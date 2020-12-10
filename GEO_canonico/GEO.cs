@@ -1,7 +1,10 @@
-﻿using System;
+﻿// #define DEBUGT
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+
 
 namespace GEO_canonico
 {
@@ -92,20 +95,18 @@ namespace GEO_canonico
       
       
         public static double GEO(int n_variaveis_projeto, int bits_por_variavel, double function_min, double function_max, double tao, int criterio_parada_nro_avaliacoes_funcao, List<int> NFOBs){
+            
             /*
 
-
-                PROBABILIDADE >= RANDOM ??
+                ECOSISTEMA? POPULAÇÃO?
 
                 CRITÉRIO DE PARADA
 
                 VALORES DE TAO
 
-                RETORNAR O MELHOR DA HISTÓRIA DEPOIS DE 
-                MUTAR/N_MUTAR, OU UM POSSÍVEL MELHOR?
+                PDFs
 
-
-                */
+            */
 
 
 
@@ -113,143 +114,203 @@ namespace GEO_canonico
             // Inicializa algumas variáveis de controle do algoritmo
             // ========================================
             
-            // Armazena o melhor f(x) até o momento
-            double melhor_fx = double.MaxValue;
-            
             // Número de avaliações da função objetivo
             int NFOB = 0;
 
+            // Melhor ecosistema e fitness
+            List<bool> melhor_C = new List<bool>();
+            double melhor_fx = 9999;
             
+
             // ========================================
             // Geração da População Inicial
             // ========================================
             
             // Define o tamanho do cromossomo
-            int tamanho_cromossomo = n_variaveis_projeto * bits_por_variavel;
+            int tamanho_ecosistema = n_variaveis_projeto * bits_por_variavel;
             
             // Inicializa o cromossomo como uma lista
-            List<bool> populacao_bits = new List<bool>();
+            List<bool> ecosistema = new List<bool>();
             
             // Gera mu bit para cada posição do cromossomo
-            for (int i=0; i<tamanho_cromossomo; ++i){
-                populacao_bits.Add( (random.Next(0, 2)==1) ? true : false );
+            for (int i=0; i<tamanho_ecosistema; ++i){
+                ecosistema.Add( (random.Next(0, 2)==1) ? true : false );
             }
+#if DEBUGT
+            Console.WriteLine("Cromossomo gerado:");
+            ApresentaCromossomoBool(ecosistema);
+#endif
 
-            // Console.WriteLine("Cromossomo gerado:");
-            // ApresentaCromossomoBool(populacao_bits);
 
-            
+            // ========================================
+            // Calcula o primeiro Valor Refrência
+            // ========================================
+            melhor_fx = funcao_objetivo(ecosistema, n_variaveis_projeto, function_min, function_max);
+#if DEBUGT            
+            Console.WriteLine("Melhor fx: " + melhor_fx);
+#endif
+
+
             // ========================================
             // Iterações
             // ========================================
             
             // Executa o algoritmos até que o critério de parada (número de avaliações na FO) seja atingido
             while (NFOB < criterio_parada_nro_avaliacoes_funcao){
-                              
+                   
+#if DEBUGT
+                Console.WriteLine("Ecosistema começo while:");
+                ApresentaCromossomoBool(ecosistema);
+#endif
+
+                
                 // ========================================
                 // Avalia o flip para cada bit
                 // ========================================
 
-                List<double> fitness_por_bit = new List<double>();
+                List<double> deltaV_fitness = new List<double>();
                 List<int> bits = new List<int>();
 
                 // Cria uma cópia do cromossomo, flipa o bit e verifica a fitness
-                for (int i=0; i<populacao_bits.Count; i++){
+                for (int i=0; i<ecosistema.Count; i++){
                     
                     // Cria uma cópia do cromossomo
-                    List<bool> populacao_bits_flipada = new List<bool>(populacao_bits);
+                    List<bool> ecosistema_flipado = new List<bool>(ecosistema);
                     
                     // Flipa o i-ésimo bit
-                    populacao_bits_flipada[i] = !populacao_bits_flipada[i];
+                    ecosistema_flipado[i] = !ecosistema_flipado[i];
 
-                    
-                    // Calcula a fitness
-                    double fx = funcao_objetivo(populacao_bits_flipada, n_variaveis_projeto, function_min, function_max);
+                    // Calcula a fitness do ecosistema com o bit flipado
+                    double fx = funcao_objetivo(ecosistema_flipado, n_variaveis_projeto, function_min, function_max);
                     // Console.WriteLine("Fitness " + i + ": " + fx);
 
-                    // // Incrementa o número de avaliações da função objetivo
-                    NFOB++;
-                    // Console.WriteLine("NFOB atual: " + NFOB);
+                    // Calcula o ganho ou perda de flipar
+                    double deltaV = fx - melhor_fx;
+#if DEBUGT
+                    Console.WriteLine("DELTAV " + deltaV + " = fx " + fx + " - ref " + melhor_fx);
+#endif
                     
-                    // ApresentaCromossomoBool(populacao_bits_flipada);
-                    
-                    // // Se essa fitness FO for o menor de todos, atualiza o melhor da história
-                    // if ( fx < best_fx_ever ){
-                    //     best_fx_ever = fx;
-                    // }
-                        
-                    // Adiciona essa fitness em uma lista de fitness por bit
-                    fitness_por_bit.Add(fx);
+                    // Adiciona o delta na lista
                     bits.Add(i);
+                    deltaV_fitness.Add(deltaV);
+
+                    // Incrementa o número de avaliações da função objetivo
+                    NFOB++;
                 }
 
                 
+            
                 // ========================================
-                // Rankeia a fitness por bits
+                // Ordena os bits conforme os indices fitness
                 // ========================================
 
-                // Console.WriteLine("Antes da ordenação");
-                // for (int i=0; i<fitness_por_bit.Count; i++){
-                //     Console.WriteLine("Bit: " + bits[i] + "Fitness: " + fitness_por_bit[i]);
-                // }
+#if DEBUGT
+                Console.WriteLine("Antes da ordenação");
+                for (int i=0; i<deltaV_fitness.Count; i++){
+                    Console.WriteLine(i + ": Bit: " + bits[i] + " | deltaV_fitness: " + deltaV_fitness[i]);
+                }
+#endif
+
+                // Inverte o sinal pra conseguir ordenar ao contrário
+                for (int i=0; i<deltaV_fitness.Count; i++){
+                    deltaV_fitness[i] = (-1) * deltaV_fitness[i];
+                }
+
+
 
                 // Transforma a população e os fitness para array para poder ordenar
-                var fitness_por_bit_array = fitness_por_bit.ToArray();
+                var deltaV_fitness_array = deltaV_fitness.ToArray();
                 var bits_array = bits.ToArray();
                 // Ordena a população com base no fitness
-                Array.Sort(fitness_por_bit_array, bits_array);
+                Array.Sort(deltaV_fitness_array, bits_array);
                 // Converte novamente os arrays para listas
-                fitness_por_bit = fitness_por_bit_array.ToList();
+                deltaV_fitness = deltaV_fitness_array.ToList();
                 bits = bits_array.ToList();
 
-                // Console.WriteLine("Depois da ordenação");
-                // for (int i=0; i<fitness_por_bit.Count; i++){
-                //     Console.WriteLine("Bit: " + bits[i] + " | Fitness: " + fitness_por_bit[i]);
+
+
+                // Inverte o sinal de volta
+                for (int i=0; i<deltaV_fitness.Count; i++){
+                    deltaV_fitness[i] = (-1) * deltaV_fitness[i];
+                }
+
+#if DEBUGT
+                Console.WriteLine("Antes da ordenação");
+                for (int i=0; i<deltaV_fitness.Count; i++){
+                    Console.WriteLine(i + ": Bit: " + bits[i] + " | deltaV_fitness: " + deltaV_fitness[i]);
+                }
+#endif
+
+                // // Cria novo ecossistema conforme os deltaV ordenados
+                // List<bool> ecosistema_ordenado = new List<bool>();
+                // foreach (int bit_ordenado in bits){
+                //     ecosistema_ordenado.Add(ecosistema[bit_ordenado]);
                 // }
 
-                // Obtém o bit a provavelmente ser flipado 
-                int bit_a_ser_flipado = bits[0];
-
-
-                // Console.WriteLine("MELHOR DE TODOS SE MUDAR: Fitness = " + fitness_por_bit[0]);
                 
-
-                // Com probabilidade Pk => k^(-tao)
-                int random_k_1toL = random.Next(1, tamanho_cromossomo);
-
-                double Pk = Math.Pow(random_k_1toL, -tao);
-
-            
-
+                
+                // // ATUALIZA O ECOSISTEMA COM O ORDENADO?????
+                // ecosistema = ecosistema_ordenado;
 
                 
+                // ========================================
+                // Flipa um bit com probabilidade Pk
+                // ========================================
 
+                // Verifica as probabilidades até que um bit seja mutado
+                bool bit_flipado = false;
+                while (!bit_flipado){
 
+                    // Gera um número aleatório com distribuição uniforme
+                    double ALE = random.NextDouble();
 
-                if (Pk >= random.NextDouble()){
-                    // Posição para flipar = 
-                    // Flipa o bit
-                    populacao_bits[bit_a_ser_flipado] = !populacao_bits[bit_a_ser_flipado];
-                    // Console.WriteLine("Flipou!");
+                    // k é o índice do array ordenado
+                    int k = random.Next(1, tamanho_ecosistema+1);
+                    
+                    // Com probabilidade Pk => k^(-tao)
+                    double Pk = Math.Pow(k, -tao);
+
+                    // k precisa ser de 1 a N, mas aqui nos índices começa em 0
+                    k -= 1;
+#if DEBUGT
+                    // Se o Pk é maior ou igual ao aleatório, então flipa o bit
+                    Console.WriteLine("Tentando flipar o indice "+k+", que é o bit "+bits[k]+" com Pk "+Pk+" >= ALE "+ALE);
+#endif
+                    if (Pk >= ALE){
+                        // Flipa o bit
+                        ecosistema[ bits[k] ] = !ecosistema[ bits[k] ];
+#if DEBUGT
+                        Console.WriteLine("Flipando o indice " + k + ", que é o bit " + bits[k]);
+#endif                  
+                        // Atualiza que o bit foi flipado
+                        bit_flipado = true;
+                        break;
+                        
+                    }
                 }
-                else{
-                    // Console.WriteLine("Sem Flipar!");
-                }
+#if DEBUGT
+                Console.WriteLine("Depois de flipar:");
+                ApresentaCromossomoBool(ecosistema);
+#endif
 
 
-                // Calcula a fitness dessa iteração
-                double fitness_iteracao = funcao_objetivo(populacao_bits, n_variaveis_projeto, function_min, function_max);
+                // Calcula a fitness do ecosistema
+                double fitness_ecosistema = funcao_objetivo(ecosistema, n_variaveis_projeto, function_min, function_max);
 
                 
-                // Se essa fitness for a menor de todas, atualiza a melhor da história
-                if (fitness_iteracao < melhor_fx){
-                    melhor_fx = fitness_iteracao;
+                // ========================================
+                // Atualiza se possível o valor (Valor Refrência)
+                // ========================================
+
+                // Se essa fitness for a menor que a melhor, atualiza a melhor da história
+                if (fitness_ecosistema < melhor_fx){
+                    melhor_fx = fitness_ecosistema;
                 }
 
 
-                // Se NFOB é maior que o primeiro a ser apresentado, apresenta e remove o 1º.
+                // Pra cada NFOB, mostra a melhor fitness
                 if (NFOB > NFOBs[0]){
-                    Console.WriteLine("Fitness NFOB " + NFOB + ": " + fitness_iteracao);
+                    Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
                     NFOBs.RemoveAt(0);
 				}
             }
@@ -263,22 +324,22 @@ namespace GEO_canonico
        
         public static void Main(string[] args){
             // Parâmetros de execução do algoritmo
-            const int bits_por_variavel = 14;
-            const int n_variaveis_projeto = 10;
+            const int bits_por_variavel = 10;
+            const int n_variaveis_projeto = 4;
             const double function_min = -600.0;
             const double function_max = 600.0;
             
             // 0.75 a 5.0
-            const double tao = 0.01;
+            const double tao = 2;
             
             const int criterio_parada_nro_avaliacoes_funcao = 200000;
             
-            // // Definição se apresenta no console o passo a passo ou se só executa diretamente
-            // DEBUG_CONSOLE = false;
+            // Definição se apresenta no console o passo a passo ou se só executa diretamente
+            DEBUG_CONSOLE = false;
 
             // Essa lista contém todos os pontos NFOB onde se deseja saber o valor fitness do algoritmo. 
             // O algoritmo executa e retorna uma lista contendo o melhor valor fitness logo acima daquele NFOB.
-            List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000, 199999};
+            List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
             
 
 
