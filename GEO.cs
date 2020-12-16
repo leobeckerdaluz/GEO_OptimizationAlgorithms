@@ -44,10 +44,11 @@ namespace GEO
 
 
         /*
-            A função objetivo é a função fitness do algoritmo. Ela recebe como parâmetro a população de 
-            ... bits, calcula o fenótipo de cada variável de projeto e calcula o valor da função objetivo.
+            A função para calcula fenótipo de variáveis tem por objetivo percorrer toda a população de bits
+            e calcular o fenótipo de cada uma das variáveis de projeto.
+            A função retorna uma lista contendo o fenótipo de cada variável
         */
-        public static double funcao_objetivo(List<bool> populacao_de_bits, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max){
+        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max){
             //============================================================
             // Calcula o fenótipo para cada variável de projeto
             //============================================================
@@ -87,10 +88,47 @@ namespace GEO
                 fenotipo_variaveis_projeto.Add(fenotipo_variavel_projeto);
             }
 
-            //============================================================
-            // Calcula a função de Griewank
-            //============================================================
-            
+            // Retorna a lista dos fenótipos
+            return fenotipo_variaveis_projeto;
+        }
+
+
+
+        // /*
+        //     A função de rosenbrock recebe como parâmetro a lista contendo o fenótipo de cada
+        //     variável de projeto e calcula o valor da função.
+        // */
+        // public static double funcao_rosenbrock(List<double> fenotipo_variaveis_projeto){
+        //     double laco_somatorio = 0;
+
+        //     // Laço para os somatórios
+        //     for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+        //         // Obtém o valor da variável atual
+        //         double Xi = fenotipo_variaveis_projeto[i];
+        //         // Obtém o valor da próxima variável. Se for a última, pega a primeira
+        //         double Xi1 = ( (i == fenotipo_variaveis_projeto.Count-1) ? fenotipo_variaveis_projeto[0] : fenotipo_variaveis_projeto[i+1]);
+                
+        //         double primeira_parte = 100 * Math.Pow( (Math.Pow(Xi,2) - Xi1), 2 );
+        //         double segunda_parte = Math.Pow( (1 + Xi), 2 );
+        //         double colchetes = primeira_parte + segunda_parte;
+        //         laco_somatorio += colchetes;
+        //     }
+
+        //     // Obtém a f(x)
+        //     double fx = laco_somatorio;
+
+        //     // Retorna o valor de f(x)
+        //     return fx;
+        // }
+        
+        
+        
+        
+        /*
+            A função de griewank recebe como parâmetro a lista contendo o fenótipo de cada
+            variável de projeto e calcula o valor da função.
+        */
+        public static double funcao_griewank(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
             double laco_produto = 1;
 
@@ -103,11 +141,26 @@ namespace GEO
 
             // Expressão final de f(x)
             double fx = (1 + laco_somatorio/4000.0 - laco_produto);
-            
-#if DEBUG_FUNCTION
-            Console.WriteLine("fx: " + fx);
-#endif
 
+            // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+
+        /*
+            A função objetivo é a função fitness do algoritmo. Ela invoca os métodos para calcular
+            o fenótipo de cada variável de projeto e, posteriormente, calcula o valor fitness.
+        */
+        public static double funcao_objetivo(List<bool> populacao_de_bits, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max){
+            // Calcula o fenótipo para cada variável de projeto
+            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max);
+
+            // Calcula o valor da função objetivo
+            double fx = funcao_griewank(fenotipo_variaveis_projeto);
+            // double fx = funcao_rosenbrock(fenotipo_variaveis_projeto);
+
+            // Retorna o valor fitness
             return fx;
         }
 
@@ -395,11 +448,10 @@ namespace GEO
                 }
                 
                 //============================================================
-                // Ordena os bits e flipa apenas um deles, atualizando a população
+                // Ordena os bits e flipa, atualizando a população
                 //============================================================
                 
                 // populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tamanho_populacao_bits, tao);
-
 
                 populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_projeto, tamanho_populacao_bits, tao);
 
