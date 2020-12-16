@@ -94,32 +94,34 @@ namespace GEO
 
 
 
-        // /*
-        //     A função de rosenbrock recebe como parâmetro a lista contendo o fenótipo de cada
-        //     variável de projeto e calcula o valor da função.
-        // */
-        // public static double funcao_rosenbrock(List<double> fenotipo_variaveis_projeto){
-        //     double laco_somatorio = 0;
+        /*
+            A função de rosenbrock recebe como parâmetro a lista contendo o fenótipo de cada
+            variável de projeto e calcula o valor da função.
+        */
+        public static double funcao_rosenbrock(List<double> fenotipo_variaveis_projeto){
+            double laco_somatorio = 0;
 
-        //     // Laço para os somatórios
-        //     for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
-        //         // Obtém o valor da variável atual
-        //         double Xi = fenotipo_variaveis_projeto[i];
-        //         // Obtém o valor da próxima variável. Se for a última, pega a primeira
-        //         double Xi1 = ( (i == fenotipo_variaveis_projeto.Count-1) ? fenotipo_variaveis_projeto[0] : fenotipo_variaveis_projeto[i+1]);
+            // Laço para os somatórios
+            for(int i=0; i<fenotipo_variaveis_projeto.Count-1; i++){
+                // Obtém o valor da variável atual
+                double Xi = fenotipo_variaveis_projeto[i];
+                // Obtém o valor da próxima variável
+                double Xi1 = fenotipo_variaveis_projeto[i+1];
                 
-        //         double primeira_parte = 100 * Math.Pow( (Math.Pow(Xi,2) - Xi1), 2 );
-        //         double segunda_parte = Math.Pow( (1 + Xi), 2 );
-        //         double colchetes = primeira_parte + segunda_parte;
-        //         laco_somatorio += colchetes;
-        //     }
+                double primeira_parte = 100 * Math.Pow( (Math.Pow(Xi,2) - Xi1), 2 );
+                // double primeira_parte = 100 * Math.Pow( (Xi1 - Math.Pow(Xi,2)), 2 );
+                // double segunda_parte = Math.Pow( (1 + Xi), 2 );
+                double segunda_parte = Math.Pow( (1 - Xi), 2 );
+                double colchetes = primeira_parte + segunda_parte;
+                laco_somatorio += colchetes;
+            }
 
-        //     // Obtém a f(x)
-        //     double fx = laco_somatorio;
+            // Obtém a f(x)
+            double fx = laco_somatorio;
 
-        //     // Retorna o valor de f(x)
-        //     return fx;
-        // }
+            // Retorna o valor de f(x)
+            return fx;
+        }
         
         
         
@@ -157,8 +159,8 @@ namespace GEO
             List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max);
 
             // Calcula o valor da função objetivo
-            double fx = funcao_griewank(fenotipo_variaveis_projeto);
-            // double fx = funcao_rosenbrock(fenotipo_variaveis_projeto);
+            // double fx = funcao_griewank(fenotipo_variaveis_projeto);
+            double fx = funcao_rosenbrock(fenotipo_variaveis_projeto);
 
             // Retorna o valor fitness
             return fx;
