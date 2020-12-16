@@ -21,6 +21,10 @@ namespace GEO
 
 
 
+
+
+
+
     /*
         Classe principal contendo os algoritmos GEO
     */
@@ -29,6 +33,10 @@ namespace GEO
         // Inicializa a variável global para a genração de números aleatórios
         public static Random random = new Random();
       
+
+
+
+
 
 
         /*
@@ -41,6 +49,10 @@ namespace GEO
             Console.WriteLine("");
         } 
        
+
+
+
+
 
 
         /*
@@ -94,6 +106,33 @@ namespace GEO
 
 
 
+
+
+
+
+        /*
+            A função DeJong#3 recebe como parâmetro a lista contendo o fenótipo de cada
+            variável de projeto e calcula o valor da função.
+        */
+        public static double funcao_DeJong3_inteiro(List<double> fenotipo_variaveis_projeto){
+            double laco_somatorio = 0;
+
+            // Laço para os somatórios
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                // Arredonda para o inteiro mais próximo
+                laco_somatorio += Math.Round(fenotipo_variaveis_projeto[i], 0);
+            }
+
+            // Retorna o valor de f(x), que é o somatório
+            return laco_somatorio;
+        }
+        
+        
+
+
+
+
+        
         /*
             A função de rosenbrock recebe como parâmetro a lista contendo o fenótipo de cada
             variável de projeto e calcula o valor da função.
@@ -116,15 +155,15 @@ namespace GEO
                 laco_somatorio += colchetes;
             }
 
-            // Obtém a f(x)
-            double fx = laco_somatorio;
-
-            // Retorna o valor de f(x)
-            return fx;
+            // Retorna o valor de f(x), que é o somatório
+            return laco_somatorio;
         }
         
         
         
+
+
+
         
         /*
             A função de griewank recebe como parâmetro a lista contendo o fenótipo de cada
@@ -150,6 +189,10 @@ namespace GEO
 
 
 
+
+
+
+
         /*
             A função objetivo é a função fitness do algoritmo. Ela invoca os métodos para calcular
             o fenótipo de cada variável de projeto e, posteriormente, calcula o valor fitness.
@@ -161,10 +204,15 @@ namespace GEO
             // Calcula o valor da função objetivo
             // double fx = funcao_griewank(fenotipo_variaveis_projeto);
             double fx = funcao_rosenbrock(fenotipo_variaveis_projeto);
+            // double fx = funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
 
             // Retorna o valor fitness
             return fx;
         }
+
+
+
+
 
 
 
@@ -342,11 +390,10 @@ namespace GEO
             }
 #endif
 
-
-
             // Retorna a nova população de bits
             return populacao_de_bits;
         }
+
 
 
 
@@ -485,7 +532,10 @@ namespace GEO
         
 
        
-       /*
+
+
+
+        /*
             A função main é a função que invoca a execução do GEO. Aqui nesse bloco são definidos os parâmetros de 
             execução do algoritmo e o algoritmo é executado.
         */
@@ -497,13 +547,18 @@ namespace GEO
             
             // Parâmetros de execução do algoritmo
             const int bits_por_variavel_projeto = 10;
-            const int n_variaveis_projeto = 4;
-            const double function_min = -600.0;
-            const double function_max = 600.0;
+            
+            // const int n_variaveis_projeto = 5;
+            // const double function_min = -5.12;
+            // const double function_max = 5.12;
+            
+            const int n_variaveis_projeto = 2;
+            const double function_min = -2.048;
+            const double function_max = 2.048;
             
             // Se o tao é alto, é mais determinístico
             // Se o tao é baixo, é mais estocástico
-            const double tao = 5;
+            const double tao = 0.75;
             
             // Define o critério de parada com o número de avaliações da NFOBs
             const int criterio_parada_nro_avaliacoes_funcao = 200000;
