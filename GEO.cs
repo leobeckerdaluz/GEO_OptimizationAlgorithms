@@ -406,7 +406,7 @@ namespace GEO
             avaliação do flip de cada bit.
             A função retorna o melhor f(x) da execução.
         */
-        public static double GEO_algorithm(int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max, double tao, int criterio_parada_nro_avaliacoes_funcao, List<int> NFOBs){            
+        public static double GEO_algorithm(int tipo_GEO, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max, double tao, int criterio_parada_nro_avaliacoes_funcao, List<int> NFOBs){            
             
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo
@@ -500,9 +500,14 @@ namespace GEO
                 // Ordena os bits e flipa, atualizando a população
                 //============================================================
                 
-                // populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tamanho_populacao_bits, tao);
-
-                populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_projeto, tamanho_populacao_bits, tao);
+                //GEOcanonico
+                if (tipo_GEO == 0){ 
+                    populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tamanho_populacao_bits, tao);
+                }
+                //GEOvar
+                else if (tipo_GEO == 1){
+                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_projeto, tamanho_populacao_bits, tao);
+                }
 
 
                 // Calcula a fitness da nova população de bits
@@ -548,17 +553,14 @@ namespace GEO
             // Parâmetros de execução do algoritmo
             const int bits_por_variavel_projeto = 10;
             
-            // const int n_variaveis_projeto = 5;
-            // const double function_min = -5.12;
-            // const double function_max = 5.12;
-            
             const int n_variaveis_projeto = 2;
             const double function_min = -2.048;
             const double function_max = 2.048;
             
-            // Se o tao é alto, é mais determinístico
-            // Se o tao é baixo, é mais estocástico
+            // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
             const double tao = 0.75;
+
+            const int tipo_GEO = 0; // 0-GEOcanonico / 1-GEOvar 
             
             // Define o critério de parada com o número de avaliações da NFOBs
             const int criterio_parada_nro_avaliacoes_funcao = 200000;
@@ -567,7 +569,9 @@ namespace GEO
             // Essa lista contém todos os pontos NFOB onde se deseja saber o valor fitness do algoritmo. 
             // O algoritmo mostra o melhor fitness até o momento assim que o NFOB atinge cada um destes valores.
 
-            List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+            // List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+            
+            List<int> NFOBs_desejados = new List<int>(){300000};
             
             // List<int> NFOBs_desejados = new List<int>(){10,20,30,40,50,60,70,80,90,100,120,140,160,180,200,250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
 
@@ -575,18 +579,74 @@ namespace GEO
             // Execução do algoritmo
             //============================================================
 
-            // Inicializa o temporizador
-            var total_watch = System.Diagnostics.Stopwatch.StartNew();
-
             // Executa o GEO e recebe como retorno a melhor fitness da execução
-            double melhor_fx_geral = GEO_algorithm(n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados);
+            double melhor_fx_geral = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados);
 
-            // Para o temporizador
-            total_watch.Stop();
+            
 
-            // Calcula o tempo de execução
-            var elapsedMs = total_watch.ElapsedMilliseconds;
-            Console.WriteLine("Tempo total de execução: " + elapsedMs/1000.0 + " segundos");
+
+
+
+
+            // // ================================================================
+            // // 50 EXECUÇÕES
+            // // ================================================================
+
+            // // Cria lista para armazenar os valores fitness a cada NFOB desejado
+            // List<List<double>> todas_execucoes_SGA_NFOB = new List<List<double>>();
+
+            // // Apresenta o melhor resultado
+            // Console.WriteLine("Execução " + i + ": " + SGA_bests_NFOB[SGA_bests_NFOB.Count - 1]);
+            // // Adiciona na lista de execuções a execução atual
+            // todas_execucoes_SGA_NFOB.Add(SGA_bests_NFOB);
+
+            // // Para cada probabilidade de crossover, executa o algoritmo
+            // List<double> valores_TAO_F3 = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10};
+            // List<double> valores_TAO_F5 = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
+
+
+
+
+
+            // // Parâmetros de execução do algoritmo
+            // const int bits_por_variavel_projeto = 10;
+            // const int n_variaveis_projeto = 2;
+            // const double function_min = -2.048;
+            // const double function_max = 2.048;
+            // // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
+            // const double tao = 0.75;
+            // const int tipo_GEO = 0; // 0-GEOcanonico / 1-GEOvar 
+            // // Define o critério de parada com o número de avaliações da NFOBs
+            // const int criterio_parada_nro_avaliacoes_funcao = 100000;
+            // List<double> valores_TAO_F2 = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3};
+            // List<int> NFOBs_desejados = new List<int>(){400000};
+            
+
+            // foreach (double TAO in valores_TAO_F2){
+            //     Console.WriteLine("===> TAO: " + TAO);
+                
+            //     // Executa o SGA por 50 vezes
+            //     double somatorio_melhores_GEO = 0;
+            //     double somatorio_melhores_GEOvar = 0;
+
+            //     // Executa o GEO e o GEOvar por 5 vezes
+            //     for(int i=0; i<50; i++){
+            //         // Executa o GEO e recebe como retorno a melhor fitness da execução
+            //         somatorio_melhores_GEO += GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados);
+
+            //         // Executa o GEO e recebe como retorno a melhor fitness da execução
+            //         somatorio_melhores_GEOvar += GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados);
+            //     }
+
+            //     // Calcula a média dos melhores f(x) pra esse TAO
+            //     double media_melhor_fx_GEO = somatorio_melhores_GEO / 50;
+            //     double media_melhor_fx_GEOvar = somatorio_melhores_GEOvar / 50;
+
+            //     print("media_melhor_fx_GEO" + media_melhor_fx_GEO);
+            //     print("media_melhor_fx_GEOvar" + media_melhor_fx_GEOvar);
+            // }
+
+
         }
     }
 }
