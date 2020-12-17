@@ -1,0 +1,52 @@
+===> TAO: 0.25   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 0.5   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 0.75   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 1   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 1.25   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 1.5   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 1.75   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 2   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 2.25   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 2.5   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 2.75   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 3   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 3.5   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 4   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 4.5   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 5   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 6   |   GEOcan / GEOvar
+-25
+-25
+===> TAO: 7   |   GEOcan / GEOvar
