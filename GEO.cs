@@ -64,8 +64,7 @@ namespace GEO
             e calcular o fenótipo de cada uma das variáveis de projeto.
             A função retorna uma lista contendo o fenótipo de cada variável
         */
-        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max){
-        // public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, List<int> bits_por_variavel_variaveis){
+        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, int n_variaveis_projeto, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, List<int> bits_por_variavel_variaveis){
             //============================================================
             // Calcula o fenótipo para cada variável de projeto
             //============================================================
@@ -74,14 +73,20 @@ namespace GEO
             List<double> fenotipo_variaveis_projeto = new List<double>();
             
             // Transforma o genótipo de cada variável em uma string para depois converter para decimal
+            int iterator = 0;
             for (int i=0; i<n_variaveis_projeto; i++){
+                double limite_superior_variavel = limites_superiores_variaveis[i];
+                double limite_inferior_variavel = limites_inferiores_variaveis[i];
+                double bits_variavel_projeto = bits_por_variavel_variaveis[i];
                 // Cria string representando os bits da variável
                 string fenotipo_xi = "";
-                
+
                 // Percorre o número de bits de cada variável de projeto
-                for(int c = bits_por_variavel_projeto*i; c < bits_por_variavel_projeto*(i+1); c++){
+                for(int c=0; c<bits_variavel_projeto; c++){
                     // Se o bit for true, concatena "1", senão, "0"
-                    fenotipo_xi += (populacao_de_bits[c] ? "1" : "0");
+                    fenotipo_xi += (populacao_de_bits[iterator] ? "1" : "0");
+                    
+                    iterator++;
                 }
 
                 // Converte essa string de bits para inteiro
@@ -93,7 +98,8 @@ namespace GEO
                 // binario --- x
                 // (max-min) / (2^bits - 0) ======> Variação de valor por bit
                 // min + [(max-min) / (2^bits - 0)] * binario
-                double fenotipo_variavel_projeto = function_min + ((function_max - function_min) * variavel_convertida / (Math.Pow(2, bits_por_variavel_projeto) - 1));
+                
+                double fenotipo_variavel_projeto = limite_inferior_variavel + ((limite_superior_variavel - limite_inferior_variavel) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto) - 1));
 
 #if DEBUG_FUNCTION
                 Console.WriteLine("Fenótipo " + i + ": " + fenotipo_xi);
@@ -126,9 +132,9 @@ namespace GEO
             A função objetivo é a função fitness do algoritmo. Ela invoca os métodos para calcular
             o fenótipo de cada variável de projeto e, posteriormente, calcula o valor fitness.
         */
-        public static double funcao_objetivo(int definicao_funcao_objetivo, List<bool> populacao_de_bits, int n_variaveis_projeto, int bits_por_variavel_projeto, double function_min, double function_max){
+        public static double funcao_objetivo(int definicao_funcao_objetivo, List<bool> populacao_de_bits, int n_variaveis_projeto, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, List<int> bits_por_variavel_variaveis){
             // Calcula o fenótipo para cada variável de projeto
-            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max);
+            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
             // Calcula o valor da função objetivo
             double fx = 99999;
@@ -246,7 +252,7 @@ namespace GEO
             bit por variável para mutar
             A função retorna a nova população de bits com os bits mutados.
         */
-        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int n_variaveis_projeto, int bits_por_variavel_projeto, int tamanho_populacao_bits, double tao){
+        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int tamanho_populacao_bits, double tao){
             
             //============================================================
             // Ordena os bits conforme os indices fitness
@@ -265,14 +271,20 @@ namespace GEO
 #endif
 
             // Percorre cada variável de projeto para ordenar os bits e escolher o bit para filpar
+            int iterador = 0;
             for (int i=0; i<n_variaveis_projeto; i++){
+                // Obtém o número de bits dessa variável de projeto
+                int bits_variavel_projeto = bits_por_variavel_variaveis[i];
+                
                 // Cria uma lista com as informações de mutação de cada bit da variável
                 List<BitVerificado> lista_informacoes_bits_variavel = new List<BitVerificado>();
                 
                 // Percorre o número de bits de cada variável de projeto
-                for(int c = bits_por_variavel_projeto*i; c < bits_por_variavel_projeto*(i+1); c++){
+                for(int c=0; c<bits_variavel_projeto; c++){
                     // Se o bit for true, concatena "1", senão, "0"
-                    lista_informacoes_bits_variavel.Add( lista_informacoes_mutacao[c] );
+                    lista_informacoes_bits_variavel.Add( lista_informacoes_mutacao[iterador] );
+
+                    iterador++;
                 }
 
                 // Ordena esses bits da variável
@@ -296,7 +308,7 @@ namespace GEO
                     double ALE = random.NextDouble();
 
                     // k é o índice da população de bits ordenada
-                    int k = random.Next(1, bits_por_variavel_projeto+1);
+                    int k = random.Next(1, bits_variavel_projeto+1);
                     
                     // Probabilidade Pk => k^(-tao)
                     double Pk = Math.Pow(k, -tao);
@@ -358,8 +370,8 @@ namespace GEO
             avaliação do flip de cada bit.
             A função retorna o melhor f(x) da execução.
         */
-        public static List<double> GEO_algorithm(int tipo_GEO, int n_variaveis_projeto, int bits_por_variavel_projeto, int definicao_funcao_objetivo, double function_min, double function_max, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado){  
-            
+        public static List<double> GEO_algorithm(int tipo_GEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado){  
+
             // definicao_funcao_objetivo
             // 0 - Griewangk
             // 1 - Rosenbrock
@@ -383,7 +395,7 @@ namespace GEO
             int NFOB = 0;
 
             // Melhor fitness até o momento. Como é minimização, começa com o maior valor possível
-            double melhor_fx = function_max;
+            double melhor_fx = Double.MaxValue;
 
             // Cria a lista que conterá os melhores f(x) a cada NFOB desejado
             List<double> melhores_NFOBs = new List<double>();
@@ -392,8 +404,11 @@ namespace GEO
             // Geração da População de Bits Inicial
             //============================================================
             
-            // Define o tamanho da população de bits
-            int tamanho_populacao_bits = n_variaveis_projeto * bits_por_variavel_projeto;
+            // Soma os bits por variável de projeto para saber o tamanho da população
+            int tamanho_populacao_bits = 0;
+            foreach(int bits_variavel in bits_por_variavel_variaveis){
+                tamanho_populacao_bits += bits_variavel;
+            }
             
             // Inicializa a população de bits como uma lista de bits (bool)
             List<bool> populacao_de_bits = new List<bool>();
@@ -407,7 +422,7 @@ namespace GEO
             // Calcula o primeiro Valor Referência
             //============================================================
 
-            melhor_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max);
+            melhor_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
 #if DEBUG_CONSOLE    
             Console.WriteLine("População de bits gerado:");
@@ -430,7 +445,7 @@ namespace GEO
 #if DEBUG_CONSOLE
                 Console.WriteLine("População de Bits começo while:");
                 ApresentaCromossomoBool(populacao_de_bits);
-                double teste = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, bits_por_variavel_projeto,function_min, function_max);
+                double teste = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
                 Console.WriteLine("Fx = " + teste);
                 Console.WriteLine("Fx melhor = " + melhor_fx);
 #endif
@@ -452,7 +467,7 @@ namespace GEO
                     populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                     // Calcula a fitness da populacao_de_bits com o bit flipado
-                    double fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max);
+                    double fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
                     // Calcula o ganho ou perda de flipar
                     double deltaV = fx - melhor_fx;
@@ -481,12 +496,12 @@ namespace GEO
                 }
                 //GEOvar
                 else if (tipo_GEO == 1){
-                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_projeto, tamanho_populacao_bits, tao);
+                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tamanho_populacao_bits, tao);
                 }
 
 
                 // Calcula a fitness da nova população de bits
-                double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, bits_por_variavel_projeto, function_min, function_max);
+                double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
                 //============================================================
                 // Atualiza, se possível, o valor (Valor Refrência)
@@ -533,12 +548,19 @@ namespace GEO
         */
         public static void Main(string[] args){
             // Parâmetros de execução do algoritmo
-            const int bits_por_variavel_projeto = 14;
+            // const int bits_por_variavel_projeto = 14;
+            List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
+
             const int n_variaveis_projeto = 10;
-            const double function_min = -600.0;
-            const double function_max = 600.0;
+            
+            // const double function_min = -600.0;
+            List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
+
+            // const double function_max = 600.0;
+            List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+
             // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
-            const double tao = 1;
+            const double tao = 5;
             // Define o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
             const int tipo_GEO = 1; 
             // Define o critério de parada com o número de avaliações da NFOBs
@@ -563,7 +585,7 @@ namespace GEO
             //============================================================
 
             // Executa o GEO e recebe como retorno a melhor fitness da execução
-            List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_projeto, definicao_funcao_objetivo, function_min, function_max, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados, fx_esperado);
+            List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados, fx_esperado);
             
             foreach(double melhor_NFOB in melhores_NFOBs){
                 Console.WriteLine(melhor_NFOB);
