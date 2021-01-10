@@ -1,16 +1,16 @@
 ﻿// Diretivas de compilação para controle de partes do código
 // #define DEBUG_CONSOLE
 // #define DEBUG_FUNCTION
-// #define MOSTRAR_NFOBS
 
-#define CRITERIO_PARADA_NFOB
-// #define CRITERIO_PARADA_PRECISAO
+// #define CRITERIO_PARADA_NFOB
+#define CRITERIO_PARADA_PRECISAO
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Funcoes_Definidas;
+using SpaceDesignTeste;
 
 namespace GEO
 {
@@ -76,6 +76,9 @@ namespace GEO
             int iterator = 0;
             for (int i=0; i<n_variaveis_projeto; i++){
                 double limite_superior_variavel = limites_superiores_variaveis[i];
+                if (i==2){
+                    limite_superior_variavel = fenotipo_variaveis_projeto[1]-1;
+                }
                 double limite_inferior_variavel = limites_inferiores_variaveis[i];
                 double bits_variavel_projeto = bits_por_variavel_variaveis[i];
                 // Cria string representando os bits da variável
@@ -153,7 +156,7 @@ namespace GEO
                     break;
                 // Custom Spacecraft Orbit Function
                 case 3:
-                    fx = 2;//Funcoes_Definidas.Funcoes.funcao_custom_spacecraft_orbit(fenotipo_variaveis_projeto);
+                    fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
                     break;
             }
 
@@ -509,20 +512,24 @@ namespace GEO
 
                 // Se essa fitness for a menor que a melhor, atualiza a melhor da história
                 if (fitness_populacao_de_bits < melhor_fx){
-                    melhor_fx = fitness_populacao_de_bits;
-                    // Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
+                    if (fitness_populacao_de_bits >= 0){
+                        melhor_fx = fitness_populacao_de_bits;
+                        Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
+                        ApresentaCromossomoBool(populacao_de_bits);
+                    }
                 }
 
                 // Se o NFOB for algum da lista para mostrar, mostra a melhor fitness até o momento
 
                 // Console.WriteLine("Vai acessar NFOBs["+iterador_NFOB+"]="+NFOBs[iterador_NFOB] + " com NFOBs tamanho " + NFOBs.Count + " com NFOB " + NFOB);
+                
+#if CRITERIO_PARADA_NFOB
                 if (NFOB > NFOBs[iterador_NFOB]){
-#if MOSTRAR_NFOBS
                     Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
-#endif
                     iterador_NFOB ++;
                     melhores_NFOBs.Add(melhor_fx);
 				}
+#endif
             }
             
             // Conforme o tipo de critério de parada, retorna ou a lista dos f(x) nos NFOBs
@@ -530,7 +537,7 @@ namespace GEO
 #if CRITERIO_PARADA_NFOB            
             return melhores_NFOBs;
 #elif CRITERIO_PARADA_PRECISAO
-            return NFOB;
+            return new List<double>(){NFOB};
 #else
             return 9999;
 #endif
@@ -546,32 +553,81 @@ namespace GEO
             A função main é a função que invoca a execução do GEO. Aqui nesse bloco são definidos os parâmetros de 
             execução do algoritmo e o algoritmo é executado.
         */
-        public static void Main(string[] args){
+        // public static void Main(string[] args){
+        public static void testes(){
+            // // Parâmetros de execução do algoritmo
+            // // const int bits_por_variavel_projeto = 14;
+            // List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
+
+            // const int n_variaveis_projeto = 10;
+            
+            // // const double function_min = -600.0;
+            // List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
+
+            // // const double function_max = 600.0;
+            // List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+
+            // // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
+            // const double tao = 0.5;
+            // // Define o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
+            // const int tipo_GEO = 1; 
+            // // Define o critério de parada com o número de avaliações da NFOBs
+            // const double valor_criterio_parada = 200000;
+            // double fx_esperado = 0;
+
+            // // definicao_funcao_objetivo
+            // // 0 - Griewangk
+            // // 1 - Rosenbrock
+            // // 2 - DeJong3
+            // int definicao_funcao_objetivo = 0;
+
+            // // Essa lista contém todos os pontos NFOB onde se deseja saber o valor fitness do algoritmo. 
+            // // O algoritmo mostra o melhor fitness até o momento assim que o NFOB atinge cada um destes valores.
+
+            // List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+            
+            // // List<int> NFOBs_desejados = new List<int>(){10,20,30,40,50,60,70,80,90,100,120,140,160,180,200,250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+
+            // //============================================================
+            // // Execução do algoritmo
+            // //============================================================
+
+            // // Executa o GEO e recebe como retorno a melhor fitness da execução
+            // List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado);
+            
+            // foreach(double melhor_NFOB in melhores_NFOBs){
+            //     Console.WriteLine(melhor_NFOB);
+            // }
+
+
+
+
+
+
+
+
+
             // Parâmetros de execução do algoritmo
             // const int bits_por_variavel_projeto = 14;
-            List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
-
-            const int n_variaveis_projeto = 10;
-            
-            // const double function_min = -600.0;
-            List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
-
-            // const double function_max = 600.0;
-            List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+            const int n_variaveis_projeto = 3;
+            List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
+            List<double> limites_inferiores_variaveis = new List<double>(){13,1,1};
+            List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
 
             // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
-            const double tao = 5;
+            const double tao = 1;
             // Define o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
             const int tipo_GEO = 1; 
             // Define o critério de parada com o número de avaliações da NFOBs
-            const int criterio_parada_nro_avaliacoes_funcao = 200000;
-            double fx_esperado = 0;
+            const double valor_criterio_parada = 0.1;//200000;
+            double fx_esperado = 196.949;
 
             // definicao_funcao_objetivo
             // 0 - Griewangk
             // 1 - Rosenbrock
             // 2 - DeJong3
-            int definicao_funcao_objetivo = 0;
+            // 3 - Space Design
+            int definicao_funcao_objetivo = 3;
 
             // Essa lista contém todos os pontos NFOB onde se deseja saber o valor fitness do algoritmo. 
             // O algoritmo mostra o melhor fitness até o momento assim que o NFOB atinge cada um destes valores.
@@ -585,11 +641,12 @@ namespace GEO
             //============================================================
 
             // Executa o GEO e recebe como retorno a melhor fitness da execução
-            List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, criterio_parada_nro_avaliacoes_funcao, NFOBs_desejados, fx_esperado);
+            List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado);
             
             foreach(double melhor_NFOB in melhores_NFOBs){
                 Console.WriteLine(melhor_NFOB);
             }
+
 
             
 
