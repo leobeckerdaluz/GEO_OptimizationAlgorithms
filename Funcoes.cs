@@ -29,6 +29,8 @@ namespace Funcoes_Definidas
         }
         
         
+
+        
         /*
             A função de rosenbrock recebe como parâmetro a lista contendo o fenótipo de cada
             variável de projeto e calcula o valor da função.
@@ -55,6 +57,8 @@ namespace Funcoes_Definidas
             return laco_somatorio;
         }
         
+
+
         
         /*
             A função de griewank recebe como parâmetro a lista contendo o fenótipo de cada

@@ -141,26 +141,11 @@ namespace SpaceDesignTeste
             p.DeltaV_deorbit = PropulsionManager.DeltaV_DeOrbit(p.FinalOrbit, p.DeOrbit);
 
             Satellite.Mp = PropulsionManager.StimateTotalMass(Satellite) - Satellite.Md;
-            p.DeltaV_pertubations = PropulsionManager.DragDeltaV(Satellite, Ss_orb, 0);
+            // p.DeltaV_pertubations = PropulsionManager.DragDeltaV(Satellite, Ss_orb, 0);
 
 
             fx = Satellite.M;
-            // Console.WriteLine("Fx: " + fx);
-            // AddNFOB(getBestFx);
             return fx;
-        }
-
-
-
-
-       
-        public static void Main(string[] args){
-            Console.WriteLine("Rodando!");
-
-            List<double> fenotipo_variaveis_projeto = new List<double>(){13,50,60};
-            double fx = ObjectiveFunction(fenotipo_variaveis_projeto);
-            
-            Console.WriteLine("Fx Final: " + fx);
         }
     }
 }
