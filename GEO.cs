@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Funcoes_Definidas;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Funcoes_Definidas;
 using SpaceDesignTeste;
 
 namespace GEO
@@ -64,9 +64,9 @@ namespace GEO
             int iterator = 0;
             for (int i=0; i<n_variaveis_projeto; i++){
                 double limite_superior_variavel = limites_superiores_variaveis[i];
-                if (i==2){
-                    limite_superior_variavel = fenotipo_variaveis_projeto[1]-1;
-                }
+                // if (i==2){
+                //     limite_superior_variavel = fenotipo_variaveis_projeto[1]-1;
+                // }
                 double limite_inferior_variavel = limites_inferiores_variaveis[i];
                 double bits_variavel_projeto = bits_por_variavel_variaveis[i];
                 // Cria string representando os bits da variável
@@ -122,15 +122,15 @@ namespace GEO
             switch(definicao_funcao_objetivo){
                 // Griewangk
                 case 0:
-                    fx = Funcoes_Definidas.Funcoes.funcao_griewank(fenotipo_variaveis_projeto);
+                    fx = Funcoes.funcao_griewank(fenotipo_variaveis_projeto);
                     break;
                 // Rosenbrock
                 case 1:
-                    fx = Funcoes_Definidas.Funcoes.funcao_rosenbrock(fenotipo_variaveis_projeto);
+                    fx = Funcoes.funcao_rosenbrock(fenotipo_variaveis_projeto);
                     break;
                 // DeJong3
                 case 2:
-                    fx = Funcoes_Definidas.Funcoes.funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
+                    fx = Funcoes.funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
                     break;
                 // Custom Spacecraft Orbit Function
                 case 3:
@@ -391,15 +391,8 @@ namespace GEO
             // Iterações
             //============================================================
             
-            // Conforme a diretiva de compilação escolhida, define o tipo de critério de parada
+            // Entra no while e avalia a variável de condição lá dentro
             bool condition = true;
-            if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
-                condition = (NFOB < valor_criterio_parada);
-            }
-            else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
-                condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada );
-            }
-            
             while (condition){
 
 #if DEBUG_CONSOLE
@@ -469,11 +462,11 @@ namespace GEO
 
                 // Se essa fitness for a menor que a melhor, atualiza a melhor da história
                 if (fitness_populacao_de_bits < melhor_fx){
-                    if (fitness_populacao_de_bits >= 0){
+                    // if (fitness_populacao_de_bits >= 0){
                         melhor_fx = fitness_populacao_de_bits;
-                        Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
-                        ApresentaCromossomoBool(populacao_de_bits);
-                    }
+                        // Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
+                        // ApresentaCromossomoBool(populacao_de_bits);
+                    // }
                 }
 
                 // Se o NFOB for algum da lista para mostrar, mostra a melhor fitness até o momento
@@ -482,10 +475,22 @@ namespace GEO
                 
                 if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
                     if (NFOB > NFOBs[iterador_NFOB]){
-                        Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
+                        // Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
                         iterador_NFOB ++;
                         melhores_NFOBs.Add(melhor_fx);
                     }
+                }
+
+
+                // Conforme o tipo de critério de parada, define a condição do laço
+                if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+                    condition = (NFOB < valor_criterio_parada);
+                    // Console.WriteLine("NFOB");
+                }
+                else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
+                    condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada );
+                    // Console.WriteLine("PRECISAO");
+                    // Console.WriteLine(Math.Abs(melhor_fx) + " - " + Math.Abs(fx_esperado) + " > " + valor_criterio_parada);
                 }
             }
             
