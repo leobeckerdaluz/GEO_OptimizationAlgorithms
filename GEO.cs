@@ -2,9 +2,6 @@
 // #define DEBUG_CONSOLE
 // #define DEBUG_FUNCTION
 
-// #define CRITERIO_PARADA_NFOB
-#define CRITERIO_PARADA_PRECISAO
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -338,28 +335,18 @@ namespace GEO
             avaliação do flip de cada bit.
             A função retorna o melhor f(x) da execução.
         */
-        public static List<double> GEO_algorithm(int tipo_GEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado){  
+        public static List<double> GEO_algorithm(int tipo_GEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){  
 
             // definicao_funcao_objetivo
             // 0 - Griewangk
             // 1 - Rosenbrock
             // 2 - DeJong3
-
-            // Verifica se as diretivas de controle de critério de parada estão declaradas de forma correta
-#if CRITERIO_PARADA_NFOB && CRITERIO_PARADA_PRECISAO
-            Console.WriteLine("as diretivas CRITERIO_PARADA_PRECISAO e CRITERIO_PARADA_NFOB não podem ser definidas simultaneamente. Escolha apenas um tipo de critério de parada.");
-            System.Environment.Exit(-1);
-#elif !CRITERIO_PARADA_NFOB && !CRITERIO_PARADA_PRECISAO
-            Console.WriteLine("Nenhuma diretiva para critério de parada foi definida. Por favor, defina ao menos uma das diretivas CRITERIO_PARADA_PRECISAO ou CRITERIO_PARADA_NFOB.");
-            System.Environment.Exit(-2);  
-#endif        
+   
             
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo
             //============================================================
-#if CRITERIO_PARADA_NFOB            
             int iterador_NFOB = 0;
-#endif
 
             // Número de avaliações da função objetivo
             int NFOB = 0;
@@ -405,12 +392,15 @@ namespace GEO
             //============================================================
             
             // Conforme a diretiva de compilação escolhida, define o tipo de critério de parada
-
-#if CRITERIO_PARADA_NFOB
-            while (NFOB < valor_criterio_parada){
-#elif CRITERIO_PARADA_PRECISAO
-            while ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada ){
-#endif
+            bool condition = true;
+            if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+                condition = (NFOB < valor_criterio_parada);
+            }
+            else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
+                condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada );
+            }
+            
+            while (condition){
 
 #if DEBUG_CONSOLE
                 Console.WriteLine("População de Bits começo while:");
@@ -490,24 +480,26 @@ namespace GEO
 
                 // Console.WriteLine("Vai acessar NFOBs["+iterador_NFOB+"]="+NFOBs[iterador_NFOB] + " com NFOBs tamanho " + NFOBs.Count + " com NFOB " + NFOB);
                 
-#if CRITERIO_PARADA_NFOB
-                if (NFOB > NFOBs[iterador_NFOB]){
-                    Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
-                    iterador_NFOB ++;
-                    melhores_NFOBs.Add(melhor_fx);
-				}
-#endif
+                if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+                    if (NFOB > NFOBs[iterador_NFOB]){
+                        Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
+                        iterador_NFOB ++;
+                        melhores_NFOBs.Add(melhor_fx);
+                    }
+                }
             }
             
             // Conforme o tipo de critério de parada, retorna ou a lista dos f(x) nos NFOBs
             // ... desejados ou então o NFOB quando atingiu o f(x) esperado
-#if CRITERIO_PARADA_NFOB            
-            return melhores_NFOBs;
-#elif CRITERIO_PARADA_PRECISAO
-            return new List<double>(){NFOB};
-#else
-            return 9999;
-#endif
+            if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+                return melhores_NFOBs;
+            }
+            else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
+                return new List<double>(){NFOB};
+            }
+            else{
+                return new List<double>(){Double.MaxValue};
+            }
         }
     }
 }
