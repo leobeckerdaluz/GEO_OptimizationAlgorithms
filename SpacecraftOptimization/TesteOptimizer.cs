@@ -1,3 +1,5 @@
+// #define DEBUG_CONSOLE
+
 using SpaceConceptOptimizer.Models;
 using MathModelsDomain.ModelsManagers;
 using MathModelsDomain.Utilities;
@@ -41,12 +43,15 @@ namespace SpaceDesignTeste
             SpaceConceptOptimizer.Settings.Settings.SolarModes.Add(new SolarModeModel(SpaceConceptOptimizer.Utilities.SolarMode.MediumHigh, 3));
 
             SpaceConceptOptimizer.Settings.Settings.LaunchAltitudeError = 20000;
+
+            // SpaceConceptOptimizer.Settings.Settings.LaunchInclinationError = (0.15).DegreesToRadians();
             SpaceConceptOptimizer.Settings.Settings.LaunchInclinationError = (0.015).DegreesToRadians();
+            
             SpaceConceptOptimizer.Settings.Settings.ISP = 225;
             SpaceConceptOptimizer.Settings.Settings.PrecisionPropulsion = 10e-5;
 
-            // //Settings.Settings.AreaPercentOverSectionalArea = 4.37;
             SpaceConceptOptimizer.Settings.Settings.AreaPercentOverSectionalArea = 1.8;
+            // SpaceConceptOptimizer.Settings.Settings.AreaPercentOverSectionalArea = 4.37;
 
             SpaceConceptOptimizer.Settings.Settings.V0 = 6.778309031049825E+03;
             SpaceConceptOptimizer.Settings.Settings.MissionResolution = 20;
@@ -58,63 +63,69 @@ namespace SpaceDesignTeste
 
             double fx = 0;
 
-            // int I = (int)parameters[0];
-            // int N = (int)parameters[1];
-            // int D = (int)parameters[2];
-
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
-            // Console.WriteLine(ReferencePayload.WeightOpt);
-            // Console.WriteLine(ReferencePayload.WeightElec);
-            // Console.WriteLine(ReferencePayload.Power);
-            // Console.WriteLine(ReferencePayload.Resolution);
-            // Console.WriteLine(ReferencePayload.Aparture);
-            // Console.WriteLine(ReferencePayload.FocalLenght);
-            // Console.WriteLine(ReferencePayload.NPixels);
-            // Console.WriteLine(ReferencePayload.PixelSize);
-            // Console.WriteLine(ReferencePayload.FOV);
+#if DEBUG_CONSOLE
+            Console.WriteLine("ReferencePayload.WeightOpt: "+ReferencePayload.WeightOpt);
+            Console.WriteLine("ReferencePayload.WeightElec: "+ReferencePayload.WeightElec);
+            Console.WriteLine("ReferencePayload.Power: "+ReferencePayload.Power);
+            Console.WriteLine("ReferencePayload.Resolution: "+ReferencePayload.Resolution);
+            Console.WriteLine("ReferencePayload.Aparture: "+ReferencePayload.Aparture);
+            Console.WriteLine("ReferencePayload.FocalLenght: "+ReferencePayload.FocalLenght);
+            Console.WriteLine("ReferencePayload.NPixels: "+ReferencePayload.NPixels);
+            Console.WriteLine("ReferencePayload.PixelSize: "+ReferencePayload.PixelSize);
+            Console.WriteLine("ReferencePayload.FOV: "+ReferencePayload.FOV);
+#endif
 
 
             SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, N, D, 0.00);
-            // Console.WriteLine(Ss_orb.I);
-            // Console.WriteLine(Ss_orb.N);
-            // Console.WriteLine(Ss_orb.D);
-            // Console.WriteLine(Ss_orb.Rev);
+#if DEBUG_CONSOLE
+            Console.WriteLine("Ss_orb.I: "+Ss_orb.I);
+            Console.WriteLine("Ss_orb.N: "+Ss_orb.N);
+            Console.WriteLine("Ss_orb.D: "+Ss_orb.D);
+            Console.WriteLine("Ss_orb.Rev: "+Ss_orb.Rev);
+#endif
 
             int iterations = 0;
             double a = 0;
             double i = 0;
 
             SunSyncOrbitsWRptManager ss_mg = new SunSyncOrbitsWRptManager();
-            // Console.WriteLine(Ss_orb.Rev);
+#if DEBUG_CONSOLE
+            Console.WriteLine("Ss_orb.Rev: "+Ss_orb.Rev);
+#endif
 
             ss_mg.NewtonRaphson(Ss_orb, out iterations);
 
             a = Ss_orb.a;
-            // a = 6944.284;//Ss_orb.a;
             i = Ss_orb.i;
-            // i = 97.656;//Ss_orb.i;
-            // Console.WriteLine(a);
-            // Console.WriteLine(i);
-
+            
             Utility.Convert(ref a, ref i);
             Ss_orb.i = i.DegreesToRadians();
-            // Console.WriteLine(a);
-            // Console.WriteLine(Ss_orb.i);
+#if DEBUG_CONSOLE
+            Console.WriteLine("a: "+a);
+            Console.WriteLine("i: "+i);
+            Console.WriteLine("Ss_orb.i: "+Ss_orb.a);
+            Console.WriteLine("Ss_orb.i: "+Ss_orb.i);
+#endif
 
             double FovMin = FOVManager.FovMin(Ss_orb);
-            // Console.WriteLine(FovMin);
+#if DEBUG_CONSOLE
+            Console.WriteLine("FovMin: "+FovMin);
+#endif
 
             Camera designedPayload = CameraManager.DesignCamera(ReferencePayload, Ss_orb, FovMin);
-            // Console.WriteLine(designedPayload);
-            // Console.WriteLine(designedPayload.WeightOpt);
-            // Console.WriteLine(designedPayload.WeightElec);
-            // Console.WriteLine(designedPayload.Power);
-            // Console.WriteLine(designedPayload.Resolution);
-            // Console.WriteLine(designedPayload.Aparture);
-            // Console.WriteLine(designedPayload.FocalLenght);
-            // Console.WriteLine(designedPayload.NPixels);
-            // Console.WriteLine(designedPayload.PixelSize);
-            // Console.WriteLine(designedPayload.FOV);
+#if DEBUG_CONSOLE
+            Console.WriteLine("designedPayload: "+designedPayload);
+            Console.WriteLine("designedPayload.WeightOpt: "+designedPayload.WeightOpt);
+            Console.WriteLine("designedPayload.WeightElec: "+designedPayload.WeightElec);
+            Console.WriteLine("designedPayload.Power: "+designedPayload.Power);
+            Console.WriteLine("designedPayload.Resolution: "+designedPayload.Resolution);
+            Console.WriteLine("designedPayload.Aparture: "+designedPayload.Aparture);
+            Console.WriteLine("designedPayload.FocalLenght: "+designedPayload.FocalLenght);
+            Console.WriteLine("designedPayload.NPixels: "+designedPayload.NPixels);
+            Console.WriteLine("designedPayload.PixelSize: "+designedPayload.PixelSize);
+            Console.WriteLine("designedPayload.FOV: "+designedPayload.FOV);
+#endif
 
             Satellite Satellite = new Satellite();
             Satellite.Payload = designedPayload;
@@ -122,16 +133,17 @@ namespace SpaceDesignTeste
             Satellite.Cd = 2.2;
             Satellite.Md = SatelliteManager.DryMassFromCamera(designedPayload);
             Satellite.Power = SatelliteManager.PowerFromCamera(designedPayload);
-
             Satellite.A = SatelliteManager.CrossSectionalArea(Satellite.Power, Satellite.Md);
-
-            // Settings.Settings.AreaPercentOverSectionalArea = 1.8;
             Satellite.At = 1.8 * Satellite.A;
+#if DEBUG_CONSOLE
+            Console.WriteLine("Satellite.Md: "+Satellite.Md);
+            Console.WriteLine("Satellite.Power: "+Satellite.Power);
+            Console.WriteLine("Satellite.A: "+Satellite.A);
+            Console.WriteLine("Satellite.At: "+Satellite.At);
+#endif
 
             Orbit Deorbit = DeOrbitManager.DeOrbit(Satellite, Ss_orb);
 
-            // Settings.Settings.LaunchInclinationError = (0.15).DegreesToRadians();
-            // Settings.Settings.LaunchAltitudeError = 20000;
             Propulsion p = new Propulsion(SpaceConceptOptimizer.Settings.Settings.LaunchAltitudeError, SpaceConceptOptimizer.Settings.Settings.LaunchInclinationError, Ss_orb, Deorbit);
             
             Satellite.Propulsion = p;
@@ -139,10 +151,19 @@ namespace SpaceDesignTeste
             p.DeltaV_a = PropulsionManager.HommanTransferDeltaV_a(p);
             p.DeltaV_i = PropulsionManager.HommanTransferDeltaV_i(p);
             p.DeltaV_deorbit = PropulsionManager.DeltaV_DeOrbit(p.FinalOrbit, p.DeOrbit);
+#if DEBUG_CONSOLE
+            Console.WriteLine("p.DeltaV_a: "+p.DeltaV_a);
+            Console.WriteLine("p.DeltaV_i: "+p.DeltaV_i);
+            Console.WriteLine("p.DeltaV_deorbit: "+p.DeltaV_deorbit);
+#endif
 
             Satellite.Mp = PropulsionManager.StimateTotalMass(Satellite) - Satellite.Md;
-            // p.DeltaV_pertubations = PropulsionManager.DragDeltaV(Satellite, Ss_orb, 0);
+#if DEBUG_CONSOLE
+            Console.WriteLine("Satellite.Mp: "+Satellite.Mp);
+            Console.WriteLine("Satellite.M: "+Satellite.M);
+#endif
 
+            // p.DeltaV_pertubations = PropulsionManager.DragDeltaV(Satellite, Ss_orb, 0);
 
             fx = Satellite.M;
             return fx;
