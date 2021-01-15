@@ -80,10 +80,8 @@ namespace MathModelsDomain.Solvers
                 //    Math.Abs(Math.Abs(xs[1, 0]) - Math.Abs(i)) <= 1e-8)
                 //    return xs.ToArray();
                 if (Math.Abs(fs[0, 0]) <= 1e-18 &&
-                    Math.Abs(fs[1, 0]) <= 1e-18){
-                
+                    Math.Abs(fs[1, 0]) <= 1e-18)
                     return xs.ToArray();
-                }
                 else
                 {
                     ss_orb.a = xs[0, 0];

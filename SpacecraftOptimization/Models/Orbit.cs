@@ -1,4 +1,4 @@
-﻿// using MathModelsDomain.Utilities;
+﻿using MathModelsDomain.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace SpaceConceptOptimizer.Models
     /// <summary>
     /// This class represents one orbit
     /// </summary>
-    public class Orbit// : ICloneable
+    public class Orbit : ICloneable
     {
         /// <summary>
         /// Semi-major axis
@@ -37,10 +37,8 @@ namespace SpaceConceptOptimizer.Models
         /// </summary>
         public double n0
         {
-            // get{ return Math.Sqrt(Settings.Settings.u0 / Math.Pow(a, 3)); }
-            
-            // u0 = 3.986004418e14
-            get{ return Math.Sqrt(3.986004418e14 / Math.Pow(a, 3)); }
+            get
+            { return Math.Sqrt(Settings.Settings.u0 / Math.Pow(a, 3)); }
         }
 
         /// <summary>
@@ -56,16 +54,12 @@ namespace SpaceConceptOptimizer.Models
         /// <summary>
         /// Perigee Altitude
         /// </summary>
-        
-        // R0 = 6378137
-        public double Hp { get { return Rp - 6378137; } }
+        public double Hp { get { return Rp - Settings.Settings.R0; } }
 
         /// <summary>
         /// Apogee Altitude
         /// </summary>
-        
-        // R0 = 6378137
-        public double Ha { get { return Ra - 6378137; } }
+        public double Ha { get { return Ra - Settings.Settings.R0; } }
 
         /// <summary>
         /// Velocity at Perigee
@@ -86,8 +80,7 @@ namespace SpaceConceptOptimizer.Models
             {
                 return 2 * Math.PI
                       * Math.Sqrt(Math.Pow(Rp, 3)
-                      // u0
-                      / 3.986004418e14);
+                      / Settings.Settings.u0);
             }
         }
 
@@ -118,9 +111,8 @@ namespace SpaceConceptOptimizer.Models
         public static Orbit FindOrbit(double hp, double ha)
         {
             Orbit o = new Orbit();
-            // R0 = 6378137
-            double ra = ha + 6378137;
-            double rp = hp + 6378137;
+            double ra = ha + Settings.Settings.R0;
+            double rp = hp + Settings.Settings.R0;
 
             o.e = (ra - rp) / (ra + rp);
 
@@ -143,8 +135,7 @@ namespace SpaceConceptOptimizer.Models
 
         public double V(double a, double r)
         {
-            // u0 = 3.986004418e14
-            return Math.Sqrt(3.986004418e14 * ((2.0 / r) - (1.0 / a)));
+            return Math.Sqrt(Settings.Settings.u0 * ((2.0 / r) - (1.0 / a)));
         }
 
         public object Clone()

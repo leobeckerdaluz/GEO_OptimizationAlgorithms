@@ -7,19 +7,9 @@ using System.Threading.Tasks;
 
 namespace SpaceConceptOptimizer.Models
 {
-    // public enum SolarMode
-    // {
-    //     Low,
-    //     MediumLow,
-    //     MediumHigh,
-    //     High
-    // }
-
-    
     public class SolarModeModel
     {
         public SolarMode Mode { get; set; }
-        
 
         public int Years { get; set; }
 

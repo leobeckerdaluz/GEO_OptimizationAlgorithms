@@ -1,10 +1,11 @@
-// #define DEBUG_CONSOLE
+#define DEBUG_CONSOLE
 
 using SpaceConceptOptimizer.Models;
 using MathModelsDomain.ModelsManagers;
 using MathModelsDomain.Utilities;
 using SpaceConceptOptimizer.ModelsManager;
-using SpaceConceptOptimizer;
+using SpaceConceptOptimizer.Settings;
+using SpaceConceptOptimizer.Utilities;
 
 
 using System;
@@ -31,39 +32,33 @@ namespace SpaceDesignTeste
 
 
         public static double ObjectiveFunction(List<double> fenotipo_variaveis_projeto){
-            int I = (int)fenotipo_variaveis_projeto[0];
-            int N = (int)fenotipo_variaveis_projeto[1];
-            int D = (int)fenotipo_variaveis_projeto[2];
-            
-
-            SpaceConceptOptimizer.Settings.Settings.SolarModes = new List<SolarModeModel>();
-
-            SpaceConceptOptimizer.Settings.Settings.SolarModes.Add(new SolarModeModel(SpaceConceptOptimizer.Utilities.SolarMode.High, 1));
-
-            SpaceConceptOptimizer.Settings.Settings.SolarModes.Add(new SolarModeModel(SpaceConceptOptimizer.Utilities.SolarMode.MediumHigh, 3));
-
-            SpaceConceptOptimizer.Settings.Settings.LaunchAltitudeError = 20000;
-
-            // SpaceConceptOptimizer.Settings.Settings.LaunchInclinationError = (0.15).DegreesToRadians();
-            SpaceConceptOptimizer.Settings.Settings.LaunchInclinationError = (0.015).DegreesToRadians();
-            
-            SpaceConceptOptimizer.Settings.Settings.ISP = 225;
-            SpaceConceptOptimizer.Settings.Settings.PrecisionPropulsion = 10e-5;
-
-            SpaceConceptOptimizer.Settings.Settings.AreaPercentOverSectionalArea = 1.8;
-            // SpaceConceptOptimizer.Settings.Settings.AreaPercentOverSectionalArea = 4.37;
-
-            SpaceConceptOptimizer.Settings.Settings.V0 = 6.778309031049825E+03;
-            SpaceConceptOptimizer.Settings.Settings.MissionResolution = 20;
+           
+            Settings.SolarModes = new List<SolarModeModel>();
+            Settings.SolarModes.Add(new SolarModeModel(SolarMode.High, 1));
+            Settings.SolarModes.Add(new SolarModeModel(SolarMode.MediumHigh, 3));
 
 
+            Settings.LaunchAltitudeError = 20000;
+            Settings.LaunchInclinationError = (0.15).DegreesToRadians();
+            // Settings.LaunchInclinationError = (0.015).DegreesToRadians();
+            Settings.ISP = 225;
+            Settings.PrecisionPropulsion = 10e-5;
 
+            // Settings.AreaPercentOverSectionalArea = 4.37;
+            Settings.AreaPercentOverSectionalArea = 1.8;
 
+            Settings.V0 = 6.778309031049825E+03;
+            Settings.MissionResolution = 20;
 
 
             double fx = 0;
 
+            int I = (int)fenotipo_variaveis_projeto[0];
+            int N = (int)fenotipo_variaveis_projeto[1];
+            int D = (int)fenotipo_variaveis_projeto[2];
+            
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
+
 #if DEBUG_CONSOLE
             Console.WriteLine("ReferencePayload.WeightOpt: "+ReferencePayload.WeightOpt);
             Console.WriteLine("ReferencePayload.WeightElec: "+ReferencePayload.WeightElec);
@@ -78,6 +73,7 @@ namespace SpaceDesignTeste
 
 
             SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, N, D, 0.00);
+
 #if DEBUG_CONSOLE
             Console.WriteLine("Ss_orb.I: "+Ss_orb.I);
             Console.WriteLine("Ss_orb.N: "+Ss_orb.N);
@@ -90,6 +86,7 @@ namespace SpaceDesignTeste
             double i = 0;
 
             SunSyncOrbitsWRptManager ss_mg = new SunSyncOrbitsWRptManager();
+
 #if DEBUG_CONSOLE
             Console.WriteLine("Ss_orb.Rev: "+Ss_orb.Rev);
 #endif
@@ -101,6 +98,7 @@ namespace SpaceDesignTeste
             
             Utility.Convert(ref a, ref i);
             Ss_orb.i = i.DegreesToRadians();
+
 #if DEBUG_CONSOLE
             Console.WriteLine("a: "+a);
             Console.WriteLine("i: "+i);
@@ -109,11 +107,13 @@ namespace SpaceDesignTeste
 #endif
 
             double FovMin = FOVManager.FovMin(Ss_orb);
+
 #if DEBUG_CONSOLE
             Console.WriteLine("FovMin: "+FovMin);
 #endif
 
             Camera designedPayload = CameraManager.DesignCamera(ReferencePayload, Ss_orb, FovMin);
+
 #if DEBUG_CONSOLE
             Console.WriteLine("designedPayload: "+designedPayload);
             Console.WriteLine("designedPayload.WeightOpt: "+designedPayload.WeightOpt);
@@ -134,7 +134,8 @@ namespace SpaceDesignTeste
             Satellite.Md = SatelliteManager.DryMassFromCamera(designedPayload);
             Satellite.Power = SatelliteManager.PowerFromCamera(designedPayload);
             Satellite.A = SatelliteManager.CrossSectionalArea(Satellite.Power, Satellite.Md);
-            Satellite.At = 1.8 * Satellite.A;
+            Satellite.At = Settings.AreaPercentOverSectionalArea * Satellite.A;
+
 #if DEBUG_CONSOLE
             Console.WriteLine("Satellite.Md: "+Satellite.Md);
             Console.WriteLine("Satellite.Power: "+Satellite.Power);
@@ -144,13 +145,14 @@ namespace SpaceDesignTeste
 
             Orbit Deorbit = DeOrbitManager.DeOrbit(Satellite, Ss_orb);
 
-            Propulsion p = new Propulsion(SpaceConceptOptimizer.Settings.Settings.LaunchAltitudeError, SpaceConceptOptimizer.Settings.Settings.LaunchInclinationError, Ss_orb, Deorbit);
+            Propulsion p = new Propulsion(Settings.LaunchAltitudeError, Settings.LaunchInclinationError, Ss_orb, Deorbit);
             
             Satellite.Propulsion = p;
 
             p.DeltaV_a = PropulsionManager.HommanTransferDeltaV_a(p);
             p.DeltaV_i = PropulsionManager.HommanTransferDeltaV_i(p);
             p.DeltaV_deorbit = PropulsionManager.DeltaV_DeOrbit(p.FinalOrbit, p.DeOrbit);
+
 #if DEBUG_CONSOLE
             Console.WriteLine("p.DeltaV_a: "+p.DeltaV_a);
             Console.WriteLine("p.DeltaV_i: "+p.DeltaV_i);
@@ -158,12 +160,22 @@ namespace SpaceDesignTeste
 #endif
 
             Satellite.Mp = PropulsionManager.StimateTotalMass(Satellite) - Satellite.Md;
+
 #if DEBUG_CONSOLE
+            Console.WriteLine("Satellite.Md: "+Satellite.Md);
             Console.WriteLine("Satellite.Mp: "+Satellite.Mp);
             Console.WriteLine("Satellite.M: "+Satellite.M);
 #endif
 
-            // p.DeltaV_pertubations = PropulsionManager.DragDeltaV(Satellite, Ss_orb, 0);
+            p.DeltaV_pertubations = PropulsionManager.DragDeltaV(Satellite, Ss_orb, 0);
+
+#if DEBUG_CONSOLE
+            Console.WriteLine("------------------");
+            Console.WriteLine("Satellite.Md: "+Satellite.Md);
+            Console.WriteLine("Satellite.Mp: "+Satellite.Mp);
+            Console.WriteLine("Satellite.M: "+Satellite.M);
+            Console.WriteLine("------------------");
+#endif
 
             fx = Satellite.M;
             return fx;

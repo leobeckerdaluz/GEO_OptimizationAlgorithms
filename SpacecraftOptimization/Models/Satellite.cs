@@ -10,7 +10,7 @@ namespace SpaceConceptOptimizer.Models
     /// <summary>
     /// This class respresents a Satellite
     /// </summary>
-    public class Satellite//:ICloneable
+    public class Satellite:ICloneable
     {
         /// <summary>
         /// Satellite's payload
@@ -73,10 +73,10 @@ namespace SpaceConceptOptimizer.Models
         /// </summary>
         public double T { get; set; }
 
-        // public object Clone()
-        // {
-        //     return Utility.InstantiateFunction(this);
-        // }
+        public object Clone()
+        {
+            return new object();//Utility.InstantiateFunction(this);
+        }
 
 
     }

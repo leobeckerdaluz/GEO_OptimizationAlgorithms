@@ -11,7 +11,7 @@ namespace SpaceConceptOptimizer.Models
     /// Represents the Propulsion Model for the lifecycle of the
     /// spacecraft
     /// </summary>
-    public class Propulsion//:ICloneable
+    public class Propulsion:ICloneable
     {
         /// <summary>
         /// Error of the Laucher for major semi-axis (% - User Entry)
@@ -103,9 +103,9 @@ namespace SpaceConceptOptimizer.Models
             DeOrbit = _deorbit;
         }
 
-        // public object Clone()
-        // {
-        //     return Utility.InstantiateFunction(this);
-        // }
+        public object Clone()
+        {
+            return new object();//Utility.InstantiateFunction(this);
+        }
     }
 }

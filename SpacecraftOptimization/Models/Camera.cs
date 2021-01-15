@@ -1,5 +1,5 @@
 ﻿// using AlgoritimosEvolutivos.Utils;
-// using MathModelsDomain.Utilities;
+using MathModelsDomain.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpaceConceptOptimizer.Models
 {
-    public class Camera//: ICloneable
+    public class Camera: ICloneable
     {
         public double WeightOpt { get; set; }
 
@@ -67,9 +67,9 @@ namespace SpaceConceptOptimizer.Models
             FOV = fov;
         }
 
-        // public object Clone()
-        // {
-        //     return AlgoritimosEvolutivos.Utils.Utility.InstantiateFunction(this);
-        // }
+        public object Clone()
+        {
+            return new object();// AlgoritimosEvolutivos.Utils.Utility.InstantiateFunction(this);
+        }
     }
 }

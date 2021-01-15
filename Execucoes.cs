@@ -57,53 +57,6 @@ namespace Execucoes
             }
         }
 
-        public static bool ValidateRestrictionsTeste(int i, int n, int d){
-            return (n < d) && ((double)n%d != 0); //&& (Satellite.Payload.FOV >= 1.05*FovMin);
-        }
-
-        public static void otimizacao_spacecraft(){
-            double menor_fx_historia = Double.MaxValue;
-            double menor_i_historia = Double.MaxValue;
-            double menor_n_historia = Double.MaxValue;
-            double menor_d_historia = Double.MaxValue;
-
-            for (int i = 13; i <= 15; i++){
-                for (int n = 1; n <= 59; n++){
-                    for (int d = 1; d <= 60; d++){
-                        //SunSyncOrbitRPT ss_orb = new SunSyncOrbitRPT(i, n, d, 0.00);
-
-                        //Tuple<double, double, double> m = Operation(ss_orb, refPayload);
-
-                        // double m = opt.ObjectiveFunction(i, n, d);
-
-                        List<double> fenotipo_variaveis_projeto = new List<double>(){i,n,d};
-                        double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
-                        // Console.WriteLine("Fx Final: " + fx);
-
-                        
-                        // Valida as restrições
-                        if( (n < d) && ((double)n%d != 0) ) { //&& (Satellite.Payload.FOV >= 1.05*FovMin);
-                            Console.WriteLine("Espaço válido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
-
-                            if (fx < menor_fx_historia){
-                                menor_fx_historia = fx;
-                                menor_i_historia = i;
-                                menor_n_historia = n;
-                                menor_d_historia = d;
-                            }
-                        }
-                        else{
-                            // Console.WriteLine("Espaço inválido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
-                        }
-                    }
-                }
-            }
-
-            Console.WriteLine("Menor fx história: " + menor_fx_historia);
-            Console.WriteLine("Menor i história: " + menor_i_historia);
-            Console.WriteLine("Menor n história: " + menor_n_historia);
-            Console.WriteLine("Menor d história: " + menor_d_historia);
-        }
 
         public static void GEOcan_GEOvar_SpaceDesign(){
             // Parâmetros de execução do algoritmo
@@ -566,12 +519,56 @@ namespace Execucoes
         }
 
 
+        public static void SpacecraftOptimization_ExtensiveSearch(){
+            double menor_fx_historia = Double.MaxValue;
+            double menor_i_historia = Double.MaxValue;
+            double menor_n_historia = Double.MaxValue;
+            double menor_d_historia = Double.MaxValue;
+
+            for (int i = 13; i <= 15; i++){
+                for (int n = 1; n <= 59; n++){
+                    for (int d = 1; d <= 60; d++){
+                        //SunSyncOrbitRPT ss_orb = new SunSyncOrbitRPT(i, n, d, 0.00);
+
+                        //Tuple<double, double, double> m = Operation(ss_orb, refPayload);
+
+                        // double m = opt.ObjectiveFunction(i, n, d);
+
+                        List<double> fenotipo_variaveis_projeto = new List<double>(){i,n,d};
+                        double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                        // Console.WriteLine("Fx Final: " + fx);
+
+                        
+                        // Valida as restrições
+                        if( (n < d) && ((double)n%d != 0) ) { //&& (Satellite.Payload.FOV >= 1.05*FovMin);
+                            // Console.WriteLine("Espaço válido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
+
+                            if (fx < menor_fx_historia){
+                                menor_fx_historia = fx;
+                                menor_i_historia = i;
+                                menor_n_historia = n;
+                                menor_d_historia = d;
+                            }
+                        }
+                        else{
+                            // Console.WriteLine("Espaço inválido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("Menor fx história: " + menor_fx_historia);
+            Console.WriteLine("Menor i história: " + menor_i_historia);
+            Console.WriteLine("Menor n história: " + menor_n_historia);
+            Console.WriteLine("Menor d história: " + menor_d_historia);
+        }
+
+
         public static void Main(string[] args){
             Console.WriteLine("Rodando!");
 
             // GEOcan_GEOvar_Griewangk();
             // GEOcan_GEOvar_SpaceDesign();
-            otimizacao_spacecraft();
             
             ////GEOs_variandoTAO_F2_Rosenbrock();
             ////GEOs_variandoTAO_F3_DeJong3();
@@ -581,9 +578,10 @@ namespace Execucoes
             ////GEO_TAO125_e_GEOvar_TAO3_F5_Griewangk();
 
 
-            // List<double> fenotipo_variaveis_projeto = new List<double>(){14,59,60};
-            // double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
-            // Console.WriteLine("Fx Final: " + fx);
+            // SpacecraftOptimization_ExtensiveSearch();
+            List<double> fenotipo_variaveis_projeto = new List<double>(){14,59,60};
+            double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+            Console.WriteLine("Fx Final: " + fx);
         }
     }
 }

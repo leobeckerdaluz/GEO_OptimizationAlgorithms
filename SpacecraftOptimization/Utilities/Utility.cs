@@ -70,7 +70,8 @@ namespace MathModelsDomain.Utilities
         /// <returns></returns>
         public static XDocument GetSettings(string fileName)
         {
-            return XDocument.Load(Environment.CurrentDirectory+"\\Settings\\" + fileName + ".xml");
+            // return XDocument.Load(Environment.CurrentDirectory+"\\Settings\\" + fileName + ".xml");
+            return XDocument.Load(Environment.CurrentDirectory+"//SpacecraftOptimization//Settings//" + fileName + ".xml");
         }
 
         /// <summary>

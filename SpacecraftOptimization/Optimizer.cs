@@ -234,5 +234,15 @@
 
 //             return false;
 //         }
+
+//         public override GEOt GetDefaultValuesGEOtBehavior(int seed, bool eng)
+//         {
+//             throw new NotImplementedException();
+//         }
+
+//         public override GEOt2 GetDefaultValuesGEOt2Behavior(int seed, bool eng)
+//         {
+//             throw new NotImplementedException();
+//         }
 //     }
 // }

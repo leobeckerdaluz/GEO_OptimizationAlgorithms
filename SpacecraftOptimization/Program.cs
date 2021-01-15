@@ -180,13 +180,13 @@
 //             {
 //                 TGEO geo = null;
 //                 if (typeof(TGEO) == typeof(GEO))
-//                     geo = new GEO(opt, lowerLimits, upperLimits, sizeParams, 3 + 6 + 6, tao, i
+//                     geo = new GEO(opt, lowerLimits, upperLimits, sizeParams, 2 + 6 + 6, tao, i
 //                    , true, true, true) as TGEO;
 //                 else if (typeof(TGEO) == typeof(GEOt))
-//                     geo = new GEOt(opt, lowerLimits, upperLimits, sizeParams, 3 + 6 + 6, i,
+//                     geo = new GEOt(opt, lowerLimits, upperLimits, sizeParams, 2 + 6 + 6, i,
 //                         true, true, true) as TGEO;
 //                 else
-//                     geo = new GEOt2(opt, lowerLimits, upperLimits, sizeParams, 3 + 6 + 6, i,
+//                     geo = new GEOt2(opt, lowerLimits, upperLimits, sizeParams, 2 + 6 + 6, i,
 //                         true, true, true) as TGEO;
 
 //                 TPop result = geo.Init();
@@ -244,11 +244,11 @@
 //             DateTime dtEnd = DateTime.Now;
 //             Console.WriteLine("Time: " + (dtEnd - dtSt));
 //             if (typeof(TGEO) == typeof(GEO))
-//                 SaveResults((dtEnd - dtSt), nfob, std, best.NFOB, paramResults, res, "nFOVGEO_100_MDO" + tao);
+//                 SaveResults((dtEnd - dtSt), nfob, std, best.NFOB, paramResults, res, "FixGEO_100_MDO" + tao);
 //             else if (typeof(TGEO) == typeof(GEOt))
-//                 SaveResults((dtEnd - dtSt),nfob, std, best.NFOB, paramResults, res, "nFOVGEOt_100_MDO");
+//                 SaveResults((dtEnd - dtSt),nfob, std, best.NFOB, paramResults, res, "FixGEOt_100_MDO");
 //             else
-//                 SaveResults((dtEnd - dtSt),nfob, std, best.NFOB, paramResults, res, "nFOVGEOt2_100_MDO");
+//                 SaveResults((dtEnd - dtSt),nfob, std, best.NFOB, paramResults, res, "FixGEOt2_100_MDO");
 //         }
 
 
@@ -286,43 +286,43 @@
 //             double[] upperLimits = new double[] { 15, D - 1, D };
 //             int[] sizeParams = new int[] { 2, 6, 6 };
 
-//             //Console.WriteLine("Chose the algoritm");
-//             //Console.WriteLine("1 - GEO");
-//             //Console.WriteLine("2 - GEOt");
-//             //Console.WriteLine("3 - GEOt2");
+//             Console.WriteLine("Chose the algoritm");
+//             Console.WriteLine("1 - GEO");
+//             Console.WriteLine("2 - GEOt");
+//             Console.WriteLine("3 - GEOt2");
 
-//             //int alg = int.Parse(Console.ReadLine());
+//             int alg = int.Parse(Console.ReadLine());
 
-//             //double minTau = 0;
-//             //double maxTau = 0;
-//             //double stepTau = 0;
+//             double minTau = 0;
+//             double maxTau = 0;
+//             double stepTau = 0;
 
-//             //if (alg == 1)
-//             //{
-//             //    Console.WriteLine("Escolha um tau inicial");
-//             //    minTau = double.Parse(Console.ReadLine());
+//             if (alg == 1)
+//             {
+//                 Console.WriteLine("Escolha um tau inicial");
+//                 minTau = double.Parse(Console.ReadLine());
 
-//             //    Console.WriteLine("Escolha um incremento de tau");
-//             //    stepTau = double.Parse(Console.ReadLine());
+//                 Console.WriteLine("Escolha um incremento de tau");
+//                 stepTau = double.Parse(Console.ReadLine());
 
-//             //    Console.WriteLine("Escolha um tau maximo");
-//             //    maxTau = double.Parse(Console.ReadLine());
-//             //}
+//                 Console.WriteLine("Escolha um tau maximo");
+//                 maxTau = double.Parse(Console.ReadLine());
+//             }
 
-//             //double tau = minTau;
-//             //if (alg == 1)
-//             //    for (tau = minTau; tau <= maxTau; tau += stepTau)
-//             //    {
-//             //        Console.WriteLine("TAO: " + tau);
-//             //        GEO<GEO, Populacao>(tau, opt, lowerLimits, upperLimits, sizeParams);
-//             //        Console.Clear();
-//             //    }
-//             //else if (alg == 2)
-//             //    GEO<GEOt, PopulacaoT>(tau, opt, lowerLimits, upperLimits, sizeParams);
-//             //else
-//             //    GEO<GEOt2, PopulacaoT>(tau, opt, lowerLimits, upperLimits, sizeParams);
+//             double tau = minTau;
+//             if (alg == 1)
+//                 for (tau = minTau; tau <= maxTau; tau += stepTau)
+//                 {
+//                     Console.WriteLine("TAO: " + tau);
+//                     GEO<GEO, Populacao>(tau, opt, lowerLimits, upperLimits, sizeParams);
+//                     Console.Clear();
+//                 }
+//             else if (alg == 2)
+//                 GEO<GEOt, PopulacaoT>(tau, opt, lowerLimits, upperLimits, sizeParams);
+//             else
+//                 GEO<GEOt2, PopulacaoT>(tau, opt, lowerLimits, upperLimits, sizeParams);
 
-//             ExtensiveSearchSpace(opt);
+//             //ExtensiveSearchSpace(opt);
 //             //SunSyncOrbitRPT ss_orb = new SunSyncOrbitRPT(14, 59, 60, 0.00);
 
 //             //Tuple<double, double, double> m = Operation(ss_orb, refPayload);
