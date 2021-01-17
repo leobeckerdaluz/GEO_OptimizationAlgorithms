@@ -519,6 +519,37 @@ namespace Execucoes
         }
 
 
+        public static void TesteFuncaoObjetivoPopulacao_SpacecraftOptimization(){
+            
+            // =========================================================
+            // Calcula a função objetivo utilizando a populacao
+            // =========================================================
+
+            int definicao_funcao_objetivo = 3;
+            List<bool> populacao_de_bits = new List<bool>(){
+                true, false, 
+                true, true, true, true, true, true, 
+                true, true, true, true, true, true 
+            };
+            int n_variaveis_projeto = 3;
+            List<double> limites_inferiores_variaveis = new List<double>(){13,1,1};
+            List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
+            List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
+            
+            double melhor_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+            Console.WriteLine("Melhor fx: {0}", melhor_fx);
+
+
+            // =========================================================
+            // Calcula a função objetivo diretamente com o fenótipo
+            // =========================================================
+
+            List<double> fenotipo_variaveis_projeto = new List<double>(){14,60,59};
+            double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+            Console.WriteLine("Fx Final: {0}", fx);
+        }
+            
+            
         public static void SpacecraftOptimization_ExtensiveSearch(){
             double menor_fx_historia = Double.MaxValue;
             double menor_i_historia = Double.MaxValue;
@@ -526,21 +557,15 @@ namespace Execucoes
             double menor_d_historia = Double.MaxValue;
 
             for (int i = 13; i <= 15; i++){
-                for (int n = 1; n <= 59; n++){
-                    for (int d = 1; d <= 60; d++){
-                        //SunSyncOrbitRPT ss_orb = new SunSyncOrbitRPT(i, n, d, 0.00);
-
-                        //Tuple<double, double, double> m = Operation(ss_orb, refPayload);
-
-                        // double m = opt.ObjectiveFunction(i, n, d);
-
-                        List<double> fenotipo_variaveis_projeto = new List<double>(){i,n,d};
-                        double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
-                        // Console.WriteLine("Fx Final: " + fx);
-
-                        
-                        // Valida as restrições
+                for (int d = 1; d <= 60; d++){
+                    for (int n = 1; n <= 59; n++){
+                        // Se a condição for válida, executa
                         if( (n < d) && ((double)n%d != 0) ) { //&& (Satellite.Payload.FOV >= 1.05*FovMin);
+                            // Monta a lista de fenótipos
+                            List<double> fenotipo_variaveis_projeto = new List<double>(){i,n,d};
+                            // Executa diretamente a função objetivo
+                            double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                            // Console.WriteLine("Fx Final: " + fx);
                             // Console.WriteLine("Espaço válido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
 
                             if (fx < menor_fx_historia){
@@ -564,6 +589,69 @@ namespace Execucoes
         }
 
 
+        public static void GEOs_variandoTAO_SpacecraftOptimization(){
+            // ================================================================
+            // 50 EXECUÇÕES GEOcanonico e GEOvar para diferentes TAO na SpacecraftOptimization
+            // ================================================================
+
+            // Parâmetros de execução do algoritmo
+            const int n_variaveis_projeto = 3;
+            List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
+            List<double> limites_inferiores_variaveis = new List<double>(){13,1,1};
+            List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            const double valor_criterio_parada = 0.0000001;
+            double fx_esperado = 196.949433192159;
+            const int CRITERIO_PARADA_NFOBouPRECISAO = 1;
+
+            // Definicao_funcao_objetivo
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 3;
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            List<double> valores_TAO = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5};
+            List<int> NFOBs_desejados = new List<int>(){400000};
+            
+            foreach (double tao in valores_TAO){
+                Console.WriteLine("===> TAO: " + tao + "   |   GEOcan / GEOvar");
+                
+                // Executa o SGA por 50 vezes
+                double somatorio_nro_avaliacoes_FO_encontrar_global_GEO = 0;
+                // double somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar = 0;
+
+                // Executa o GEO e o GEOvar por 5 vezes
+                int quantidade_execucoes = 5;
+                for(int i=0; i<quantidade_execucoes; i++){
+                    Console.Write((i+1) +"... ");
+
+                    // O primeiro parâmetro é o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
+
+                    // Executa o GEO e recebe como retorno a melhor fitness da execução
+                    List<double> retorno_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    // Como o retorno é somente o número de avaliações médio, então obtém o número
+                    somatorio_nro_avaliacoes_FO_encontrar_global_GEO += retorno_GEO[0];
+
+                    // // Executa o GEOvar e recebe como retorno o número de avaliações médio
+                    // List<double> retorno_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    // // Como o retorno é somente o número de avaliações médio, então obtém o número
+                    // somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar += retorno_GEOvar[0];
+                }
+
+                // Calcula a média dos melhores f(x) pra esse TAO
+                double media_nro_avaliacoes_GEO = somatorio_nro_avaliacoes_FO_encontrar_global_GEO / quantidade_execucoes;
+                // double media_nro_avaliacoes_GEOvar = somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar / quantidade_execucoes;
+
+                string string_media_nro_avaliacoes_GEO = (media_nro_avaliacoes_GEO.ToString()).Replace('.',',');
+                // string string_media_nro_avaliacoes_GEOvar = (media_nro_avaliacoes_GEOvar.ToString()).Replace('.',',');
+		        
+                Console.WriteLine("");
+                Console.WriteLine(string_media_nro_avaliacoes_GEO);
+                // Console.WriteLine(string_media_nro_avaliacoes_GEOvar);
+            }
+        }
+
+
         public static void Main(string[] args){
             Console.WriteLine("Rodando!");
 
@@ -579,9 +667,15 @@ namespace Execucoes
 
 
             // SpacecraftOptimization_ExtensiveSearch();
-            List<double> fenotipo_variaveis_projeto = new List<double>(){14,59,60};
-            double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
-            Console.WriteLine("Fx Final: " + fx);
+
+            // GEOs_variandoTAO_SpacecraftOptimization();
+
+            TesteFuncaoObjetivoPopulacao_SpacecraftOptimization();
+
+
+            // List<double> fenotipo_variaveis_projeto = new List<double>(){14,59,60};
+            // double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+            // Console.WriteLine("Fx Final: " + fx);
         }
     }
 }

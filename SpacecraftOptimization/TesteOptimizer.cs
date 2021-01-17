@@ -1,4 +1,4 @@
-#define DEBUG_CONSOLE
+// #define DEBUG_CONSOLE
 
 using SpaceConceptOptimizer.Models;
 using MathModelsDomain.ModelsManagers;
@@ -54,8 +54,8 @@ namespace SpaceDesignTeste
             double fx = 0;
 
             int I = (int)fenotipo_variaveis_projeto[0];
-            int N = (int)fenotipo_variaveis_projeto[1];
-            int D = (int)fenotipo_variaveis_projeto[2];
+            int D = (int)fenotipo_variaveis_projeto[1];
+            int N = (int)fenotipo_variaveis_projeto[2];
             
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
 

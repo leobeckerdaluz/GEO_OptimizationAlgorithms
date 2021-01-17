@@ -1,6 +1,7 @@
 ﻿// Diretivas de compilação para controle de partes do código
 // #define DEBUG_CONSOLE
 // #define DEBUG_FUNCTION
+// #define DEBUG_NOVO_MELHOR_FX
 
 using System;
 using System.Collections.Generic;
@@ -134,7 +135,17 @@ namespace GEO
                     break;
                 // Custom Spacecraft Orbit Function
                 case 3:
-                    fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                    int D = (int)fenotipo_variaveis_projeto[1];
+                    int N = (int)fenotipo_variaveis_projeto[2];
+                    
+                    if ( (N < D) && ((double)N%D != 0) ){ //&& (Satellite.Payload.FOV >= 1.05*FovMin);
+                        // Critério aceito
+                        fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                    }
+                    else{
+                        fx = Double.MaxValue;
+                        // Console.WriteLine("MÁXIMO VALOR!!");
+                    }
                     break;
             }
 
@@ -150,7 +161,10 @@ namespace GEO
             probabilidade normalmente distribuida, um bit da população de bits para mutar.
             A função retorna a nova população de bits com o bit mutado.
         */
-        public static List<bool> GEO_ordena_e_flipa_um_bit(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int tamanho_populacao_bits, double tao){
+        public static List<bool> GEO_ordena_e_flipa_um_bit(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, double tao){
+
+            int tamanho_populacao_bits = populacao_de_bits.Count;
+
             //============================================================
             // Ordena os bits conforme os indices fitness
             //============================================================
@@ -227,7 +241,7 @@ namespace GEO
             bit por variável para mutar
             A função retorna a nova população de bits com os bits mutados.
         */
-        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int tamanho_populacao_bits, double tao){
+        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, double tao){
             
             //============================================================
             // Ordena os bits conforme os indices fitness
@@ -380,6 +394,8 @@ namespace GEO
             //============================================================
 
             melhor_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+            // Incrementa o número de avaliações da função objetivo
+            NFOB++;
 
 #if DEBUG_CONSOLE    
             Console.WriteLine("População de bits gerado:");
@@ -391,9 +407,8 @@ namespace GEO
             // Iterações
             //============================================================
             
-            // Entra no while e avalia a variável de condição lá dentro
-            bool condition = true;
-            while (condition){
+            // Entra no while e avalia a condição de parada lá no fim
+            while (true){
 
 #if DEBUG_CONSOLE
                 Console.WriteLine("População de Bits começo while:");
@@ -421,6 +436,8 @@ namespace GEO
 
                     // Calcula a fitness da populacao_de_bits com o bit flipado
                     double fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                    // Incrementa o número de avaliações da função objetivo
+                    NFOB++;
 
                     // Calcula o ganho ou perda de flipar
                     double deltaV = fx - melhor_fx;
@@ -434,9 +451,6 @@ namespace GEO
                     informacoes_bit.delta_fitness = deltaV;
                     informacoes_bit.indice_bit_mutado = i;
                     lista_informacoes_mutacao.Add(informacoes_bit);
-                    
-                    // Incrementa o número de avaliações da função objetivo
-                    NFOB++;
                 }
                 
                 //============================================================
@@ -445,16 +459,18 @@ namespace GEO
                 
                 //GEOcanonico
                 if (tipo_GEO == 0){ 
-                    populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tamanho_populacao_bits, tao);
+                    populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tao);
                 }
                 //GEOvar
                 else if (tipo_GEO == 1){
-                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tamanho_populacao_bits, tao);
+                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tao);
                 }
 
 
                 // Calcula a fitness da nova população de bits
                 double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                // Incrementa o número de avaliações da função objetivo
+                NFOB++;
 
                 //============================================================
                 // Atualiza, se possível, o valor (Valor Refrência)
@@ -462,11 +478,13 @@ namespace GEO
 
                 // Se essa fitness for a menor que a melhor, atualiza a melhor da história
                 if (fitness_populacao_de_bits < melhor_fx){
-                    // if (fitness_populacao_de_bits >= 0){
-                        melhor_fx = fitness_populacao_de_bits;
-                        // Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
-                        // ApresentaCromossomoBool(populacao_de_bits);
-                    // }
+                    melhor_fx = fitness_populacao_de_bits;
+                    // Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
+#if DEBUG_NOVO_MELHOR_FX
+                    Console.WriteLine("------------------");
+                    Console.WriteLine("novo fx: {0}: ", fitness_populacao_de_bits);
+                    Console.WriteLine("------------------");
+#endif
                 }
 
                 // Se o NFOB for algum da lista para mostrar, mostra a melhor fitness até o momento
@@ -482,15 +500,31 @@ namespace GEO
                 }
 
 
+                //============================================================
+                // Verifica o critério de parada
+                //============================================================
                 // Conforme o tipo de critério de parada, define a condição do laço
                 if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
-                    condition = (NFOB < valor_criterio_parada);
-                    // Console.WriteLine("NFOB");
+                    
+                    bool condition = (NFOB < valor_criterio_parada);
+
+                    if (!condition){
+                        break;
+                    }
                 }
                 else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
-                    condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada );
-                    // Console.WriteLine("PRECISAO");
-                    // Console.WriteLine(Math.Abs(melhor_fx) + " - " + Math.Abs(fx_esperado) + " > " + valor_criterio_parada);
+                    bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada );
+                    bool condition2 = NFOB < 100000;
+                    bool condition = condition1 && condition2;
+
+                    // if (NFOB % 1000 == 0){
+                    //     Console.WriteLine(NFOB);
+                    // }
+
+                    if (!condition){
+                        Console.WriteLine("PRECISION BREAK! NFOB = {0}", NFOB);
+                        break;
+                    }
                 }
             }
             
