@@ -36,6 +36,31 @@ namespace GEO
 
 
         /*
+            Função que gera a população de bits inicial para a execução
+        */
+        public static List<bool> geracao_populacao_de_bits(List<int> bits_por_variavel_variaveis){
+            // Soma os bits por variável de projeto para saber o tamanho da população
+            int tamanho_populacao_bits = 0;
+            foreach(int bits_variavel in bits_por_variavel_variaveis){
+                tamanho_populacao_bits += bits_variavel;
+            }
+            
+            // Inicializa a população de bits como uma lista de bits (bool)
+            List<bool> populacao_de_bits = new List<bool>();
+            
+            // Gera um bit para cada posição da população de bits
+            for (int i=0; i<tamanho_populacao_bits; ++i){
+                populacao_de_bits.Add( (random.Next(0, 2)==1) ? true : false );
+            }
+
+            // Retorna a população de bits
+            return populacao_de_bits;
+        }
+        
+
+
+
+        /*
             Função que somente é executada no modo DEBUG. Ela serve para printar um cromossomo na tela
         */
         public static void ApresentaCromossomoBool(List<bool> boolarray){
@@ -156,6 +181,51 @@ namespace GEO
 
 
 
+        /*
+            A função tem como objetivo flipar cada bit e, para cada flip, calcular a fx e compará-lo com um fx referência, 
+            gerando um deltaV para cada flip. Essa lista de deltaV's é retornada pela função.
+        */
+        public static List<BitVerificado> obtem_lista_deltaV_se_flipar_comparando_com(double fx_para_comparacao, List<bool> populacao_de_bits, int definicao_funcao_objetivo, int n_variaveis_projeto, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, List<int> bits_por_variavel_variaveis){
+
+            // Cria uma lista contendo as informações sobre mutar um bit
+            List<BitVerificado> lista_informacoes_mutacao = new List<BitVerificado>();
+
+            // Cria uma cópia da população de bits, flipa o bit e verifica a fitness
+            for (int i=0; i<populacao_de_bits.Count; i++){
+                
+                // Cria uma cópia da população de bits
+                List<bool> populacao_de_bits_flipado = new List<bool>(populacao_de_bits);
+                
+                // Flipa o i-ésimo bit
+                populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
+
+                // Calcula a fitness da populacao_de_bits com o bit flipado
+                double fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                
+                // // Incrementa o número de avaliações da função objetivo
+                // NFOB++;
+
+                // Calcula o ganho ou perda de flipar
+                double deltaV = fx - fx_para_comparacao;
+
+#if DEBUG_CONSOLE
+                Console.WriteLine("DELTAV " + deltaV + " = fx " + fx + " - ref " + fx_para_comparacao);
+#endif
+                
+                // Armazena as informações dessa mutação do bit na lista de informações
+                BitVerificado informacoes_bit = new BitVerificado();
+                informacoes_bit.delta_fitness = deltaV;
+                informacoes_bit.indice_bit_mutado = i;
+                lista_informacoes_mutacao.Add(informacoes_bit);
+            }
+
+            // Retorna a lista contendo as informações de flips
+            return lista_informacoes_mutacao;
+        }
+
+
+
+        
         /*
             A função para ordenar e flipar um bit tem como objetivo ordenar toda a população de bits e escolher, com 
             probabilidade normalmente distribuida, um bit da população de bits para mutar.
@@ -347,9 +417,8 @@ namespace GEO
             A função GEO é a função principal do código. Aqui nesse bloco toda a lógica implementada para os algoritmos
             GEOcanonico e GEOvar são implementadas, como a geração da população, o controle do critério de parada e a
             avaliação do flip de cada bit.
-            A função retorna o melhor f(x) da execução.
         */
-        public static List<double> GEO_algorithm(int tipo_GEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){  
+        public static List<double> GEO_algorithm(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){  
 
             // definicao_funcao_objetivo
             // 0 - Griewangk
@@ -375,27 +444,19 @@ namespace GEO
             // Geração da População de Bits Inicial
             //============================================================
             
-            // Soma os bits por variável de projeto para saber o tamanho da população
-            int tamanho_populacao_bits = 0;
-            foreach(int bits_variavel in bits_por_variavel_variaveis){
-                tamanho_populacao_bits += bits_variavel;
-            }
-            
-            // Inicializa a população de bits como uma lista de bits (bool)
-            List<bool> populacao_de_bits = new List<bool>();
-            
-            // Gera um bit para cada posição da população de bits
-            for (int i=0; i<tamanho_populacao_bits; ++i){
-                populacao_de_bits.Add( (random.Next(0, 2)==1) ? true : false );
-            }
+            List<bool> populacao_de_bits = geracao_populacao_de_bits(bits_por_variavel_variaveis);
 
             //============================================================
             // Calcula o primeiro Valor Referência
             //============================================================
 
-            melhor_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+            double atual_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+            
             // Incrementa o número de avaliações da função objetivo
             NFOB++;
+
+            // Inicializa o melhor fx como o fx inicial.
+            melhor_fx = atual_fx;
 
 #if DEBUG_CONSOLE    
             Console.WriteLine("População de bits gerado:");
@@ -407,6 +468,22 @@ namespace GEO
             // Iterações
             //============================================================
             
+
+
+
+
+            // Inicializa o CoI(i-1) para o controle da mutaçaão do TAO no AGEO
+            double CoI_1 = 1.0 / Math.Sqrt(populacao_de_bits.Count);
+
+            // tao começa como 0.5 se for o AGEO
+            if (tipo_AGEO == 1 || tipo_AGEO == 2){
+                tao = 0.5;
+            }
+
+
+
+
+
             // Entra no while e avalia a condição de parada lá no fim
             while (true){
 
@@ -422,37 +499,87 @@ namespace GEO
                 // Avalia o flip para cada bit
                 //============================================================
 
-                // Cria uma lista contendo as informações sobre mutar um bit
-                List<BitVerificado> lista_informacoes_mutacao = new List<BitVerificado>();
+                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_deltaV_se_flipar_comparando_com(melhor_fx, populacao_de_bits, definicao_funcao_objetivo, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
-                // Cria uma cópia da população de bits, flipa o bit e verifica a fitness
+                // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
                 for (int i=0; i<populacao_de_bits.Count; i++){
-                    
-                    // Cria uma cópia da população de bits
-                    List<bool> populacao_de_bits_flipado = new List<bool>(populacao_de_bits);
-                    
-                    // Flipa o i-ésimo bit
-                    populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
-
-                    // Calcula a fitness da populacao_de_bits com o bit flipado
-                    double fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
-                    // Incrementa o número de avaliações da função objetivo
                     NFOB++;
-
-                    // Calcula o ganho ou perda de flipar
-                    double deltaV = fx - melhor_fx;
-
-#if DEBUG_CONSOLE
-                    Console.WriteLine("DELTAV " + deltaV + " = fx " + fx + " - ref " + melhor_fx);
-#endif
-                    
-                    // Armazena as informações dessa mutação do bit na lista de informações
-                    BitVerificado informacoes_bit = new BitVerificado();
-                    informacoes_bit.delta_fitness = deltaV;
-                    informacoes_bit.indice_bit_mutado = i;
-                    lista_informacoes_mutacao.Add(informacoes_bit);
                 }
+            
+
+
+
+                //============================================================
+                // Calcula a Chance of Improvement
+                //============================================================
                 
+                if (tipo_AGEO == 1 || tipo_AGEO == 2){
+                    List<BitVerificado> informacoes_mutacao_AGEO = new List<BitVerificado>();
+
+                    if (tipo_AGEO == 1){
+                        // Obtém a lista de deltaV's comparado ao melhor fx
+                        informacoes_mutacao_AGEO = lista_informacoes_mutacao;
+
+                        // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
+                        for (int i=0; i<populacao_de_bits.Count; i++){
+                            NFOB++;
+                        }
+                    }
+                    else if (tipo_AGEO == 2){
+                        // Obtém a lista de deltaV's comparado ao atual fx
+                        informacoes_mutacao_AGEO = obtem_lista_deltaV_se_flipar_comparando_com(atual_fx, populacao_de_bits, definicao_funcao_objetivo, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+
+                        // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
+                        for (int i=0; i<populacao_de_bits.Count; i++){
+                            NFOB++;
+                        }
+                    }
+
+                    // Conta quantas mudanças que flipando dá melhor
+                    int melhoraram = 0;
+                    foreach(BitVerificado info in informacoes_mutacao_AGEO){
+                        if (info.delta_fitness < 0){
+                            melhoraram++;
+                        }
+                    }
+                    
+                    // Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_de_bits.Count, melhoraram);
+
+                    // Calcula a Chance of Improvement
+                    double CoI = (double)melhoraram / populacao_de_bits.Count;
+
+                    // Verifica se INCREASE TAO ou RESTART TAO
+                    if (CoI == 0.0){
+                        // RESTART TAO
+                        // Console.WriteLine("RESTART TAO");
+                        
+                        // tao = 0.5 * Math.Exp(random.NextDouble() * (1.0/Math.Sqrt(populacao_de_bits.Count)));
+                        
+                        // tao = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_de_bits.Count)) );
+
+                        // tao = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_de_bits.Count), 1.0/2.0)));
+
+                        tao = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_de_bits.Count), 1.0/2.0 )));
+
+                    }
+                    else if(CoI <= CoI_1){
+                        // INCREASE TAO
+                        // Console.WriteLine("INCREASE TAO");
+
+                        tao += (0.5 + CoI) * random.NextDouble();
+                    }
+                    
+                    // Console.WriteLine("Valor TAO: {0}", tao);
+
+                    // Atualiza o CoI(i-1) como sendo o atual CoI(i)
+                    CoI_1 = CoI;
+                }
+
+
+
+
+
+
                 //============================================================
                 // Ordena os bits e flipa, atualizando a população
                 //============================================================
@@ -466,33 +593,35 @@ namespace GEO
                     populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tao);
                 }
 
-
-                // Calcula a fitness da nova população de bits
-                double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
-                // Incrementa o número de avaliações da função objetivo
-                NFOB++;
-
                 //============================================================
                 // Atualiza, se possível, o valor (Valor Refrência)
                 //============================================================
 
-                // Se essa fitness for a menor que a melhor, atualiza a melhor da história
+                // Calcula a fitness da nova população de bits
+                double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                
+                // Incrementa o número de avaliações da função objetivo
+                NFOB++;
+
+                // Se essa fitness for a menor que a melhor...
                 if (fitness_populacao_de_bits < melhor_fx){
+                    // Atualiza o melhor da história
                     melhor_fx = fitness_populacao_de_bits;
-                    // Console.WriteLine("Atualizou melhor "+melhor_fx+" em NFOB "+NFOB);
+
 #if DEBUG_NOVO_MELHOR_FX
                     Console.WriteLine("------------------");
-                    Console.WriteLine("novo fx: {0}: ", fitness_populacao_de_bits);
+                    Console.WriteLine("Atualizou o melhor "+melhor_fx+" em NFOB "+NFOB);
                     Console.WriteLine("------------------");
 #endif
                 }
+
 
                 // Se o NFOB for algum da lista para mostrar, mostra a melhor fitness até o momento
 
                 // Console.WriteLine("Vai acessar NFOBs["+iterador_NFOB+"]="+NFOBs[iterador_NFOB] + " com NFOBs tamanho " + NFOBs.Count + " com NFOB " + NFOB);
                 
                 if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
-                    if (NFOB > NFOBs[iterador_NFOB]){
+                    if (NFOB >= NFOBs[iterador_NFOB]){
                         // Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
                         iterador_NFOB ++;
                         melhores_NFOBs.Add(melhor_fx);
@@ -506,22 +635,22 @@ namespace GEO
                 // Conforme o tipo de critério de parada, define a condição do laço
                 if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
                     
-                    bool condition = (NFOB < valor_criterio_parada);
+                    bool condition = (NFOB >= valor_criterio_parada);
 
-                    if (!condition){
+                    if (condition){
                         break;
                     }
                 }
                 else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
-                    bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) > valor_criterio_parada );
-                    bool condition2 = NFOB < 100000;
-                    bool condition = condition1 && condition2;
+                    bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= valor_criterio_parada );
+                    bool condition2 = NFOB > 100000;
+                    bool condition = condition1 || condition2;
 
                     // if (NFOB % 1000 == 0){
                     //     Console.WriteLine(NFOB);
                     // }
 
-                    if (!condition){
+                    if (condition){
                         Console.WriteLine("PRECISION BREAK! NFOB = {0}", NFOB);
                         break;
                     }

@@ -11,7 +11,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Funcoes_Definidas;
 using SpaceDesignTeste;
-using static GEO.GEO;
 
 namespace Execucoes
 {
@@ -49,7 +48,7 @@ namespace Execucoes
             //============================================================
 
             // Executa o GEO e recebe como retorno a melhor fitness da execução
-            List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+            List<double> melhores_NFOBs = GEO.GEO.GEO_algorithm(tipo_GEO, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
             
             foreach(double melhor_NFOB in melhores_NFOBs){
                 string melhor_NFOB_virgula = (melhor_NFOB.ToString()).Replace('.',',');
@@ -91,7 +90,7 @@ namespace Execucoes
 
             for(int i=0; i<100; i++){
                 // Executa o GEO e recebe como retorno a melhor fitness da execução
-                List<double> melhores_NFOBs = GEO_algorithm(tipo_GEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> melhores_NFOBs = GEO.GEO.GEO_algorithm(tipo_GEO, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                 
                 // melhores_NFOBs
 
@@ -141,12 +140,12 @@ namespace Execucoes
                     // O primeiro parâmetro é o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
 
                     // Executa o GEO e recebe como retorno a melhor fitness da execução
-                    List<double> retorno_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_nro_avaliacoes_FO_encontrar_global_GEO += retorno_GEO[0];
 
                     // Executa o GEOvar e recebe como retorno o número de avaliações médio
-                    List<double> retorno_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar += retorno_GEOvar[0];
                 }
@@ -203,12 +202,12 @@ namespace Execucoes
                     // O primeiro parâmetro é o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
 
                     // Executa o GEO e recebe como retorno a melhor fitness da execução
-                    List<double> retorno_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_nro_avaliacoes_FO_encontrar_global_GEO += retorno_GEO[0];
 
                     // Executa o GEOvar e recebe como retorno o número de avaliações médio
-                    List<double> retorno_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar += retorno_GEOvar[0];
                 }
@@ -265,13 +264,13 @@ namespace Execucoes
                     // O primeiro parâmetro é o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
 
                     // Executa o GEO e recebe como retorno a melhor fitness da execução
-                    List<double> retorno_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_melhores_GEO += retorno_GEO[retorno_GEO.Count-1];
 
 
                     // Executa o GEOvar e recebe como retorno o número de avaliações médio
-                    List<double> retorno_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_melhores_GEOvar += retorno_GEOvar[retorno_GEOvar.Count-1];
                 }
@@ -326,12 +325,12 @@ namespace Execucoes
                 Console.Write((i+1) +"... ");
 
                 // Executa o GEO
-                List<double> NFOBs_results_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEO, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> NFOBs_results_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEO, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
                 NFOBs_all_results_GEO.Add(NFOBs_results_GEO);
 
                 // Executa o GEOvar
-                List<double> NFOBs_results_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEOvar, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> NFOBs_results_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEOvar, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
                 NFOBs_all_results_GEOvar.Add(NFOBs_results_GEOvar);
             }
@@ -402,12 +401,12 @@ namespace Execucoes
                 Console.Write((i+1) +"... ");
 
                 // Executa o GEO
-                List<double> NFOBs_results_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEO, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> NFOBs_results_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEO, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
                 NFOBs_all_results_GEO.Add(NFOBs_results_GEO);
 
                 // Executa o GEOvar
-                List<double> NFOBs_results_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEOvar, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> NFOBs_results_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEOvar, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
                 NFOBs_all_results_GEOvar.Add(NFOBs_results_GEOvar);
             }
@@ -478,12 +477,12 @@ namespace Execucoes
                 Console.Write((i+1) +"... ");
 
                 // Executa o GEO
-                List<double> NFOBs_results_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEO, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> NFOBs_results_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEO, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
                 NFOBs_all_results_GEO.Add(NFOBs_results_GEO);
 
                 // Executa o GEOvar
-                List<double> NFOBs_results_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEOvar, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                List<double> NFOBs_results_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao_GEOvar, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
                 NFOBs_all_results_GEOvar.Add(NFOBs_results_GEOvar);
             }
@@ -536,7 +535,7 @@ namespace Execucoes
             List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
             List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
             
-            double melhor_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+            double melhor_fx = GEO.GEO.funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
             Console.WriteLine("Melhor fx: {0}", melhor_fx);
 
 
@@ -621,19 +620,19 @@ namespace Execucoes
                 // double somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar = 0;
 
                 // Executa o GEO e o GEOvar por 5 vezes
-                int quantidade_execucoes = 5;
+                int quantidade_execucoes = 50;
                 for(int i=0; i<quantidade_execucoes; i++){
                     Console.Write((i+1) +"... ");
 
                     // O primeiro parâmetro é o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
 
                     // Executa o GEO e recebe como retorno a melhor fitness da execução
-                    List<double> retorno_GEO = GEO_algorithm(0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    List<double> retorno_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // Como o retorno é somente o número de avaliações médio, então obtém o número
                     somatorio_nro_avaliacoes_FO_encontrar_global_GEO += retorno_GEO[0];
 
                     // // Executa o GEOvar e recebe como retorno o número de avaliações médio
-                    // List<double> retorno_GEOvar = GEO_algorithm(1, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                    // List<double> retorno_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
                     // // Como o retorno é somente o número de avaliações médio, então obtém o número
                     // somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar += retorno_GEOvar[0];
                 }
@@ -652,6 +651,100 @@ namespace Execucoes
         }
 
 
+        public static void AGEO_Griewangk(){
+            // // Parâmetros de execução do algoritmo
+            // const int n_variaveis_projeto = 10;
+            // List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
+            // List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
+            // List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+
+            // // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
+            // const double tao = 5;
+            // // Define o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
+            // const int tipo_GEO = 0; 
+            // // Define o critério de parada com o número de avaliações da NFOBs
+            // const double valor_criterio_parada = 200000;
+            // const double fx_esperado = 0;
+            // const int CRITERIO_PARADA_NFOBouPRECISAO = 0;
+
+            // // Definicao_funcao_objetivo
+            // // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            // const int definicao_funcao_objetivo = 0;
+
+            // // Essa lista contém todos os pontos NFOB onde se deseja saber o valor fitness do algoritmo. 
+            // // O algoritmo mostra o melhor fitness até o momento assim que o NFOB atinge cada um destes valores.
+
+            // List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+            // // List<int> NFOBs_desejados = new List<int>(){10,20,30,40,50,60,70,80,90,100,120,140,160,180,200,250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+            
+
+            // //============================================================
+            // // Execução do algoritmo
+            // //============================================================
+
+            // // Executa o GEO e recebe como retorno a melhor fitness da execução
+            // List<double> melhores_NFOBs = AGEO.AGEO.AGEO_algorithm(tipo_GEO, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+            
+            // foreach(double melhor_NFOB in melhores_NFOBs){
+            //     string melhor_NFOB_virgula = (melhor_NFOB.ToString()).Replace('.',',');
+            //     Console.WriteLine(melhor_NFOB_virgula);
+            // }
+        }
+
+
+        public static void AGEO_PRECISION_F2_Rosenbrock(){
+            // ================================================================
+            // EXECUÇÕES para AGEO para F2
+            // ================================================================
+
+            // Parâmetros de execução do algoritmo
+            const int n_variaveis_projeto = 2;
+            List<int> bits_por_variavel_variaveis = new List<int>(){13,13};
+            List<double> limites_inferiores_variaveis = new List<double>(){-2.048,-2.048};
+            List<double> limites_superiores_variaveis = new List<double>(){2.048, 2.048};
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            const double valor_criterio_parada = 0.001;
+            double fx_esperado = 0;
+            const int CRITERIO_PARADA_NFOBouPRECISAO = 1;
+
+            // Definicao_funcao_objetivo
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 1;
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            List<int> NFOBs_desejados = new List<int>(){15000};
+
+
+            // double tao = 0.5;
+            double tao = 1;
+
+
+            // Executa o SGA por 50 vezes
+            double somatorio_nro_avaliacoes_FO_encontrar_global_AGEO = 0;
+
+            // Executa o AGEO
+            int numero_execucoes = 50;
+            for(int i=0; i<numero_execucoes; i++){
+                Console.Write((i+1) +"... ");
+
+                // Executa o AGEO e recebe como retorno a melhor fitness da execução
+                List<double> retorno_AGEO = GEO.GEO.GEO_algorithm(0, 2, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                
+                // Como o retorno é somente o número de avaliações médio, então obtém o número
+                somatorio_nro_avaliacoes_FO_encontrar_global_AGEO += retorno_AGEO[0];
+            }
+
+            // Calcula a média dos melhores f(x) pra esse TAO
+            double media_nro_avaliacoes_AGEO = somatorio_nro_avaliacoes_FO_encontrar_global_AGEO / numero_execucoes;
+
+            string string_media_nro_avaliacoes_AGEO = (media_nro_avaliacoes_AGEO.ToString()).Replace('.',',');
+            
+            Console.WriteLine("");
+            Console.WriteLine(string_media_nro_avaliacoes_AGEO);
+        }
+
+
         public static void Main(string[] args){
             Console.WriteLine("Rodando!");
 
@@ -661,16 +754,22 @@ namespace Execucoes
             ////GEOs_variandoTAO_F2_Rosenbrock();
             ////GEOs_variandoTAO_F3_DeJong3();
             ////GEOs_variandoTAO_F5_Griewangk();
-            ////GEO_TAO1_e_GEOvar_TAO125_F2_Rosenbrock();
-            ////GEO_TAO3_e_GEOvar_TAO8_F3_DeJong3();
+            // GEO_TAO1_e_GEOvar_TAO125_F2_Rosenbrock();
+            // GEO_TAO3_e_GEOvar_TAO8_F3_DeJong3();
             ////GEO_TAO125_e_GEOvar_TAO3_F5_Griewangk();
+
+
+            // AGEO_Griewangk();
+
+
+            AGEO_PRECISION_F2_Rosenbrock();
 
 
             // SpacecraftOptimization_ExtensiveSearch();
 
             // GEOs_variandoTAO_SpacecraftOptimization();
 
-            TesteFuncaoObjetivoPopulacao_SpacecraftOptimization();
+            // TesteFuncaoObjetivoPopulacao_SpacecraftOptimization();
 
 
             // List<double> fenotipo_variaveis_projeto = new List<double>(){14,59,60};
