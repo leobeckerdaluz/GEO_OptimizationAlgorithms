@@ -520,19 +520,19 @@ namespace GEO
                         // Obtém a lista de deltaV's comparado ao melhor fx
                         informacoes_mutacao_AGEO = lista_informacoes_mutacao;
 
-                        // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
-                        for (int i=0; i<populacao_de_bits.Count; i++){
-                            NFOB++;
-                        }
+                        // // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
+                        // for (int i=0; i<populacao_de_bits.Count; i++){
+                        //     NFOB++;
+                        // }
                     }
                     else if (tipo_AGEO == 2){
                         // Obtém a lista de deltaV's comparado ao atual fx
                         informacoes_mutacao_AGEO = obtem_lista_deltaV_se_flipar_comparando_com(atual_fx, populacao_de_bits, definicao_funcao_objetivo, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
-                        // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
-                        for (int i=0; i<populacao_de_bits.Count; i++){
-                            NFOB++;
-                        }
+                        // // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
+                        // for (int i=0; i<populacao_de_bits.Count; i++){
+                        //     NFOB++;
+                        // }
                     }
 
                     // Conta quantas mudanças que flipando dá melhor
@@ -549,7 +549,7 @@ namespace GEO
                     double CoI = (double)melhoraram / populacao_de_bits.Count;
 
                     // Verifica se INCREASE TAO ou RESTART TAO
-                    if (CoI == 0.0){
+                    if (CoI <= 0.0 || tao > 5){
                         // RESTART TAO
                         // Console.WriteLine("RESTART TAO");
                         
@@ -600,8 +600,8 @@ namespace GEO
                 // Calcula a fitness da nova população de bits
                 double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
                 
-                // Incrementa o número de avaliações da função objetivo
-                NFOB++;
+                // // Incrementa o número de avaliações da função objetivo
+                // NFOB++;
 
                 // Se essa fitness for a menor que a melhor...
                 if (fitness_populacao_de_bits < melhor_fx){
@@ -643,7 +643,7 @@ namespace GEO
                 }
                 else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
                     bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= valor_criterio_parada );
-                    bool condition2 = NFOB > 100000;
+                    bool condition2 = NFOB >= 100000;
                     bool condition = condition1 || condition2;
 
                     // if (NFOB % 1000 == 0){
