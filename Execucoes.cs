@@ -745,6 +745,61 @@ namespace Execucoes
         }
 
 
+
+        public static void AGEO_PRECISION_F3_Griewangk(){
+            // ================================================================
+            // EXECUÇÕES para AGEO para F3
+            // ================================================================
+
+            // Parâmetros de execução do algoritmo
+            const int n_variaveis_projeto = 10;
+            List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
+            List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
+            List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            const double valor_criterio_parada = 0.5;
+            double fx_esperado = 0;
+            const int CRITERIO_PARADA_NFOBouPRECISAO = 1;
+
+            // Definicao_funcao_objetivo
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 0;
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            List<int> NFOBs_desejados = new List<int>(){15000};
+
+
+            // double tao = 0.5;
+            // double tao = 1;
+            const double tao = 1.25;
+
+
+            // Executa o SGA por 50 vezes
+            double somatorio_nro_avaliacoes_FO_encontrar_global_AGEO = 0;
+
+            // Executa o AGEO
+            int numero_execucoes = 50;
+            for(int i=0; i<numero_execucoes; i++){
+                Console.Write((i+1) +"... ");
+
+                // Executa o AGEO e recebe como retorno a melhor fitness da execução
+                List<double> retorno_AGEO = GEO.GEO.GEO_algorithm(0, 2, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+                
+                // Como o retorno é somente o número de avaliações médio, então obtém o número
+                somatorio_nro_avaliacoes_FO_encontrar_global_AGEO += retorno_AGEO[0];
+            }
+
+            // Calcula a média dos melhores f(x) pra esse TAO
+            double media_nro_avaliacoes_AGEO = somatorio_nro_avaliacoes_FO_encontrar_global_AGEO / numero_execucoes;
+
+            string string_media_nro_avaliacoes_AGEO = (media_nro_avaliacoes_AGEO.ToString()).Replace('.',',');
+            
+            Console.WriteLine("");
+            Console.WriteLine(string_media_nro_avaliacoes_AGEO);
+        }
+
+
         public static void Main(string[] args){
             Console.WriteLine("Rodando!");
 
@@ -762,7 +817,9 @@ namespace Execucoes
             // AGEO_Griewangk();
 
 
-            AGEO_PRECISION_F2_Rosenbrock();
+            // AGEO_PRECISION_F2_Rosenbrock();
+
+            AGEO_PRECISION_F3_Griewangk();
 
 
             // SpacecraftOptimization_ExtensiveSearch();
