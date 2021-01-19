@@ -46,6 +46,45 @@ namespace Execucoes
         }
         
         
+        public static List<double> Obtem_FxsMedios_NFOB_Execucoes(int numero_execucoes, int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs_desejados, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){
+            
+            List<List<double>> NFOBs_all_results_GEO = new List<List<double>>();
+            
+            // Executa o GEO e o GEOvar por 50 vezes
+            for(int i=0; i<numero_execucoes; i++){
+                Console.Write((i+1) +"... ");
+
+                // Executa o algoritmo
+                List<double> NFOBs_results_GEO = GEO.GEO.GEO_algorithm(tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+
+                // Adiciona a lista de NFOBs em uma lista geral
+                NFOBs_all_results_GEO.Add(NFOBs_results_GEO);
+            }
+            // Console.WriteLine("");
+
+            // Lista irá conter o f(x) médio para cada NFOB desejado
+            List<double> fx_medio_cada_NFOB_desejado = new List<double>();
+            
+            // Para cada NFOB desejado, calcula a média das N execuções
+            Console.WriteLine("===> Médias das N execuções para cada NFOB desejado no GEO:");
+            for(int i=0; i<NFOBs_desejados.Count; i++){
+                double sum = 0;
+
+                // Percorre aquele NFOB em cada execução para calcular a média de f(x) naquele NFOB
+                foreach(List<double> execution in NFOBs_all_results_GEO){
+                    sum += execution[i];
+                }
+                double media = sum / (double)NFOBs_all_results_GEO.Count;
+                
+                // Adiciona o f(x) médio do NFOB na lista
+                fx_medio_cada_NFOB_desejado.Add(media);
+            }
+
+            // Retorna a lista contendo o f(x) médio para cada NFOB
+            return fx_medio_cada_NFOB_desejado;
+        }
+        
+        
         public static void GEOcan_GEOvar_Griewangk(){
             // Parâmetros de execução do algoritmo
             const int n_variaveis_projeto = 10;
@@ -682,9 +721,6 @@ namespace Execucoes
 
 
         public static void AGEO_PRECISION_F2_Rosenbrock(){
-            // ================================================================
-            // EXECUÇÕES para AGEO para F2
-            // ================================================================
 
             // Parâmetros de execução do algoritmo
             const int n_variaveis_projeto = 2;
@@ -755,6 +791,89 @@ namespace Execucoes
             
             Console.WriteLine("");
             Console.WriteLine(string_media_nro_avaliacoes);
+        }
+
+
+        public static void AGEO_NFOBs_F3_Griewangk(){
+
+            // Parâmetros de execução do algoritmo
+            const int n_variaveis_projeto = 10;
+            List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
+            List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
+            List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            const double valor_criterio_parada = 1000000;
+            // const double valor_criterio_parada = 100000;
+            double fx_esperado = 0;
+            const int CRITERIO_PARADA_NFOBouPRECISAO = 0;
+
+            // Definicao_funcao_objetivo
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 0;
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            // List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000};
+            List<int> NFOBs_desejados = new List<int>(){0,25000,50000,75000,100000,125000,150000,175000,200000,225000,250000,275000,300000,325000,350000,375000,400000,425000,450000,475000,500000,525000,550000,575000,600000,625000,650000,675000,700000,725000,750000,775000,800000,825000,850000,875000,900000,925000,950000,975000,1000000};
+
+            const double tao = 1.25;
+
+            int numero_execucoes = 20;
+            int tipo_GEO = 0;
+            int tipo_AGEO = 2;
+            
+            List<double> fx_medio_cada_NFOB_desejado = Obtem_FxsMedios_NFOB_Execucoes(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+
+            for(int i=0; i<NFOBs_desejados.Count; i++){
+                double fx_medio_NFOB = fx_medio_cada_NFOB_desejado[i];
+
+                double NFOB = NFOBs_desejados[i];
+
+                string string_media = (fx_medio_NFOB.ToString()).Replace('.',',');
+
+                Console.WriteLine("NFOB {0}: {1}", NFOB, string_media);
+            }
+        }
+
+
+        public static void AGEO_NFOBs_F2_Rosenbrock(){
+
+            // Parâmetros de execução do algoritmo
+            const int n_variaveis_projeto = 2;
+            List<int> bits_por_variavel_variaveis = new List<int>(){13,13};
+            List<double> limites_inferiores_variaveis = new List<double>(){-2.048,-2.048};
+            List<double> limites_superiores_variaveis = new List<double>(){2.048, 2.048};
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            const double valor_criterio_parada = 1000000;
+            double fx_esperado = 0;
+            const int CRITERIO_PARADA_NFOBouPRECISAO = 0;
+
+            // Definicao_funcao_objetivo
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 1;
+
+            // Define o critério de parada com o número de avaliações da NFOBs
+            // List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000};
+            List<int> NFOBs_desejados = new List<int>(){0,25000,50000,75000,100000,125000,150000,175000,200000,225000,250000,275000,300000,325000,350000,375000,400000,425000,450000,475000,500000,525000,550000,575000,600000,625000,650000,675000,700000,725000,750000,775000,800000,825000,850000,875000,900000,925000,950000,975000,1000000};
+
+            const double tao = 1.0;
+
+            int numero_execucoes = 20;
+            int tipo_GEO = 0;
+            int tipo_AGEO = 2;
+            
+            List<double> fx_medio_cada_NFOB_desejado = Obtem_FxsMedios_NFOB_Execucoes(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+
+            for(int i=0; i<NFOBs_desejados.Count; i++){
+                double fx_medio_NFOB = fx_medio_cada_NFOB_desejado[i];
+
+                double NFOB = NFOBs_desejados[i];
+
+                string string_media = (fx_medio_NFOB.ToString()).Replace('.',',');
+
+                Console.WriteLine("NFOB {0}: {1}", NFOB, string_media);
+            }
         }
 
 
@@ -832,10 +951,13 @@ namespace Execucoes
 
             // AGEO_PRECISION_F2_Rosenbrock();
 
-            AGEO_PRECISION_F3_Griewangk();
+            // AGEO_PRECISION_F3_Griewangk();
 
             // AGEO_PRECISION_SpacecraftOptimization();
 
+
+            // AGEO_NFOBs_F3_Griewangk();
+            AGEO_NFOBs_F2_Rosenbrock();
 
 
             // SpacecraftOptimization_ExtensiveSearch();
