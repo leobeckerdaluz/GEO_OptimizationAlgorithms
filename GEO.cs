@@ -401,8 +401,8 @@ namespace GEO
             else if (criterio_parada_NFOBouNFEouMELHORFX == 1){
                 bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= valor_criterio_parada );
                 bool condition2 = NFOB >= 100000;
-                // bool condition = condition1 || condition2;
-                bool condition = condition1;
+                bool condition = condition1 || condition2;
+                // bool condition = condition1;
 
                 // if (NFOB % 1000 == 0){
                 //     Console.WriteLine(NFOB);
