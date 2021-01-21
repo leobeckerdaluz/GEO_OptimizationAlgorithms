@@ -4,6 +4,10 @@ Por que Griwangk com 16 bits?
 
 ------------------------------------------------------------
 
+Mudar funcao_objetivo para fenotipo e FO
+
+------------------------------------------------------------
+
 Arrumar lista NFOBs para Steps de tanto em tanto
 
 ------------------------------------------------------------

@@ -658,9 +658,6 @@ namespace Execucoes
 
 
         public static void GEOs_variandoTAO_SpacecraftOptimization(){
-            // ================================================================
-            // 50 EXECUÇÕES GEOcanonico e GEOvar para diferentes TAO na SpacecraftOptimization
-            // ================================================================
 
             // Parâmetros de execução do algoritmo
             const int n_variaveis_projeto = 3;
@@ -681,41 +678,19 @@ namespace Execucoes
             List<double> valores_TAO = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5};
             List<int> NFOBs_desejados = new List<int>(){400000};
             
+            const int numero_execucoes = 10;
+            const int tipo_GEO = 0;
+            const int tipo_AGEO = 0;
+
             foreach (double tao in valores_TAO){
-                Console.WriteLine("===> TAO: " + tao + "   |   GEOcan / GEOvar");
+                Console.WriteLine("===> TAO: " + tao);
+
+                double media_nro_avaliacoes = Obtem_Media_Execucoes_NFE(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
+
+                string string_media_nro_avaliacoes = (media_nro_avaliacoes.ToString()).Replace('.',',');
                 
-                // Executa o SGA por 50 vezes
-                double somatorio_nro_avaliacoes_FO_encontrar_global_GEO = 0;
-                // double somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar = 0;
-
-                // Executa o GEO e o GEOvar por 5 vezes
-                int quantidade_execucoes = 50;
-                for(int i=0; i<quantidade_execucoes; i++){
-                    Console.Write((i+1) +"... ");
-
-                    // O primeiro parâmetro é o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
-
-                    // Executa o GEO e recebe como retorno a melhor fitness da execução
-                    List<double> retorno_GEO = GEO.GEO.GEO_algorithm(0, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
-                    // Como o retorno é somente o número de avaliações médio, então obtém o número
-                    somatorio_nro_avaliacoes_FO_encontrar_global_GEO += retorno_GEO[0];
-
-                    // // Executa o GEOvar e recebe como retorno o número de avaliações médio
-                    // List<double> retorno_GEOvar = GEO.GEO.GEO_algorithm(1, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
-                    // // Como o retorno é somente o número de avaliações médio, então obtém o número
-                    // somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar += retorno_GEOvar[0];
-                }
-
-                // Calcula a média dos melhores f(x) pra esse TAO
-                double media_nro_avaliacoes_GEO = somatorio_nro_avaliacoes_FO_encontrar_global_GEO / quantidade_execucoes;
-                // double media_nro_avaliacoes_GEOvar = somatorio_nro_avaliacoes_FO_encontrar_global_GEOvar / quantidade_execucoes;
-
-                string string_media_nro_avaliacoes_GEO = (media_nro_avaliacoes_GEO.ToString()).Replace('.',',');
-                // string string_media_nro_avaliacoes_GEOvar = (media_nro_avaliacoes_GEOvar.ToString()).Replace('.',',');
-		        
                 Console.WriteLine("");
-                Console.WriteLine(string_media_nro_avaliacoes_GEO);
-                // Console.WriteLine(string_media_nro_avaliacoes_GEOvar);
+                Console.WriteLine(string_media_nro_avaliacoes);
             }
         }
 
@@ -819,8 +794,8 @@ namespace Execucoes
             const double tao = 1.25;
 
             int numero_execucoes = 20;
-            int tipo_GEO = 0;
-            int tipo_AGEO = 2;
+            int tipo_GEO = 1;
+            int tipo_AGEO = 1;
             
             List<double> fx_medio_cada_NFOB_desejado = Obtem_FxsMedios_NFOB_Execucoes(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
 
@@ -860,7 +835,7 @@ namespace Execucoes
             const double tao = 1.0;
 
             int numero_execucoes = 20;
-            int tipo_GEO = 0;
+            int tipo_GEO = 1;
             int tipo_AGEO = 2;
             
             List<double> fx_medio_cada_NFOB_desejado = Obtem_FxsMedios_NFOB_Execucoes(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, NFOBs_desejados, fx_esperado, CRITERIO_PARADA_NFOBouPRECISAO);
@@ -963,6 +938,7 @@ namespace Execucoes
             // SpacecraftOptimization_ExtensiveSearch();
 
             // GEOs_variandoTAO_SpacecraftOptimization();
+            
 
             // TesteFuncaoObjetivoPopulacao_SpacecraftOptimization();
 

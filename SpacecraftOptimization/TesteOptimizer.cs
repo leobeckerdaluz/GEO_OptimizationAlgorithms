@@ -33,21 +33,21 @@ namespace SpaceDesignTeste
 
         public static double ObjectiveFunction(List<double> fenotipo_variaveis_projeto){
            
-            // Settings.SolarModes = new List<SolarModeModel>();
-            // Settings.SolarModes.Add(new SolarModeModel(SolarMode.High, 1));
-            // Settings.SolarModes.Add(new SolarModeModel(SolarMode.MediumHigh, 3));
+            Settings.SolarModes = new List<SolarModeModel>();
+            Settings.SolarModes.Add(new SolarModeModel(SolarMode.High, 1));
+            Settings.SolarModes.Add(new SolarModeModel(SolarMode.MediumHigh, 3));
 
-            // Settings.LaunchAltitudeError = 20000;
-            // Settings.LaunchInclinationError = (0.15).DegreesToRadians();
-            // // Settings.LaunchInclinationError = (0.015).DegreesToRadians();
-            // Settings.ISP = 225;
-            // Settings.PrecisionPropulsion = 10e-5;
+            Settings.LaunchAltitudeError = 20000;
+            Settings.LaunchInclinationError = (0.15).DegreesToRadians();
+            // Settings.LaunchInclinationError = (0.015).DegreesToRadians();
+            Settings.ISP = 225;
+            Settings.PrecisionPropulsion = 10e-5;
 
-            // // Settings.AreaPercentOverSectionalArea = 4.37;
-            // Settings.AreaPercentOverSectionalArea = 1.8;
+            // Settings.AreaPercentOverSectionalArea = 4.37;
+            Settings.AreaPercentOverSectionalArea = 1.8;
 
-            // Settings.V0 = 6.778309031049825E+03;
-            // Settings.MissionResolution = 20;
+            Settings.V0 = 6.778309031049825E+03;
+            Settings.MissionResolution = 20;
 
 
             double fx = 0;
@@ -69,7 +69,6 @@ namespace SpaceDesignTeste
             Console.WriteLine("ReferencePayload.PixelSize: "+ReferencePayload.PixelSize);
             Console.WriteLine("ReferencePayload.FOV: "+ReferencePayload.FOV);
 #endif
-
 
             SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, N, D, 0.00);
 

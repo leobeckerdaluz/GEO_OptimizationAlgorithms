@@ -172,6 +172,35 @@ namespace GEO
                         // Console.WriteLine("MÁXIMO VALOR!!");
                     }
                     break;
+                
+                // F6
+                case 6:
+                    fx = Funcoes.funcao_Rastringin(fenotipo_variaveis_projeto);
+                    break;
+                // F7
+                case 7:
+                    fx = Funcoes.funcao_Schwefel(fenotipo_variaveis_projeto);
+                    break;
+                // F8
+                case 8:
+                    fx = Funcoes.funcao_Ackley(fenotipo_variaveis_projeto);
+                    break;
+                // F9
+                case 9:
+                    fx = 2;
+                    break;
+                // F10
+                case 10:
+                    fx = 2;
+                    break;
+                // F11
+                case 11:
+                    fx = 2;
+                    break;
+                // F12
+                case 12:
+                    fx = 2;
+                    break;
             }
 
             // Retorna o valor fitness
@@ -424,7 +453,6 @@ namespace GEO
             // 0 - Griewangk
             // 1 - Rosenbrock
             // 2 - DeJong3
-   
             
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo

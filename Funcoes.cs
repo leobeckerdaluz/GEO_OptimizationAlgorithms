@@ -11,14 +11,10 @@ namespace Funcoes_Definidas
 {
     public class Funcoes
     {
-        /*
-            A função DeJong#3 recebe como parâmetro a lista contendo o fenótipo de cada
-            variável de projeto e calcula o valor da função.
-        */
         public static double funcao_DeJong3_inteiro(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
 
-            // Laço para os somatórios
+            // Laço para o somatório
             for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
                 // Arredonda para o inteiro mais próximo
                 laco_somatorio += Math.Round(fenotipo_variaveis_projeto[i], 0);
@@ -27,18 +23,12 @@ namespace Funcoes_Definidas
             // Retorna o valor de f(x), que é o somatório
             return laco_somatorio;
         }
-        
-        
 
-        
-        /*
-            A função de rosenbrock recebe como parâmetro a lista contendo o fenótipo de cada
-            variável de projeto e calcula o valor da função.
-        */
+
         public static double funcao_rosenbrock(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
 
-            // Laço para os somatórios
+            // Laço para o somatório
             for(int i=0; i<fenotipo_variaveis_projeto.Count-1; i++){
                 // Obtém o valor da variável atual
                 double Xi = fenotipo_variaveis_projeto[i];
@@ -56,19 +46,13 @@ namespace Funcoes_Definidas
             // Retorna o valor de f(x), que é o somatório
             return laco_somatorio;
         }
-        
-
 
         
-        /*
-            A função de griewank recebe como parâmetro a lista contendo o fenótipo de cada
-            variável de projeto e calcula o valor da função.
-        */
         public static double funcao_griewank(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
             double laco_produto = 1;
 
-            // Laço para os somatórios e pi
+            // Laço para o somatório e produtório
             for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
                 laco_somatorio += Math.Pow(fenotipo_variaveis_projeto[i], 2);
                 // laco_produto *= Math.Cos( Math.PI * fenotipo_variaveis_projeto[i] / Math.Sqrt(i+1) );
@@ -77,6 +61,71 @@ namespace Funcoes_Definidas
 
             // Expressão final de f(x)
             double fx = (1 + laco_somatorio/4000.0 - laco_produto);
+
+            // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+        public static double funcao_Rastringin(List<double> fenotipo_variaveis_projeto){
+            double laco_somatorio = 0.0;
+
+            // Laço para o somatório
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+
+                double quadrado = Math.Pow(xi, 2);
+                double cosseno = 10.0*Math.Cos(2.0 * Math.PI * xi);
+                
+                laco_somatorio += quadrado - cosseno;
+            }
+
+            // Expressão final de f(x)
+            double fx = 10.0*fenotipo_variaveis_projeto.Count + laco_somatorio;
+
+            // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+        public static double funcao_Schwefel(List<double> fenotipo_variaveis_projeto){
+            double laco_somatorio = 0.0;
+
+            // Laço para o somatório
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+                laco_somatorio += xi * Math.Sin(Math.Sqrt(Math.Abs(xi)));
+            }
+
+            // Expressão final de f(x)
+            double fx = 418.9829 * fenotipo_variaveis_projeto.Count - laco_somatorio;
+
+            // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+        public static double funcao_Ackley(List<double> fenotipo_variaveis_projeto){
+            double laco_somatorio_1 = 0.0;
+            double laco_somatorio_2 = 0.0;
+
+            // Laço para os somatórios
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+
+                laco_somatorio_1 += Math.Pow(xi, 2.0);
+                laco_somatorio_2 += Math.Cos(2.0 * Math.PI * xi);
+            }
+
+            // Obtém o número total de variáveis
+            int N = fenotipo_variaveis_projeto.Count;
+
+            // Calculaos Exp antes para depois juntar
+            double Exp1 = Math.Exp(-0.2 * Math.Sqrt(1.0/N * laco_somatorio_1 ));
+            double Exp2 = Math.Exp(1.0/N * laco_somatorio_2 );
+
+            // Expressão final de f(x)
+            double fx = 20.0 + Math.Exp(1.0) - 20.0*Exp1 - Exp2;
 
             // Retorna o valor de f(x)
             return fx;
