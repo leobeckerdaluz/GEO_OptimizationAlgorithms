@@ -139,69 +139,12 @@ namespace GEO
             A função objetivo é a função fitness do algoritmo. Ela invoca os métodos para calcular
             o fenótipo de cada variável de projeto e, posteriormente, calcula o valor fitness.
         */
-        public static double funcao_objetivo(int definicao_funcao_objetivo, List<bool> populacao_de_bits, int n_variaveis_projeto, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, List<int> bits_por_variavel_variaveis){
+        public static double calcula_valor_fx(int definicao_funcao_objetivo, List<bool> populacao_de_bits, int n_variaveis_projeto, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, List<int> bits_por_variavel_variaveis){
             // Calcula o fenótipo para cada variável de projeto
             List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
 
             // Calcula o valor da função objetivo
-            double fx = 99999;
-            switch(definicao_funcao_objetivo){
-                // Griewangk
-                case 0:
-                    fx = Funcoes.funcao_griewank(fenotipo_variaveis_projeto);
-                    break;
-                // Rosenbrock
-                case 1:
-                    fx = Funcoes.funcao_rosenbrock(fenotipo_variaveis_projeto);
-                    break;
-                // DeJong3
-                case 2:
-                    fx = Funcoes.funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
-                    break;
-                // Custom Spacecraft Orbit Function
-                case 3:
-                    int D = (int)fenotipo_variaveis_projeto[1];
-                    int N = (int)fenotipo_variaveis_projeto[2];
-                    
-                    if ( (N < D) && ((double)N%D != 0) ){ //&& (Satellite.Payload.FOV >= 1.05*FovMin);
-                        // Critério aceito
-                        fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
-                    }
-                    else{
-                        fx = Double.MaxValue;
-                        // Console.WriteLine("MÁXIMO VALOR!!");
-                    }
-                    break;
-                
-                // F6
-                case 6:
-                    fx = Funcoes.funcao_Rastringin(fenotipo_variaveis_projeto);
-                    break;
-                // F7
-                case 7:
-                    fx = Funcoes.funcao_Schwefel(fenotipo_variaveis_projeto);
-                    break;
-                // F8
-                case 8:
-                    fx = Funcoes.funcao_Ackley(fenotipo_variaveis_projeto);
-                    break;
-                // F9
-                case 9:
-                    fx = 2;
-                    break;
-                // F10
-                case 10:
-                    fx = 2;
-                    break;
-                // F11
-                case 11:
-                    fx = 2;
-                    break;
-                // F12
-                case 12:
-                    fx = 2;
-                    break;
-            }
+            double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
 
             // Retorna o valor fitness
             return fx;
@@ -229,7 +172,7 @@ namespace GEO
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                 // Calcula a fitness da populacao_de_bits com o bit flipado
-                double fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                double fx = calcula_valor_fx(definicao_funcao_objetivo, populacao_de_bits_flipado, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
                 
                 // // Incrementa o número de avaliações da função objetivo
                 // NFOB++;
@@ -441,13 +384,51 @@ namespace GEO
 
 
 
+        /*
+            A função verifica o critério de parada da execução.
+        */
+        public static bool Verifica_Criterio_Parada(int CRITERIO_PARADA_NFOBouPRECISAO, double valor_criterio_parada, double fx_esperado, int NFOB, double melhor_fx){
+            
+            // Se o critério de parada for de NFOB...
+            if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+                
+                bool condition = (NFOB >= valor_criterio_parada);
+                return condition;
+
+            }
+            
+            // Se o critério de parada for por precisão...
+            else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
+                bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= valor_criterio_parada );
+                bool condition2 = NFOB >= 100000;
+                bool condition = condition1 || condition2;
+
+                // if (NFOB % 1000 == 0){
+                //     Console.WriteLine(NFOB);
+                // }
+
+                if (condition){
+                    Console.WriteLine("PRECISION BREAK! NFOB = {0}", NFOB);
+                }
+                
+                return condition;
+            }
+
+            // Se o critério não for correto, retorna ok para a parada.
+            else{
+                return true;
+            }
+        }
+
+
+
 
         /*
             A função GEO é a função principal do código. Aqui nesse bloco toda a lógica implementada para os algoritmos
             GEOcanonico e GEOvar são implementadas, como a geração da população, o controle do critério de parada e a
             avaliação do flip de cada bit.
         */
-        public static List<double> GEO_algorithm(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, List<int> NFOBs, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){  
+        public static List<double> GEO_algorithm(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, int step_obter_NFOBs, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){  
 
             // definicao_funcao_objetivo
             // 0 - Griewangk
@@ -457,7 +438,9 @@ namespace GEO
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo
             //============================================================
-            int iterador_NFOB = 0;
+
+            // Variável que contém o número do NFOB no qual deve se armazenar o f(x)
+            int proximo_step = step_obter_NFOBs;
 
             // Número de avaliações da função objetivo
             int NFOB = 0;
@@ -478,7 +461,7 @@ namespace GEO
             // Calcula o primeiro Valor Referência
             //============================================================
 
-            double atual_fx = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+            double atual_fx = calcula_valor_fx(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
             
             // Incrementa o número de avaliações da função objetivo
             NFOB++;
@@ -496,9 +479,6 @@ namespace GEO
             // Iterações
             //============================================================
             
-
-
-
 
             // Inicializa o CoI(i-1) para o controle da mutaçaão do TAO no AGEO
             double CoI_1 = 1.0 / Math.Sqrt(populacao_de_bits.Count);
@@ -518,10 +498,11 @@ namespace GEO
 #if DEBUG_CONSOLE
                 Console.WriteLine("População de Bits começo while:");
                 ApresentaCromossomoBool(populacao_de_bits);
-                double teste = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                double teste = calcula_valor_fx(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
                 Console.WriteLine("Fx = " + teste);
                 Console.WriteLine("Fx melhor = " + melhor_fx);
 #endif
+
 
                 //============================================================
                 // Avalia o flip para cada bit
@@ -534,8 +515,6 @@ namespace GEO
                     NFOB++;
                 }
             
-
-
 
                 //============================================================
                 // Calcula a Chance of Improvement
@@ -604,10 +583,6 @@ namespace GEO
                 }
 
 
-
-
-
-
                 //============================================================
                 // Ordena os bits e flipa, atualizando a população
                 //============================================================
@@ -621,15 +596,16 @@ namespace GEO
                     populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tao);
                 }
 
+
                 //============================================================
                 // Atualiza, se possível, o valor (Valor Refrência)
                 //============================================================
 
                 // Calcula a fitness da nova população de bits
-                double fitness_populacao_de_bits = funcao_objetivo(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
+                double fitness_populacao_de_bits = calcula_valor_fx(definicao_funcao_objetivo, populacao_de_bits, n_variaveis_projeto, limites_inferiores_variaveis, limites_superiores_variaveis, bits_por_variavel_variaveis);
                 
-                // // Incrementa o número de avaliações da função objetivo
-                // NFOB++;
+                // Incrementa o número de avaliações da função objetivo
+                NFOB++;
 
                 // Se essa fitness for a menor que a melhor...
                 if (fitness_populacao_de_bits < melhor_fx){
@@ -644,55 +620,44 @@ namespace GEO
                 }
 
 
-                // Se o NFOB for algum da lista para mostrar, mostra a melhor fitness até o momento
+                //============================================================
+                // Verifica se armazena o valor f(x) no atual NFOB
+                //============================================================
 
-                // Console.WriteLine("Vai acessar NFOBs["+iterador_NFOB+"]="+NFOBs[iterador_NFOB] + " com NFOBs tamanho " + NFOBs.Count + " com NFOB " + NFOB);
-                
-                if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
-                    if (NFOB >= NFOBs[iterador_NFOB]){
-                        // Console.WriteLine("Fitness NFOB " + NFOB + ": " + melhor_fx);
-                        iterador_NFOB ++;
-                        melhores_NFOBs.Add(melhor_fx);
-                    }
+                // Se for a hora de guardar o valor f(x) nesse NFOB, guarda
+                if (NFOB > proximo_step){
+                    // Incrementa o step para verificação de NFOB
+                    proximo_step += step_obter_NFOBs;
+                        
+                    // Adiciona o f(x) na lista de NFOBs
+                    melhores_NFOBs.Add(melhor_fx);
                 }
 
 
                 //============================================================
                 // Verifica o critério de parada
                 //============================================================
-                // Conforme o tipo de critério de parada, define a condição do laço
-                if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
-                    
-                    bool condition = (NFOB >= valor_criterio_parada);
-
-                    if (condition){
-                        break;
-                    }
-                }
-                else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
-                    bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= valor_criterio_parada );
-                    bool condition2 = NFOB >= 100000;
-                    bool condition = condition1 || condition2;
-
-                    // if (NFOB % 1000 == 0){
-                    //     Console.WriteLine(NFOB);
-                    // }
-
-                    if (condition){
-                        Console.WriteLine("PRECISION BREAK! NFOB = {0}", NFOB);
-                        break;
-                    }
+                
+                bool parada = Verifica_Criterio_Parada(CRITERIO_PARADA_NFOBouPRECISAO, valor_criterio_parada, fx_esperado, NFOB, melhor_fx);
+                
+                if (parada){
+                    break;
                 }
             }
             
-            // Conforme o tipo de critério de parada, retorna ou a lista dos f(x) nos NFOBs
-            // ... desejados ou então o NFOB quando atingiu o f(x) esperado
+            //============================================================
+            // Retorna o resultado da execução
+            //============================================================
+
+            // Se o critério de parada era por NFOB, retorna a lista de f(x) nos NFOBs
             if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
                 return melhores_NFOBs;
             }
+            // Se o critério de parada era por precisão, retorna o NFE atingido
             else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
                 return new List<double>(){NFOB};
             }
+            // Senão, retorna um número grande
             else{
                 return new List<double>(){Double.MaxValue};
             }

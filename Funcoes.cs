@@ -11,6 +11,72 @@ namespace Funcoes_Definidas
 {
     public class Funcoes
     {
+        public static double funcao_objetivo(List<double> fenotipo_variaveis_projeto, int definicao_funcao_objetivo){
+            double fx = 99999;
+
+            // Executa a função objetivo conforme o código dela
+            switch(definicao_funcao_objetivo){
+
+                // Griewangk
+                case 0:
+                    return funcao_griewank(fenotipo_variaveis_projeto);
+
+                // Rosenbrock
+                case 1:
+                    return funcao_rosenbrock(fenotipo_variaveis_projeto);
+
+                // DeJong3
+                case 2:
+                    return funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
+
+                // Custom Spacecraft Orbit Function
+                case 3:
+                    int D = (int)fenotipo_variaveis_projeto[1];
+                    int N = (int)fenotipo_variaveis_projeto[2];
+                    
+                    if ( (N < D) && ((double)N%D != 0) ){ //&& (Satellite.Payload.FOV >= 1.05*FovMin);
+                        // Critério aceito. Espaço viável.
+                        return SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                    }
+                    else{
+                        // Espaço inviável. Retorna o máximo
+                        return Double.MaxValue;
+                    }
+                
+                // F6
+                case 6:
+                    return funcao_Rastringin(fenotipo_variaveis_projeto);
+
+                // F7
+                case 7:
+                    return funcao_Schwefel(fenotipo_variaveis_projeto);
+
+                // F8
+                case 8:
+                    return funcao_Ackley(fenotipo_variaveis_projeto);
+
+                // F9
+                case 9:
+                    return 2;
+
+                // F10
+                case 10:
+                    return 2;
+
+                // F11
+                case 11:
+                    return 2;
+
+                // F12
+                case 12:
+                    return 2;
+
+            }
+
+            return fx;
+        }
+
+
         public static double funcao_DeJong3_inteiro(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
 
