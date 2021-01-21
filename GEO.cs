@@ -387,10 +387,10 @@ namespace GEO
         /*
             A função verifica o critério de parada da execução.
         */
-        public static bool Verifica_Criterio_Parada(int CRITERIO_PARADA_NFOBouPRECISAO, double valor_criterio_parada, double fx_esperado, int NFOB, double melhor_fx){
+        public static bool Verifica_Criterio_Parada(int criterio_parada_NFOBouNFEouMELHORFX, double valor_criterio_parada, double fx_esperado, int NFOB, double melhor_fx){
             
             // Se o critério de parada for de NFOB...
-            if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+            if (criterio_parada_NFOBouNFEouMELHORFX == 0 || criterio_parada_NFOBouNFEouMELHORFX == 2) {
                 
                 bool condition = (NFOB >= valor_criterio_parada);
                 return condition;
@@ -398,18 +398,19 @@ namespace GEO
             }
             
             // Se o critério de parada for por precisão...
-            else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
+            else if (criterio_parada_NFOBouNFEouMELHORFX == 1){
                 bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= valor_criterio_parada );
                 bool condition2 = NFOB >= 100000;
-                bool condition = condition1 || condition2;
+                // bool condition = condition1 || condition2;
+                bool condition = condition1;
 
                 // if (NFOB % 1000 == 0){
                 //     Console.WriteLine(NFOB);
                 // }
 
-                if (condition){
-                    Console.WriteLine("PRECISION BREAK! NFOB = {0}", NFOB);
-                }
+                // if (condition){
+                //     Console.WriteLine("PRECISION BREAK! NFOB = {0}", NFOB);
+                // }
                 
                 return condition;
             }
@@ -428,7 +429,7 @@ namespace GEO
             GEOcanonico e GEOvar são implementadas, como a geração da população, o controle do critério de parada e a
             avaliação do flip de cada bit.
         */
-        public static List<double> GEO_algorithm(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, int step_obter_NFOBs, double fx_esperado, int CRITERIO_PARADA_NFOBouPRECISAO){  
+        public static List<double> GEO_algorithm(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, int step_obter_NFOBs, double fx_esperado, int criterio_parada_NFOBouNFEouMELHORFX){  
 
             // definicao_funcao_objetivo
             // 0 - Griewangk
@@ -638,7 +639,7 @@ namespace GEO
                 // Verifica o critério de parada
                 //============================================================
                 
-                bool parada = Verifica_Criterio_Parada(CRITERIO_PARADA_NFOBouPRECISAO, valor_criterio_parada, fx_esperado, NFOB, melhor_fx);
+                bool parada = Verifica_Criterio_Parada(criterio_parada_NFOBouNFEouMELHORFX, valor_criterio_parada, fx_esperado, NFOB, melhor_fx);
                 
                 if (parada){
                     break;
@@ -650,12 +651,16 @@ namespace GEO
             //============================================================
 
             // Se o critério de parada era por NFOB, retorna a lista de f(x) nos NFOBs
-            if (CRITERIO_PARADA_NFOBouPRECISAO == 0){
+            if (criterio_parada_NFOBouNFEouMELHORFX == 0){
                 return melhores_NFOBs;
             }
-            // Se o critério de parada era por precisão, retorna o NFE atingido
-            else if (CRITERIO_PARADA_NFOBouPRECISAO == 1){
+            // Se o critério de parada era por NFE, retorna o NFE ao fim da execução
+            else if (criterio_parada_NFOBouNFEouMELHORFX == 1){
                 return new List<double>(){NFOB};
+            }
+            // Se o critério de parada era por MELHORFX, retorna o melhor f(x) obtido no final
+            else if (criterio_parada_NFOBouNFEouMELHORFX == 2){
+                return new List<double>(){melhor_fx};
             }
             // Senão, retorna um número grande
             else{
