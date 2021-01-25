@@ -194,12 +194,14 @@ namespace Execucoes
                 tipo_GEO = 0;
                 tipo_AGEO = 0;
                 double media_GEO = Obtem_Media_Execucoes_NFE(quantidade_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, step_obter_NFOBs, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
+                Console.WriteLine("NFE médio GEO: {0}", media_GEO);
                 
                 // GEOvar
                 Console.Write("\nGEOvar...");
                 tipo_GEO = 1;
                 tipo_AGEO = 0;
-                double media_GEOvar = Obtem_Media_Execucoes_NFE(quantidade_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, step_obter_NFOBs, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
+                double media_GEOvar = 2;//Obtem_Media_Execucoes_NFE(quantidade_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, step_obter_NFOBs, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
+                Console.WriteLine("NFE médio GEOvar: {0}", media_GEOvar);
 
                 // ===========================================================
                 // Mostra a média dos NFE nas execuções
@@ -370,102 +372,8 @@ namespace Execucoes
         // =====================================
         // SPACECRAFT OPTIMIZATION
         // =====================================
-        public static void AGEO_PRECISION_SpacecraftOptimization(){
-            // ================================================================
-            // EXECUÇÕES para AGEO para SpacecraftOptimization
-            // ================================================================
 
-            // Parâmetros de execução do algoritmo
-            const int n_variaveis_projeto = 3;
-            List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
-            List<double> limites_inferiores_variaveis = new List<double>(){13,1,1};
-            List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
-
-            // Define o critério de parada com o número de avaliações da NFOBs
-            const double valor_criterio_parada = 0.0000001;
-            double fx_esperado = 196.949433192159;
-            const int criterio_parada_NFOBouNFEouMELHORFX = 1;
-
-            // Definicao_funcao_objetivo
-            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
-            int definicao_funcao_objetivo = 3;
-            
-            // Define o critério de parada com o número de avaliações da NFOBs
-            // List<int> NFOBs_desejados = new List<int>(){15000};
-            int step_obter_NFOBs = 0;
-
-            const double tao = 1.0;
-
-            int numero_execucoes = 50;
-            int tipo_GEO = 0;
-            int tipo_AGEO = 0;
-
-
-            Settings.SolarModes = new List<SolarModeModel>();
-            Settings.SolarModes.Add(new SolarModeModel(SolarMode.High, 1));
-            Settings.SolarModes.Add(new SolarModeModel(SolarMode.MediumHigh, 3));
-
-            Settings.LaunchAltitudeError = 20000;
-            Settings.LaunchInclinationError = (0.15).DegreesToRadians();
-            // Settings.LaunchInclinationError = (0.015).DegreesToRadians();
-            Settings.ISP = 225;
-            Settings.PrecisionPropulsion = 10e-5;
-
-            // Settings.AreaPercentOverSectionalArea = 4.37;
-            Settings.AreaPercentOverSectionalArea = 1.8;
-
-            Settings.V0 = 6.778309031049825E+03;
-            Settings.MissionResolution = 20;
-
-
-
-            double media_nro_avaliacoes = Obtem_Media_Execucoes_NFE(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, step_obter_NFOBs, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
-
-            string string_media_nro_avaliacoes = (media_nro_avaliacoes.ToString()).Replace('.',',');
-            
-            Console.WriteLine("");
-            Console.WriteLine(string_media_nro_avaliacoes);
-        }
-
-        public static void GEOs_variandoTAO_SpacecraftOptimization(){
-
-            // Parâmetros de execução do algoritmo
-            const int n_variaveis_projeto = 3;
-            List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
-            List<double> limites_inferiores_variaveis = new List<double>(){13,1,1};
-            List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
-
-            // Define o critério de parada com o número de avaliações da NFOBs
-            const double valor_criterio_parada = 0.0000001;
-            double fx_esperado = 196.949433192159;
-            const int criterio_parada_NFOBouNFEouMELHORFX = 1;
-
-            // Definicao_funcao_objetivo
-            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
-            int definicao_funcao_objetivo = 3;
-
-            // Define o critério de parada com o número de avaliações da NFOBs
-            List<double> valores_TAO = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5};
-            // List<int> NFOBs_desejados = new List<int>(){400000};
-            int step_obter_NFOBs = 0;
-            
-            const int numero_execucoes = 10;
-            const int tipo_GEO = 0;
-            const int tipo_AGEO = 0;
-
-            foreach (double tao in valores_TAO){
-                Console.WriteLine("===> TAO: " + tao);
-
-                double media_nro_avaliacoes = Obtem_Media_Execucoes_NFE(numero_execucoes, tipo_GEO, tipo_AGEO, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, step_obter_NFOBs, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
-
-                string string_media_nro_avaliacoes = (media_nro_avaliacoes.ToString()).Replace('.',',');
-                
-                Console.WriteLine("");
-                Console.WriteLine(string_media_nro_avaliacoes);
-            }
-        }
-
-        public static void SpacecraftOptimization_ExtensiveSearch(){
+        public static void ExtensiveSearch_SpacecraftOptimization(){
             double menor_fx_historia = Double.MaxValue;
             double menor_i_historia = Double.MaxValue;
             double menor_n_historia = Double.MaxValue;
@@ -473,25 +381,25 @@ namespace Execucoes
 
             for (int i = 13; i <= 15; i++){
                 for (int d = 1; d <= 60; d++){
-                    for (int n = 1; n <= 59; n++){
-                        // Se a condição for válida, executa
+                    for (int n = 1; n <= d; n++){
+                        
+                        // Se o espaço for viável, executa
                         if( (n < d) && ((double)n%d != 0) ) { //&& (Satellite.Payload.FOV >= 1.05*FovMin);
+                            
                             // Monta a lista de fenótipos
-                            List<double> fenotipo_variaveis_projeto = new List<double>(){i,n,d};
+                            List<double> fenotipo_variaveis_projeto = new List<double>(){i,d,n};
+                            
                             // Executa diretamente a função objetivo
                             double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
-                            // Console.WriteLine("Fx Final: " + fx);
                             // Console.WriteLine("Espaço válido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
 
+                            // Verifica se essa execução é a melhor da história
                             if (fx < menor_fx_historia){
                                 menor_fx_historia = fx;
                                 menor_i_historia = i;
                                 menor_n_historia = n;
                                 menor_d_historia = d;
                             }
-                        }
-                        else{
-                            // Console.WriteLine("Espaço inválido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
                         }
                     }
                 }
@@ -503,14 +411,14 @@ namespace Execucoes
             Console.WriteLine("Menor d história: " + menor_d_historia);
         }
 
-        public static void TesteFuncaoObjetivoPopulacao_SpacecraftOptimization(){
+        public static void Teste_FuncoesObjetivo_SpacecraftOptimization(){
             
             // Define qual função chamar e o fenótipo
             int definicao_funcao_objetivo = 3;
             List<double> fenotipo_variaveis_projeto = new List<double>(){14,60,59};
             
             // =========================================================
-            // Calcula a função objetivo utilizando a populacao
+            // Calcula a função objetivo com a rotina de FOs
             // =========================================================
             
             double melhor_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
@@ -519,7 +427,7 @@ namespace Execucoes
 
 
             // =========================================================
-            // Calcula a função objetivo diretamente com o fenótipo
+            // Calcula a função objetivo diretamente
             // =========================================================
 
             double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
@@ -527,51 +435,55 @@ namespace Execucoes
             Console.WriteLine("Fx Final Função diretamente: {0}", fx);
         }
 
-        public static void GEOcan_GEOvar_SpaceDesign(){
-            // Parâmetros de execução do algoritmo
+        public static void Execucoes_SpacecraftOptimization(){
+            
+            // Parâmetros da função
             const int n_variaveis_projeto = 3;
             List<int> bits_por_variavel_variaveis = new List<int>(){2,6,6};
             List<double> limites_inferiores_variaveis = new List<double>(){13,1,1};
             List<double> limites_superiores_variaveis = new List<double>(){15,60,59};
-
-            // Se o TAO é alto, é mais determinístico. Se o TAO é baixo, é mais estocástico
-            const double tao = 1;
-            // Define o tipo do GEO ==> 0-GEOcanonico | 1-GEOvar 
-            const int tipo_GEO = 0; 
-            // Define o critério de parada com o número de avaliações da NFOBs
-            const double valor_criterio_parada = 1000000;
-            double fx_esperado = 196.949;
-            const int criterio_parada_NFOBouNFEouMELHORFX = 0;
-
-            // Definicao_funcao_objetivo
+            double fx_esperado = 196.949433192159;
             // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
             int definicao_funcao_objetivo = 3;
 
-            // Essa lista contém todos os pontos NFOB onde se deseja saber o valor fitness do algoritmo. 
-            // O algoritmo mostra o melhor fitness até o momento assim que o NFOB atinge cada um destes valores.
+            // Define a quantidade de execuções
+            int quantidade_execucoes = 20;
 
-            // List<int> NFOBs_desejados = new List<int>(){250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000};
-            
-            int step_obter_NFOBs = 250;
-            // List<int> NFOBs_desejados = new List<int>(){10,20,30,40,50,60,70,80,90,100,120,140,160,180,200,250,500,750,1000,1500,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000,40000,50000,60000,70000,80000,90000,100000,199999};
+            // ========================================
+            // OBTÉM NFEs PARA CADA NFOB DESEJADO
+            // ========================================
 
-            //============================================================
-            // Execução do algoritmo
-            //============================================================
+            // // Parâmetros de execução do algoritmo
+            // const double valor_criterio_parada = 1500;
+            // // Define o passo para a obtenção dos f(x) a cada NFOB
+            // int step_obter_NFOBs = 50;
 
-            for(int i=0; i<100; i++){
-                // Executa o GEO e recebe como retorno a melhor fitness da execução
-                List<double> melhores_NFOBs = GEO.GEO.GEO_algorithm(tipo_GEO, 0, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, tao, valor_criterio_parada, step_obter_NFOBs, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
-                
-                // melhores_NFOBs
+            // // Define os TAOs
+            // double taoGEO = 3.0;
+            // double taoGEOvar = 8.0;
 
-                foreach(double melhor_NFOB in melhores_NFOBs){
-                    string melhor_NFOB_virgula = (melhor_NFOB.ToString()).Replace('.',',');
-                    Console.WriteLine(melhor_NFOB_virgula);
-                }
-            }
+            // // Executa todos os algoritmos
+            // Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
+
+
+            // ========================================
+            // OBTÉM MELHORES F(X) VARIANDO TAO
+            // ========================================
+
+            // Define que o algoritmo irá executar até certo NFOB e a execução irá retornar o melhor f(x)
+            const int criterio_parada_NFOBouNFEouMELHORFX = 1;
+            // NFOB para a execução encerrar
+            const double valor_criterio_parada = 0.00001;
+
+            // Percorre a lista de TAOs e executa os algoritmos
+            // Define o critério de parada com o número de avaliações da NFOBs
+            // List<double> valores_TAO = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5};
+            List<double> valores_TAO = new List<double>(){1};
+
+            Executa_Todos_Algoritmos_NFE_OU_MELHORFXporTAO(valores_TAO, quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, valor_criterio_parada, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
         }
-
+        
+        
 
         // =====================================
         // MAIN
@@ -582,11 +494,11 @@ namespace Execucoes
 
             // Execucoes_Griewangk();
             // Execucoes_Rosenbrock();
-            Execucoes_DeJong3();
+            // Execucoes_DeJong3();
 
-            // SpacecraftOptimization_ExtensiveSearch();
-            // GEOs_variandoTAO_SpacecraftOptimization();
-            // TesteFuncaoObjetivoPopulacao_SpacecraftOptimization();
+            // ExtensiveSearch_SpacecraftOptimization();
+            // Teste_FuncoesObjetivo_SpacecraftOptimization();
+            Execucoes_SpacecraftOptimization();
         }
     }
 }
