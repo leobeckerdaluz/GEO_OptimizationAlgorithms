@@ -4,14 +4,6 @@ Por que Griwangk com 16 bits?
 
 ------------------------------------------------------------
 
-Mudar funcao_objetivo para fenotipo e FO
-
-------------------------------------------------------------
-
-Arrumar lista NFOBs para Steps de tanto em tanto
-
-------------------------------------------------------------
-
 POO em todo o GEO e AGEO
 
 GEOvar.Create(
@@ -28,9 +20,6 @@ int NFOB_atingido = GEOvar.Execute_Until_Precision(0.01, fx_esperado);
 List<double> fx_para_cada_NFOB_desejado = GEOcan.Execute_Until_NFOB(100000);
 
 GEOvar.End();
-
-CLARO_91871C
-484BD491871C
 
 ------------------------------------------------------------
 
