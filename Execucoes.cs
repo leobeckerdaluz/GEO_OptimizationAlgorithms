@@ -231,24 +231,24 @@ namespace Execucoes
         public static void Execucoes_Griewangk(){
             // Parâmetros da função
             const int n_variaveis_projeto = 10;
-            List<int> bits_por_variavel_variaveis = new List<int>(){14,14,14,14,14,14,14,14,14,14};
-            List<double> limites_inferiores_variaveis = new List<double>(){-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0,-600.0};
-            List<double> limites_superiores_variaveis = new List<double>(){600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0,600.0};
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(14, n_variaveis_projeto).ToList();
+            List<double> limites_inferiores_variaveis = Enumerable.Repeat(-600.0, n_variaveis_projeto).ToList();
+            List<double> limites_superiores_variaveis = Enumerable.Repeat(600.0, n_variaveis_projeto).ToList();
             double fx_esperado = 0;
             // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
             int definicao_funcao_objetivo = 0;
 
             // Define a quantidade de execuções
-            int quantidade_execucoes = 10;
+            int quantidade_execucoes = 50;
 
             // ========================================
             // OBTÉM NFEs PARA CADA NFOB DESEJADO
             // ========================================
 
             // Parâmetros de execução do algoritmo
-            const double valor_criterio_parada = 100000;
+            const double valor_criterio_parada = 1E6;
             // Define o passo para a obtenção dos f(x) a cada NFOB
-            int step_obter_NFOBs = 500;
+            int step_obter_NFOBs = 10000;
             
             // Define os TAOs
             double taoGEO = 1.25;
@@ -293,9 +293,9 @@ namespace Execucoes
             // ========================================
 
             // Parâmetros de execução do algoritmo
-            const double valor_criterio_parada = 10000;
+            const double valor_criterio_parada = 1e6;
             // Define o passo para a obtenção dos f(x) a cada NFOB
-            int step_obter_NFOBs = 250;
+            int step_obter_NFOBs = 10000;
 
             // Define os TAOs
             double taoGEO = 1.0;
@@ -335,39 +335,179 @@ namespace Execucoes
             int quantidade_execucoes = 50;
 
 
-            // // ========================================
-            // // OBTÉM NFEs PARA CADA NFOB DESEJADO
-            // // ========================================
-
-            // // Parâmetros de execução do algoritmo
-            // const double valor_criterio_parada = 1500;
-            // // Define o passo para a obtenção dos f(x) a cada NFOB
-            // int step_obter_NFOBs = 50;
-
-            // // Define os TAOs
-            // double taoGEO = 3.0;
-            // double taoGEOvar = 8.0;
-
-            // // Executa todos os algoritmos
-            // Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
-
-
             // ========================================
-            // OBTÉM MELHORES F(X) VARIANDO TAO
+            // OBTÉM NFEs PARA CADA NFOB DESEJADO
             // ========================================
 
-            // Define que o algoritmo irá executar até certo NFOB e a execução irá retornar o melhor f(x)
-            const int criterio_parada_NFOBouNFEouMELHORFX = 1;
-            // NFOB para a execução encerrar
-            const double valor_criterio_parada = 0.01;
+            // Parâmetros de execução do algoritmo
+            const double valor_criterio_parada = 50000;
+            // Define o passo para a obtenção dos f(x) a cada NFOB
+            int step_obter_NFOBs = 250;
 
-            // Percorre a lista de TAOs e executa os algoritmos
-            List<double> valores_TAO = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10};
+            // Define os TAOs
+            double taoGEO = 3.0;
+            double taoGEOvar = 8.0;
 
-            Executa_Todos_Algoritmos_NFE_OU_MELHORFXporTAO(valores_TAO, quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, valor_criterio_parada, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
+            // Executa todos os algoritmos
+            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
+
+
+            // // ========================================
+            // // OBTÉM MELHORES F(X) VARIANDO TAO
+            // // ========================================
+
+            // // Define que o algoritmo irá executar até certo NFOB e a execução irá retornar o melhor f(x)
+            // const int criterio_parada_NFOBouNFEouMELHORFX = 1;
+            // // NFOB para a execução encerrar
+            // const double valor_criterio_parada = 0.001;
+
+            // // Percorre a lista de TAOs e executa os algoritmos
+            // List<double> valores_TAO = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10};
+
+            // Executa_Todos_Algoritmos_NFE_OU_MELHORFXporTAO(valores_TAO, quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, valor_criterio_parada, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
         }
 
 
+        public static void Execucoes_Rastringin(){
+            // Parâmetros da função
+            const int n_variaveis_projeto = 20;
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
+            List<double> limites_inferiores_variaveis = Enumerable.Repeat(-5.12, n_variaveis_projeto).ToList();
+            List<double> limites_superiores_variaveis = Enumerable.Repeat(5.12, n_variaveis_projeto).ToList();
+            double fx_esperado = 0.0;
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 4;
+           
+            // Define a quantidade de execuções
+            int quantidade_execucoes = 50;
+
+
+            // ========================================
+            // OBTÉM NFEs PARA CADA NFOB DESEJADO
+            // ========================================
+
+            // Parâmetros de execução do algoritmo
+            const double valor_criterio_parada = 1e6;
+            // Define o passo para a obtenção dos f(x) a cada NFOB
+            int step_obter_NFOBs = 10000;
+
+            // Define os TAOs
+            double taoGEO = 1.0;
+            double taoGEOvar = 1.75;
+
+            // Executa todos os algoritmos
+            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
+        }
+
+
+        public static void Execucoes_Schwefel(){
+            // Parâmetros da função
+            const int n_variaveis_projeto = 10;
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
+            List<double> limites_inferiores_variaveis = Enumerable.Repeat(-500.0, n_variaveis_projeto).ToList();
+            List<double> limites_superiores_variaveis = Enumerable.Repeat(500.0, n_variaveis_projeto).ToList();
+            double fx_esperado = 0.0;
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 5;
+           
+            // Define a quantidade de execuções
+            int quantidade_execucoes = 50;
+
+
+            // ========================================
+            // OBTÉM NFEs PARA CADA NFOB DESEJADO
+            // ========================================
+
+            // Parâmetros de execução do algoritmo
+            const double valor_criterio_parada = 1e6;
+            // Define o passo para a obtenção dos f(x) a cada NFOB
+            int step_obter_NFOBs = 10000;
+
+            // Define os TAOs
+            double taoGEO = 1.00;
+            double taoGEOvar = 1.75;
+
+            // Executa todos os algoritmos
+            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
+        }
+
+
+        public static void Execucoes_Ackley(){
+            // Parâmetros da função
+            const int n_variaveis_projeto = 30;
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
+            List<double> limites_inferiores_variaveis = Enumerable.Repeat(-30.0, n_variaveis_projeto).ToList();
+            List<double> limites_superiores_variaveis = Enumerable.Repeat(30.0, n_variaveis_projeto).ToList();
+            double fx_esperado = 0.0;
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 6;
+           
+            // Define a quantidade de execuções
+            int quantidade_execucoes = 50;
+
+
+            // ========================================
+            // OBTÉM NFEs PARA CADA NFOB DESEJADO
+            // ========================================
+
+            // Parâmetros de execução do algoritmo
+            const double valor_criterio_parada = 1e6+1;
+            // Define o passo para a obtenção dos f(x) a cada NFOB
+            int step_obter_NFOBs = 10000;
+
+            // Define os TAOs
+            double taoGEO = 2.25;
+            double taoGEOvar = 2.50;
+
+            // Executa todos os algoritmos
+            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
+        }
+
+
+        public static void Execucoes_F9(){
+            // Parâmetros da função
+            const int n_variaveis_projeto = 2;
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(18, n_variaveis_projeto).ToList();
+            List<double> limites_inferiores_variaveis = Enumerable.Repeat(-10.0, n_variaveis_projeto).ToList();
+            List<double> limites_superiores_variaveis = Enumerable.Repeat(10.0, n_variaveis_projeto).ToList();
+            double fx_esperado = 1.0;
+            // 0 - Griewangk | 1 - Rosenbrock | 2 - DeJong3 | 3 - Spacecraft Design
+            int definicao_funcao_objetivo = 7;
+           
+            // Define a quantidade de execuções
+            int quantidade_execucoes = 50;
+
+            // ========================================
+            // OBTÉM NFEs PARA CADA NFOB DESEJADO
+            // ========================================
+
+            // Parâmetros de execução do algoritmo
+            const double valor_criterio_parada = 1e6;
+            // Define o passo para a obtenção dos f(x) a cada NFOB
+            int step_obter_NFOBs = 10000;
+
+            // Define os TAOs
+            double taoGEO = 1.5;
+            double taoGEOvar = 1.75;
+
+            // Executa todos os algoritmos
+            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, taoGEO, taoGEOvar, valor_criterio_parada, step_obter_NFOBs, fx_esperado);
+
+
+            // // ========================================
+            // // OBTÉM MELHORES F(X) VARIANDO TAO
+            // // ========================================
+
+            // // Define que o algoritmo irá executar até atingir certa precisão e retornará o NFE atingido
+            // const int criterio_parada_NFOBouNFEouMELHORFX = 1;
+            // // NFOB para a execução encerrar
+            // const double valor_criterio_parada = 0.0001;
+
+            // // Percorre a lista de TAOs e executa os algoritmos
+            // List<double> valores_TAO = new List<double>(){1.5, 1.75};
+
+            // Executa_Todos_Algoritmos_NFE_OU_MELHORFXporTAO(valores_TAO, quantidade_execucoes, n_variaveis_projeto, bits_por_variavel_variaveis, definicao_funcao_objetivo, limites_inferiores_variaveis, limites_superiores_variaveis, valor_criterio_parada, fx_esperado, criterio_parada_NFOBouNFEouMELHORFX);
+        }
 
         // =====================================
         // SPACECRAFT OPTIMIZATION
