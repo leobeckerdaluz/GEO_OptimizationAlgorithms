@@ -1,0 +1,515 @@
+TAO = 0.5
+GEO...1...Passou reto o if. NFOB = 12946
+2...Passou reto o if. NFOB = 26596
+3...Passou reto o if. NFOB = 18586
+4...Passou reto o if. NFOB = 12196
+5...Passou reto o if. NFOB = 38776
+6...Passou reto o if. NFOB = 12301
+7...Não contabilizando! NFOB = 40006
+8...Não contabilizando! NFOB = 40006
+9...Não contabilizando! NFOB = 40006
+10...Passou reto o if. NFOB = 12616
+11...Não contabilizando! NFOB = 40006
+12...Não contabilizando! NFOB = 40006
+13...Passou reto o if. NFOB = 30811
+14...Não contabilizando! NFOB = 40006
+15...Passou reto o if. NFOB = 2566
+16...Não contabilizando! NFOB = 40006
+17...Não contabilizando! NFOB = 40006
+18...Passou reto o if. NFOB = 5476
+19...Não contabilizando! NFOB = 40006
+20...Passou reto o if. NFOB = 10891
+21...Passou reto o if. NFOB = 20386
+22...Passou reto o if. NFOB = 4951
+23...Passou reto o if. NFOB = 1261
+24...Não contabilizando! NFOB = 40006
+25...Passou reto o if. NFOB = 28081
+26...Passou reto o if. NFOB = 19501
+27...Passou reto o if. NFOB = 8716
+28...Passou reto o if. NFOB = 8341
+29...Não contabilizando! NFOB = 40006
+30...Passou reto o if. NFOB = 7066
+31...Passou reto o if. NFOB = 5581
+32...Passou reto o if. NFOB = 11836
+33...Passou reto o if. NFOB = 2896
+34...Passou reto o if. NFOB = 21376
+35...Passou reto o if. NFOB = 12466
+36...Não contabilizando! NFOB = 40006
+37...Não contabilizando! NFOB = 40006
+38...Passou reto o if. NFOB = 27136
+39...Não contabilizando! NFOB = 40006
+40...Passou reto o if. NFOB = 1546
+41...Passou reto o if. NFOB = 3076
+42...Passou reto o if. NFOB = 29041
+43...Não contabilizando! NFOB = 40006
+44...Passou reto o if. NFOB = 21226
+45...Não contabilizando! NFOB = 40006
+46...Passou reto o if. NFOB = 17746
+47...Passou reto o if. NFOB = 706
+48...Passou reto o if. NFOB = 4606
+49...Passou reto o if. NFOB = 30346
+50...Não contabilizando! NFOB = 40006
+deubom: 33
+NFE médio GEO: 14292.363636363636
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 0.75
+GEO...1...Passou reto o if. NFOB = 14146
+2...Passou reto o if. NFOB = 20116
+3...Passou reto o if. NFOB = 10561
+4...Não contabilizando! NFOB = 40006
+5...Passou reto o if. NFOB = 14431
+6...Não contabilizando! NFOB = 40006
+7...Passou reto o if. NFOB = 8176
+8...Passou reto o if. NFOB = 2791
+9...Não contabilizando! NFOB = 40006
+10...Passou reto o if. NFOB = 2296
+11...Não contabilizando! NFOB = 40006
+12...Não contabilizando! NFOB = 40006
+13...Passou reto o if. NFOB = 30691
+14...Não contabilizando! NFOB = 40006
+15...Passou reto o if. NFOB = 9076
+16...Passou reto o if. NFOB = 37561
+17...Passou reto o if. NFOB = 511
+18...Passou reto o if. NFOB = 10666
+19...Passou reto o if. NFOB = 1201
+20...Não contabilizando! NFOB = 40006
+21...Passou reto o if. NFOB = 3001
+22...Passou reto o if. NFOB = 4861
+23...Passou reto o if. NFOB = 24196
+24...Passou reto o if. NFOB = 11011
+25...Passou reto o if. NFOB = 5866
+26...Não contabilizando! NFOB = 40006
+27...Passou reto o if. NFOB = 31456
+28...Passou reto o if. NFOB = 12451
+29...Passou reto o if. NFOB = 35281
+30...Passou reto o if. NFOB = 166
+31...Passou reto o if. NFOB = 16051
+32...Passou reto o if. NFOB = 37921
+33...Passou reto o if. NFOB = 6781
+34...Passou reto o if. NFOB = 14866
+35...Não contabilizando! NFOB = 40006
+36...Não contabilizando! NFOB = 40006
+37...Não contabilizando! NFOB = 40006
+38...Passou reto o if. NFOB = 18811
+39...Passou reto o if. NFOB = 18106
+40...Passou reto o if. NFOB = 1681
+41...Passou reto o if. NFOB = 646
+42...Passou reto o if. NFOB = 16561
+43...Passou reto o if. NFOB = 19726
+44...Passou reto o if. NFOB = 20266
+45...Passou reto o if. NFOB = 27226
+46...Passou reto o if. NFOB = 25861
+47...Não contabilizando! NFOB = 40006
+48...Passou reto o if. NFOB = 5086
+49...Passou reto o if. NFOB = 181
+50...Não contabilizando! NFOB = 40006
+deubom: 37
+NFE médio GEO: 14061.675675675675
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 1
+GEO...1...Passou reto o if. NFOB = 19831
+2...Passou reto o if. NFOB = 28321
+3...Passou reto o if. NFOB = 11356
+4...Passou reto o if. NFOB = 1846
+5...Passou reto o if. NFOB = 8296
+6...Passou reto o if. NFOB = 106
+7...Passou reto o if. NFOB = 25426
+8...Passou reto o if. NFOB = 5491
+9...Passou reto o if. NFOB = 22996
+10...Passou reto o if. NFOB = 1186
+11...Passou reto o if. NFOB = 19036
+12...Passou reto o if. NFOB = 3376
+13...Passou reto o if. NFOB = 2821
+14...Passou reto o if. NFOB = 15811
+15...Passou reto o if. NFOB = 3151
+16...Passou reto o if. NFOB = 2326
+17...Passou reto o if. NFOB = 28531
+18...Passou reto o if. NFOB = 20491
+19...Passou reto o if. NFOB = 17641
+20...Passou reto o if. NFOB = 18796
+21...Passou reto o if. NFOB = 22621
+22...Passou reto o if. NFOB = 25231
+23...Passou reto o if. NFOB = 12256
+24...Passou reto o if. NFOB = 3226
+25...Passou reto o if. NFOB = 16081
+26...Passou reto o if. NFOB = 23341
+27...Passou reto o if. NFOB = 21661
+28...Passou reto o if. NFOB = 3646
+29...Passou reto o if. NFOB = 27331
+30...Passou reto o if. NFOB = 11116
+31...Passou reto o if. NFOB = 4921
+32...Passou reto o if. NFOB = 2521
+33...Passou reto o if. NFOB = 3556
+34...Passou reto o if. NFOB = 1816
+35...Passou reto o if. NFOB = 7081
+36...Passou reto o if. NFOB = 6571
+37...Passou reto o if. NFOB = 14326
+38...Passou reto o if. NFOB = 2131
+39...Passou reto o if. NFOB = 211
+40...Passou reto o if. NFOB = 18046
+41...Passou reto o if. NFOB = 5431
+42...Não contabilizando! NFOB = 40006
+43...Passou reto o if. NFOB = 2701
+44...Passou reto o if. NFOB = 16216
+45...Passou reto o if. NFOB = 4186
+46...Passou reto o if. NFOB = 2521
+47...Passou reto o if. NFOB = 3256
+48...Passou reto o if. NFOB = 27136
+49...Passou reto o if. NFOB = 886
+50...Não contabilizando! NFOB = 40006
+deubom: 48
+NFE médio GEO: 11392.875
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 1.25
+GEO...1...Passou reto o if. NFOB = 26971
+2...Passou reto o if. NFOB = 4666
+3...Passou reto o if. NFOB = 2536
+4...Passou reto o if. NFOB = 9136
+5...Passou reto o if. NFOB = 15361
+6...Passou reto o if. NFOB = 6391
+7...Passou reto o if. NFOB = 22366
+8...Passou reto o if. NFOB = 15016
+9...Passou reto o if. NFOB = 2761
+10...Passou reto o if. NFOB = 301
+11...Passou reto o if. NFOB = 18826
+12...Passou reto o if. NFOB = 23581
+13...Passou reto o if. NFOB = 7111
+14...Passou reto o if. NFOB = 9106
+15...Passou reto o if. NFOB = 38416
+16...Passou reto o if. NFOB = 1006
+17...Passou reto o if. NFOB = 5236
+18...Passou reto o if. NFOB = 23026
+19...Passou reto o if. NFOB = 4126
+20...Passou reto o if. NFOB = 14146
+21...Passou reto o if. NFOB = 25621
+22...Passou reto o if. NFOB = 10606
+23...Passou reto o if. NFOB = 5731
+24...Passou reto o if. NFOB = 21796
+25...Passou reto o if. NFOB = 22801
+26...Passou reto o if. NFOB = 7066
+27...Passou reto o if. NFOB = 1576
+28...Passou reto o if. NFOB = 8221
+29...Passou reto o if. NFOB = 20656
+30...Passou reto o if. NFOB = 3046
+31...Passou reto o if. NFOB = 541
+32...Passou reto o if. NFOB = 5146
+33...Passou reto o if. NFOB = 10006
+34...Passou reto o if. NFOB = 721
+35...Passou reto o if. NFOB = 11161
+36...Passou reto o if. NFOB = 36331
+37...Passou reto o if. NFOB = 18241
+38...Não contabilizando! NFOB = 40006
+39...Passou reto o if. NFOB = 8281
+40...Passou reto o if. NFOB = 3061
+41...Passou reto o if. NFOB = 15271
+42...Passou reto o if. NFOB = 4921
+43...Passou reto o if. NFOB = 8041
+44...Passou reto o if. NFOB = 27241
+45...Passou reto o if. NFOB = 11656
+46...Passou reto o if. NFOB = 3391
+47...Passou reto o if. NFOB = 4306
+48...Passou reto o if. NFOB = 2701
+49...Passou reto o if. NFOB = 691
+50...Passou reto o if. NFOB = 19711
+deubom: 49
+NFE médio GEO: 11604.57142857143
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 1.5
+GEO...1...Passou reto o if. NFOB = 14566
+2...Passou reto o if. NFOB = 3166
+3...Passou reto o if. NFOB = 856
+4...Passou reto o if. NFOB = 15091
+5...Passou reto o if. NFOB = 841
+6...Passou reto o if. NFOB = 8281
+7...Passou reto o if. NFOB = 3646
+8...Passou reto o if. NFOB = 3691
+9...Passou reto o if. NFOB = 10096
+10...Passou reto o if. NFOB = 11056
+11...Passou reto o if. NFOB = 9451
+12...Passou reto o if. NFOB = 10306
+13...Passou reto o if. NFOB = 361
+14...Passou reto o if. NFOB = 3631
+15...Passou reto o if. NFOB = 1471
+16...Passou reto o if. NFOB = 3316
+17...Passou reto o if. NFOB = 2071
+18...Passou reto o if. NFOB = 4261
+19...Passou reto o if. NFOB = 8866
+20...Passou reto o if. NFOB = 11056
+21...Passou reto o if. NFOB = 3991
+22...Passou reto o if. NFOB = 11371
+23...Passou reto o if. NFOB = 991
+24...Passou reto o if. NFOB = 9991
+25...Passou reto o if. NFOB = 5041
+26...Passou reto o if. NFOB = 6451
+27...Passou reto o if. NFOB = 11431
+28...Passou reto o if. NFOB = 8731
+29...Passou reto o if. NFOB = 2146
+30...Passou reto o if. NFOB = 6016
+31...Passou reto o if. NFOB = 8326
+32...Passou reto o if. NFOB = 13876
+33...Passou reto o if. NFOB = 301
+34...Passou reto o if. NFOB = 2521
+35...Passou reto o if. NFOB = 21421
+36...Passou reto o if. NFOB = 8986
+37...Passou reto o if. NFOB = 2311
+38...Passou reto o if. NFOB = 26926
+39...Passou reto o if. NFOB = 991
+40...Passou reto o if. NFOB = 1681
+41...Passou reto o if. NFOB = 4351
+42...Passou reto o if. NFOB = 2266
+43...Passou reto o if. NFOB = 1756
+44...Passou reto o if. NFOB = 9856
+45...Passou reto o if. NFOB = 2761
+46...Passou reto o if. NFOB = 16666
+47...Passou reto o if. NFOB = 7186
+48...Passou reto o if. NFOB = 1561
+49...Passou reto o if. NFOB = 676
+50...Passou reto o if. NFOB = 15886
+deubom: 50
+NFE médio GEO: 6850.9
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 1.75
+GEO...1...Passou reto o if. NFOB = 106
+2...Passou reto o if. NFOB = 556
+3...Passou reto o if. NFOB = 13201
+4...Passou reto o if. NFOB = 5611
+5...Passou reto o if. NFOB = 29866
+6...Passou reto o if. NFOB = 661
+7...Passou reto o if. NFOB = 15451
+8...Não contabilizando! NFOB = 40006
+9...Passou reto o if. NFOB = 1861
+10...Passou reto o if. NFOB = 2461
+11...Passou reto o if. NFOB = 496
+12...Passou reto o if. NFOB = 8896
+13...Passou reto o if. NFOB = 11071
+14...Passou reto o if. NFOB = 15181
+15...Passou reto o if. NFOB = 1246
+16...Passou reto o if. NFOB = 5791
+17...Passou reto o if. NFOB = 61
+18...Passou reto o if. NFOB = 5506
+19...Passou reto o if. NFOB = 211
+20...Passou reto o if. NFOB = 39421
+21...Passou reto o if. NFOB = 2416
+22...Passou reto o if. NFOB = 9046
+23...Passou reto o if. NFOB = 9106
+24...Passou reto o if. NFOB = 616
+25...Passou reto o if. NFOB = 271
+26...Passou reto o if. NFOB = 14611
+27...Passou reto o if. NFOB = 646
+28...Passou reto o if. NFOB = 2446
+29...Passou reto o if. NFOB = 33211
+30...Passou reto o if. NFOB = 1111
+31...Passou reto o if. NFOB = 8341
+32...Passou reto o if. NFOB = 331
+33...Passou reto o if. NFOB = 2506
+34...Passou reto o if. NFOB = 4576
+35...Passou reto o if. NFOB = 4201
+36...Passou reto o if. NFOB = 10021
+37...Passou reto o if. NFOB = 7141
+38...Passou reto o if. NFOB = 11476
+39...Passou reto o if. NFOB = 6301
+40...Passou reto o if. NFOB = 12421
+41...Passou reto o if. NFOB = 691
+42...Passou reto o if. NFOB = 15991
+43...Passou reto o if. NFOB = 13036
+44...Passou reto o if. NFOB = 22021
+45...Passou reto o if. NFOB = 25216
+46...Passou reto o if. NFOB = 7726
+47...Passou reto o if. NFOB = 5521
+48...Passou reto o if. NFOB = 6766
+49...Passou reto o if. NFOB = 1576
+50...Passou reto o if. NFOB = 1501
+deubom: 49
+NFE médio GEO: 8132.530612244898
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 2
+GEO...1...Passou reto o if. NFOB = 12421
+2...Passou reto o if. NFOB = 9736
+3...Passou reto o if. NFOB = 556
+4...Passou reto o if. NFOB = 5266
+5...Passou reto o if. NFOB = 36541
+6...Passou reto o if. NFOB = 11431
+7...Passou reto o if. NFOB = 5581
+8...Passou reto o if. NFOB = 31396
+9...Passou reto o if. NFOB = 6556
+10...Passou reto o if. NFOB = 19801
+11...Passou reto o if. NFOB = 19426
+12...Passou reto o if. NFOB = 34546
+13...Passou reto o if. NFOB = 21781
+14...Passou reto o if. NFOB = 7186
+15...Passou reto o if. NFOB = 616
+16...Passou reto o if. NFOB = 13741
+17...Passou reto o if. NFOB = 3916
+18...Passou reto o if. NFOB = 31996
+19...Passou reto o if. NFOB = 37291
+20...Passou reto o if. NFOB = 18991
+21...Passou reto o if. NFOB = 15586
+22...Passou reto o if. NFOB = 6256
+23...Não contabilizando! NFOB = 40006
+24...Passou reto o if. NFOB = 151
+25...Passou reto o if. NFOB = 9901
+26...Passou reto o if. NFOB = 1096
+27...Passou reto o if. NFOB = 5431
+28...Passou reto o if. NFOB = 10006
+29...Passou reto o if. NFOB = 17221
+30...Passou reto o if. NFOB = 11296
+31...Passou reto o if. NFOB = 2476
+32...Passou reto o if. NFOB = 6556
+33...Passou reto o if. NFOB = 8131
+34...Passou reto o if. NFOB = 15661
+35...Passou reto o if. NFOB = 3211
+36...Passou reto o if. NFOB = 4666
+37...Passou reto o if. NFOB = 16636
+38...Passou reto o if. NFOB = 166
+39...Passou reto o if. NFOB = 13606
+40...Passou reto o if. NFOB = 25111
+41...Passou reto o if. NFOB = 5566
+42...Passou reto o if. NFOB = 6616
+43...Passou reto o if. NFOB = 11251
+44...Passou reto o if. NFOB = 25486
+45...Passou reto o if. NFOB = 1366
+46...Passou reto o if. NFOB = 16126
+47...Passou reto o if. NFOB = 3361
+48...Passou reto o if. NFOB = 256
+49...Passou reto o if. NFOB = 13591
+50...Não contabilizando! NFOB = 40006
+deubom: 48
+NFE médio GEO: 12199.125
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 2.25
+GEO...1...Não contabilizando! NFOB = 40006
+2...Passou reto o if. NFOB = 32356
+3...Passou reto o if. NFOB = 1261
+4...Passou reto o if. NFOB = 2236
+5...Passou reto o if. NFOB = 34186
+6...Passou reto o if. NFOB = 17146
+7...Passou reto o if. NFOB = 3151
+8...Passou reto o if. NFOB = 3946
+9...Não contabilizando! NFOB = 40006
+10...Passou reto o if. NFOB = 2851
+11...Passou reto o if. NFOB = 3916
+12...Passou reto o if. NFOB = 25546
+13...Passou reto o if. NFOB = 24781
+14...Não contabilizando! NFOB = 40006
+15...Passou reto o if. NFOB = 27361
+16...Passou reto o if. NFOB = 1636
+17...Passou reto o if. NFOB = 1816
+18...Passou reto o if. NFOB = 4981
+19...Passou reto o if. NFOB = 14056
+20...Não contabilizando! NFOB = 40006
+21...Passou reto o if. NFOB = 13891
+22...Não contabilizando! NFOB = 40006
+23...Passou reto o if. NFOB = 136
+24...Passou reto o if. NFOB = 19696
+25...Passou reto o if. NFOB = 9796
+26...Não contabilizando! NFOB = 40006
+27...Passou reto o if. NFOB = 496
+28...Não contabilizando! NFOB = 40006
+29...Passou reto o if. NFOB = 796
+30...Passou reto o if. NFOB = 106
+31...Passou reto o if. NFOB = 12331
+32...Não contabilizando! NFOB = 40006
+33...Passou reto o if. NFOB = 3481
+34...Passou reto o if. NFOB = 29971
+35...Passou reto o if. NFOB = 3061
+36...Passou reto o if. NFOB = 6601
+37...Passou reto o if. NFOB = 1666
+38...Passou reto o if. NFOB = 5866
+39...Passou reto o if. NFOB = 61
+40...Passou reto o if. NFOB = 781
+41...Passou reto o if. NFOB = 34231
+42...Não contabilizando! NFOB = 40006
+43...Passou reto o if. NFOB = 38776
+44...Passou reto o if. NFOB = 11821
+45...Passou reto o if. NFOB = 1576
+46...Não contabilizando! NFOB = 40006
+47...Não contabilizando! NFOB = 40006
+48...Passou reto o if. NFOB = 946
+49...Passou reto o if. NFOB = 8506
+50...Passou reto o if. NFOB = 5011
+deubom: 39
+NFE médio GEO: 10534.076923076924
+
+GEOvar...NFE médio GEOvar: 2
+
+TAO = 2.5
+GEO...1...Não contabilizando! NFOB = 40006
+2...Passou reto o if. NFOB = 376
+3...Passou reto o if. NFOB = 29026
+4...Passou reto o if. NFOB = 27751
+5...Passou reto o if. NFOB = 5986
+6...Não contabilizando! NFOB = 40006
+7...Passou reto o if. NFOB = 691
+8...Não contabilizando! NFOB = 40006
+9...Passou reto o if. NFOB = 1276
+10...Passou reto o if. NFOB = 5131
+11...Passou reto o if. NFOB = 21166
+12...Passou reto o if. NFOB = 28831
+13...Passou reto o if. NFOB = 4096
+14...Passou reto o if. NFOB = 9481
+15...Não contabilizando! NFOB = 40006
+16...Passou reto o if. NFOB = 1081
+17...Não contabilizando! NFOB = 40006
+18...Não contabilizando! NFOB = 40006
+19...Passou reto o if. NFOB = 466
+20...Passou reto o if. NFOB = 33181
+21...Não contabilizando! NFOB = 40006
+22...Passou reto o if. NFOB = 31426
+23...Passou reto o if. NFOB = 316
+24...Não contabilizando! NFOB = 40006
+25...Não contabilizando! NFOB = 40006
+26...Não contabilizando! NFOB = 40006
+27...Não contabilizando! NFOB = 40006
+28...Passou reto o if. NFOB = 4141
+29...Não contabilizando! NFOB = 40006
+30...Passou reto o if. NFOB = 18571
+31...Não contabilizando! NFOB = 40006
+32...Não contabilizando! NFOB = 40006
+33...Não contabilizando! NFOB = 40006
+34...Não contabilizando! NFOB = 40006
+35...Não contabilizando! NFOB = 40006
+36...Passou reto o if. NFOB = 21646
+37...Passou reto o if. NFOB = 20521
+38...Passou reto o if. NFOB = 3301
+39...Não contabilizando! NFOB = 40006
+40...Passou reto o if. NFOB = 36001
+41...Não contabilizando! NFOB = 40006
+42...Não contabilizando! NFOB = 40006
+43...Não contabilizando! NFOB = 40006
+44...Passou reto o if. NFOB = 3766
+45...Passou reto o if. NFOB = 6496
+46...Passou reto o if. NFOB = 13756
+47...Passou reto o if. NFOB = 6046
+48...Não contabilizando! NFOB = 40006
+49...Passou reto o if. NFOB = 28621
+50...Passou reto o if. NFOB = 391
+deubom: 28
+NFE médio GEO: 12983.5
+
+GEOvar...NFE médio GEOvar: 2
+
+===> Médias NFE:
+TAO;GEO;GEOvar
+0,5;14292,363636363636;2
+0,75;14061,675675675675;2
+1;11392,875;2
+1,25;11604,57142857143;2
+1,5;6850,9;2
+1,75;8132,530612244898;2
+2;12199,125;2
+2,25;10534,076923076924;2
+2,5;12983,5;2
