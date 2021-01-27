@@ -28,3 +28,12 @@ GEOtVar -> Muda o TAO conforme o sucesso de cada variável
 AGEO_var -> Ao invés de rankear todos os bits, rankeia por variável e aplica o TAO que tá variando
 
 AGEO louco -> Ao invés de calcular deltaV com o melhor da história, calcula com o melhor atual
+
+--------------------------------------------------------
+
+Retorno GEOs
+
+Retorno ret = new Rotorno();
+ret.NFOB = NFOB;
+ret.melhores_NFOBs = melhores_NFOBs;
+ret.melhor_fx = melhor_fx;

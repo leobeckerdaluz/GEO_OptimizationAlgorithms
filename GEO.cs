@@ -203,7 +203,7 @@ namespace GEO
             probabilidade normalmente distribuida, um bit da população de bits para mutar.
             A função retorna a nova população de bits com o bit mutado.
         */
-        public static List<bool> GEO_ordena_e_flipa_um_bit(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, double tao){
+        public static List<bool> GEO_ordena_e_flipa_um_bit(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, double tau){
 
             int tamanho_populacao_bits = populacao_de_bits.Count;
 
@@ -242,8 +242,8 @@ namespace GEO
                 // k é o índice da população de bits ordenada
                 int k = random.Next(1, tamanho_populacao_bits+1);
                 
-                // Probabilidade Pk => k^(-tao)
-                double Pk = Math.Pow(k, -tao);
+                // Probabilidade Pk => k^(-tau)
+                double Pk = Math.Pow(k, -tau);
 
                 // k precisa ser de 1 a N, mas aqui nos índices começa em 0
                 k -= 1;
@@ -283,7 +283,7 @@ namespace GEO
             bit por variável para mutar
             A função retorna a nova população de bits com os bits mutados.
         */
-        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, double tao){
+        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, double tau){
             
             //============================================================
             // Ordena os bits conforme os indices fitness
@@ -341,8 +341,8 @@ namespace GEO
                     // k é o índice da população de bits ordenada
                     int k = random.Next(1, bits_variavel_projeto+1);
                     
-                    // Probabilidade Pk => k^(-tao)
-                    double Pk = Math.Pow(k, -tao);
+                    // Probabilidade Pk => k^(-tau)
+                    double Pk = Math.Pow(k, -tau);
 
                     // k precisa ser de 1 a N, mas aqui nos índices começa em 0
                     k -= 1;
@@ -429,7 +429,7 @@ namespace GEO
             GEOcanonico e GEOvar são implementadas, como a geração da população, o controle do critério de parada e a
             avaliação do flip de cada bit.
         */
-        public static List<double> GEO_algorithm(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tao, double valor_criterio_parada, int step_obter_NFOBs, double fx_esperado, int criterio_parada_NFOBouNFEouMELHORFX){  
+        public static List<double> GEOs_algorithms(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tau, double valor_criterio_parada, int step_obter_NFOBs, double fx_esperado, int criterio_parada_NFOBouNFEouMELHORFX){  
 
             // definicao_funcao_objetivo
             // 0 - Griewangk
@@ -481,12 +481,12 @@ namespace GEO
             //============================================================
             
 
-            // Inicializa o CoI(i-1) para o controle da mutaçaão do TAO no AGEO
+            // Inicializa o CoI(i-1) para o controle da mutaçaão do TAU no AGEO
             double CoI_1 = 1.0 / Math.Sqrt(populacao_de_bits.Count);
 
-            // tao começa como 0.5 se for o AGEO
+            // tau começa como 0.5 se for o AGEO
             if (tipo_AGEO == 1 || tipo_AGEO == 2){
-                tao = 0.5;
+                tau = 0.5;
             }
 
 
@@ -556,28 +556,28 @@ namespace GEO
                     // Calcula a Chance of Improvement
                     double CoI = (double)melhoraram / populacao_de_bits.Count;
 
-                    // Verifica se INCREASE TAO ou RESTART TAO
-                    if (CoI <= 0.0 || tao > 5){
-                        // RESTART TAO
-                        // Console.WriteLine("RESTART TAO");
+                    // Verifica se INCREASE TAU ou RESTART TAU
+                    if (CoI <= 0.0 || tau > 5){
+                        // RESTART TAU
+                        // Console.WriteLine("RESTART TAU");
                         
-                        // tao = 0.5 * Math.Exp(random.NextDouble() * (1.0/Math.Sqrt(populacao_de_bits.Count)));
+                        // tau = 0.5 * Math.Exp(random.NextDouble() * (1.0/Math.Sqrt(populacao_de_bits.Count)));
                         
-                        // tao = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_de_bits.Count)) );
+                        // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_de_bits.Count)) );
 
-                        // tao = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_de_bits.Count), 1.0/2.0)));
+                        // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_de_bits.Count), 1.0/2.0)));
 
-                        tao = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_de_bits.Count), 1.0/2.0 )));
+                        tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_de_bits.Count), 1.0/2.0 )));
 
                     }
                     else if(CoI <= CoI_1){
-                        // INCREASE TAO
-                        // Console.WriteLine("INCREASE TAO");
+                        // INCREASE TAU
+                        // Console.WriteLine("INCREASE TAU");
 
-                        tao += (0.5 + CoI) * random.NextDouble();
+                        tau += (0.5 + CoI) * random.NextDouble();
                     }
                     
-                    // Console.WriteLine("Valor TAO: {0}", tao);
+                    // Console.WriteLine("Valor TAU: {0}", tau);
 
                     // Atualiza o CoI(i-1) como sendo o atual CoI(i)
                     CoI_1 = CoI;
@@ -590,11 +590,11 @@ namespace GEO
                 
                 //GEOcanonico
                 if (tipo_GEO == 0){ 
-                    populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tao);
+                    populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tau);
                 }
                 //GEOvar
                 else if (tipo_GEO == 1){
-                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tao);
+                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, n_variaveis_projeto, bits_por_variavel_variaveis, tau);
                 }
 
 
