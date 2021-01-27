@@ -115,52 +115,88 @@ namespace SpaceConceptOptimizer.ModelsManager
         /// <param name="s"></param>
         /// <param name="o"></param>
         /// <returns></returns>
+        // public static double DragDeltaV(Satellite s, Orbit o, int iteration)
+        // {
+        //     if (iteration > 100)
+        //         return s.Propulsion.DeltaV_pertubations;
+
+        //     //Atmospheric Density, Function of Altitude
+        //     double[] ps = Interpolate_p(o);
+
+        //     //Atmospheric acceleration
+        //     //double a_d = (-1.0 / 2.0) * p *
+        //     //    s.Cd * s.A * Math.Pow(o.Vp, 2);
+
+        //     s.Propulsion.DeltaV_pertubations = 0;
+        //     int cnt = 0;
+        //     foreach (double p in ps)
+        //     {
+        //         double lifeTime = s.T * 3.154e+7;
+        //         lifeTime *= (Settings.Settings.SolarModes[cnt].Years / s.T);
+
+        //         s.Propulsion.DeltaV_pertubations +=
+        //             Math.PI * (s.Cd * s.A / s.M) * p * o.a * o.Vp * (lifeTime / o.Tp);
+        //         cnt++;
+        //     }
+
+        //     //s.M0 = s.M - FuelConsuption(deltaVM0, Settings.Settings.ISP, s);
+
+        //     //double precision = Math.Abs(s.M - s.M0 + s.Md + delta_M);
+
+        //     double mp = s.M * (1 - Math.Exp(-s.Propulsion.Total_deltaV / (Settings.Settings.g0 * Settings.Settings.ISP)));
+        //     double mf = s.Md + mp;
+        //     double precision = Math.Abs(mf - s.M);
+
+        //     s.Mp = mp;
+
+        //     iteration++;
+        //     if (precision < Settings.Settings.PrecisionPropulsion)
+        //     {
+        //         //double delta_V = Settings.Settings.g0 * Settings.Settings.ISP
+        //         //    * Math.Log(s.M0 / (s.M0 + delta_M));
+
+        //         return s.Propulsion.DeltaV_pertubations;
+        //     }
+
+        //     return DragDeltaV(s, o, iteration);
+
+        // }
+
+
+
         public static double DragDeltaV(Satellite s, Orbit o, int iteration)
         {
-            if (iteration > 100)
-                return s.Propulsion.DeltaV_pertubations;
-
             //Atmospheric Density, Function of Altitude
             double[] ps = Interpolate_p(o);
 
-            //Atmospheric acceleration
-            //double a_d = (-1.0 / 2.0) * p *
-            //    s.Cd * s.A * Math.Pow(o.Vp, 2);
+            for(int i=0; i<100; i++){
+                s.Propulsion.DeltaV_pertubations = 0;
+                int cnt = 0;
 
-            s.Propulsion.DeltaV_pertubations = 0;
-            int cnt = 0;
-            foreach (double p in ps)
-            {
-                double lifeTime = s.T * 3.154e+7;
-                lifeTime *= (Settings.Settings.SolarModes[cnt].Years / s.T);
+                foreach (double p in ps){
+                    double lifeTime = s.T * 3.154e+7 * (Settings.Settings.SolarModes[cnt].Years / s.T);
 
-                s.Propulsion.DeltaV_pertubations +=
-                    Math.PI * (s.Cd * s.A / s.M) * p * o.a * o.Vp * (lifeTime / o.Tp);
-                cnt++;
+                    s.Propulsion.DeltaV_pertubations += Math.PI * (s.Cd * s.A / s.M) * p * o.a * o.Vp * (lifeTime / o.Tp);
+                    
+                    cnt++;
+                }
+                
+                double mp = s.M * (1 - Math.Exp(-s.Propulsion.Total_deltaV / (Settings.Settings.g0 * Settings.Settings.ISP)));
+                double mf = s.Md + mp;
+                double precision = Math.Abs(mf - s.M);
+
+                s.Mp = mp;
+
+                if (precision < Settings.Settings.PrecisionPropulsion){
+                    break;
+                }
             }
 
-            //s.M0 = s.M - FuelConsuption(deltaVM0, Settings.Settings.ISP, s);
-
-            //double precision = Math.Abs(s.M - s.M0 + s.Md + delta_M);
-
-            double mp = s.M * (1 - Math.Exp(-s.Propulsion.Total_deltaV / (Settings.Settings.g0 * Settings.Settings.ISP)));
-            double mf = s.Md + mp;
-            double precision = Math.Abs(mf - s.M);
-
-            s.Mp = mp;
-
-            iteration++;
-            if (precision < Settings.Settings.PrecisionPropulsion)
-            {
-                //double delta_V = Settings.Settings.g0 * Settings.Settings.ISP
-                //    * Math.Log(s.M0 / (s.M0 + delta_M));
-
-                return s.Propulsion.DeltaV_pertubations;
-            }
-
-            return DragDeltaV(s, o, iteration);
-
+            return s.Propulsion.DeltaV_pertubations;
         }
+
+
+
 
         /// <summary>
         /// Calculates de Delta V required to put the satellite in De-orbit
