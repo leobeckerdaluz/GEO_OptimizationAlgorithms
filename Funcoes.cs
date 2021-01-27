@@ -44,24 +44,33 @@ namespace Funcoes_Definidas
                     }
                 
                 // F6
-                case 6:
+                case 4:
                     return funcao_Rastringin(fenotipo_variaveis_projeto);
 
                 // F7
-                case 7:
+                case 5:
                     return funcao_Schwefel(fenotipo_variaveis_projeto);
 
                 // F8
-                case 8:
+                case 6:
                     return funcao_Ackley(fenotipo_variaveis_projeto);
 
                 // F9
-                case 9:
-                    return 2;
+                case 7:
+                    return funcao_F9(fenotipo_variaveis_projeto);
 
                 // F10
-                case 10:
-                    return 2;
+                case 8:
+                    double xi1 = fenotipo_variaveis_projeto[0];
+                    double xi2 = fenotipo_variaveis_projeto[1];
+                    
+                    if (xi1+xi2 < 4){
+                        // Espaço inviável
+                        return Double.MaxValue;
+                    }
+                    else{
+                        return funcao_F10(fenotipo_variaveis_projeto);
+                    }
 
                 // F11
                 case 11:
@@ -141,13 +150,13 @@ namespace Funcoes_Definidas
                 double xi = fenotipo_variaveis_projeto[i];
 
                 double quadrado = Math.Pow(xi, 2);
-                double cosseno = 10.0*Math.Cos(2.0 * Math.PI * xi);
+                double cosseno = 3.0*Math.Cos(2.0 * Math.PI * xi);
                 
                 laco_somatorio += quadrado - cosseno;
             }
 
             // Expressão final de f(x)
-            double fx = 10.0*fenotipo_variaveis_projeto.Count + laco_somatorio;
+            double fx = 3.0*fenotipo_variaveis_projeto.Count + laco_somatorio;
 
             // Retorna o valor de f(x)
             return fx;
@@ -192,6 +201,34 @@ namespace Funcoes_Definidas
 
             // Expressão final de f(x)
             double fx = 20.0 + Math.Exp(1.0) - 20.0*Exp1 - Exp2;
+
+            // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+        public static double funcao_F9(List<double> fenotipo_variaveis_projeto){
+            double xi1 = fenotipo_variaveis_projeto[0];
+            double xi2 = fenotipo_variaveis_projeto[1];
+
+            double soma_quadrados = Math.Pow(xi1, 2.0) + Math.Pow(xi2, 2.0);
+            double cosseno1 = Math.Cos(20.0 * Math.PI * xi1);
+            double cosseno2 = Math.Cos(20.0 * Math.PI * xi2);
+
+            // Expressão final de f(x)
+            double fx = 1.0/2.0 * soma_quadrados - cosseno1*cosseno2 + 2.0;
+
+            // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+        public static double funcao_F10(List<double> fenotipo_variaveis_projeto){
+            double xi1 = fenotipo_variaveis_projeto[0];
+            double xi2 = fenotipo_variaveis_projeto[1];
+
+            // Expressão final de f(x)
+            double fx = 0.25*Math.Pow(xi1,4) - 3*Math.Pow(xi1,3) + 11*Math.Pow(xi1,2) - 13*xi1 + 0.25*Math.Pow(xi2,4) - 3*Math.Pow(xi2,3) + 11*Math.Pow(xi2,2) - 13*xi1;
 
             // Retorna o valor de f(x)
             return fx;
