@@ -78,15 +78,15 @@ namespace GEO
         /*
             A função calcula o fenótipo de cada uma das variáveis de projeto.
         */
-        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, ParametrosDaFuncao parametros_problema){
+        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo){
             //============================================================
             // Calcula o fenótipo para cada variável de projeto
             //============================================================
 
-            int n_variaveis_projeto = parametros_problema.n_variaveis_projeto;
-            List<double> limites_inferiores_variaveis = parametros_problema.limites_inferiores_variaveis;
-            List<double> limites_superiores_variaveis = parametros_problema.limites_superiores_variaveis;
-            List<int> bits_por_variavel_variaveis = parametros_problema.bits_por_variavel_variaveis;
+            int n_variaveis_projeto = codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis.Count;
+            List<double> limites_inferiores_variaveis = codificacao_binaria_para_fenotipo.limites_inferiores_variaveis;
+            List<double> limites_superiores_variaveis = codificacao_binaria_para_fenotipo.limites_superiores_variaveis;
+            List<int> bits_por_variavel_variaveis = codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis;
 
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
@@ -140,7 +140,7 @@ namespace GEO
         /*
             A função tem como objetivo flipar cada bit e calcular a fx, retornando a fx para cada flip.
         */
-        public static List<BitVerificado> obtem_lista_fxs_flipando(List<bool> populacao_de_bits, ParametrosDaFuncao parametros_problema){
+        public static List<BitVerificado> obtem_lista_fxs_flipando(List<bool> populacao_de_bits, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo){
 
             // Cria uma lista contendo as informações sobre mutar um bit
             List<BitVerificado> lista_informacoes_mutacao = new List<BitVerificado>();
@@ -155,7 +155,7 @@ namespace GEO
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                 // Calcula a fitness da populacao_de_bits com o bit flipado
-                List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits_flipado, parametros_problema);
+                List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits_flipado, codificacao_binaria_para_fenotipo);
 
                 double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
                 
@@ -355,7 +355,7 @@ namespace GEO
         /*
             A função verifica o critério de parada da execução.
         */
-        public static bool Verifica_Criterio_Parada(ParametrosCriterioParada parametros_criterio_parada, double fx_esperado, int NFOB, double melhor_fx){
+        public static bool Verifica_Criterio_Parada(ParametrosCriterioParada parametros_criterio_parada, int NFOB, double melhor_fx){
             
             // Se o critério de parada for de NFOB...
             if (parametros_criterio_parada.tipo_criterio_parada == 0) {
@@ -370,7 +370,7 @@ namespace GEO
             else if (parametros_criterio_parada.tipo_criterio_parada == 1){
                 
                 // Determina a condição final
-                bool condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
+                bool condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
                 
                 return condition;
             }
@@ -379,7 +379,7 @@ namespace GEO
             else if (parametros_criterio_parada.tipo_criterio_parada == 2){
                 
                 // Verifica a condição por precisão
-                bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
+                bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
                 
                 // Verifica a condição por NFOB
                 bool condition2 = NFOB >= parametros_criterio_parada.NFOB_criterio_parada;
@@ -407,9 +407,7 @@ namespace GEO
             Essa função é a função principal. Nesse bloco toda a lógica para o GEO e GEOvar é implementada, 
             além do AGEO1, AGEO2 e o mix de AGEO1var e AGEO2var.
         */
-        // public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, int n_variaveis_projeto, List<int> bits_por_variavel_variaveis, int definicao_funcao_objetivo, List<double> limites_inferiores_variaveis, List<double> limites_superiores_variaveis, double tau, double valor_criterio_parada, int step_obter_NFOBs, double fx_esperado, int criterio_parada_NFOBouNFEouMELHORFX){ 
-
-        public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, ParametrosCriterioParada parametros_criterio_parada){   
+        public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo, ParametrosCriterioParada parametros_criterio_parada){   
 
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo
@@ -431,14 +429,14 @@ namespace GEO
             // Geração da População de Bits Inicial
             //============================================================
             
-            List<bool> populacao_atual = geracao_populacao_de_bits(parametros_problema.bits_por_variavel_variaveis);
+            List<bool> populacao_atual = geracao_populacao_de_bits(codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis);
 
             //============================================================
             // Calcula o primeiro Valor Referência
             //============================================================
             
             // Inicializa o fenótipo das variáveis de projeto
-            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, parametros_problema);
+            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, codificacao_binaria_para_fenotipo);
 
             double atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
             
@@ -487,7 +485,7 @@ namespace GEO
                 // Avalia o flip para cada bit
                 //============================================================
 
-                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, parametros_problema);
+                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, parametros_problema, codificacao_binaria_para_fenotipo);
 
                 // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
                 for (int i=0; i<populacao_atual.Count; i++){
@@ -549,7 +547,7 @@ namespace GEO
                 }
                 //GEOvar
                 else if (tipo_GEO == 1){
-                    populacao_atual = ordena_por_var_e_perturba_por_var(populacao_atual, lista_informacoes_mutacao, parametros_problema.bits_por_variavel_variaveis, tau);
+                    populacao_atual = ordena_por_var_e_perturba_por_var(populacao_atual, lista_informacoes_mutacao, codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis, tau);
                 }
 
 
@@ -558,7 +556,7 @@ namespace GEO
                 //============================================================
 
                 // Calcula a fitness da nova população de bits
-                fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits, parametros_problema);
+                fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, codificacao_binaria_para_fenotipo);
 
                 atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
                 
@@ -599,7 +597,7 @@ namespace GEO
                 // Verifica o critério de parada
                 //============================================================
                 
-                bool parada = Verifica_Criterio_Parada(parametros_criterio_parada, parametros_problema.fx_esperado, NFOB, melhor_fx);
+                bool parada = Verifica_Criterio_Parada(parametros_criterio_parada, NFOB, melhor_fx);
                 
                 if (parada){
                     break;

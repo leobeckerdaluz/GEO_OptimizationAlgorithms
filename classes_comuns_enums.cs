@@ -17,6 +17,7 @@ namespace Classes_Comuns_Enums
         public int step_para_obter_NFOBs { get; set; }
         public int NFOB_criterio_parada { get; set; }
         public double PRECISAO_criterio_parada { get; set; }
+        public double fx_esperado { get; set; }
     }
     // 'parada_por_NFOB_atingido';
     // 'parada_por_Precisao_atingida';
@@ -35,8 +36,10 @@ namespace Classes_Comuns_Enums
 
     public class ParametrosDaFuncao {
         public int definicao_funcao_objetivo { get; set; }
-        public double fx_esperado { get; set; }
         public int n_variaveis_projeto { get; set; }
+    }
+    
+    public class CodificacaoBinariaParaFenotipo {
         public List<int> bits_por_variavel_variaveis { get; set; }
         public List<double> limites_inferiores_variaveis { get; set; }
         public List<double>  limites_superiores_variaveis { get; set; }
