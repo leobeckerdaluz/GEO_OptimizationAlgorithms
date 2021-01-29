@@ -1,4 +1,4 @@
-﻿// Diretivas de compilação para controle de partes do código
+// Diretivas de compilação para controle de partes do código
 // #define DEBUG_CONSOLE
 // #define DEBUG_FUNCTION
 // #define DEBUG_NOVO_MELHOR_FX
@@ -177,7 +177,7 @@ namespace GEO
             A função ordena toda a população de bits e escolhe, com probabilidade normalmente 
             distribuida, um bit da população de bits para mutar.
         */
-        public static List<bool> GEO_ordena_e_flipa_um_bit(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, double tau){
+        public static List<bool> ordena_tudo_e_perturba_um_bit(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, double tau){
 
             int tamanho_populacao_bits = populacao_de_bits.Count;
 
@@ -253,7 +253,7 @@ namespace GEO
             A função ordenaa todos os bits de cada variável e, posteriormente, escolhe com probabilidade normalmente 
             distribuida, um bit por variável para mutar.
         */
-        public static List<bool> GEOvar_ordena_e_flipa_bits(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, List<int> bits_por_variavel_variaveis, double tau){
+        public static List<bool> ordena_por_var_e_perturba_por_var(List<bool> populacao_de_bits, List<BitVerificado> lista_informacoes_mutacao, List<int> bits_por_variavel_variaveis, double tau){
             
             //============================================================
             // Ordena os bits conforme os indices fitness
@@ -431,7 +431,7 @@ namespace GEO
             // Geração da População de Bits Inicial
             //============================================================
             
-            List<bool> populacao_de_bits = geracao_populacao_de_bits(parametros_problema.bits_por_variavel_variaveis);
+            List<bool> populacao_atual = geracao_populacao_de_bits(parametros_problema.bits_por_variavel_variaveis);
 
             //============================================================
             // Calcula o primeiro Valor Referência
@@ -450,7 +450,7 @@ namespace GEO
 
 #if DEBUG_CONSOLE    
             Console.WriteLine("População de bits gerado:");
-            ApresentaCromossomoBool(populacao_de_bits);        
+            ApresentaCromossomoBool(populacao_atual);        
             Console.WriteLine("Melhor fx: " + melhor_fx);
 #endif
 
@@ -459,7 +459,7 @@ namespace GEO
             // AGEOs
             //====================================================================
             // Inicializa o CoI(i-1) para o controle da mutaçaão do TAU no AGEO
-            double CoI_1 = 1.0 / Math.Sqrt(populacao_de_bits.Count);
+            double CoI_1 = 1.0 / Math.Sqrt(populacao_atual.Count);
 
             // tau começa como 0.5 se for o AGEO
             if (tipo_AGEO == 1 || tipo_AGEO == 2){
@@ -478,7 +478,7 @@ namespace GEO
 
 #if DEBUG_CONSOLE
                 Console.WriteLine("População de Bits começo while:");
-                ApresentaCromossomoBool(populacao_de_bits);
+                ApresentaCromossomoBool(populacao_atual);
                 Console.WriteLine("Fx = " + atual_fx);
                 Console.WriteLine("Fx melhor = " + melhor_fx);
 #endif
@@ -487,10 +487,10 @@ namespace GEO
                 // Avalia o flip para cada bit
                 //============================================================
 
-                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_de_bits, parametros_problema);
+                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, parametros_problema);
 
                 // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
-                for (int i=0; i<populacao_de_bits.Count; i++){
+                for (int i=0; i<populacao_atual.Count; i++){
                     NFOB++;
                 }
             
@@ -515,13 +515,13 @@ namespace GEO
                     }
 
                     // Calcula a Chance of Improvement
-                    double CoI = (double) melhoraram / populacao_de_bits.Count;
+                    double CoI = (double) melhoraram / populacao_atual.Count;
 
                     // Se a CoI for zero, restarta o TAU
                     if (CoI <= 0.0 || tau > 5){
-                        // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_de_bits.Count)) );
-                        // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_de_bits.Count), 1.0/2.0)));
-                        tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_de_bits.Count), 1.0/2.0 )));
+                        // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
+                        // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
+                        tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
 
                     }
                     // Senão, se for menor que o CoI anterior, aumenta o TAU
@@ -530,7 +530,7 @@ namespace GEO
                     }
                     
 #if DEBUG_CONSOLE
-                    Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_de_bits.Count, melhoraram);
+                    Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
                     Console.WriteLine("Valor TAU: {0}", tau);
 #endif
 
@@ -545,11 +545,11 @@ namespace GEO
                 
                 //GEOcanonico
                 if (tipo_GEO == 0){ 
-                    populacao_de_bits = GEO_ordena_e_flipa_um_bit(populacao_de_bits, lista_informacoes_mutacao, tau);
+                    populacao_atual = ordena_tudo_e_perturba_um_bit(populacao_atual, lista_informacoes_mutacao, tau);
                 }
                 //GEOvar
                 else if (tipo_GEO == 1){
-                    populacao_de_bits = GEOvar_ordena_e_flipa_bits(populacao_de_bits, lista_informacoes_mutacao, parametros_problema.bits_por_variavel_variaveis, tau);
+                    populacao_atual = ordena_por_var_e_perturba_por_var(populacao_atual, lista_informacoes_mutacao, parametros_problema.bits_por_variavel_variaveis, tau);
                 }
 
 
