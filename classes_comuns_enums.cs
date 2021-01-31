@@ -5,6 +5,16 @@ using System.Runtime.InteropServices;
 
 namespace Classes_Comuns_Enums
 {
+    /*
+        Classe para armazenar as informações da mutação de um bit.
+        Para cada bit, é armazenado o delta fitness caso mute e o indice do bit na população
+    */
+    public class BitVerificado{
+        public double funcao_objetivo_flipando { get; set; }
+        public int indice_bit_mutado { get; set; }
+    }
+    
+    
     public class RetornoGEOs {
         public int NFOB { get; set; }
         public double melhor_fx { get; set; }
@@ -43,5 +53,11 @@ namespace Classes_Comuns_Enums
         public List<int> bits_por_variavel_variaveis { get; set; }
         public List<double> limites_inferiores_variaveis { get; set; }
         public List<double>  limites_superiores_variaveis { get; set; }
+    }
+
+
+    public class RestricoesLaterais {
+        public double limite_inferior_variavel { get; set; }
+        public double limite_superior_variavel { get; set; }
     }
 }

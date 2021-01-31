@@ -12,25 +12,11 @@ using SpaceDesignTeste;
 
 using Classes_Comuns_Enums;
 
-namespace GEO
-{
-    /*
-        Classe para armazenar as informações da mutação de um bit.
-        Para cada bit, é armazenado o delta fitness caso mute e o indice do bit na população
-    */
-    public class BitVerificado{
-        public double funcao_objetivo_flipando { get; set; }
-        public int indice_bit_mutado { get; set; }
-    }
-
-
-
-
+namespace GEO{
     /*
         Classe principal contendo os algoritmos GEO
     */
-    public class GEO
-    {
+    public class GEO{
         // Inicializa a variável global para a genração de números aleatórios
         public static Random random = new Random();
       

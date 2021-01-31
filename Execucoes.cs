@@ -927,20 +927,20 @@ namespace Execucoes
         // MAIN
         // =====================================
 
-        public static void Main(string[] args){
-            Console.WriteLine("Rodando!");
+        // public static void Main(string[] args){
+        //     Console.WriteLine("Rodando!");
 
-            Execucoes_Griewangk();
-            // Execucoes_Rosenbrock();
-            // Execucoes_DeJong3();
-            // Execucoes_Rastringin();
-            // Execucoes_Schwefel();
-            // Execucoes_Ackley();
-            // Execucoes_F9();
+        //     Execucoes_Griewangk();
+        //     // Execucoes_Rosenbrock();
+        //     // Execucoes_DeJong3();
+        //     // Execucoes_Rastringin();
+        //     // Execucoes_Schwefel();
+        //     // Execucoes_Ackley();
+        //     // Execucoes_F9();
 
-            // ExtensiveSearch_SpacecraftOptimization();
-            // Teste_FuncoesObjetivo_SpacecraftOptimization();
-            // Execucoes_SpacecraftOptimization();
-        }
+        //     // ExtensiveSearch_SpacecraftOptimization();
+        //     // Teste_FuncoesObjetivo_SpacecraftOptimization();
+        //     // Execucoes_SpacecraftOptimization();
+        // }
     }
 }

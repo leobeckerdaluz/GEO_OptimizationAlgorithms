@@ -4,25 +4,6 @@ Por que Griwangk com 16 bits?
 
 ------------------------------------------------------------
 
-POO em todo o GEO e AGEO
-
-GEOvar.Create(
-    n_variaveis_projeto, 
-    bits_por_cada_variavel, 
-    limites_inferiores_cada_variavel, 
-    limites_superiores_cada_variavel, 
-    tao 
-    identificacao_funcao_objetivo, 
-);
-
-int NFOB_atingido = GEOvar.Execute_Until_Precision(0.01, fx_esperado);
-
-List<double> fx_para_cada_NFOB_desejado = GEOcan.Execute_Until_NFOB(100000);
-
-GEOvar.End();
-
-------------------------------------------------------------
-
 GEOtVar -> Muda o TAO conforme o sucesso de cada variável
 
 AGEO_var -> Ao invés de rankear todos os bits, rankeia por variável e aplica o TAO que tá variando
@@ -31,9 +12,4 @@ AGEO louco -> Ao invés de calcular deltaV com o melhor da história, calcula co
 
 --------------------------------------------------------
 
-Retorno GEOs
-
-Retorno ret = new Rotorno();
-ret.NFOB = NFOB;
-ret.melhores_NFOBs = melhores_NFOBs;
-ret.melhor_fx = melhor_fx;
+O resto foi Implementado
