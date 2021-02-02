@@ -129,9 +129,10 @@ namespace Funcoes_Definidas
 
             // Laço para o somatório e produtório
             for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
-                laco_somatorio += Math.Pow(fenotipo_variaveis_projeto[i], 2);
-                // laco_produto *= Math.Cos( Math.PI * fenotipo_variaveis_projeto[i] / Math.Sqrt(i+1) );
-                laco_produto *= Math.Cos( fenotipo_variaveis_projeto[i] / Math.Sqrt(i+1) );
+                double xi = fenotipo_variaveis_projeto[i];
+                laco_somatorio += Math.Pow(xi, 2);
+                // laco_produto *= Math.Cos( Math.PI * xi / Math.Sqrt(i+1) );
+                laco_produto *= Math.Cos( xi / Math.Sqrt(i+1) );
             }
 
             // Expressão final de f(x)

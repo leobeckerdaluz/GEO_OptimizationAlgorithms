@@ -60,4 +60,23 @@ namespace Classes_Comuns_Enums
         public double limite_inferior_variavel { get; set; }
         public double limite_superior_variavel { get; set; }
     }
+
+    public class Perturbacao{
+        public double xi_antes_da_perturbacao {get; set;}
+        public double xi_depois_da_perturbacao {get; set;}
+        public double fx_depois_da_perturbacao {get; set;}
+        public int indice_variavel_projeto {get; set;}
+    }
+
+    enum EnumNomesFuncoesObjetivo{
+        enum_griwangk,
+        enum_rosenbrock,
+        enum_dejong3,
+        enum_spacecraft,
+        enum_rastringin,
+        enum_schwefel,
+        enum_ackley,
+        enum_F09,
+        enum_F10
+    }
 }
