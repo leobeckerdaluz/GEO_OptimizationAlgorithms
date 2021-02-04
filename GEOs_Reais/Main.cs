@@ -13,19 +13,6 @@ namespace GEOs_REAIS
             Console.WriteLine("Rodando...");
 
             // //======================================================
-            // // GRIEWANGK
-            // //======================================================
-            // const double tau = 1.25;
-            // const int n_variaveis_projeto = 10;
-            // const int definicao_funcao_objetivo = 0;
-            // List<RestricoesLaterais> restricoes_laterais_variaveis = new List<RestricoesLaterais>();
-            // for(int i=0; i<n_variaveis_projeto; i++){
-            //     restricoes_laterais_variaveis.Add( 
-            //         new RestricoesLaterais(){limite_inferior_variavel=-600.0, limite_superior_variavel=600.0}
-            //     );
-            // }
-
-            // //======================================================
             // // SCHWEFEL
             // //======================================================
             // const double tau = 6.25;
@@ -38,10 +25,28 @@ namespace GEOs_REAIS
             //     );
             // }
 
+
+            //======================================================
+            // GRIEWANGK
+            //======================================================
+            const int n_variaveis_projeto = 10;
+            const int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
+            List<RestricoesLaterais> restricoes_laterais_variaveis = new List<RestricoesLaterais>();
+            for(int i=0; i<n_variaveis_projeto; i++){
+                restricoes_laterais_variaveis.Add( 
+                    new RestricoesLaterais(){limite_inferior_variavel=-600.0, limite_superior_variavel=600.0}
+                );
+            }
+            const double tau_GEOreal1 = 1.25;
+            const double tau_GEOreal2 = 1.75;
+            // const double std = 1;
+            const double std1 = 2.0;
+            const int P = 16;
+
+
             // //======================================================
             // // RASTRINGIN
             // //======================================================
-            // const double tau = 1.75;
             // const int n_variaveis_projeto = 20;
             // const int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
             // List<RestricoesLaterais> restricoes_laterais_variaveis = new List<RestricoesLaterais>();
@@ -50,86 +55,95 @@ namespace GEOs_REAIS
             //         new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12}
             //     );
             // }
-
-            //======================================================
-            // RASTRINGIN VAR
-            //======================================================
-            const int n_variaveis_projeto = 20;
-            const int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
-            List<RestricoesLaterais> restricoes_laterais_variaveis = new List<RestricoesLaterais>();
-            for(int i=0; i<n_variaveis_projeto; i++){
-                restricoes_laterais_variaveis.Add( 
-                    new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12}
-                );
-            }
-            const double tau = 2.25;
-            const double std1 = 8;
-            const int P = 8;
-            
+            // const double tau_GEOreal1 = 1.75;
+            // const double tau_GEOreal2 = 2.25;
+            // // const double std = 1;
+            // const double std1 = 8;
+            // const int P = 8;
 
 
-            double std = 1;
-            int step_obter_NFOBs = 250;
-            int NFOB_criterio_parada = 25000;
+            List<double> stds = new List<double>{0.1, 0.2, 0.5, 0.8, 1, 1.2, 1.5};
 
+            const int step_obter_NFOBs = 250;
+            const int NFOB_criterio_parada = 25000;
             const int quantidade_execucoes = 50;
-            List<RetornoGEOs> todos_retornos = new List<RetornoGEOs>();
-            for (int i=0; i<quantidade_execucoes; i++){
-                Console.Write("{0}...", i);
+
+            foreach (double std in stds){
+
+                List<RetornoGEOs> retornos_execucoes_GEOreal1 = new List<RetornoGEOs>();
+                List<RetornoGEOs> retornos_execucoes_GEOreal2 = new List<RetornoGEOs>();
+                List<RetornoGEOs> retornos_execucoes_AGEOreal1 = new List<RetornoGEOs>();
+                List<RetornoGEOs> retornos_execucoes_AGEOreal2 = new List<RetornoGEOs>();
+                
+                for (int i=0; i<quantidade_execucoes; i++){
+                    Console.Write("{0}...", i);
+
+                    GEOsBASE_REAL geo_real1 = new GEOsBASE_REAL(
+                        tau_GEOreal1,
+                        n_variaveis_projeto,
+                        definicao_funcao_objetivo,
+                        restricoes_laterais_variaveis,
+                        step_obter_NFOBs,
+                        std);
+
+                    RetornoGEOs retorno_GEOreal1 = geo_real1.rodar_por_NFOB(NFOB_criterio_parada);
+                    retornos_execucoes_GEOreal1.Add(retorno_GEOreal1);
 
 
-                // GEOsBASE_REAL geo_real = new GEOsBASE_REAL(
-                //     tau,
-                //     n_variaveis_projeto,
-                //     definicao_funcao_objetivo,
-                //     restricoes_laterais_variaveis,
-                //     step_obter_NFOBs,
-                //     std);
-
-                // RetornoGEOs retorno = geo_real.rodar_por_NFOB(NFOB_criterio_parada);
-                // todos_retornos.Add(retorno);
-
-
-                GEOvar_REAL geovar_real = new GEOvar_REAL(
-                    tau,
-                    n_variaveis_projeto,
-                    definicao_funcao_objetivo,
-                    restricoes_laterais_variaveis,
-                    step_obter_NFOBs,
-                    std,
-                    std1,
-                    P);
-
-                RetornoGEOs retorno = geovar_real.rodar_por_NFOB(NFOB_criterio_parada);
-                todos_retornos.Add(retorno);
+                    // GEOvar_REAL geo_real2 = new GEOvar_REAL(
+                    //     tau_GEOreal2,
+                    //     n_variaveis_projeto,
+                    //     definicao_funcao_objetivo,
+                    //     restricoes_laterais_variaveis,
+                    //     step_obter_NFOBs,
+                    //     std,
+                    //     std1,
+                    //     P);
+                    
+                    // RetornoGEOs retorno_GEOreal2 = geo_real2.rodar_por_NFOB(NFOB_criterio_parada);
+                    // retornos_execucoes_GEOreal2.Add(retorno_GEOreal2);
 
 
-                // const int tipo_AGEO = 2;
-                // AGEOs_REAL ageo1 = new AGEOs_REAL(
-                //     tau,
-                //     n_variaveis_projeto,
-                //     definicao_funcao_objetivo,
-                //     restricoes_laterais_variaveis,
-                //     step_obter_NFOBs,
-                //     std,
-                //     tipo_AGEO);
+                    AGEOs_REAL AGEOreal1 = new AGEOs_REAL(
+                        tau_GEOreal1,
+                        n_variaveis_projeto,
+                        definicao_funcao_objetivo,
+                        restricoes_laterais_variaveis,
+                        step_obter_NFOBs,
+                        std,
+                        1);
 
-                // RetornoGEOs retorno = ageo1.rodar_por_NFOB(NFOB_criterio_parada);
-                // todos_retornos.Add(retorno);
-            }
+                    RetornoGEOs retorno_AGEOreal1 = AGEOreal1.rodar_por_NFOB(NFOB_criterio_parada);
+                    retornos_execucoes_AGEOreal1.Add(retorno_AGEOreal1);
 
-            // Para cada NFOB, avalia as execuções
-            int quantidade_NFOBs = todos_retornos[0].melhores_NFOBs.Count;
-            for(int i=0; i<quantidade_NFOBs; i++){
-                double sum = 0.0;
-                foreach(RetornoGEOs ret in todos_retornos){
-                    sum += ret.melhores_NFOBs[i];
+
+                    AGEOs_REAL AGEOreal2 = new AGEOs_REAL(
+                        tau_GEOreal1,
+                        n_variaveis_projeto,
+                        definicao_funcao_objetivo,
+                        restricoes_laterais_variaveis,
+                        step_obter_NFOBs,
+                        std,
+                        2);
+
+                    RetornoGEOs retorno_AGEOreal2 = AGEOreal2.rodar_por_NFOB(NFOB_criterio_parada);
+                    retornos_execucoes_AGEOreal2.Add(retorno_AGEOreal2);
                 }
-                double media_NFOBs = sum / quantidade_execucoes;
-                string media_str = (media_NFOBs.ToString()).Replace('.',',');
-                Console.WriteLine(media_str);
-            }
 
+                // Para cada NFOB, avalia as execuções
+                int quantidade_NFOBs = retornos_execucoes[0].melhores_NFOBs.Count;
+                Console.WriteLine("");
+                for(int i=0; i<quantidade_NFOBs; i++){
+                    double sum = 0.0;
+                    foreach(RetornoGEOs ret in retornos_execucoes){
+                        sum += ret.melhores_NFOBs[i];
+                    }
+                    double media_NFOBs = sum / quantidade_execucoes;
+                    string media_str = (media_NFOBs.ToString()).Replace('.',',');
+                    Console.WriteLine(media_str);
+                }
+
+            }
            
 
 

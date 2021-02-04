@@ -1,6 +1,7 @@
 // #define DEBUG_FUNCTION
 // #define DEBUG_CONSOLE
 // #define DEBUG_FUNCTION_OVERLIMIT
+// #define NOVO_MELHOR_FX
 
 using System;
 using System.Collections.Generic;
@@ -149,6 +150,11 @@ namespace GEOs_REAIS
        
         public virtual void verifica_perturbacoes()
         {
+
+#if DEBUG_CONSOLE
+            Console.WriteLine("===================================================");
+#endif
+
             // Inicia a lista de perturbações zerada
             List<Perturbacao> perturbacoes = new List<Perturbacao>();
             
@@ -276,7 +282,7 @@ namespace GEOs_REAIS
         public virtual void avaliacao(){
             if (fx_atual < fx_melhor){
 
-#if DEBUG_CONSOLE
+#if NOVO_MELHOR_FX
                 Console.WriteLine("AVALIAÇÃO: fx atual = {0} < fx_melhor = {1}", fx_atual, fx_melhor);
 #endif
 
@@ -290,48 +296,21 @@ namespace GEOs_REAIS
             geracao_populacao();
             while(true)
             {
-
-#if DEBUG_CONSOLE || DEBUG_FUNCTION
-                Console.WriteLine("===================================================");
-#endif
-
                 verifica_perturbacoes();
                 mutacao_do_tau_AGEOs();
                 ordena_e_perturba();
                 avaliacao();
+
+                // if ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(fx_esperado)) <= PRECISAO_criterio_parada )
                 if ( NFOB >= NFOB_criterio_parada)
                 {
-                    
 #if DEBUG_CONSOLE
                     Console.WriteLine("Critério de parada atingido por NFOB = {0} >= criterio = {1}", NFOB, NFOB_criterio_parada);
 #endif
-
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFOB = this.NFOB;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFOBs = this.melhores_NFOBs;
-                    
-                    return retorno;
-                }
-            }
-
-        }  
-
-
-        public virtual RetornoGEOs rodar_por_PRECISAO(double PRECISAO_criterio_parada, double fx_esperado){
-            geracao_populacao();
-            while(true)
-            {
-                verifica_perturbacoes();
-                mutacao_do_tau_AGEOs();
-                ordena_e_perturba();
-                avaliacao();
-                if ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(fx_esperado)) <= PRECISAO_criterio_parada )
-                {
-                    RetornoGEOs retorno = new RetornoGEOs();
-                    retorno.NFOB = this.NFOB;
-                    retorno.melhor_fx = this.fx_melhor;
-                    retorno.melhores_NFOBs = new List<double>();
                     
                     return retorno;
                 }
