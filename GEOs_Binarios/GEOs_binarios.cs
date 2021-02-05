@@ -64,15 +64,12 @@ namespace GEO{
         /*
             A função calcula o fenótipo de cada uma das variáveis de projeto.
         */
-        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo){
+        public static List<double> calcula_fenotipos_variaveis(List<bool> populacao_de_bits, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis){
             //============================================================
             // Calcula o fenótipo para cada variável de projeto
             //============================================================
 
-            int n_variaveis_projeto = codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis.Count;
-            List<double> limites_inferiores_variaveis = codificacao_binaria_para_fenotipo.limites_inferiores_variaveis;
-            List<double> limites_superiores_variaveis = codificacao_binaria_para_fenotipo.limites_superiores_variaveis;
-            List<int> bits_por_variavel_variaveis = codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis;
+            int n_variaveis_projeto = bits_por_variavel_variaveis.Count;
 
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
@@ -80,8 +77,8 @@ namespace GEO{
             // Transforma o genótipo de cada variável em uma string para depois converter para decimal
             int iterator = 0;
             for (int i=0; i<n_variaveis_projeto; i++){
-                double limite_superior_variavel = limites_superiores_variaveis[i];
-                double limite_inferior_variavel = limites_inferiores_variaveis[i];
+                double limite_superior_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel;
+                double limite_inferior_variavel = restricoes_laterais_variaveis[i].limite_inferior_variavel;
                 double bits_variavel_projeto = bits_por_variavel_variaveis[i];
                 // Cria string representando os bits da variável
                 string fenotipo_xi = "";
@@ -126,7 +123,7 @@ namespace GEO{
         /*
             A função tem como objetivo flipar cada bit e calcular a fx, retornando a fx para cada flip.
         */
-        public static List<BitVerificado> obtem_lista_fxs_flipando(List<bool> populacao_de_bits, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo){
+        public static List<BitVerificado> obtem_lista_fxs_flipando(List<bool> populacao_de_bits, ParametrosDaFuncao parametros_problema, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis){
 
             // Cria uma lista contendo as informações sobre mutar um bit
             List<BitVerificado> lista_informacoes_mutacao = new List<BitVerificado>();
@@ -141,7 +138,7 @@ namespace GEO{
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                 // Calcula a fitness da populacao_de_bits com o bit flipado
-                List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits_flipado, codificacao_binaria_para_fenotipo);
+                List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits_flipado, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
                 double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
                 
@@ -393,7 +390,7 @@ namespace GEO{
             Essa função é a função principal. Nesse bloco toda a lógica para o GEO e GEOvar é implementada, 
             além do AGEO1, AGEO2 e o mix de AGEO1var e AGEO2var.
         */
-        public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo, ParametrosCriterioParada parametros_criterio_parada){   
+        public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis, ParametrosCriterioParada parametros_criterio_parada){   
 
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo
@@ -415,14 +412,14 @@ namespace GEO{
             // Geração da População de Bits Inicial
             //============================================================
             
-            List<bool> populacao_atual = geracao_populacao_de_bits(codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis);
+            List<bool> populacao_atual = geracao_populacao_de_bits(bits_por_variavel_variaveis);
 
             //============================================================
             // Calcula o primeiro Valor Referência
             //============================================================
             
             // Inicializa o fenótipo das variáveis de projeto
-            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, codificacao_binaria_para_fenotipo);
+            List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
             double atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
             
@@ -471,7 +468,7 @@ namespace GEO{
                 // Avalia o flip para cada bit
                 //============================================================
 
-                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, parametros_problema, codificacao_binaria_para_fenotipo);
+                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
                 // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
                 for (int i=0; i<populacao_atual.Count; i++){
@@ -533,7 +530,7 @@ namespace GEO{
                 }
                 //GEOvar
                 else if (tipo_GEO == 1){
-                    populacao_atual = ordena_por_var_e_perturba_por_var(populacao_atual, lista_informacoes_mutacao, codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis, tau);
+                    populacao_atual = ordena_por_var_e_perturba_por_var(populacao_atual, lista_informacoes_mutacao, bits_por_variavel_variaveis, tau);
                 }
 
 
@@ -542,7 +539,7 @@ namespace GEO{
                 //============================================================
 
                 // Calcula a fitness da nova população de bits
-                fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, codificacao_binaria_para_fenotipo);
+                fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
                 atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
                 

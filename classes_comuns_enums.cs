@@ -24,14 +24,16 @@ namespace Classes_Comuns_Enums
 
     public class ParametrosCriterioParada {
         public int tipo_criterio_parada { get; set; }
-        public int step_para_obter_NFOBs { get; set; }
         public int NFOB_criterio_parada { get; set; }
+        
+        public int step_para_obter_NFOBs { get; set; }
+        
         public double PRECISAO_criterio_parada { get; set; }
         public double fx_esperado { get; set; }
     }
     // 'parada_por_NFOB_atingido';
     // 'parada_por_Precisao_atingida';
-    // 'parada_por_Precisao_E_NFOB_atingidos';
+    // 'parada_por_Precisao_ou_NFOB_atingidos';
 
 
     public class QuaisAlgoritmosRodar {
@@ -41,6 +43,12 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2 { get; set; }
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
+        public bool rodar_GEOreal1 { get; set; }
+        public bool rodar_GEOreal2 { get; set; }
+        public bool rodar_AGEO1real1 { get; set; }
+        public bool rodar_AGEO2real1 { get; set; }
+        public bool rodar_AGEO1real2 { get; set; }
+        public bool rodar_AGEO2real2 { get; set; }
     }
 
 
@@ -54,7 +62,6 @@ namespace Classes_Comuns_Enums
         public List<double> limites_inferiores_variaveis { get; set; }
         public List<double>  limites_superiores_variaveis { get; set; }
     }
-
 
     public class RestricoesLaterais {
         public double limite_inferior_variavel { get; set; }
@@ -78,5 +85,26 @@ namespace Classes_Comuns_Enums
         enum_ackley,
         enum_F09,
         enum_F10
+    }
+
+    enum EnumNomesAlgoritmos{
+        GEO_can,
+        GEO_var,
+        AGEO1,
+        AGEO2,
+        AGEO1var,
+        AGEO2var,
+        GEOreal1,
+        GEOreal2,
+        AGEO1real1,
+        AGEO2real1,
+        AGEO1real2,
+        AGEO2real2,
+    }
+
+    enum EnumTipoCriterioParada{
+        parada_por_NFOB,
+        parada_por_PRECISAO,
+        parada_por_PRECISAOouNFOB
     }
 }

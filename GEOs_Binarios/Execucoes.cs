@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using Funcoes_Definidas;
 using SpaceDesignTeste;
 
+using GEOs_REAIS;
+
 using Classes_Comuns_Enums;
 
 using SpaceConceptOptimizer.Models;
@@ -20,69 +22,45 @@ namespace Execucoes
         // ROTINAS PARA EXECUÇÃO
         // =====================================
 
-        public static double Obtem_Media_Execucoes_NFE_OU_MELHORFX(int NFE_ou_MELHORFX, int quantidade_execucoes, int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo, ParametrosCriterioParada parametros_criterio_parada){
-            //------------------------------------------------
-            //int contador_deubom = 0;
-            //------------------------------------------------
 
-            // Executa o algoritmo por N vezes
-            double somatorio_NFEs_OU_MELHORFX = 0;
-            for(int i=0; i<quantidade_execucoes; i++){
-                Console.Write((i+1) +"...");
-
-                // Executa o algoritmo desejado e recebe como retorno apenas um valor (melhor fitness da execução ou NFE atingido), conforme o critério de parada.
-                RetornoGEOs retorno_algoritmo = GEO.GEO.GEOs_algorithms(tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+        public static RetornoGEOs Executa_Algoritmo_por_N_vezes(int qual_algoritmo_executar, int quantidade_execucoes, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_por_variavel, int step_para_obter_NFOBs, ParametrosCriterioParada parametros_criterio_parada, double tau, double std, int P){
                 
-                //------------------------------------------------
-                // if (retorno_algoritmo[0] >= 100000){
-                //     Console.WriteLine("Não contabilizando! NFOB = {0}", retorno_algoritmo[0]);
-                //     continue;
-                // }
-                // Console.WriteLine("Passou reto o if. NFOB = {0}", retorno_algoritmo[0]);
-                // contador_deubom++;
-                //------------------------------------------------
-
-                if (NFE_ou_MELHORFX == 0){
-                    somatorio_NFEs_OU_MELHORFX += retorno_algoritmo.NFOB;
-                }
-                else if (NFE_ou_MELHORFX == 1){
-                    somatorio_NFEs_OU_MELHORFX += retorno_algoritmo.melhor_fx;
-                }
-            }
-
-            // Calcula e retorna a média dos valores recebidos durante a execução
-            double media_resultado = somatorio_NFEs_OU_MELHORFX / quantidade_execucoes;
-            
-            // if (parametros_criterio_parada.tipo_criterio_parada == 1){
-            //     Console.WriteLine("Media NFE / total execucoes: {0}", media_resultado);
-            // }
-            // else if (parametros_criterio_parada.tipo_criterio_parada == 2){
-            //     Console.WriteLine("Media MELHORFX / total execucoes: {0}", media_resultado);
-            // }
-
-            //------------------------------------------------
-            // double media_deubom = somatorio_NFEs_OU_MELHORFX / contador_deubom;
-            // Console.WriteLine("Media / deubom: {0}", media_deubom);
-            //------------------------------------------------
-
-            return media_resultado;
-        }
-        
-        
-        public static List<double> Obtem_FxsMedios_NFOB_Execucoes(int quantidade_execucoes, int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo, ParametrosCriterioParada parametros_criterio_parada){
-
             // Inicializa a lista de todos os resultados
             List<List<double>> NFOBs_todas_execucoes = new List<List<double>>();
+            // Inicializa o somatório de NFOBs
+            int somatorio_NFOBs = 0;
+            // Inicializa o somatório de melhor f(x)
+            double somatorio_melhorFX = 0;
             
             // Executa os algoritmos por N vezes
             for(int i=0; i<quantidade_execucoes; i++){
                 Console.Write((i+1) +"...");
+            
+                RetornoGEOs retorno_algoritmo = new RetornoGEOs();
 
-                // Executa o algoritmo
-                RetornoGEOs retorno_algoritmo = GEO.GEO.GEOs_algorithms(tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+                switch(qual_algoritmo_executar){
+                    
+                    case (int)EnumNomesAlgoritmos.GEOreal1:
+                        GEO_real1 geo_real1 = new GEO_real1(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_por_variavel, step_para_obter_NFOBs, std);
+                        
+                        retorno_algoritmo = geo_real1.executar(parametros_criterio_parada);
 
-                // Adiciona a lista de NFOBs em uma lista geral
+                        break;
+
+                    case (int)EnumNomesAlgoritmos.AGEO2real1:
+                        AGEOs_REAL1 AGEO2real1 = new AGEOs_REAL1(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_por_variavel, step_para_obter_NFOBs, std, 2);
+                        
+                        retorno_algoritmo = AGEO2real1.executar(parametros_criterio_parada);
+
+                        break;
+                }
+
+                // Adiciona a lista de fxs em cada NFOBs da execução em uma lista geral
                 NFOBs_todas_execucoes.Add( retorno_algoritmo.melhores_NFOBs );
+                // Somatório de NFOBs para posterior média
+                somatorio_NFOBs += retorno_algoritmo.NFOB;
+                // Somatório de melhorFX para posterior média
+                somatorio_melhorFX += retorno_algoritmo.melhor_fx;
             }
 
             // Lista irá conter o f(x) médio para cada NFOB desejado
@@ -90,9 +68,9 @@ namespace Execucoes
             
             // Obtém a quantidade de NFOBs armazenados
             int quantidade_NFOBs = NFOBs_todas_execucoes[0].Count;
+
             // Para cada NFOB desejado, calcula a média das N execuções
             for(int i=0; i<quantidade_NFOBs; i++){
-
                 // Percorre aquele NFOB em cada execução para calcular a média de f(x) naquele NFOB
                 double sum = 0;
                 foreach(List<double> execution in NFOBs_todas_execucoes){
@@ -104,227 +82,235 @@ namespace Execucoes
                 lista_fxs_medios_cada_NFOB_desejado.Add(media);
             }
 
-            // Retorna a lista contendo o f(x) médio para cada NFOB
-            return lista_fxs_medios_cada_NFOB_desejado;
+            // Cria um objeto de retorno contendo a média dos valores para as N execuções
+            RetornoGEOs media_das_execucoes = new RetornoGEOs();
+            media_das_execucoes.melhores_NFOBs = lista_fxs_medios_cada_NFOB_desejado;
+            media_das_execucoes.melhor_fx = (double) somatorio_melhorFX / quantidade_execucoes;
+            media_das_execucoes.NFOB = somatorio_NFOBs / quantidade_execucoes;
+            
+            // Retorna o objeto com a média das execuções
+            return media_das_execucoes;
         }
         
 
-        public static void Executa_Todos_Algoritmos_Por_NFOBs(int quantidade_execucoes, double tauGEO, double tauGEOvar, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo, ParametrosCriterioParada parametros_criterio_parada, QuaisAlgoritmosRodar quais_algoritmos_rodar){
-
-            // Inicializa as variáveis para cada execução
-            double tau = 0.0;
-            int tipo_GEO = 0;
-            int tipo_AGEO = 0;
+        public static void Executa_Os_Algoritmos_Por_N_Vezes(int quantidade_execucoes, double tau_GEO, double tau_GEOvar, double tau_GEOreal1, double tau_GEOreal2, double tau_minimo_AGEOs, double std_GEOreal1, double std_GEOreal2, double std_AGEO1real1, double std_AGEO2real1, double std_AGEO1real2, double std_AGEO2real2, int P_GEOreal2, int P_AGEO1real2, int P_AGEO2real2, ParametrosDaFuncao parametros_problema, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis, ParametrosCriterioParada parametros_criterio_parada, int step_para_obter_NFOBs, QuaisAlgoritmosRodar quais_algoritmos_rodar){
 
             // ===========================================================
             // Executa os algoritmos
             // ===========================================================
 
-            // Inicializa as listas com os resultados
-            List<double> FXsMedios_Por_NFOB_GEO = new List<double>();
-            List<double> FXsMedios_Por_NFOB_GEOvar = new List<double>();
-            List<double> FXsMedios_Por_NFOB_AGEO1 = new List<double>();
-            List<double> FXsMedios_Por_NFOB_AGEO2 = new List<double>();
-            List<double> FXsMedios_Por_NFOB_AGEO1var = new List<double>();
-            List<double> FXsMedios_Por_NFOB_AGEO2var = new List<double>();
+            // Inicializa os retornos da média das execuções para cada algoritmo
+            RetornoGEOs retorno_GEO = new RetornoGEOs();
+            RetornoGEOs retorno_GEOvar = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO1 = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO2 = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO1var = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO2var = new RetornoGEOs();
+            RetornoGEOs retorno_GEOreal1 = new RetornoGEOs();
+            RetornoGEOs retorno_GEOreal2 = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO1real1 = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO2real1 = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO1real2 = new RetornoGEOs();
+            RetornoGEOs retorno_AGEO2real2 = new RetornoGEOs();
+
+            // Inicializa a quantidade de NFOBs
+            int quantidade_NFOBs = 0;
             
             // GEO
             if (quais_algoritmos_rodar.rodar_GEO){
                 Console.Write("\nGEO...");
-                tau = tauGEO;
-                tipo_GEO = 0;
-                tipo_AGEO = 0;
 
-                FXsMedios_Por_NFOB_GEO = Obtem_FxsMedios_NFOB_Execucoes(quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+                retorno_GEO = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.GEO_can, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_GEO, 0, 0);
+
+                quantidade_NFOBs = retorno_GEO.melhores_NFOBs.Count;
             }
 
             // GEOvar
             if (quais_algoritmos_rodar.rodar_GEOvar){
                 Console.Write("\nGEOvar...");
-                tau = tauGEOvar;
-                tipo_GEO = 1;
-                tipo_AGEO = 0;
 
-                FXsMedios_Por_NFOB_GEOvar = Obtem_FxsMedios_NFOB_Execucoes(quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+                retorno_GEOvar = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.GEO_var, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_GEOvar, 0, 0);
+
+                quantidade_NFOBs = retorno_GEOvar.melhores_NFOBs.Count;
             }
 
             // AGEO1
             if (quais_algoritmos_rodar.rodar_AGEO1){
                 Console.Write("\nAGEO1...");
-                tipo_GEO = 0;
-                tipo_AGEO = 1;
 
-                FXsMedios_Por_NFOB_AGEO1 = Obtem_FxsMedios_NFOB_Execucoes(quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+                retorno_AGEO1 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO1, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, 0, 0);
+
+                quantidade_NFOBs = retorno_AGEO1.melhores_NFOBs.Count;
             }
 
             // AGEO2
             if (quais_algoritmos_rodar.rodar_AGEO2){
                 Console.Write("\nAGEO2...");
-                tipo_GEO = 0;
-                tipo_AGEO = 2;
                 
-                FXsMedios_Por_NFOB_AGEO2 = Obtem_FxsMedios_NFOB_Execucoes(quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+                retorno_AGEO2 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO2, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, 0, 0);
+
+                quantidade_NFOBs = retorno_AGEO2.melhores_NFOBs.Count;
             }
 
             // AGEO1var
             if (quais_algoritmos_rodar.rodar_AGEO1var){
                 Console.Write("\nAGEO1var...");
-                tipo_GEO = 1;
-                tipo_AGEO = 1;
                 
-                FXsMedios_Por_NFOB_AGEO1var = Obtem_FxsMedios_NFOB_Execucoes(quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+                retorno_AGEO1var = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO1var, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, 0, 0);
+
+                quantidade_NFOBs = retorno_AGEO1var.melhores_NFOBs.Count;
             }
 
             // AGEO2var
             if (quais_algoritmos_rodar.rodar_AGEO2var){
                 Console.Write("\nAGEO2var...");
-                tipo_GEO = 1;
-                tipo_AGEO = 2;
-                FXsMedios_Por_NFOB_AGEO2var = Obtem_FxsMedios_NFOB_Execucoes(quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
+
+                retorno_AGEO2var = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO2var, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, 0, 0);
+
+                quantidade_NFOBs = retorno_AGEO2var.melhores_NFOBs.Count;
             }
+
+            // GEOreal1
+            if (quais_algoritmos_rodar.rodar_GEOreal1){
+                Console.Write("\nGEOreal1...");
+
+                retorno_GEOreal1 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.GEOreal1, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_GEOreal1, std_GEOreal1, 0);
+
+                quantidade_NFOBs = retorno_GEOreal1.melhores_NFOBs.Count;
+            }
+
+            // GEOreal2
+            if (quais_algoritmos_rodar.rodar_GEOreal2){
+                Console.Write("\nGEOreal2...");
+
+                retorno_GEOreal2 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.GEOreal2, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_GEOreal2, std_GEOreal2, 0);
+
+                quantidade_NFOBs = retorno_GEOreal2.melhores_NFOBs.Count;
+            }
+
+            // AGEO1real1
+            if (quais_algoritmos_rodar.rodar_AGEO1real1){
+                Console.Write("\nAGEO1real1...");
+
+                retorno_AGEO1real1 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO1real1, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, std_AGEO1real1, 0);
+
+                quantidade_NFOBs = retorno_AGEO1real1.melhores_NFOBs.Count;
+            }
+
+            // AGEO2real1
+            if (quais_algoritmos_rodar.rodar_AGEO2real1){
+                Console.Write("\nAGEO2real1...");
+
+                retorno_AGEO2real1 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO2real1, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, std_AGEO2real1, 0);
+
+                quantidade_NFOBs = retorno_AGEO2real1.melhores_NFOBs.Count;
+            }
+
+            // AGEO1real2
+            if (quais_algoritmos_rodar.rodar_AGEO1real2){
+                Console.Write("\nAGEO1real2...");
+
+                retorno_AGEO1real2 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO1real2, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, std_AGEO1real2, 0);
+
+                quantidade_NFOBs = retorno_AGEO1real2.melhores_NFOBs.Count;
+            }
+
+            // AGEO2real2
+            if (quais_algoritmos_rodar.rodar_AGEO2real2){
+                Console.Write("\nAGEO2real2...");
+
+                retorno_AGEO2real2 = Executa_Algoritmo_por_N_vezes( (int)EnumNomesAlgoritmos.AGEO2real2, quantidade_execucoes, parametros_problema.n_variaveis_projeto, parametros_problema.definicao_funcao_objetivo, restricoes_laterais_variaveis, step_para_obter_NFOBs, parametros_criterio_parada, tau_minimo_AGEOs, std_AGEO2real2, 0);
+
+                quantidade_NFOBs = retorno_AGEO2real2.melhores_NFOBs.Count;
+            }
+
 
             // ===========================================================
             // Mostra a média dos f(x) nas execuções em cada NFOB
             // ===========================================================
 
+            string algoritmos_executados = "NFOB;";
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_GEO ? "GEO;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_GEOvar ? "GEOvar;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO1 ? "AGEO1;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO2 ? "AGEO2;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO1var ? "AGEO1var;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO2var ? "AGEO2var;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_GEOreal1 ? "GEOreal1;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_GEOreal2 ? "GEOreal2;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO1real1 ? "AGEO1real1;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO2real1 ? "AGEO2real1;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO1real2 ? "AGEO1real2;" : "");
+            algoritmos_executados += (quais_algoritmos_rodar.rodar_AGEO2real2 ? "AGEO2real2;" : "");
+            
             Console.WriteLine("");
             Console.WriteLine("===> Médias para cada NFOB:");
-            Console.WriteLine("NFOB;GEO;GEOvar;AGEO1;AGEO2;AGEO1var;AGEO2var");
+            Console.WriteLine(algoritmos_executados);
             
-            // Obtém a quantidade de NFOBs
-            int quantidade_NFOBs = FXsMedios_Por_NFOB_GEO.Count;
-
             // Apresenta a média para cada NFOB
-            int NFOB_atual = parametros_criterio_parada.step_para_obter_NFOBs;
+            int NFOB_atual = step_para_obter_NFOBs;
             for(int i=0; i<quantidade_NFOBs; i++){
-                string str_media_GEO = (quais_algoritmos_rodar.rodar_GEO) ? (FXsMedios_Por_NFOB_GEO[i].ToString()).Replace('.',',') : "0.0";
-                string str_media_GEOvar = (quais_algoritmos_rodar.rodar_GEOvar) ? (FXsMedios_Por_NFOB_GEOvar[i].ToString()).Replace('.',',') : "0.0";
-                string str_media_AGEO1 = (quais_algoritmos_rodar.rodar_AGEO1) ? (FXsMedios_Por_NFOB_AGEO1[i].ToString()).Replace('.',',') : "0.0";
-                string str_media_AGEO2 = (quais_algoritmos_rodar.rodar_AGEO2) ? (FXsMedios_Por_NFOB_AGEO2[i].ToString()).Replace('.',',') : "0.0";
-                string str_media_AGEO1var = (quais_algoritmos_rodar.rodar_AGEO1var) ? (FXsMedios_Por_NFOB_AGEO1var[i].ToString()).Replace('.',',') : "0.0";
-                string str_media_AGEO2var = (quais_algoritmos_rodar.rodar_AGEO2var) ? (FXsMedios_Por_NFOB_AGEO2var[i].ToString()).Replace('.',',') : "0.0";
+                string fxs_naquele_NFOB = "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_GEO) ? ((retorno_GEO.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_GEOvar) ? ((retorno_GEOvar.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO1) ? ((retorno_AGEO1.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO2) ? ((retorno_AGEO2.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO1var) ? ((retorno_AGEO1var.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO2var) ? ((retorno_AGEO2var.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_GEOreal1) ? ((retorno_GEOreal1.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_GEOreal2) ? ((retorno_GEOreal2.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO1real1) ? ((retorno_AGEO1real1.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO2real1) ? ((retorno_AGEO2real1.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO1real2) ? ((retorno_AGEO1real2.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
+                fxs_naquele_NFOB += (quais_algoritmos_rodar.rodar_AGEO2real2) ? ((retorno_AGEO2real2.melhores_NFOBs[i].ToString()).Replace('.',',')+';') : "";
 
-                Console.WriteLine("{0};{1};{2};{3};{4};{5};{6}", NFOB_atual, str_media_GEO, str_media_GEOvar, str_media_AGEO1, str_media_AGEO2, str_media_AGEO1var, str_media_AGEO2var);
+                Console.WriteLine(NFOB_atual + ";" + fxs_naquele_NFOB);
 
-                NFOB_atual += parametros_criterio_parada.step_para_obter_NFOBs;
+                NFOB_atual += step_para_obter_NFOBs;
             }
-        }
-
-
-        public static void Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(int NFE_ou_MELHORFX, int quantidade_execucoes, double tauGEO, double tauGEOvar, ParametrosDaFuncao parametros_problema, CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo, ParametrosCriterioParada parametros_criterio_parada, QuaisAlgoritmosRodar quais_algoritmos_rodar){
-         
-            // Inicializa as variáveis para cada execução
-            double tau = 0.0;
-            int tipo_GEO = 0;
-            int tipo_AGEO = 0;
-
-            // Inicializa as strings de resultado das médias
-            string str_media_NFE_GEO = "0.0";
-            string str_media_NFE_GEOvar = "0.0";
-            string str_media_NFE_AGEO1 = "0.0";
-            string str_media_NFE_AGEO2 = "0.0";
-            string str_media_NFE_AGEO1var = "0.0";
-            string str_media_NFE_AGEO2var = "0.0";
-
-            // ===========================================================
-            // Executa os algoritmos
-            // ===========================================================
-
-            // GEO
-            if (quais_algoritmos_rodar.rodar_GEO){
-                Console.Write("\nGEO...");
-                tau = tauGEO;
-                tipo_GEO = 0;
-                tipo_AGEO = 0;
-
-                double media_GEO = Obtem_Media_Execucoes_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
-
-                Console.WriteLine("\nMédia GEO: {0}", media_GEO);
-
-                str_media_NFE_GEO = (media_GEO.ToString()).Replace('.',',');
-            }
-
-            // GEOvar
-            if (quais_algoritmos_rodar.rodar_GEOvar){
-                Console.Write("\nGEOvar...");
-                tau = tauGEOvar;
-                tipo_GEO = 1;
-                tipo_AGEO = 0;
-
-                double media_GEOvar = Obtem_Media_Execucoes_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
-
-                Console.WriteLine("\nMédia GEOvar: {0}", media_GEOvar);
-
-                str_media_NFE_GEOvar = (media_GEOvar.ToString()).Replace('.',',');
-            }
-
-            // AGEO1
-            if (quais_algoritmos_rodar.rodar_AGEO1){
-                Console.Write("\nAGEO1...");
-                tipo_GEO = 0;
-                tipo_AGEO = 1;
-
-                double media_AGEO1 = Obtem_Media_Execucoes_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
-
-                Console.WriteLine("\nMédia AGEO1: {0}", media_AGEO1);
-
-                str_media_NFE_AGEO1 = (media_AGEO1.ToString()).Replace('.',',');
-            }
-
-            // AGEO2
-            if (quais_algoritmos_rodar.rodar_AGEO2){
-                Console.Write("\nAGEO2...");
-                tipo_GEO = 0;
-                tipo_AGEO = 2;
-
-                double media_AGEO2 = Obtem_Media_Execucoes_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
-
-                Console.WriteLine("\nMédia AGEO2: {0}", media_AGEO2);
-
-                str_media_NFE_AGEO2 = (media_AGEO2.ToString()).Replace('.',',');
-            }
-
-            // AGEO1var
-            if (quais_algoritmos_rodar.rodar_AGEO1var){
-                Console.Write("\nAGEO1var...");
-                tipo_GEO = 1;
-                tipo_AGEO = 1;
-
-                double media_AGEO1var = Obtem_Media_Execucoes_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
-
-                Console.WriteLine("\nMédia AGEO1var: {0}", media_AGEO1var);
-
-                str_media_NFE_AGEO1var = (media_AGEO1var.ToString()).Replace('.',',');
-            }
-
-            // AGEO2var
-            if (quais_algoritmos_rodar.rodar_AGEO2var){
-                Console.Write("\nAGEO2var...");
-                tipo_GEO = 1;
-                tipo_AGEO = 2;
-
-                double media_AGEO2var = Obtem_Media_Execucoes_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tipo_GEO, tipo_AGEO, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada);
-
-                Console.WriteLine("\nMédia AGEO2var: {0}", media_AGEO2var);
-
-                str_media_NFE_AGEO2var = (media_AGEO2var.ToString()).Replace('.',',');
-            }
-
-            // ===========================================================
-            // Mostra a média dos NFE nas execuções
-            // ===========================================================
-
-            string result = String.Format("{0};{1};{2};{3};{4};{5};{6}", tau, str_media_NFE_GEO, str_media_NFE_GEOvar, str_media_NFE_AGEO1, str_media_NFE_AGEO2, str_media_NFE_AGEO1var, str_media_NFE_AGEO2var);
 
             Console.WriteLine("");
+            Console.WriteLine("===> Média NFEs atingidos:");
+            Console.WriteLine(algoritmos_executados);
+            string media_do_NFE_atingido_nas_execucoes = "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEO) ? (retorno_GEO.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOvar) ? (retorno_GEOvar.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1) ? (retorno_AGEO1.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2) ? (retorno_AGEO2.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1var) ? (retorno_AGEO1var.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2var) ? (retorno_AGEO2var.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOreal1) ? (retorno_GEOreal1.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOreal2) ? (retorno_GEOreal2.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1real1) ? (retorno_AGEO1real1.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2real1) ? (retorno_AGEO2real1.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1real2) ? (retorno_AGEO1real2.NFOB.ToString()+';') : "";
+            media_do_NFE_atingido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2real2) ? (retorno_AGEO2real2.NFOB.ToString()+';') : "";
 
-            if (NFE_ou_MELHORFX == 0)
-                Console.WriteLine("===> Médias NFE:");
-            else if (NFE_ou_MELHORFX == 1)
-                Console.WriteLine("===> Médias MELHORFX:");
-            
-            Console.WriteLine("TAU;GEO;GEOvar;AGEO1;AGEO2;AGEO1var;AGEO2var");
-            Console.WriteLine(result);
+            // Substitui os pontos por vírgulas
+            media_do_NFE_atingido_nas_execucoes.Replace('.',',');
+            Console.WriteLine(media_do_NFE_atingido_nas_execucoes);
+
+
+            Console.WriteLine("");
+            Console.WriteLine("===> Média melhor f(x) atingido:");
+            Console.WriteLine(algoritmos_executados);
+            string media_do_melhor_FX_obtido_nas_execucoes = "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEO) ? (retorno_GEO.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOvar) ? (retorno_GEOvar.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1) ? (retorno_AGEO1.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2) ? (retorno_AGEO2.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1var) ? (retorno_AGEO1var.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2var) ? (retorno_AGEO2var.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOreal1) ? (retorno_GEOreal1.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOreal2) ? (retorno_GEOreal2.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1real1) ? (retorno_AGEO1real1.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2real1) ? (retorno_AGEO2real1.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1real2) ? (retorno_AGEO1real2.melhor_fx.ToString()+';') : "";
+            media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2real2) ? (retorno_AGEO2real2.melhor_fx.ToString()+';') : "";
+
+            // Substitui os pontos por vírgulas
+            media_do_melhor_FX_obtido_nas_execucoes.Replace('.',',');
+            Console.WriteLine(media_do_melhor_FX_obtido_nas_execucoes);
         }
             
 
@@ -334,47 +320,47 @@ namespace Execucoes
         // =====================================
 
         public static void Execucoes_Griewangk(){
-            int n_variaveis_projeto = 10;
+            // int n_variaveis_projeto = 10;
             
-            ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            parametros_problema.n_variaveis_projeto = n_variaveis_projeto;
-            parametros_problema.definicao_funcao_objetivo = 0;
+            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
+            // parametros_problema.n_variaveis_projeto = n_variaveis_projeto;
+            // parametros_problema.definicao_funcao_objetivo = 0;
 
-            CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo = new CodificacaoBinariaParaFenotipo();
-            codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis = Enumerable.Repeat(14, n_variaveis_projeto).ToList();
-            codificacao_binaria_para_fenotipo.limites_inferiores_variaveis = Enumerable.Repeat(-600.0, n_variaveis_projeto).ToList();
-            codificacao_binaria_para_fenotipo.limites_superiores_variaveis = Enumerable.Repeat(600.0, n_variaveis_projeto).ToList();
+            // CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo = new CodificacaoBinariaParaFenotipo();
+            // codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis = Enumerable.Repeat(14, n_variaveis_projeto).ToList();
+            // codificacao_binaria_para_fenotipo.limites_inferiores_variaveis = Enumerable.Repeat(-600.0, n_variaveis_projeto).ToList();
+            // codificacao_binaria_para_fenotipo.limites_superiores_variaveis = Enumerable.Repeat(600.0, n_variaveis_projeto).ToList();
 
-            // Define a quantidade de execuções
-            int quantidade_execucoes = 50;
+            // // Define a quantidade de execuções
+            // int quantidade_execucoes = 50;
 
 
-            // ========================================
-            // OBTÉM NFEs PARA CADA NFOB DESEJADO
-            // ========================================
+            // // ========================================
+            // // OBTÉM NFEs PARA CADA NFOB DESEJADO
+            // // ========================================
 
-            // Define os TAUs
-            double tauGEO = 1.25;
-            double tauGEOvar = 3.0;
+            // // Define os TAUs
+            // double tauGEO = 1.25;
+            // double tauGEOvar = 3.0;
 
-            ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
-            parametros_criterio_parada.tipo_criterio_parada = 0;
-            parametros_criterio_parada.step_para_obter_NFOBs = 1000;
-            parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
-            parametros_criterio_parada.fx_esperado = 0.0;
+            // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
+            // parametros_criterio_parada.tipo_criterio_parada = 0;
+            // parametros_criterio_parada.step_para_obter_NFOBs = 1000;
+            // parametros_criterio_parada.PRECISAO_criterio_parada = 0;
+            // parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
+            // parametros_criterio_parada.fx_esperado = 0.0;
 
-            // Define quais algoritmos executar
-            QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            quais_algoritmos_rodar.rodar_GEO = true;
-            quais_algoritmos_rodar.rodar_GEOvar = true;
-            quais_algoritmos_rodar.rodar_AGEO1 = true;
-            quais_algoritmos_rodar.rodar_AGEO2 = true;
-            quais_algoritmos_rodar.rodar_AGEO1var = true;
-            quais_algoritmos_rodar.rodar_AGEO2var = true;
+            // // Define quais algoritmos executar
+            // QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
+            // quais_algoritmos_rodar.rodar_GEO = true;
+            // quais_algoritmos_rodar.rodar_GEOvar = true;
+            // quais_algoritmos_rodar.rodar_AGEO1 = true;
+            // quais_algoritmos_rodar.rodar_AGEO2 = true;
+            // quais_algoritmos_rodar.rodar_AGEO1var = true;
+            // quais_algoritmos_rodar.rodar_AGEO2var = true;
 
-            // Executa todos os algoritmos
-            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+            // // Executa todos os algoritmos
+            // Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
 
 
             // // ========================================
@@ -406,6 +392,26 @@ namespace Execucoes
             //     Console.WriteLine("\n==========================================");
             //     Console.WriteLine("TAU = {0}", tau);
             //     Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, parametros_criterio_parada, codificacao_binaria_para_fenotipo, quais_algoritmos_rodar);
+            // }
+
+
+            const int qual_algoritmo_executar = (int)EnumNomesAlgoritmos.AGEO2real1;
+            const int quantidade_execucoes = 20;
+            const double tau = 0.5;
+            const double std = 1;
+            const int n_variaveis_projeto = 10;
+            const int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
+            List<RestricoesLaterais> restricoes_laterais_por_variavel = new List<RestricoesLaterais>();
+            for(int i=0; i<n_variaveis_projeto; i++){
+                restricoes_laterais_por_variavel.Add( new RestricoesLaterais(){limite_inferior_variavel=-500.0, limite_superior_variavel=500.0});
+            }
+            const int step_para_obter_NFOBs = 1000;
+            const int NFOB_criterio_parada = 100000;
+
+            // List<double> result = Executa_Algoritmo_por_N_vezes_retornaFXsNFOB(qual_algoritmo_executar, quantidade_execucoes, tau, std, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_por_variavel, step_para_obter_NFOBs, NFOB_criterio_parada);
+
+            // foreach(double fx in result){
+            //     Console.WriteLine(fx);
             // }
         }
 
@@ -463,7 +469,6 @@ namespace Execucoes
 
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = 1;
-            parametros_criterio_parada.step_para_obter_NFOBs = 0;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0.001;
             parametros_criterio_parada.NFOB_criterio_parada = 0;
             parametros_criterio_parada.fx_esperado = 0.0;
@@ -482,7 +487,7 @@ namespace Execucoes
             foreach(double tau in valores_TAU){
                 Console.WriteLine("\n==========================================");
                 Console.WriteLine("TAU = {0}", tau);
-                Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+                // Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
             }
         }
         
@@ -540,7 +545,6 @@ namespace Execucoes
 
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = 2;
-            parametros_criterio_parada.step_para_obter_NFOBs = 0;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0.001;
             parametros_criterio_parada.NFOB_criterio_parada = 100000;
             parametros_criterio_parada.fx_esperado = -25.0;
@@ -559,7 +563,7 @@ namespace Execucoes
             foreach(double tau in valores_TAU){
                 Console.WriteLine("\n==========================================");
                 Console.WriteLine("TAU = {0}", tau);
-                Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+                // Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
             }
         }
 
@@ -590,7 +594,6 @@ namespace Execucoes
 
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = 0;
-            parametros_criterio_parada.step_para_obter_NFOBs = (int)1e3;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0;
             parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
             parametros_criterio_parada.fx_esperado = 0.0;
@@ -604,8 +607,8 @@ namespace Execucoes
             quais_algoritmos_rodar.rodar_AGEO1var = true;
             quais_algoritmos_rodar.rodar_AGEO2var = true;
 
-            // Executa todos os algoritmos
-            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+            // // Executa todos os algoritmos
+            // Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
         }
 
 
@@ -616,10 +619,12 @@ namespace Execucoes
             parametros_problema.n_variaveis_projeto = n_variaveis_projeto;
             parametros_problema.definicao_funcao_objetivo = 5;
 
-            CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo = new CodificacaoBinariaParaFenotipo();
-            codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
-            codificacao_binaria_para_fenotipo.limites_inferiores_variaveis = Enumerable.Repeat(-500.0, n_variaveis_projeto).ToList();
-            codificacao_binaria_para_fenotipo.limites_superiores_variaveis = Enumerable.Repeat(500.0, n_variaveis_projeto).ToList();
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
+            
+            List<RestricoesLaterais> restricoes_laterais_por_variavel = new List<RestricoesLaterais>();
+            for(int i=0; i<n_variaveis_projeto; i++){
+                restricoes_laterais_por_variavel.Add( new RestricoesLaterais(){limite_inferior_variavel=-500.0, limite_superior_variavel=500.0});
+            }
            
             // Define a quantidade de execuções
             int quantidade_execucoes = 50;
@@ -635,7 +640,6 @@ namespace Execucoes
 
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = 0;
-            parametros_criterio_parada.step_para_obter_NFOBs = (int)1e3;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0;
             parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
             parametros_criterio_parada.fx_esperado = 0.0;
@@ -649,53 +653,61 @@ namespace Execucoes
             quais_algoritmos_rodar.rodar_AGEO1var = true;
             quais_algoritmos_rodar.rodar_AGEO2var = true;
 
-            // Executa todos os algoritmos
-            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+            // // Executa todos os algoritmos
+            // Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, quais_algoritmos_rodar);
         }
 
 
         public static void Execucoes_Ackley(){
-            int n_variaveis_projeto = 30;
+            int quantidade_execucoes = 5;
+
+            const double tau_GEO = 2.25;
+            const double tau_GEOvar = 2.50;
+            const double tau_GEOreal1 = 2.50;
+            const double tau_GEOreal2 = 2.50;
+            const double tau_minimo_AGEOs = 0.5;
+            const double std_GEOreal1 = 1.0;
+            const double std_GEOreal2 = 1.0;
+            const double std_AGEO1real1 = 1.0;
+            const double std_AGEO2real1 = 1.0;
+            const double std_AGEO1real2 = 1.0;
+            const double std_AGEO2real2 = 1.0;
+            const int P_GEOreal2 = 8;
+            const int P_AGEO1real2 = 8;
+            const int P_AGEO2real2 = 8;
             
             ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            parametros_problema.n_variaveis_projeto = n_variaveis_projeto;
+            parametros_problema.n_variaveis_projeto = 30;
             parametros_problema.definicao_funcao_objetivo = 6;
-
-            CodificacaoBinariaParaFenotipo codificacao_binaria_para_fenotipo = new CodificacaoBinariaParaFenotipo();
-            codificacao_binaria_para_fenotipo.bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
-            codificacao_binaria_para_fenotipo.limites_inferiores_variaveis = Enumerable.Repeat(-30.0, n_variaveis_projeto).ToList();
-            codificacao_binaria_para_fenotipo.limites_superiores_variaveis = Enumerable.Repeat(30.0, n_variaveis_projeto).ToList();
-           
-            // Define a quantidade de execuções
-            int quantidade_execucoes = 50;
-
-
-            // ========================================
-            // OBTÉM NFEs PARA CADA NFOB DESEJADO
-            // ========================================
-
-            // Define os TAUs
-            double tauGEO = 2.25;
-            double tauGEOvar = 2.50;
+            
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
+            
+            List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-30.0, limite_superior_variavel=30.0} , parametros_problema.n_variaveis_projeto).ToList();
 
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = 0;
-            parametros_criterio_parada.step_para_obter_NFOBs = (int)1e3;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0;
             parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
             parametros_criterio_parada.fx_esperado = 0.0;
 
-            // Define quais algoritmos executar
+            const int step_para_obter_NFOBs = (int)1e3;
+            
             QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            quais_algoritmos_rodar.rodar_GEO = true;
-            quais_algoritmos_rodar.rodar_GEOvar = true;
-            quais_algoritmos_rodar.rodar_AGEO1 = true;
-            quais_algoritmos_rodar.rodar_AGEO2 = true;
-            quais_algoritmos_rodar.rodar_AGEO1var = true;
-            quais_algoritmos_rodar.rodar_AGEO2var = true;
+            quais_algoritmos_rodar.rodar_GEO = false;
+            quais_algoritmos_rodar.rodar_GEOvar = false;
+            quais_algoritmos_rodar.rodar_AGEO1 = false;
+            quais_algoritmos_rodar.rodar_AGEO2 = false;
+            quais_algoritmos_rodar.rodar_AGEO1var = false;
+            quais_algoritmos_rodar.rodar_AGEO2var = false;
+            quais_algoritmos_rodar.rodar_GEOreal1 = true;
+            quais_algoritmos_rodar.rodar_GEOreal2 = false;
+            quais_algoritmos_rodar.rodar_AGEO1real1 = false;
+            quais_algoritmos_rodar.rodar_AGEO2real1 = true;
+            quais_algoritmos_rodar.rodar_AGEO1real2 = false;
+            quais_algoritmos_rodar.rodar_AGEO2real2 = false;
 
             // Executa todos os algoritmos
-            Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+            Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, tau_GEOreal2, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO1real2, std_AGEO2real1, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar);
         }
 
 
@@ -751,7 +763,6 @@ namespace Execucoes
 
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = 1;
-            parametros_criterio_parada.step_para_obter_NFOBs = 0;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0.0001;
             parametros_criterio_parada.NFOB_criterio_parada = 0;
             parametros_criterio_parada.fx_esperado = 1.0;
@@ -770,7 +781,7 @@ namespace Execucoes
             foreach(double tau in valores_TAU){
                 Console.WriteLine("\n==========================================");
                 Console.WriteLine("TAU = {0}", tau);
-                Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+                // Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
             }
         }
 
@@ -903,7 +914,7 @@ namespace Execucoes
             foreach(double tau in valores_TAU){
                 Console.WriteLine("\n==========================================");
                 Console.WriteLine("TAU = {0}", tau);
-                Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
+                // Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
             }
 
 
@@ -927,20 +938,20 @@ namespace Execucoes
         // MAIN
         // =====================================
 
-        // public static void Main(string[] args){
-        //     Console.WriteLine("Rodando!");
+        public static void Main(string[] args){
+            Console.WriteLine("Rodando!");
 
-        //     Execucoes_Griewangk();
-        //     // Execucoes_Rosenbrock();
-        //     // Execucoes_DeJong3();
-        //     // Execucoes_Rastringin();
-        //     // Execucoes_Schwefel();
-        //     // Execucoes_Ackley();
-        //     // Execucoes_F9();
+            // Execucoes_Griewangk();
+            // Execucoes_Rosenbrock();
+            // Execucoes_DeJong3();
+            // Execucoes_Rastringin();
+            // Execucoes_Schwefel();
+            Execucoes_Ackley();
+            // Execucoes_F9();
 
-        //     // ExtensiveSearch_SpacecraftOptimization();
-        //     // Teste_FuncoesObjetivo_SpacecraftOptimization();
-        //     // Execucoes_SpacecraftOptimization();
-        // }
+            // ExtensiveSearch_SpacecraftOptimization();
+            // Teste_FuncoesObjetivo_SpacecraftOptimization();
+            // Execucoes_SpacecraftOptimization();
+        }
     }
 }

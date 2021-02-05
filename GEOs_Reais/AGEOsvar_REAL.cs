@@ -3,23 +3,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Classes_Comuns_Enums;
+using System.Linq;
 
 namespace GEOs_REAIS
 {
-    public class AGEOs_REAL1 : GEO_real1
+    public class AGEOsvar_REAL: GEOvar_REAL
     {
-        public int tipo_AGEO {get; set;}
-        public double CoI_1 {get; set;}
+        private int tipo_AGEO {get;set;}
+        private double CoI_1 {get;set;}
 
-        
-        public AGEOs_REAL1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais, int step_obter_NFOBs, double std, int tipo_AGEO) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais, step_obter_NFOBs, std)
-        {
-            this.tipo_AGEO = tipo_AGEO;
+
+        public AGEOsvar_REAL(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais, int step_obter_NFOBs, double std, int P, int tipo_AGEO) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais, step_obter_NFOBs, std, P){
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
+            this.tipo_AGEO = tipo_AGEO;
         }
-
 
         public override void mutacao_do_tau_AGEOs()
         {

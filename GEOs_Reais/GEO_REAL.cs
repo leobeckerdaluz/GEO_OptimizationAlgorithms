@@ -9,7 +9,7 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class GEOsBASE_REAL
+    public class GEO_real1
     {
         public Random random = new Random();
 
@@ -18,18 +18,18 @@ namespace GEOs_REAIS
         public int definicao_funcao_objetivo {get; set;}
         public List<RestricoesLaterais> restricoes_laterais_variaveis {get; set;}
         public int step_obter_NFOBs {get; set;}
+        public double std {get; set;}
 
         public int NFOB {get; set;}
-        public List<double> melhores_NFOBs {get; set;}
         public double fx_atual {get; set;}
         public double fx_melhor {get; set;}
         public List<double> populacao_atual {get; set;}
         public List<double> populacao_melhor {get; set;}
+        public List<double> melhores_NFOBs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
-        private double std {get; set;}
 
 
-        public GEOsBASE_REAL(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std){
+        public GEO_real1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std){
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
@@ -103,9 +103,6 @@ namespace GEOs_REAIS
             return penalidade_aplicada;
         }
         
-
-        public virtual void mutacao_do_tau_AGEOs(){}
-
 
         public virtual void geracao_populacao()
         {
@@ -189,11 +186,16 @@ namespace GEOs_REAIS
                 add_NFOB();
 
 
-                // // FRAUDE -> Atualiza o melhor resultado
-                // if (fx < fx_melhor){
-                //     fx_melhor = fx;
-                //     populacao_melhor = populacao_para_perturbar;
-                // }
+                // Avalia se a perturbação é a melhor de todas
+                if (fx < fx_melhor){
+
+#if NOVO_MELHOR_FX
+                Console.WriteLine("AVALIAÇÃO: fx = {0} < fx_melhor = {1}", fx, fx_melhor);
+#endif
+
+                fx_melhor = fx;
+                populacao_melhor = populacao_para_perturbar;
+            }
 
 
                 // Cria o objeto perturbação
@@ -210,6 +212,9 @@ namespace GEOs_REAIS
             // Atualiza a lista de perturbações da iteração
             perturbacoes_da_iteracao = perturbacoes;
         }
+
+
+        public virtual void mutacao_do_tau_AGEOs(){}
 
 
         public virtual void ordena_e_perturba(){
@@ -277,36 +282,45 @@ namespace GEOs_REAIS
             }
 #endif
         }
-
-        
-        public virtual void avaliacao(){
-            if (fx_atual < fx_melhor){
-
-#if NOVO_MELHOR_FX
-                Console.WriteLine("AVALIAÇÃO: fx atual = {0} < fx_melhor = {1}", fx_atual, fx_melhor);
-#endif
-
-                fx_melhor = fx_atual;
-                populacao_melhor = populacao_atual;
-            }
-        }
         
 
-        public virtual RetornoGEOs rodar_por_NFOB(int NFOB_criterio_parada){
+        public virtual RetornoGEOs executar(ParametrosCriterioParada parametros_criterio_parada){
+            
             geracao_populacao();
-            while(true)
-            {
+            
+            while(true){
                 verifica_perturbacoes();
                 mutacao_do_tau_AGEOs();
                 ordena_e_perturba();
-                avaliacao();
 
-                // if ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(fx_esperado)) <= PRECISAO_criterio_parada )
-                if ( NFOB >= NFOB_criterio_parada)
-                {
-#if DEBUG_CONSOLE
-                    Console.WriteLine("Critério de parada atingido por NFOB = {0} >= criterio = {1}", NFOB, NFOB_criterio_parada);
-#endif
+                // Verifica o critério de parada
+                bool parada_por_precisao = ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
+                bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
+                
+                // Antes de verificar a parada, começa com falso.
+                bool parada = false;
+
+                // Se o critério for por NFOB...
+                if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB){
+                    if (parada_por_NFOB){
+                        parada = true;
+                    }
+                }
+                // Se o critério for por precisão...
+                else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO){
+                    if (parada_por_precisao){
+                        parada = true;
+                    }
+                }
+                // Se o critério for por precisão ou por NFOB...
+                else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB){
+                    if (parada_por_NFOB || parada_por_precisao){
+                        parada = true;
+                    }
+                }
+
+                // Se a parada foi atingida, retorna
+                if (parada){
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFOB = this.NFOB;
                     retorno.melhor_fx = this.fx_melhor;
@@ -315,6 +329,6 @@ namespace GEOs_REAIS
                     return retorno;
                 }
             }
-        }  
+        } 
     }
 }

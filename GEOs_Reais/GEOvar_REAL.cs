@@ -8,13 +8,11 @@ using System.Linq;
 
 namespace GEOs_REAIS
 {
-    public class GEOvar_REAL : GEOsBASE_REAL
+    public class GEOvar_REAL : GEO_real1
     {
-        public double std1 {get; set;}
         public int P {get; set;}
         
-        public GEOvar_REAL(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais, int step_obter_NFOBs, double std, double std1, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais, step_obter_NFOBs, std){
-            this.std1 = std1;
+        public GEOvar_REAL(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais, int step_obter_NFOBs, double std, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais, step_obter_NFOBs, std){
             this.P = P;
         }
 
@@ -26,14 +24,15 @@ namespace GEOs_REAIS
 
             // Perturba cada variável
             for(int i=0; i<this.n_variaveis_projeto; i++){
-                double std3 = this.std1;// / (2*1);
+
+                double std_atual = this.std;
 
                 for(int j=0; j<this.P; j++){
                     // Cria uma população cópia
                     List<double> populacao_para_perturbar = new List<double>(populacao_atual);
 
                     double xi = populacao_para_perturbar[i];
-                    MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std3);
+                    MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
                     double xii = xi + normalDist.Sample() * xi;
 
 #if DEBUG_CONSOLE
@@ -73,7 +72,7 @@ namespace GEOs_REAIS
                     perturbacoes_da_iteracao.Add(perturbacao);
                 
                     // Atualiza o novo std
-                    std3 /= (2*(j+1));
+                    std_atual /= (2*(j+1));
                 }
 
 #if DEBUG_CONSOLE
