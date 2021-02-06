@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+using Classes_Comuns_Enums;
+
 
 namespace Funcoes_Definidas
 {
@@ -18,19 +20,19 @@ namespace Funcoes_Definidas
             switch(definicao_funcao_objetivo){
 
                 // Griewangk
-                case 0:
+                case (int)EnumNomesFuncoesObjetivo.enum_griwangk:
                     return funcao_griewank(fenotipo_variaveis_projeto);
 
                 // Rosenbrock
-                case 1:
+                case (int)EnumNomesFuncoesObjetivo.enum_rosenbrock:
                     return funcao_rosenbrock(fenotipo_variaveis_projeto);
 
                 // DeJong3
-                case 2:
+                case (int)EnumNomesFuncoesObjetivo.enum_dejong3:
                     return funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
 
                 // Custom Spacecraft Orbit Function
-                case 3:
+                case (int)EnumNomesFuncoesObjetivo.enum_spacecraft:
                     int D = (int)fenotipo_variaveis_projeto[1];
                     int N = (int)fenotipo_variaveis_projeto[2];
                     
@@ -44,23 +46,23 @@ namespace Funcoes_Definidas
                     }
                 
                 // F6
-                case 4:
+                case (int)EnumNomesFuncoesObjetivo.enum_rastringin:
                     return funcao_Rastringin(fenotipo_variaveis_projeto);
 
                 // F7
-                case 5:
+                case (int)EnumNomesFuncoesObjetivo.enum_schwefel:
                     return funcao_Schwefel(fenotipo_variaveis_projeto);
 
                 // F8
-                case 6:
+                case (int)EnumNomesFuncoesObjetivo.enum_ackley:
                     return funcao_Ackley(fenotipo_variaveis_projeto);
 
                 // F9
-                case 7:
+                case (int)EnumNomesFuncoesObjetivo.enum_F09:
                     return funcao_F9(fenotipo_variaveis_projeto);
 
                 // F10
-                case 8:
+                case (int)EnumNomesFuncoesObjetivo.enum_F10:
                     double xi1 = fenotipo_variaveis_projeto[0];
                     double xi2 = fenotipo_variaveis_projeto[1];
                     
@@ -71,15 +73,6 @@ namespace Funcoes_Definidas
                     else{
                         return funcao_F10(fenotipo_variaveis_projeto);
                     }
-
-                // F11
-                case 11:
-                    return 2;
-
-                // F12
-                case 12:
-                    return 2;
-
             }
 
             return fx;

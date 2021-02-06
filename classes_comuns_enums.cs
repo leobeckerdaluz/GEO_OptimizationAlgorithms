@@ -75,6 +75,12 @@ namespace Classes_Comuns_Enums
         public int indice_variavel_projeto {get; set;}
     }
 
+    public class OQueInteressaPrintar{
+        public bool mostrar_melhores_NFOB {get; set;}
+        public bool mostrar_media_NFE_atingido {get; set;}
+        public bool mostrar_media_melhor_fx {get; set;}
+    }
+
     enum EnumNomesFuncoesObjetivo{
         enum_griwangk,
         enum_rosenbrock,

@@ -123,7 +123,7 @@ namespace GEO{
         /*
             A função tem como objetivo flipar cada bit e calcular a fx, retornando a fx para cada flip.
         */
-        public static List<BitVerificado> obtem_lista_fxs_flipando(List<bool> populacao_de_bits, ParametrosDaFuncao parametros_problema, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis){
+        public static List<BitVerificado> obtem_lista_fxs_flipando(List<bool> populacao_de_bits, int n_variaveis_projeto, int definicao_funcao_objetivo, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis){
 
             // Cria uma lista contendo as informações sobre mutar um bit
             List<BitVerificado> lista_informacoes_mutacao = new List<BitVerificado>();
@@ -140,7 +140,7 @@ namespace GEO{
                 // Calcula a fitness da populacao_de_bits com o bit flipado
                 List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_de_bits_flipado, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
-                double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
+                double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
                 
                 // Armazena as informações dessa mutação do bit na lista de informações
                 BitVerificado informacoes_bit = new BitVerificado();
@@ -390,7 +390,7 @@ namespace GEO{
             Essa função é a função principal. Nesse bloco toda a lógica para o GEO e GEOvar é implementada, 
             além do AGEO1, AGEO2 e o mix de AGEO1var e AGEO2var.
         */
-        public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, double tau, ParametrosDaFuncao parametros_problema, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis, ParametrosCriterioParada parametros_criterio_parada){   
+        public static RetornoGEOs GEOs_algorithms(int tipo_GEO, int tipo_AGEO, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<int> bits_por_variavel_variaveis, List<RestricoesLaterais> restricoes_laterais_variaveis, ParametrosCriterioParada parametros_criterio_parada){   
 
             //============================================================
             // Inicializa algumas variáveis de controle do algoritmo
@@ -421,7 +421,7 @@ namespace GEO{
             // Inicializa o fenótipo das variáveis de projeto
             List<double> fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
-            double atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
+            double atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
             
             // Incrementa o número de avaliações da função objetivo
             NFOB++;
@@ -468,7 +468,7 @@ namespace GEO{
                 // Avalia o flip para cada bit
                 //============================================================
 
-                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
+                List<BitVerificado> lista_informacoes_mutacao = obtem_lista_fxs_flipando(populacao_atual, n_variaveis_projeto, definicao_funcao_objetivo, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
                 // FO foi avaliada por N vezes para cada flip. Portanto, incrementa aqui..
                 for (int i=0; i<populacao_atual.Count; i++){
@@ -541,7 +541,7 @@ namespace GEO{
                 // Calcula a fitness da nova população de bits
                 fenotipo_variaveis_projeto = calcula_fenotipos_variaveis(populacao_atual, bits_por_variavel_variaveis, restricoes_laterais_variaveis);
 
-                atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, parametros_problema.definicao_funcao_objetivo);
+                atual_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
                 
                 // Incrementa o número de avaliações da função objetivo
                 NFOB++;
