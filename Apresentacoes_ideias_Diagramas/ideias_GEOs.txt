@@ -5,10 +5,13 @@ Por que Griwangk com 16 bits?
 ------------------------------------------------------------
 
 GEOtVar -> Muda o TAO conforme o sucesso de cada variável
+IMPLEMENTADO!
 
 AGEO_var -> Ao invés de rankear todos os bits, rankeia por variável e aplica o TAO que tá variando
+IMPLEMENTADO!
 
 AGEO louco -> Ao invés de calcular deltaV com o melhor da história, calcula com o melhor atual
+INVIÁVEL, POIS DARIA NO MESMO.
 
 --------------------------------------------------------
 

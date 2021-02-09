@@ -19,6 +19,7 @@ namespace GEOs_REAIS
         public List<RestricoesLaterais> restricoes_laterais_variaveis {get; set;}
         public int step_obter_NFOBs {get; set;}
         public double std {get; set;}
+        public double porcentagem_perturbacao {get; set;}
 
         public int NFOB {get; set;}
         public double fx_atual {get; set;}
@@ -29,13 +30,14 @@ namespace GEOs_REAIS
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
 
 
-        public GEO_real1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std){
+        public GEO_real1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, double porcentagem_perturbacao){
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
             this.restricoes_laterais_variaveis = restricoes_laterais_variaveis;
             this.step_obter_NFOBs = step_obter_NFOBs;
             this.std = std;
+            this.porcentagem_perturbacao = porcentagem_perturbacao;
             
             this.NFOB = 0;
             this.fx_atual = Double.MaxValue;
@@ -163,7 +165,7 @@ namespace GEOs_REAIS
                 double xi = populacao_para_perturbar[i];
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, this.std);
                 // double xii = xi + normalDist.Sample() * xi;
-                double xii = xi + normalDist.Sample() * xi;
+                double xii = xi + (normalDist.Sample() * xi * this.porcentagem_perturbacao);
 
 #if DEBUG_CONSOLE
                 Console.WriteLine("Verificando a variável {0}", i);

@@ -2,7 +2,6 @@
 
 
 Restrições:
---> Quando aplica os desvios pra variável, descartar soluções inviáveis
 --> Penalidade vai aumentando conforme x % da população vai sendo unfeasible
 
 Se tiver fora, perturba o limite

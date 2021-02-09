@@ -341,7 +341,7 @@ namespace GEO{
         public static bool Verifica_Criterio_Parada(ParametrosCriterioParada parametros_criterio_parada, int NFOB, double melhor_fx){
             
             // Se o critério de parada for de NFOB...
-            if (parametros_criterio_parada.tipo_criterio_parada == 0) {
+            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB) {
                 
                 // Determina a condição final
                 bool condition = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
@@ -350,7 +350,7 @@ namespace GEO{
             }
             
             // Se o critério de parada for por precisão...
-            else if (parametros_criterio_parada.tipo_criterio_parada == 1){
+            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO){
                 
                 // Determina a condição final
                 bool condition = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
@@ -359,7 +359,7 @@ namespace GEO{
             }
 
             // Se o critério de parada for por precisão e por NFOB...
-            else if (parametros_criterio_parada.tipo_criterio_parada == 2){
+            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB){
                 
                 // Verifica a condição por precisão
                 bool condition1 = ( Math.Abs(Math.Abs(melhor_fx) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
@@ -564,7 +564,7 @@ namespace GEO{
                 //============================================================
 
                 // Se o critério for de NFOBs, verifica o NFOB para armazenar
-                if (parametros_criterio_parada.tipo_criterio_parada == 0){
+                if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB){
                     // Se for a hora de guardar o valor f(x) nesse NFOB, guarda
                     if (NFOB > proximo_step){
                         // Incrementa o step para verificação de NFOB

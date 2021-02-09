@@ -14,7 +14,7 @@ namespace GEOs_REAIS
         public double CoI_1 {get; set;}
 
         
-        public AGEOs_REAL1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais, int step_obter_NFOBs, double std, int tipo_AGEO) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais, step_obter_NFOBs, std)
+        public AGEOs_REAL1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais, int step_obter_NFOBs, double std, int tipo_AGEO, double porcentagem_perturbacao) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais, step_obter_NFOBs, std, porcentagem_perturbacao)
         {
             this.tipo_AGEO = tipo_AGEO;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
