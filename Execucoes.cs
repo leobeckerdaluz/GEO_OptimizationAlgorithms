@@ -378,22 +378,23 @@ namespace Execucoes
         public static void Execucoes_Griewangk(){
             int quantidade_execucoes = 50;
 
-            // ====================================
-            // RASTRINGIN
-            // ====================================
-            const double tau_GEO = 1.00;
-            const double tau_GEOreal1 = 1.00;
-            const double tau_GEOvar = 1.75;
-            const double tau_minimo_AGEOs = 0.5;
-            const double std_GEOreal1 = 1.0;
-            const double std_AGEO1real1 = 1.0;
-            const double std_AGEO2real1 = 1.0;
-            const double fx_esperado_funcao = 0.0;
-            ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            parametros_problema.n_variaveis_projeto = 20;
-            parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
-            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-            List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+            // // ====================================
+            // // RASTRINGIN
+            // // ====================================
+            // const double tau_GEO = 1.00;
+            // const double tau_GEOreal1 = 1.00;
+            // const double tau_GEOvar = 1.75;
+            // const double tau_minimo_AGEOs = 0.5;
+            // const double std_GEOreal1 = 1.0;
+            // const double std_AGEO1real1 = 1.0;
+            // const double std_AGEO2real1 = 1.0;
+            // const double fx_esperado_funcao = 0.0;
+            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
+            // parametros_problema.n_variaveis_projeto = 20;
+            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
+            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
+            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+            // // List<double> valores_TAU = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
 
 
             // // ====================================
@@ -412,25 +413,26 @@ namespace Execucoes
             // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
             // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(14, parametros_problema.n_variaveis_projeto).ToList();
             // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-600.0, limite_superior_variavel=600.0} , parametros_problema.n_variaveis_projeto).ToList();
-
-
-            // // ====================================
-            // // ROSENBROCK
-            // // ====================================
-            // const double tau_GEO = 1.00;
-            // const double tau_GEOreal1 = 1.00;
-            // const double tau_GEOvar = 1.25;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 2;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rosenbrock;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-2.048, limite_superior_variavel=2.048} , parametros_problema.n_variaveis_projeto).ToList();
-
+            // List<double> valores_TAU = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
+            
+            // ====================================
+            // ROSENBROCK
+            // ====================================
+            const double tau_GEO = 1.00;
+            const double tau_GEOreal1 = 1.00;
+            const double tau_GEOvar = 1.25;
+            const double tau_minimo_AGEOs = 0.5;
+            const double std_GEOreal1 = 1.0;
+            const double std_AGEO1real1 = 1.0;
+            const double std_AGEO2real1 = 1.0;
+            const double fx_esperado_funcao = 0.0;
+            ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
+            parametros_problema.n_variaveis_projeto = 2;
+            parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rosenbrock;
+            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
+            List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-2.048, limite_superior_variavel=2.048} , parametros_problema.n_variaveis_projeto).ToList();
+            List<double> valores_TAU = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3};
+            
             // // ====================================
             // // SCHWEFEL
             // // ====================================
@@ -469,7 +471,7 @@ namespace Execucoes
 
 
             // // =========================================
-            // // EXECUÇOẼS POR NFOB
+            // // EXECUÇÕES POR NFOB
             // // =========================================
             // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             // parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB;
@@ -504,17 +506,45 @@ namespace Execucoes
             // Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
             
             
-            // // =========================================
-            // // VARIANDO TAU
-            // // =========================================
-            // // List<double> valores_TAU = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
-            // List<double> valores_TAU = new List<double>(){0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25};
-            // foreach(double tau in valores_TAU){
-            //     Console.WriteLine("\n==========================================");
-            //     Console.WriteLine("TAU = {0}", tau);
+            // =========================================
+            // VARIANDO TAU
+            // =========================================
+            ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
+            parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAO;
+            parametros_criterio_parada.PRECISAO_criterio_parada = 0.001;
+            const int step_para_obter_NFOBs = 10000;
+            parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
+            parametros_criterio_parada.NFOB_criterio_parada = (int)1e6;
+            parametros_criterio_parada.fx_esperado = fx_esperado_funcao;
             
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, tau, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO2real1, std_AGEO1real2, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
-            // }
+            QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
+            quais_algoritmos_rodar.rodar_GEO        = true;
+            quais_algoritmos_rodar.rodar_GEOvar     = true;
+            quais_algoritmos_rodar.rodar_AGEO1      = false;
+            quais_algoritmos_rodar.rodar_AGEO2      = false;
+            quais_algoritmos_rodar.rodar_AGEO1var   = false;
+            quais_algoritmos_rodar.rodar_AGEO2var   = false;
+            quais_algoritmos_rodar.rodar_GEOreal1   = false;
+            quais_algoritmos_rodar.rodar_GEOreal2   = false;
+            quais_algoritmos_rodar.rodar_AGEO1real1 = false;
+            quais_algoritmos_rodar.rodar_AGEO2real1 = false;
+            quais_algoritmos_rodar.rodar_AGEO1real2 = false;
+            quais_algoritmos_rodar.rodar_AGEO2real2 = false;
+
+            OQueInteressaPrintar o_que_interessa_printar = new OQueInteressaPrintar();
+            o_que_interessa_printar.mostrar_melhores_NFOB = false;
+            o_que_interessa_printar.mostrar_media_NFE_atingido = true;
+            o_que_interessa_printar.mostrar_media_melhor_fx = false;
+
+            const bool printar_status_executando = true;
+            const int tipo_perturbacao_original_ou_SDdireto = (int)EnumTipoPerturbacao.perturbacao_original;
+            
+            foreach(double tau in valores_TAU){
+                Console.WriteLine("\n==========================================");
+                Console.WriteLine("{0}", tau.ToString().Replace('.',','));
+            
+                Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
+            }
 
             
             // // =========================================
@@ -566,146 +596,49 @@ namespace Execucoes
             // }
 
 
-            // =========================================
-            // EXECUÇÕES VARIANDO STD
-            // =========================================
-            ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
-            parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB;
-            parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            const int step_para_obter_NFOBs = 250;
-            parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
-            parametros_criterio_parada.NFOB_criterio_parada = 100000;
-            parametros_criterio_parada.fx_esperado = fx_esperado_funcao;
-            
-            QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            quais_algoritmos_rodar.rodar_GEO        = false;
-            quais_algoritmos_rodar.rodar_GEOvar     = false;
-            quais_algoritmos_rodar.rodar_AGEO1      = false;
-            quais_algoritmos_rodar.rodar_AGEO2      = false;
-            quais_algoritmos_rodar.rodar_AGEO1var   = false;
-            quais_algoritmos_rodar.rodar_AGEO2var   = false;
-            quais_algoritmos_rodar.rodar_GEOreal1   = true;
-            quais_algoritmos_rodar.rodar_GEOreal2   = false;
-            quais_algoritmos_rodar.rodar_AGEO1real1 = true;
-            quais_algoritmos_rodar.rodar_AGEO2real1 = true;
-            quais_algoritmos_rodar.rodar_AGEO1real2 = false;
-            quais_algoritmos_rodar.rodar_AGEO2real2 = false;
-
-            OQueInteressaPrintar o_que_interessa_printar = new OQueInteressaPrintar();
-            o_que_interessa_printar.mostrar_melhores_NFOB = false;
-            o_que_interessa_printar.mostrar_media_NFE_atingido = false;
-            o_que_interessa_printar.mostrar_media_melhor_fx = true;
-
-            const bool printar_status_executando = true;
-            const int tipo_perturbacao_original_ou_SDdireto = (int)EnumTipoPerturbacao.perturbacao_original;
-
-            List<double> valores_std = new List<double>(){0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2};
-            
-            foreach(double std in valores_std){
-                Console.WriteLine("\n==========================================");
-                Console.WriteLine("std");
-                Console.WriteLine( String.Format("{0}", std).Replace('.',',') );
-
-                Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
-            }
-        }
-
-
-        public static void Execucoes_Rosenbrock(){
-            // int quantidade_execucoes = 50;
-            
-            // const double tau_GEO = 1.00;
-            // const double tau_GEOvar = 1.25;
-            // const double tau_GEOreal1 = 1.00;
-            // const double tau_GEOreal2 = 1.25;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_GEOreal2 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_AGEO1real2 = 1.0;
-            // const double std_AGEO2real2 = 1.0;
-            // const int P_GEOreal2 = 8;
-            // const int P_AGEO1real2 = 8;
-            // const int P_AGEO2real2 = 8;
-            // const double porcentagem_perturbacao_GEOreal1 = 1.0; 
-            // const double porcentagem_perturbacao_GEOreal2 = 1.0;
-            // const double porcentagem_perturbacao_AGEO1real1 = 1.0;
-            // const double porcentagem_perturbacao_AGEO2real1 = 1.0;
-            // const double porcentagem_perturbacao_AGEO1real2 = 1.0;
-            // const double porcentagem_perturbacao_AGEO2real2 = 1.0;
-
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 2;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rosenbrock;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-2.048, limite_superior_variavel=2.048} , parametros_problema.n_variaveis_projeto).ToList();
-            
-            // const int step_para_obter_NFOBs = 1000;
-            
+            // // =========================================
+            // // EXECUÇÕES VARIANDO STD
+            // // =========================================
             // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             // parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB;
             // parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            // parametros_criterio_parada.step_para_obter_NFOBs = 1000;
-            // parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
-            // parametros_criterio_parada.fx_esperado = 0.0;
+            // const int step_para_obter_NFOBs = 250;
+            // parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
+            // parametros_criterio_parada.NFOB_criterio_parada = 100000;
+            // parametros_criterio_parada.fx_esperado = fx_esperado_funcao;
             
             // QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            // quais_algoritmos_rodar.rodar_GEO = false;
-            // quais_algoritmos_rodar.rodar_GEOvar = false;
-            // quais_algoritmos_rodar.rodar_AGEO1 = false;
-            // quais_algoritmos_rodar.rodar_AGEO2 = false;
-            // quais_algoritmos_rodar.rodar_AGEO1var = false;
-            // quais_algoritmos_rodar.rodar_AGEO2var = false;
-            // quais_algoritmos_rodar.rodar_GEOreal1 = true;
-            // quais_algoritmos_rodar.rodar_GEOreal2 = false;
+            // quais_algoritmos_rodar.rodar_GEO        = false;
+            // quais_algoritmos_rodar.rodar_GEOvar     = false;
+            // quais_algoritmos_rodar.rodar_AGEO1      = false;
+            // quais_algoritmos_rodar.rodar_AGEO2      = false;
+            // quais_algoritmos_rodar.rodar_AGEO1var   = false;
+            // quais_algoritmos_rodar.rodar_AGEO2var   = false;
+            // quais_algoritmos_rodar.rodar_GEOreal1   = true;
+            // quais_algoritmos_rodar.rodar_GEOreal2   = false;
             // quais_algoritmos_rodar.rodar_AGEO1real1 = true;
             // quais_algoritmos_rodar.rodar_AGEO2real1 = true;
             // quais_algoritmos_rodar.rodar_AGEO1real2 = false;
             // quais_algoritmos_rodar.rodar_AGEO2real2 = false;
-            
+
             // OQueInteressaPrintar o_que_interessa_printar = new OQueInteressaPrintar();
             // o_que_interessa_printar.mostrar_melhores_NFOB = false;
             // o_que_interessa_printar.mostrar_media_NFE_atingido = true;
-            // o_que_interessa_printar.mostrar_media_melhor_fx = false;
+            // o_que_interessa_printar.mostrar_media_melhor_fx = true;
 
-            // bool printar_status_executando = false;
+            // const bool printar_status_executando = true;
+            // const int tipo_perturbacao_original_ou_SDdireto = (int)EnumTipoPerturbacao.perturbacao_original;
 
+            // List<double> valores_std = new List<double>(){0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2};
             
+            // foreach(double std in valores_std){
+            //     Console.WriteLine("\n==========================================");
+            //     Console.WriteLine("std");
+            //     Console.WriteLine( String.Format("{0}", std).Replace('.',',') );
 
-            // // Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, tau_GEOreal2, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO2real1, std_AGEO1real2, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, porcentagem_perturbacao_GEOreal1, porcentagem_perturbacao_GEOreal2, porcentagem_perturbacao_AGEO1real1, porcentagem_perturbacao_AGEO2real1, porcentagem_perturbacao_AGEO1real2, porcentagem_perturbacao_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
-            
-            
-
-            // // // List<double> valores_TAU = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
-            // // List<double> valores_TAU = new List<double>(){0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25};
-            // // foreach(double tau in valores_TAU){
-            // //     Console.WriteLine("\n==========================================");
-            // //     Console.WriteLine("TAU = {0}", tau);
-            
-            // //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, tau, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO2real1, std_AGEO1real2, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, porcentagem_perturbacao_GEOreal1, porcentagem_perturbacao_GEOreal2, porcentagem_perturbacao_AGEO1real1, porcentagem_perturbacao_AGEO2real1, porcentagem_perturbacao_AGEO1real2, porcentagem_perturbacao_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
-            // // }
-
-            
-            
-            // // List<double> valores_STD = new List<double>(){0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2};
-            // List<double> valores_STD = new List<double>(){0, 0.2, 0.4, 0.6, 0.8};
-            // // List<double> valores_STD = new List<double>(){1, 1.2, 1.4, 1.6, 1.8, 2};
-
-            // List<double> valores_PORCENTAGEM = new List<double>(){0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-            // // List<double> valores_PORCENTAGEM = new List<double>(){0.5, 1};
-            
-            // foreach(double std in valores_STD){
-            //     foreach(double porcentagem in valores_PORCENTAGEM){
-            //         Console.WriteLine("\n==========================================");
-            //         Console.WriteLine("std;porcentagem");
-            //         Console.WriteLine( String.Format("{0};{1}", std, porcentagem).Replace('.',',') );
-                    
-            //         Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, tau_GEOreal2, tau_minimo_AGEOs, std, std, std, std, std, std, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, porcentagem_perturbacao_GEOreal1, porcentagem_perturbacao_GEOreal2, porcentagem_perturbacao_AGEO1real1, porcentagem_perturbacao_AGEO2real1, porcentagem_perturbacao_AGEO1real2, porcentagem_perturbacao_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
-            //     }
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
             // }
         }
-        
 
         public static void Execucoes_DeJong3(){
             int n_variaveis_projeto = 5;
@@ -781,204 +714,6 @@ namespace Execucoes
                 // Executa_Todos_Algoritmos_Por_NFE_OU_MELHORFX(NFE_ou_MELHORFX, quantidade_execucoes, tau, tau, parametros_problema, codificacao_binaria_para_fenotipo, parametros_criterio_parada, quais_algoritmos_rodar);
             }
         }
-
-
-        public static void Execucoes_Rastringin(){
-            int quantidade_execucoes = 50;
-            
-            const double tau_GEO = 1.00;
-            const double tau_GEOvar = 1.75;
-            const double tau_GEOreal1 = 1.00;
-            const double tau_GEOreal2 = 1.75;
-            const double tau_minimo_AGEOs = 0.5;
-            const double std_GEOreal1 = 1.0;
-            const double std_GEOreal2 = 1.0;
-            const double std_AGEO1real1 = 1.0;
-            const double std_AGEO2real1 = 1.0;
-            const double std_AGEO1real2 = 1.0;
-            const double std_AGEO2real2 = 1.0;
-            const int P_GEOreal2 = 8;
-            const int P_AGEO1real2 = 8;
-            const int P_AGEO2real2 = 8;
-            const double porcentagem_perturbacao_GEOreal1 = 1.0; 
-            const double porcentagem_perturbacao_GEOreal2 = 1.0;
-            const double porcentagem_perturbacao_AGEO1real1 = 1.0;
-            const double porcentagem_perturbacao_AGEO2real1 = 1.0;
-            const double porcentagem_perturbacao_AGEO1real2 = 1.0;
-            const double porcentagem_perturbacao_AGEO2real2 = 1.0;
-
-            ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            parametros_problema.n_variaveis_projeto = 20;
-            parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
-            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-            List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
-            
-            const int step_para_obter_NFOBs = 1000;
-            
-            ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
-            parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB;
-            parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            parametros_criterio_parada.step_para_obter_NFOBs = 1000;
-            parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
-            parametros_criterio_parada.fx_esperado = 0.0;
-            
-            QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            quais_algoritmos_rodar.rodar_GEO = false;
-            quais_algoritmos_rodar.rodar_GEOvar = false;
-            quais_algoritmos_rodar.rodar_AGEO1 = false;
-            quais_algoritmos_rodar.rodar_AGEO2 = false;
-            quais_algoritmos_rodar.rodar_AGEO1var = false;
-            quais_algoritmos_rodar.rodar_AGEO2var = false;
-            quais_algoritmos_rodar.rodar_GEOreal1 = true;
-            quais_algoritmos_rodar.rodar_GEOreal2 = false;
-            quais_algoritmos_rodar.rodar_AGEO1real1 = true;
-            quais_algoritmos_rodar.rodar_AGEO2real1 = true;
-            quais_algoritmos_rodar.rodar_AGEO1real2 = false;
-            quais_algoritmos_rodar.rodar_AGEO2real2 = false;
-            
-            OQueInteressaPrintar o_que_interessa_printar = new OQueInteressaPrintar();
-            o_que_interessa_printar.mostrar_melhores_NFOB = false;
-            o_que_interessa_printar.mostrar_media_NFE_atingido = true;
-            o_que_interessa_printar.mostrar_media_melhor_fx = false;
-
-            bool printar_status_executando = false;
-
-            
-
-            // Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, tau_GEOreal2, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO2real1, std_AGEO1real2, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, porcentagem_perturbacao_GEOreal1, porcentagem_perturbacao_GEOreal2, porcentagem_perturbacao_AGEO1real1, porcentagem_perturbacao_AGEO2real1, porcentagem_perturbacao_AGEO1real2, porcentagem_perturbacao_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
-            
-            
-
-            // // List<double> valores_TAU = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
-            // List<double> valores_TAU = new List<double>(){0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25};
-            // foreach(double tau in valores_TAU){
-            //     Console.WriteLine("\n==========================================");
-            //     Console.WriteLine("TAU = {0}", tau);
-            
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, tau, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO2real1, std_AGEO1real2, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, porcentagem_perturbacao_GEOreal1, porcentagem_perturbacao_GEOreal2, porcentagem_perturbacao_AGEO1real1, porcentagem_perturbacao_AGEO2real1, porcentagem_perturbacao_AGEO1real2, porcentagem_perturbacao_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
-            // }
-
-            
-            
-            // // List<double> valores_STD = new List<double>(){0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2};
-            // // List<double> valores_STD = new List<double>(){0, 0.2, 0.4, 0.6, 0.8};
-            // // List<double> valores_STD = new List<double>(){1, 1.2, 1.4, 1.6, 1.8, 2};
-            // List<double> valores_STD = new List<double>(){2};
-            // // List<double> valores_STD = new List<double>(){0, 0.2, 0.4, 0.6, 0.8};
-
-            // List<double> valores_PORCENTAGEM = new List<double>(){0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-            // // List<double> valores_PORCENTAGEM = new List<double>(){0.5, 1};
-            
-            // foreach(double std in valores_STD){
-            //     foreach(double porcentagem in valores_PORCENTAGEM){
-            //         Console.WriteLine("\n==========================================");
-            //         Console.WriteLine("std;porcentagem");
-            //         Console.WriteLine( String.Format("{0};{1}", std, porcentagem).Replace('.',',') );
-                    
-            //         Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, tau_GEOreal2, tau_minimo_AGEOs, std, std, std, std, std, std, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, porcentagem_perturbacao_GEOreal1, porcentagem_perturbacao_GEOreal2, porcentagem_perturbacao_AGEO1real1, porcentagem_perturbacao_AGEO2real1, porcentagem_perturbacao_AGEO1real2, porcentagem_perturbacao_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
-            //     }
-            // }
-        }
-
-
-        public static void Execucoes_Schwefel(){
-            int n_variaveis_projeto = 10;
-            
-            ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            parametros_problema.n_variaveis_projeto = n_variaveis_projeto;
-            parametros_problema.definicao_funcao_objetivo = 5;
-
-            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, n_variaveis_projeto).ToList();
-            
-            List<RestricoesLaterais> restricoes_laterais_por_variavel = new List<RestricoesLaterais>();
-            for(int i=0; i<n_variaveis_projeto; i++){
-                restricoes_laterais_por_variavel.Add( new RestricoesLaterais(){limite_inferior_variavel=-500.0, limite_superior_variavel=500.0});
-            }
-           
-            // Define a quantidade de execuções
-            int quantidade_execucoes = 50;
-
-
-            // ========================================
-            // OBTÉM NFEs PARA CADA NFOB DESEJADO
-            // ========================================
-
-            // Define os TAUs
-            double tauGEO = 1.0;
-            double tauGEOvar = 1.75;
-
-            ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
-            parametros_criterio_parada.tipo_criterio_parada = 0;
-            parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
-            parametros_criterio_parada.fx_esperado = 0.0;
-
-            // Define quais algoritmos executar
-            QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            quais_algoritmos_rodar.rodar_GEO = true;
-            quais_algoritmos_rodar.rodar_GEOvar = true;
-            quais_algoritmos_rodar.rodar_AGEO1 = true;
-            quais_algoritmos_rodar.rodar_AGEO2 = true;
-            quais_algoritmos_rodar.rodar_AGEO1var = true;
-            quais_algoritmos_rodar.rodar_AGEO2var = true;
-
-            // // Executa todos os algoritmos
-            // Executa_Todos_Algoritmos_Por_NFOBs(quantidade_execucoes, tauGEO, tauGEOvar, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, quais_algoritmos_rodar);
-        }
-
-
-        public static void Execucoes_Ackley(){
-            // int quantidade_execucoes = 5;
-
-            // const double tau_GEO = 2.25;
-            // const double tau_GEOvar = 2.50;
-            // const double tau_GEOreal1 = 2.50;
-            // const double tau_GEOreal2 = 2.50;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_GEOreal2 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_AGEO1real2 = 1.0;
-            // const double std_AGEO2real2 = 1.0;
-            // const int P_GEOreal2 = 8;
-            // const int P_AGEO1real2 = 8;
-            // const int P_AGEO2real2 = 8;
-            
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 30;
-            // parametros_problema.definicao_funcao_objetivo = 6;
-            
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-            
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-30.0, limite_superior_variavel=30.0} , parametros_problema.n_variaveis_projeto).ToList();
-
-            // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
-            // parametros_criterio_parada.tipo_criterio_parada = 0;
-            // parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            // parametros_criterio_parada.NFOB_criterio_parada = (int)1e5;
-            // parametros_criterio_parada.fx_esperado = 0.0;
-
-            // const int step_para_obter_NFOBs = (int)1e3;
-            
-            // QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            // quais_algoritmos_rodar.rodar_GEO = true;
-            // quais_algoritmos_rodar.rodar_GEOvar = false;
-            // quais_algoritmos_rodar.rodar_AGEO1 = false;
-            // quais_algoritmos_rodar.rodar_AGEO2 = false;
-            // quais_algoritmos_rodar.rodar_AGEO1var = false;
-            // quais_algoritmos_rodar.rodar_AGEO2var = false;
-            // quais_algoritmos_rodar.rodar_GEOreal1 = true;
-            // quais_algoritmos_rodar.rodar_GEOreal2 = false;
-            // quais_algoritmos_rodar.rodar_AGEO1real1 = false;
-            // quais_algoritmos_rodar.rodar_AGEO2real1 = true;
-            // quais_algoritmos_rodar.rodar_AGEO1real2 = false;
-            // quais_algoritmos_rodar.rodar_AGEO2real2 = false;
-
-            // // Executa todos os algoritmos
-            // Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, tau_GEOreal2, tau_minimo_AGEOs, std_GEOreal1, std_GEOreal2, std_AGEO1real1, std_AGEO1real2, std_AGEO2real1, std_AGEO2real2, P_GEOreal2, P_AGEO1real2, P_AGEO2real2, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar);
-        }
-
 
         public static void Execucoes_F9(){
             int n_variaveis_projeto = 2;
