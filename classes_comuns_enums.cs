@@ -113,4 +113,9 @@ namespace Classes_Comuns_Enums
         parada_por_PRECISAO,
         parada_por_PRECISAOouNFOB
     }
+
+    enum EnumTipoPerturbacao{
+        perturbacao_original,
+        perturbacao_SDdireto
+    }
 }

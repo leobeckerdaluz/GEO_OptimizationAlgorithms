@@ -19,7 +19,7 @@ namespace GEOs_REAIS
         public List<RestricoesLaterais> restricoes_laterais_variaveis {get; set;}
         public int step_obter_NFOBs {get; set;}
         public double std {get; set;}
-        public double porcentagem_perturbacao {get; set;}
+        public int tipo_perturbacao_original_ou_SDdireto {get; set;}
 
         public int NFOB {get; set;}
         public double fx_atual {get; set;}
@@ -30,14 +30,14 @@ namespace GEOs_REAIS
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
 
 
-        public GEO_real1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, double porcentagem_perturbacao){
+        public GEO_real1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto){
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
             this.restricoes_laterais_variaveis = restricoes_laterais_variaveis;
             this.step_obter_NFOBs = step_obter_NFOBs;
             this.std = std;
-            this.porcentagem_perturbacao = porcentagem_perturbacao;
+            this.tipo_perturbacao_original_ou_SDdireto = tipo_perturbacao_original_ou_SDdireto;
             
             this.NFOB = 0;
             this.fx_atual = Double.MaxValue;
@@ -65,8 +65,9 @@ namespace GEOs_REAIS
         }
 
 
-        public virtual double funcao_objetivo_aplicando_penalidade(List<double> fenotipos){
+        public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos){
             double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
+            add_NFOB();
             
             double penalidade = 0;
 
@@ -133,8 +134,7 @@ namespace GEOs_REAIS
             }
 #endif
 
-            fx_atual = funcao_objetivo_aplicando_penalidade(this.populacao_atual);
-            add_NFOB();
+            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
             
             // Atualiza os melhores
             fx_melhor = fx_atual;
@@ -164,8 +164,14 @@ namespace GEOs_REAIS
 
                 double xi = populacao_para_perturbar[i];
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, this.std);
-                // double xii = xi + normalDist.Sample() * xi;
-                double xii = xi + (normalDist.Sample() * xi * this.porcentagem_perturbacao);
+                
+                double xii = xi;
+                if (tipo_perturbacao_original_ou_SDdireto == (int)EnumTipoPerturbacao.perturbacao_original){
+                    xii = xi + (normalDist.Sample() * xi);
+                }
+                else if (tipo_perturbacao_original_ou_SDdireto == (int)EnumTipoPerturbacao.perturbacao_SDdireto){
+                    xii = xi + normalDist.Sample();
+                }
 
 #if DEBUG_CONSOLE
                 Console.WriteLine("Verificando a variável {0}", i);
@@ -184,9 +190,7 @@ namespace GEOs_REAIS
 #endif
 
                 // Calcula f(x) com a variável perturbada
-                double fx = funcao_objetivo_aplicando_penalidade(populacao_para_perturbar);
-                add_NFOB();
-
+                double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
 
                 // Avalia se a perturbação é a melhor de todas
                 if (fx < fx_melhor){
