@@ -49,6 +49,8 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2real1 { get; set; }
         public bool rodar_AGEO1real2 { get; set; }
         public bool rodar_AGEO2real2 { get; set; }
+        public bool rodar_AGEO1_ASTD { get; set; }
+        public bool rodar_AGEO2_ASTD { get; set; }
     }
 
 
@@ -106,6 +108,8 @@ namespace Classes_Comuns_Enums
         AGEO2real1,
         AGEO1real2,
         AGEO2real2,
+        AGEO1_ASTD,
+        AGEO2_ASTD,
     }
 
     enum EnumTipoCriterioParada{
