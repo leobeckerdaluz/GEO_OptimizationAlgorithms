@@ -413,143 +413,197 @@ namespace Execucoes
         }
             
 
-
         // =====================================
         // FUNÇÕES CONHECIDAS
         // =====================================
 
         public static void Execucoes(){
+            
+            // Variáveis da função a ser executada
+            double tau_GEO;
+            double tau_GEOreal1;
+            double tau_GEOvar;
+            double tau_minimo_AGEOs;
+            double std_GEOreal1;
+            double std_AGEO1real1;
+            double std_AGEO2real1;
+            double std_minimo_AGEOsREAIS;
+            double fx_esperado_funcao;
+            ParametrosDaFuncao parametros_problema;
+            List<int> bits_por_variavel_variaveis;
+            List<RestricoesLaterais> restricoes_laterais_por_variavel;
+            List<double> valores_TAU;
+
+
+            // Definições do usuário
             int quantidade_execucoes = 50;
-
-            // // ====================================
-            // // RASTRINGIN
-            // // ====================================
-            // const double tau_GEO = 1.00;
-            // const double tau_GEOreal1 = 1.00;
-            // const double tau_GEOvar = 1.75;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_minimo_AGEOsREAIS = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 20;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
-            // // List<double> valores_TAU = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
+            int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
 
 
-            // ====================================
-            // GRIEWANGK
-            // ====================================
-            const double tau_GEO = 1.25;
-            const double tau_GEOreal1 = 1.25;
-            const double tau_GEOvar = 3.0;
-            const double tau_minimo_AGEOs = 0.5;
-            const double std_GEOreal1 = 1.0;
-            const double std_AGEO1real1 = 1.0;
-            const double std_AGEO2real1 = 1.0;
-            const double std_minimo_AGEOsREAIS = 1.0;
-            const double fx_esperado_funcao = 0.0;
-            ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            parametros_problema.n_variaveis_projeto = 10;
-            parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
-            List<int> bits_por_variavel_variaveis = Enumerable.Repeat(14, parametros_problema.n_variaveis_projeto).ToList();
-            List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-600.0, limite_superior_variavel=600.0} , parametros_problema.n_variaveis_projeto).ToList();
-            List<double> valores_TAU = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
+
+            switch(definicao_funcao_objetivo){
+                // RASTRINGIN
+                case (int)EnumNomesFuncoesObjetivo.enum_rastringin:
+                    tau_GEO = 1.00;
+                    tau_GEOreal1 = 1.00;
+                    tau_GEOvar = 1.75;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 20;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rastringin;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    valores_TAU = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
+                break;
+
+                // GRIEWANGK
+                case (int)EnumNomesFuncoesObjetivo.enum_griwangk:
+                    tau_GEO = 1.25;
+                    tau_GEOreal1 = 1.25;
+                    tau_GEOvar = 3.0;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 10;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(14, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-600.0, limite_superior_variavel=600.0} , parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    valores_TAU = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4};
+                break;
+
+                // ROSENBROCK
+                case (int)EnumNomesFuncoesObjetivo.enum_rosenbrock:
+                    tau_GEO = 1.00;
+                    tau_GEOreal1 = 1.00;
+                    tau_GEOvar = 1.25;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 2;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rosenbrock;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-2.048, limite_superior_variavel=2.048} , parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    valores_TAU = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3};
+                break;
+
+                // SCHWEFEL
+                case (int)EnumNomesFuncoesObjetivo.enum_schwefel:
+                    tau_GEO = 1.00;
+                    tau_GEOreal1 = 1.00;
+                    tau_GEOvar = 1.75;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 10;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_schwefel;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-500.0, limite_superior_variavel=500.0} , parametros_problema.n_variaveis_projeto).ToList();
+                break;
+
+                // ACKLEY
+                case (int)EnumNomesFuncoesObjetivo.enum_ackley:
+                    tau_GEO = 2.25;
+                    tau_GEOreal1 = 2.25;
+                    tau_GEOvar = 2.50;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 30;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_ackley;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-30.0, limite_superior_variavel=30.0} , parametros_problema.n_variaveis_projeto).ToList();
+                break;
+
+                // F9 TESE
+                case (int)EnumNomesFuncoesObjetivo.enum_F09:
+                    tau_GEO = 1.50;
+                    tau_GEOreal1 = 1.50;
+                    tau_GEOvar = 1.75;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 2;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_F09;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(18, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-10.0, limite_superior_variavel=10.0} , parametros_problema.n_variaveis_projeto).ToList();
+                break;
+
+                // DEJONG3
+                case (int)EnumNomesFuncoesObjetivo.enum_dejong3:
+                    tau_GEO = 3.0;
+                    tau_GEOreal1 = 3.0;
+                    tau_GEOvar = 8.0;
+                    tau_minimo_AGEOs = 0.5;
+                    std_GEOreal1 = 1.0;
+                    std_AGEO1real1 = 1.0;
+                    std_AGEO2real1 = 1.0;
+                    std_minimo_AGEOsREAIS = 1.0;
+                    fx_esperado_funcao = 0.0;
+                    
+                    parametros_problema = new ParametrosDaFuncao();
+                    parametros_problema.n_variaveis_projeto = 5;
+                    parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_dejong3;
+                    
+                    bits_por_variavel_variaveis = Enumerable.Repeat(11, parametros_problema.n_variaveis_projeto).ToList();
+                    
+                    restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+                break;
+            }
             
-            // // ====================================
-            // // ROSENBROCK
-            // // ====================================
-            // const double tau_GEO = 1.00;
-            // const double tau_GEOreal1 = 1.00;
-            // const double tau_GEOvar = 1.25;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_minimo_AGEOsREAIS = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 2;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_rosenbrock;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-2.048, limite_superior_variavel=2.048} , parametros_problema.n_variaveis_projeto).ToList();
-            // List<double> valores_TAU = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3};
             
-            // // ====================================
-            // // SCHWEFEL
-            // // ====================================
-            // const double tau_GEO = 1.00;
-            // const double tau_GEOreal1 = 1.00;
-            // const double tau_GEOvar = 1.75;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_minimo_AGEOsREAIS = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 10;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_schwefel;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-500.0, limite_superior_variavel=500.0} , parametros_problema.n_variaveis_projeto).ToList();
-
-            // // ====================================
-            // // ACKLEY
-            // // ====================================
-            // const double tau_GEO = 2.25;
-            // const double tau_GEOreal1 = 2.25;
-            // const double tau_GEOvar = 2.50;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_minimo_AGEOsREAIS = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 30;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_ackley;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-30.0, limite_superior_variavel=30.0} , parametros_problema.n_variaveis_projeto).ToList();
-
-            // // ====================================
-            // // F9 TESE
-            // // ====================================
-            // const double tau_GEO = 1.50;
-            // const double tau_GEOreal1 = 1.50;
-            // const double tau_GEOvar = 1.75;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_minimo_AGEOsREAIS = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 2;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_F09;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(18, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-10.0, limite_superior_variavel=10.0} , parametros_problema.n_variaveis_projeto).ToList();
             
-            // // ====================================
-            // // DEJONG3
-            // // ====================================
-            // const double tau_GEO = 3.0;
-            // const double tau_GEOreal1 = 3.0;
-            // const double tau_GEOvar = 8.0;
-            // const double tau_minimo_AGEOs = 0.5;
-            // const double std_GEOreal1 = 1.0;
-            // const double std_AGEO1real1 = 1.0;
-            // const double std_AGEO2real1 = 1.0;
-            // const double std_minimo_AGEOsREAIS = 1.0;
-            // const double fx_esperado_funcao = 0.0;
-            // ParametrosDaFuncao parametros_problema = new ParametrosDaFuncao();
-            // parametros_problema.n_variaveis_projeto = 5;
-            // parametros_problema.definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_dejong3;
-            // List<int> bits_por_variavel_variaveis = Enumerable.Repeat(11, parametros_problema.n_variaveis_projeto).ToList();
-            // List<RestricoesLaterais> restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+
+            
+
+            
+            
+            
             
 
 
