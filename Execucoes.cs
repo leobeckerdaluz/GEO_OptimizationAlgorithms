@@ -32,6 +32,8 @@ namespace Execucoes
             int somatorio_NFOBs = 0;
             // Inicializa o somatório de melhor f(x)
             double somatorio_melhorFX = 0;
+            // Inicializa a lista que irá conter os melhores f(x) das N execuções
+            List<double> lista_melhores_fx = new List<double>();
             
             // Executa os algoritmos por N vezes
             for(int i=0; i<quantidade_execucoes; i++){
@@ -127,6 +129,8 @@ namespace Execucoes
                 somatorio_NFOBs += retorno_algoritmo.NFOB;
                 // Somatório de melhorFX para posterior média
                 somatorio_melhorFX += retorno_algoritmo.melhor_fx;
+                // Adiciona o melhor f(x) na lista dos melhores f(x)s
+                lista_melhores_fx.Add( retorno_algoritmo.melhor_fx );
             }
 
             // Lista irá conter o f(x) médio para cada NFOB desejado
@@ -150,11 +154,27 @@ namespace Execucoes
                 }
             }
 
+            // Calcula a média dos NFOBs
+            int media_NFOBs = (int) (somatorio_NFOBs / quantidade_execucoes);
+
+            // Calcula a média dos NFOBs
+            double media_melhor_fx = (double) somatorio_melhorFX / quantidade_execucoes;
+
+            // Calcula o desvio padrão final com base no melhor f(x) das execuções
+            double somatorio_sd = 0;
+            foreach (double melhor_fx in lista_melhores_fx){
+                somatorio_sd += Math.Pow((melhor_fx - media_melhor_fx), 2);
+            }
+            int n = lista_melhores_fx.Count - 1;
+            double SD_melhor_fx = Math.Sqrt(somatorio_sd / n);
+
             // Cria um objeto de retorno contendo a média dos valores para as N execuções
             RetornoGEOs media_das_execucoes = new RetornoGEOs();
             media_das_execucoes.melhores_NFOBs = lista_fxs_medios_cada_NFOB_desejado;
-            media_das_execucoes.melhor_fx = (double) somatorio_melhorFX / quantidade_execucoes;
-            media_das_execucoes.NFOB = somatorio_NFOBs / quantidade_execucoes;
+            media_das_execucoes.melhor_fx = media_melhor_fx;
+            media_das_execucoes.NFOB = media_NFOBs;
+            media_das_execucoes.lista_melhores_fxs = lista_melhores_fx;
+            media_das_execucoes.SD_melhor_fx = SD_melhor_fx;
             
             // Retorna o objeto com a média das execuções
             return media_das_execucoes;
@@ -389,7 +409,7 @@ namespace Execucoes
             }
             if (o_que_interessa_printar.mostrar_media_melhor_fx){
                 Console.WriteLine("");
-                Console.WriteLine("===> Média melhor f(x) atingido:");
+                Console.WriteLine("===> AVG do melhor f(x) nas N execuções:");
                 Console.WriteLine(algoritmos_executados);
                 string media_do_melhor_FX_obtido_nas_execucoes = "";
                 media_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEO) ? (retorno_GEO.melhor_fx.ToString()+';') : "";
@@ -409,6 +429,29 @@ namespace Execucoes
 
                 // Substitui os pontos por vírgulas e printa
                 Console.WriteLine(media_do_melhor_FX_obtido_nas_execucoes.Replace('.',','));
+            }
+            if (o_que_interessa_printar.mostrar_SD_melhor_fx){
+                Console.WriteLine("");
+                Console.WriteLine("===> SD do melhor f(x) nas N execuções:");
+                Console.WriteLine(algoritmos_executados);
+                string SD_do_melhor_FX_obtido_nas_execucoes = "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEO) ? (retorno_GEO.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOvar) ? (retorno_GEOvar.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1) ? (retorno_AGEO1.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2) ? (retorno_AGEO2.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1var) ? (retorno_AGEO1var.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2var) ? (retorno_AGEO2var.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOreal1) ? (retorno_GEOreal1.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_GEOreal2) ? (retorno_GEOreal2.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1real1) ? (retorno_AGEO1real1.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2real1) ? (retorno_AGEO2real1.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1real2) ? (retorno_AGEO1real2.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2real2) ? (retorno_AGEO2real2.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO1_ASTD) ? (retorno_AGEO1_ASTD.SD_melhor_fx.ToString()+';') : "";
+                SD_do_melhor_FX_obtido_nas_execucoes += (quais_algoritmos_rodar.rodar_AGEO2_ASTD) ? (retorno_AGEO2_ASTD.SD_melhor_fx.ToString()+';') : "";
+
+                // Substitui os pontos por vírgulas e printa
+                Console.WriteLine(SD_do_melhor_FX_obtido_nas_execucoes.Replace('.',','));
             }
         }
             
@@ -437,8 +480,7 @@ namespace Execucoes
 
             // Definições do usuário
             int quantidade_execucoes = 50;
-            int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_griwangk;
-
+            int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.enum_ackley;
 
 
             switch(definicao_funcao_objetivo){
@@ -594,18 +636,24 @@ namespace Execucoes
                     
                     restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
                 break;
+
+                default:
+                    Console.WriteLine("DEFAULT PARAMETERS!");
+                    tau_GEO = 0.0;
+                    tau_GEOreal1 = 0.0;
+                    tau_GEOvar = 0.0;
+                    tau_minimo_AGEOs = 0.0;
+                    std_GEOreal1 = 0.0;
+                    std_AGEO1real1 = 0.0;
+                    std_AGEO2real1 = 0.0;
+                    std_minimo_AGEOsREAIS = 0.0;
+                    fx_esperado_funcao = 0.0;
+                    parametros_problema = new ParametrosDaFuncao();
+                    bits_por_variavel_variaveis = new List<int>();
+                    restricoes_laterais_por_variavel = new List<RestricoesLaterais>();
+                break;
             }
             
-            
-            
-
-            
-
-            
-            
-            
-            
-
 
             // =========================================
             // EXECUÇÕES POR NFOB
@@ -613,36 +661,37 @@ namespace Execucoes
             ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB;
             parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            const int step_para_obter_NFOBs = 50;
+            const int step_para_obter_NFOBs = 500;
             parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
-            parametros_criterio_parada.NFOB_criterio_parada = 5000;
+            parametros_criterio_parada.NFOB_criterio_parada = 100000;
             parametros_criterio_parada.fx_esperado = fx_esperado_funcao;
             
             QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            quais_algoritmos_rodar.rodar_GEO        = false;
-            quais_algoritmos_rodar.rodar_GEOvar     = false;
-            quais_algoritmos_rodar.rodar_AGEO1      = false;
-            quais_algoritmos_rodar.rodar_AGEO2      = false;
-            quais_algoritmos_rodar.rodar_AGEO1var   = false;
-            quais_algoritmos_rodar.rodar_AGEO2var   = false;
-            quais_algoritmos_rodar.rodar_GEOreal1   = true;
+            quais_algoritmos_rodar.rodar_GEO        = true;
+            quais_algoritmos_rodar.rodar_GEOvar     = true;
+            quais_algoritmos_rodar.rodar_AGEO1      = true;
+            quais_algoritmos_rodar.rodar_AGEO2      = true;
+            quais_algoritmos_rodar.rodar_AGEO1var   = true;
+            quais_algoritmos_rodar.rodar_AGEO2var   = true;
+            quais_algoritmos_rodar.rodar_GEOreal1   = false;
             quais_algoritmos_rodar.rodar_GEOreal2   = false;
-            quais_algoritmos_rodar.rodar_AGEO1real1 = true;
-            quais_algoritmos_rodar.rodar_AGEO2real1 = true;
+            quais_algoritmos_rodar.rodar_AGEO1real1 = false;
+            quais_algoritmos_rodar.rodar_AGEO2real1 = false;
             quais_algoritmos_rodar.rodar_AGEO1real2 = false;
             quais_algoritmos_rodar.rodar_AGEO2real2 = false;
-            quais_algoritmos_rodar.rodar_AGEO1_ASTD = true;
-            quais_algoritmos_rodar.rodar_AGEO2_ASTD = true;
+            quais_algoritmos_rodar.rodar_AGEO1_ASTD = false;
+            quais_algoritmos_rodar.rodar_AGEO2_ASTD = false;
 
             OQueInteressaPrintar o_que_interessa_printar = new OQueInteressaPrintar();
             o_que_interessa_printar.mostrar_melhores_NFOB = true;
             o_que_interessa_printar.mostrar_media_NFE_atingido = false;
-            o_que_interessa_printar.mostrar_media_melhor_fx = false;
+            o_que_interessa_printar.mostrar_media_melhor_fx = true;
+            o_que_interessa_printar.mostrar_SD_melhor_fx = true;
 
             const bool printar_status_executando = true;
             const int tipo_perturbacao_original_ou_SDdireto = (int)EnumTipoPerturbacao.perturbacao_original;
 
-            Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, std_minimo_AGEOsREAIS, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
+            Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, std_minimo_AGEOsREAIS, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, printar_status_executando);
             
             
             // // =========================================

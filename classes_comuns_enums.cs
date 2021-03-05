@@ -18,7 +18,9 @@ namespace Classes_Comuns_Enums
     public class RetornoGEOs {
         public int NFOB { get; set; }
         public double melhor_fx { get; set; }
+        public double SD_melhor_fx { get; set; }
         public List<double> melhores_NFOBs { get; set; }
+        public List<double> lista_melhores_fxs { get; set; }
     }
 
 
@@ -81,6 +83,7 @@ namespace Classes_Comuns_Enums
         public bool mostrar_melhores_NFOB {get; set;}
         public bool mostrar_media_NFE_atingido {get; set;}
         public bool mostrar_media_melhor_fx {get; set;}
+        public bool mostrar_SD_melhor_fx {get; set;}
     }
 
     enum EnumNomesFuncoesObjetivo{
