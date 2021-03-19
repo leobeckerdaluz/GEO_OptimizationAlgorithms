@@ -1,0 +1,118 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "MathNet.Numerics/4.12.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/MathNet.Numerics.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MathNet.Numerics.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MathNet.Numerics/4.12.0": {
+      "sha512": "U6R74mc1PHD3HbbevY5Z6AS07toye0PBooKPpCyD9sCc5HDPlRl+lmiWl+zy8L7IEHIH0Bvkx1sVqBY++5X5eA==",
+      "type": "package",
+      "path": "mathnet.numerics/4.12.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net40/MathNet.Numerics.dll",
+        "lib/net40/MathNet.Numerics.xml",
+        "lib/net461/MathNet.Numerics.dll",
+        "lib/net461/MathNet.Numerics.xml",
+        "lib/netstandard1.3/MathNet.Numerics.dll",
+        "lib/netstandard1.3/MathNet.Numerics.xml",
+        "lib/netstandard2.0/MathNet.Numerics.dll",
+        "lib/netstandard2.0/MathNet.Numerics.xml",
+        "mathnet.numerics.4.12.0.nupkg.sha512",
+        "mathnet.numerics.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "MathNet.Numerics >= 4.12.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/bull/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/bull/git/GEO_OptimizationAlgorithms/src/GEO.csproj",
+      "projectName": "GEO",
+      "projectPath": "/home/bull/git/GEO_OptimizationAlgorithms/src/GEO.csproj",
+      "packagesPath": "/home/bull/.nuget/packages/",
+      "outputPath": "/home/bull/git/GEO_OptimizationAlgorithms/src/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/bull/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
+        "dependencies": {
+          "MathNet.Numerics": {
+            "target": "Package",
+            "version": "[4.12.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.10, 3.1.10]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[3.1.13, 3.1.13]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[3.1.0, 3.1.0]"
+          }
+        ],
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.104/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

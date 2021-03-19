@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "GEO/1.0.0": {
+        "dependencies": {
+          "MathNet.Numerics": "4.12.0"
+        },
+        "runtime": {
+          "GEO.dll": {}
+        }
+      },
+      "MathNet.Numerics/4.12.0": {
+        "runtime": {
+          "lib/netstandard2.0/MathNet.Numerics.dll": {
+            "assemblyVersion": "4.12.0.0",
+            "fileVersion": "4.12.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GEO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MathNet.Numerics/4.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U6R74mc1PHD3HbbevY5Z6AS07toye0PBooKPpCyD9sCc5HDPlRl+lmiWl+zy8L7IEHIH0Bvkx1sVqBY++5X5eA==",
+      "path": "mathnet.numerics/4.12.0",
+      "hashPath": "mathnet.numerics.4.12.0.nupkg.sha512"
+    }
+  }
+}
