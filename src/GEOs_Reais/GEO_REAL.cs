@@ -52,15 +52,15 @@ namespace GEOs_REAIS
         public virtual void add_NFOB(){
             NFOB++;
 
-#if DEBUG_CONSOLE
-            Console.WriteLine("NFOB incrementado = {0}", NFOB);
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("NFOB incrementado = {0}", NFOB);
+            #endif
 
             if (NFOB % step_obter_NFOBs == 0){
                 melhores_NFOBs.Add(fx_melhor);
-#if DEBUG_CONSOLE    
-                Console.WriteLine("melhor NFOB {0} = {1}", NFOB, fx_melhor);
-#endif
+                #if DEBUG_CONSOLE    
+                    Console.WriteLine("melhor NFOB {0} = {1}", NFOB, fx_melhor);
+                #endif
             }
         }
 
@@ -82,33 +82,32 @@ namespace GEOs_REAIS
                     
                     penalidade += penalidade_inferior;
 
-#if DEBUG_FUNCTION_OVERLIMIT
-                    Console.WriteLine("Fora do limite inferior! xi = {0} e limite inferior = {1}. Penalidade = {2}", xi, limite_inferior, penalidade_inferior);
-#endif
+                    #if DEBUG_FUNCTION_OVERLIMIT
+                        Console.WriteLine("Fora do limite inferior! xi = {0} e limite inferior = {1}. Penalidade = {2}", xi, limite_inferior, penalidade_inferior);
+                    #endif
                 }
                 else if (xi > limite_superior){
                     double penalidade_superior = 2 * Math.Pow(xi - limite_superior, 2);
                     
                     penalidade += penalidade_superior;
 
-#if DEBUG_FUNCTION_OVERLIMIT
-                    Console.WriteLine("Fora do limite superior! xi = {0} e limite superior = {1}. Penalidade = {2}", xi, limite_superior, penalidade_superior);
-#endif
+                    #if DEBUG_FUNCTION_OVERLIMIT
+                        Console.WriteLine("Fora do limite superior! xi = {0} e limite superior = {1}. Penalidade = {2}", xi, limite_superior, penalidade_superior);
+                    #endif
                 }
             }
 
             double penalidade_aplicada = fx + penalidade;
 
-#if DEBUG_FUNCTION
+            #if DEBUG_FUNCTION
             Console.WriteLine("Penalidade total = {0} aplicada na fx = {1} transforma em {2}", penalidade, fx, penalidade_aplicada);
-#endif
+            #endif
 
             return penalidade_aplicada;
         }
         
 
-        public virtual void geracao_populacao()
-        {
+        public virtual void geracao_populacao(){
             // Inicia a população zerada
             populacao_atual = new List<double>();
             populacao_melhor = new List<double>();
@@ -120,19 +119,19 @@ namespace GEOs_REAIS
 
                 double xi = limite_inferior_variavel + ((limite_superior_variavel - limite_inferior_variavel) * rand);
 
-#if DEBUG_CONSOLE
-                Console.WriteLine("xi gerado = {0}", xi);
-#endif
+                #if DEBUG_CONSOLE
+                    Console.WriteLine("xi gerado = {0}", xi);
+                #endif
 
                 populacao_atual.Add(xi);
             }
 
-#if DEBUG_CONSOLE
-            Console.WriteLine("População gerada:");
-            foreach(double ind in populacao_atual){
-                Console.WriteLine("individuo = {0}", ind);
-            }
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("População gerada:");
+                foreach(double ind in populacao_atual){
+                    Console.WriteLine("individuo = {0}", ind);
+                }
+            #endif
 
             fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
             
@@ -140,19 +139,18 @@ namespace GEOs_REAIS
             fx_melhor = fx_atual;
             populacao_melhor = populacao_atual;
             
-#if DEBUG_CONSOLE
-            Console.WriteLine("fx_atual atualizado para {0}", fx_atual);
-            Console.WriteLine("fx_melhor atualizado para atual = {0}", fx_melhor);
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("fx_atual atualizado para {0}", fx_atual);
+                Console.WriteLine("fx_melhor atualizado para atual = {0}", fx_melhor);
+            #endif
         }
        
        
-        public virtual void verifica_perturbacoes()
-        {
+        public virtual void verifica_perturbacoes(){
 
-#if DEBUG_CONSOLE
-            Console.WriteLine("===================================================");
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("===================================================");
+            #endif
 
             // Inicia a lista de perturbações zerada
             List<Perturbacao> perturbacoes = new List<Perturbacao>();
@@ -173,21 +171,21 @@ namespace GEOs_REAIS
                     xii = xi + normalDist.Sample();
                 }
 
-#if DEBUG_CONSOLE
-                Console.WriteLine("Verificando a variável {0}", i);
-                Console.WriteLine("xi vale {0} e perturbando vai para {1}", xi, xii);
-#endif
+                #if DEBUG_CONSOLE
+                    Console.WriteLine("Verificando a variável {0}", i);
+                    Console.WriteLine("xi vale {0} e perturbando vai para {1}", xi, xii);
+                #endif
 
                 // Atribui a variável perturbada
                 populacao_para_perturbar[i] = xii;
 
-#if DEBUG_CONSOLE
-                Console.WriteLine("População perturbada para calcular fx:");
-                foreach (double ind in populacao_para_perturbar){
-                    Console.Write(ind + " | ");
-                }
-                Console.WriteLine("");
-#endif
+                #if DEBUG_CONSOLE
+                    Console.WriteLine("População perturbada para calcular fx:");
+                    foreach (double ind in populacao_para_perturbar){
+                        Console.Write(ind + " | ");
+                    }
+                    Console.WriteLine("");
+                #endif
 
                 // Calcula f(x) com a variável perturbada
                 double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
@@ -195,13 +193,13 @@ namespace GEOs_REAIS
                 // Avalia se a perturbação é a melhor de todas
                 if (fx < fx_melhor){
 
-#if NOVO_MELHOR_FX
-                Console.WriteLine("AVALIAÇÃO: fx = {0} < fx_melhor = {1}", fx, fx_melhor);
-#endif
+                    #if NOVO_MELHOR_FX
+                        Console.WriteLine("AVALIAÇÃO: fx = {0} < fx_melhor = {1}", fx, fx_melhor);
+                    #endif
 
-                fx_melhor = fx;
-                populacao_melhor = populacao_para_perturbar;
-            }
+                    fx_melhor = fx;
+                    populacao_melhor = populacao_para_perturbar;
+                }
 
 
                 // Cria o objeto perturbação
@@ -223,24 +221,25 @@ namespace GEOs_REAIS
         public virtual void mutacao_do_tau_AGEOs(){}
 
 
+
         public virtual void ordena_e_perturba(){
             
-#if DEBUG_CONSOLE
-            Console.WriteLine("Agora que criou as perturbações, mostra as perturbações:");
-            foreach(Perturbacao p in perturbacoes_da_iteracao){
-                Console.WriteLine("Perturbação na var {0} com novo fx = {1} , xi antes = {2} e xi depois = {3}", p.indice_variavel_projeto, p.fx_depois_da_perturbacao, p.xi_antes_da_perturbacao, p.xi_depois_da_perturbacao);
-            }
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("Agora que criou as perturbações, mostra as perturbações:");
+                foreach(Perturbacao p in perturbacoes_da_iteracao){
+                    Console.WriteLine("Perturbação na var {0} com novo fx = {1} , xi antes = {2} e xi depois = {3}", p.indice_variavel_projeto, p.fx_depois_da_perturbacao, p.xi_antes_da_perturbacao, p.xi_depois_da_perturbacao);
+                }
+            #endif
 
             // Ordena as perturbações com base no f(x)
             perturbacoes_da_iteracao.Sort(delegate(Perturbacao b1, Perturbacao b2) { return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); });
 
-#if DEBUG_CONSOLE
-            Console.WriteLine("Perturbações depois de ordenar:");
-            foreach(Perturbacao p in perturbacoes_da_iteracao){
-                Console.WriteLine("Perturbação na var {0} com novo fx = {1} , xi antes = {2} e xi depois = {3}", p.indice_variavel_projeto, p.fx_depois_da_perturbacao, p.xi_antes_da_perturbacao, p.xi_depois_da_perturbacao);
-            }
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("Perturbações depois de ordenar:");
+                foreach(Perturbacao p in perturbacoes_da_iteracao){
+                    Console.WriteLine("Perturbação na var {0} com novo fx = {1} , xi antes = {2} e xi depois = {3}", p.indice_variavel_projeto, p.fx_depois_da_perturbacao, p.xi_antes_da_perturbacao, p.xi_depois_da_perturbacao);
+                }
+            #endif
 
 
             // Verifica as probabilidades até que uma variável seja perturbada
@@ -258,9 +257,9 @@ namespace GEOs_REAIS
                 // k precisa ser de 1 a N, mas aqui nos índices começa em 0
                 k -= 1;
 
-#if DEBUG_CONSOLE
-                Console.WriteLine("Gerou ALE = {0} e Pk = {1} para k = {2}", ALE, Pk, k+1);
-#endif
+                #if DEBUG_CONSOLE
+                    Console.WriteLine("Gerou ALE = {0} e Pk = {1} para k = {2}", ALE, Pk, k+1);
+                #endif
 
                 // Se o Pk é maior ou igual ao aleatório, então flipa o bit
                 if (Pk >= ALE){
@@ -268,10 +267,10 @@ namespace GEOs_REAIS
                     // Lá na variável k, coloca o novo xi
                     populacao_atual[ perturbacoes_da_iteracao[k].indice_variavel_projeto ] = perturbacoes_da_iteracao[k].xi_depois_da_perturbacao;
 
-#if DEBUG_CONSOLE
-                    Console.WriteLine("Perturbou populacao no indice {0} para o valor {1}", perturbacoes_da_iteracao[k].indice_variavel_projeto, perturbacoes_da_iteracao[k].xi_depois_da_perturbacao);
-                    Console.WriteLine("Novo f(x) tem que dar {0}", perturbacoes_da_iteracao[k].fx_depois_da_perturbacao);
-#endif
+                    #if DEBUG_CONSOLE
+                        Console.WriteLine("Perturbou populacao no indice {0} para o valor {1}", perturbacoes_da_iteracao[k].indice_variavel_projeto, perturbacoes_da_iteracao[k].xi_depois_da_perturbacao);
+                        Console.WriteLine("Novo f(x) tem que dar {0}", perturbacoes_da_iteracao[k].fx_depois_da_perturbacao);
+                    #endif
 
                     // Atualiza o f(x) atual com o perturbado
                     fx_atual = perturbacoes_da_iteracao[k].fx_depois_da_perturbacao;
@@ -281,12 +280,12 @@ namespace GEOs_REAIS
                 }
             }
 
-#if DEBUG_CONSOLE
-            Console.WriteLine("População depois de perturbar tudo:");
-            foreach(double ind in populacao_atual){
-                Console.WriteLine(ind);
-            }
-#endif
+            #if DEBUG_CONSOLE
+                Console.WriteLine("População depois de perturbar tudo:");
+                foreach(double ind in populacao_atual){
+                    Console.WriteLine(ind);
+                }
+            #endif
         }
         
 

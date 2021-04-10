@@ -16,8 +16,7 @@ namespace GEOs_REAIS
         }
 
 
-        public override void mutacao_do_tau_AGEOs()
-        {
+        public override void mutacao_do_tau_AGEOs(){
             // Conta quantas mudanças que flipando dá melhor
             int melhoraram = 0;
 

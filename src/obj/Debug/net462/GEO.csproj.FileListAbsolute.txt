@@ -1,0 +1,11 @@
+/home/bull/git/GEO_OptimizationAlgorithms/src/bin/Debug/net462/GEO.exe.config
+/home/bull/git/GEO_OptimizationAlgorithms/src/bin/Debug/net462/GEO.exe
+/home/bull/git/GEO_OptimizationAlgorithms/src/bin/Debug/net462/GEO.pdb
+/home/bull/git/GEO_OptimizationAlgorithms/src/bin/Debug/net462/MathNet.Numerics.dll
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.csprojAssemblyReference.cache
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.AssemblyInfoInputs.cache
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.AssemblyInfo.cs
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.csproj.CoreCompileInputs.cache
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.csproj.CopyComplete
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.exe
+/home/bull/git/GEO_OptimizationAlgorithms/src/obj/Debug/net462/GEO.pdb

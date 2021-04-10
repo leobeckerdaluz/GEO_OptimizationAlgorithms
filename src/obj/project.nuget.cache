@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "LHH8Pb/dBE7FURpaYh7JgnuDWhkkW4tZICtqhd6oIxkkRI3qWIC0Sc1md2+BQZVafrCJH+cyrDt4crDrgclCoA==",
+  "dgSpecHash": "brH7VM/qayR9Ywb46Y+GPbsSSuiXZKh9YELxyy59SV8rtgINyI47/nbI9kOiT4QsGZhJR0opIR6FH7wmiuBX8Q==",
   "success": true,
   "projectFilePath": "/home/bull/git/GEO_OptimizationAlgorithms/src/GEO.csproj",
   "expectedPackageFiles": [
     "/home/bull/.nuget/packages/mathnet.numerics/4.12.0/mathnet.numerics.4.12.0.nupkg.sha512",
-    "/home/bull/.nuget/packages/microsoft.netcore.app.ref/3.1.0/microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
-    "/home/bull/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.10/microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
-    "/home/bull/.nuget/packages/microsoft.netcore.app.host.linux-x64/3.1.13/microsoft.netcore.app.host.linux-x64.3.1.13.nupkg.sha512"
+    "/home/bull/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.0/microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "/home/bull/.nuget/packages/microsoft.netframework.referenceassemblies.net462/1.0.0/microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512"
   ],
   "logs": []
 }
