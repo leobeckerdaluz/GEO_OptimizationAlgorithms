@@ -8,11 +8,9 @@ using System.Linq;
 
 namespace GEOs_REAIS
 {
-    public class GEO_real2 : GEO_real1
+    public class GEO_real3 : GEO_real2
     {
-        public int P {get; set;}
-        
-        public GEO_real2(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto){
+        public GEO_real3(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto, P){
             this.P = P;
         }
 

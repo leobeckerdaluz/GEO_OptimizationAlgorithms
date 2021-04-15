@@ -20,19 +20,19 @@ namespace Funcoes_Definidas
             switch(definicao_funcao_objetivo){
 
                 // Griewangk
-                case (int)EnumNomesFuncoesObjetivo.enum_griwangk:
+                case (int)EnumNomesFuncoesObjetivo.griewangk:
                     return funcao_griewank(fenotipo_variaveis_projeto);
 
                 // Rosenbrock
-                case (int)EnumNomesFuncoesObjetivo.enum_rosenbrock:
+                case (int)EnumNomesFuncoesObjetivo.rosenbrock:
                     return funcao_rosenbrock(fenotipo_variaveis_projeto);
 
                 // DeJong3
-                case (int)EnumNomesFuncoesObjetivo.enum_dejong3:
+                case (int)EnumNomesFuncoesObjetivo.dejong3:
                     return funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
 
                 // Custom Spacecraft Orbit Function
-                case (int)EnumNomesFuncoesObjetivo.enum_spacecraft:
+                case (int)EnumNomesFuncoesObjetivo.spacecraft:
                     int D = (int)fenotipo_variaveis_projeto[1];
                     int N = (int)fenotipo_variaveis_projeto[2];
                     
@@ -46,23 +46,23 @@ namespace Funcoes_Definidas
                     }
                 
                 // F6
-                case (int)EnumNomesFuncoesObjetivo.enum_rastringin:
+                case (int)EnumNomesFuncoesObjetivo.rastringin:
                     return funcao_Rastringin(fenotipo_variaveis_projeto);
 
                 // F7
-                case (int)EnumNomesFuncoesObjetivo.enum_schwefel:
+                case (int)EnumNomesFuncoesObjetivo.schwefel:
                     return funcao_Schwefel(fenotipo_variaveis_projeto);
 
                 // F8
-                case (int)EnumNomesFuncoesObjetivo.enum_ackley:
+                case (int)EnumNomesFuncoesObjetivo.ackley:
                     return funcao_Ackley(fenotipo_variaveis_projeto);
 
                 // F9
-                case (int)EnumNomesFuncoesObjetivo.enum_F09:
+                case (int)EnumNomesFuncoesObjetivo.F09:
                     return funcao_F9(fenotipo_variaveis_projeto);
 
                 // F10
-                case (int)EnumNomesFuncoesObjetivo.enum_F10:
+                case (int)EnumNomesFuncoesObjetivo.F10:
                     double xi1 = fenotipo_variaveis_projeto[0];
                     double xi2 = fenotipo_variaveis_projeto[1];
                     

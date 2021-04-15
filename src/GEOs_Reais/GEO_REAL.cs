@@ -109,7 +109,7 @@ namespace GEOs_REAIS
 
         public virtual void geracao_populacao(){
             // Inicia a população zerada
-            populacao_atual = new List<double>();
+            populacao_atual = new List<double>(){};
             populacao_melhor = new List<double>();
 
             for(int i=0; i<this.n_variaveis_projeto; i++){

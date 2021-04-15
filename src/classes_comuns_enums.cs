@@ -16,6 +16,7 @@ namespace Classes_Comuns_Enums
     
     
     public class RetornoGEOs {
+        public int algoritmo_utilizado { get; set; }
         public int NFOB { get; set; }
         public double melhor_fx { get; set; }
         public double SD_melhor_fx { get; set; }
@@ -46,19 +47,30 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
         public bool rodar_GEOreal1 { get; set; }
-        public bool rodar_GEOreal2 { get; set; }
         public bool rodar_AGEO1real1 { get; set; }
         public bool rodar_AGEO2real1 { get; set; }
+        public bool rodar_GEOreal2 { get; set; }
         public bool rodar_AGEO1real2 { get; set; }
         public bool rodar_AGEO2real2 { get; set; }
-        public bool rodar_AGEO1_ASTD { get; set; }
-        public bool rodar_AGEO2_ASTD { get; set; }
+        public bool rodar_GEOreal3 { get; set; }
+        public bool rodar_AGEO1real3 { get; set; }
+        public bool rodar_AGEO2real3 { get; set; }
     }
 
 
-    public class ParametrosDaFuncao {
+    public class ParametrosProblema {
         public int definicao_funcao_objetivo { get; set; }
         public int n_variaveis_projeto { get; set; }
+        public List<int> bits_por_variavel { get; set; }
+        public List<RestricoesLaterais> restricoes_laterais_por_variavel { get; set; }
+        public ParametrosLivreProblema parametros_livres { get; set; }
+    }
+
+    public class ParametrosExecucao {
+        public int quantidade_execucoes { get; set; }
+        public ParametrosCriterioParada parametros_criterio_parada { get; set; }
+        public QuaisAlgoritmosRodar quais_algoritmos_rodar { get; set; }
+        public OQueInteressaPrintar o_que_interessa_printar { get; set; }
     }
     
     public class CodificacaoBinariaParaFenotipo {
@@ -87,16 +99,40 @@ namespace Classes_Comuns_Enums
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
     }
 
+    public class ParametrosLivreProblema{
+        public double tau_GEO {get; set;}
+        public double tau_GEOvar {get; set;}
+        public double tau_GEOreal1 {get; set;}
+        public double tau_GEOreal2 {get; set;}
+        public double tau_GEOreal3 {get; set;}
+        public double tau_minimo_AGEOs {get; set;}
+        public double std_GEOreal1 {get; set;}
+        public double std_AGEO1real1 {get; set;}
+        public double std_AGEO2real1 {get; set;}
+        public double std_GEOreal2 {get; set;}
+        public double std_AGEO1real2 {get; set;}
+        public double std_AGEO2real2 {get; set;}
+        public double std_GEOreal3 {get; set;}
+        public double std_AGEO1real3 {get; set;}
+        public double std_AGEO2real3 {get; set;}
+        public double P_GEOreal2 {get; set;}
+        public double P_AGEO1real2 {get; set;}
+        public double P_AGEO2real2 {get; set;}
+        public double P_GEOreal3 {get; set;}
+        public double P_AGEO1real3 {get; set;}
+        public double P_AGEO2real3 {get; set;}
+    }
+
     enum EnumNomesFuncoesObjetivo{
-        enum_griwangk,
-        enum_rosenbrock,
-        enum_dejong3,
-        enum_spacecraft,
-        enum_rastringin,
-        enum_schwefel,
-        enum_ackley,
-        enum_F09,
-        enum_F10
+        griewangk,
+        rosenbrock,
+        dejong3,
+        spacecraft,
+        rastringin,
+        schwefel,
+        ackley,
+        F09,
+        F10
     }
 
     enum EnumNomesAlgoritmos{
@@ -107,13 +143,14 @@ namespace Classes_Comuns_Enums
         AGEO1var,
         AGEO2var,
         GEOreal1,
-        GEOreal2,
         AGEO1real1,
         AGEO2real1,
+        GEOreal2,
         AGEO1real2,
         AGEO2real2,
-        AGEO1_ASTD,
-        AGEO2_ASTD,
+        GEOreal3,
+        AGEO1real3,
+        AGEO2real3,
     }
 
     enum EnumTipoCriterioParada{
