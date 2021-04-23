@@ -102,11 +102,8 @@ namespace Classes_Comuns_Enums
 
     public class OQueInteressaPrintar{
         public bool mostrar_melhores_NFOB {get; set;}
-        public bool mostrar_media_NFE_atingido {get; set;}
-        public bool mostrar_media_melhor_fx {get; set;}
-        public bool mostrar_SD_melhor_fx {get; set;}
+        public bool mostrar_meanNFE_meanFX_sdFX {get; set;}
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
-        public bool mostrar_populacao_cada_execucao {get; set;}
     }
 
     public class ParametrosLivreProblema{
