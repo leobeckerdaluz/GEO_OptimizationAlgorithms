@@ -10,7 +10,7 @@ namespace GEOs_REAIS
 {
     public class GEO_real3 : GEO_real2
     {
-        public GEO_real3(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto, P){
+        public GEO_real3(List<double> populacao_inicial, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(populacao_inicial, tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto, P){
             this.P = P;
         }
 

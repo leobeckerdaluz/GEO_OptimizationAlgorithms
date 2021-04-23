@@ -13,7 +13,7 @@ namespace GEOs_REAIS
         public int tipo_AGEO {get; set;}
         public double CoI_1 {get; set;}
 
-        public AGEOs_REAL2(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_AGEO, int tipo_perturbacao_original_ou_SDdireto, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto, P){
+        public AGEOs_REAL2(List<double> populacao_inicial, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_AGEO, int tipo_perturbacao_original_ou_SDdireto, int P) : base(populacao_inicial, tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto, P){
             this.P = P;
             this.tipo_AGEO = tipo_AGEO;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);

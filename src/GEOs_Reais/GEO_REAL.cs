@@ -30,7 +30,7 @@ namespace GEOs_REAIS
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
 
 
-        public GEO_real1(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto){
+        public GEO_real1(List<double> populacao_inicial, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto){
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
@@ -40,10 +40,10 @@ namespace GEOs_REAIS
             this.tipo_perturbacao_original_ou_SDdireto = tipo_perturbacao_original_ou_SDdireto;
             
             this.NFOB = 0;
-            this.fx_atual = Double.MaxValue;
-            this.fx_melhor = Double.MaxValue;
-            this.populacao_atual = new List<double>();
-            this.populacao_melhor = new List<double>();
+            this.populacao_atual = new List<double>(populacao_inicial);
+            this.populacao_melhor = new List<double>(populacao_inicial);
+            this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial);
+            this.fx_melhor = this.fx_atual;
             this.melhores_NFOBs = new List<double>();
             this.perturbacoes_da_iteracao = new List<Perturbacao>();
         }
@@ -66,19 +66,24 @@ namespace GEOs_REAIS
 
 
         public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos){
+            // Calcula o valor da função objetivo com o fenótipo desejado
             double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
+            
             add_NFOB();
             
             double penalidade = 0;
 
-            for(int i=0; i<populacao_atual.Count; i++){
+            const double grau_penalidade = 1000;
+
+            // Verifica a penalidade para cada variável do fenótipo desejado
+            for(int i=0; i<fenotipos.Count; i++){
                 double limite_inferior = restricoes_laterais_variaveis[i].limite_inferior_variavel;
                 double limite_superior = restricoes_laterais_variaveis[i].limite_superior_variavel;
-                double xi = populacao_atual[i];
+                double xi = fenotipos[i];
 
                 // Verifica se a variável está fora dos limites
                 if (xi < limite_inferior){
-                    double penalidade_inferior = 2 * Math.Pow(xi - limite_inferior, 2);
+                    double penalidade_inferior = grau_penalidade * Math.Pow(xi - limite_inferior, 2);
                     
                     penalidade += penalidade_inferior;
 
@@ -87,7 +92,7 @@ namespace GEOs_REAIS
                     #endif
                 }
                 else if (xi > limite_superior){
-                    double penalidade_superior = 2 * Math.Pow(xi - limite_superior, 2);
+                    double penalidade_superior = grau_penalidade * Math.Pow(xi - limite_superior, 2);
                     
                     penalidade += penalidade_superior;
 
@@ -106,45 +111,6 @@ namespace GEOs_REAIS
             return penalidade_aplicada;
         }
         
-
-        public virtual void geracao_populacao(){
-            // Inicia a população zerada
-            populacao_atual = new List<double>(){};
-            populacao_melhor = new List<double>();
-
-            for(int i=0; i<this.n_variaveis_projeto; i++){
-                double limite_inferior_variavel = restricoes_laterais_variaveis[i].limite_inferior_variavel;
-                double limite_superior_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel;
-                double rand = random.NextDouble();
-
-                double xi = limite_inferior_variavel + ((limite_superior_variavel - limite_inferior_variavel) * rand);
-
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("xi gerado = {0}", xi);
-                #endif
-
-                populacao_atual.Add(xi);
-            }
-
-            #if DEBUG_CONSOLE
-                Console.WriteLine("População gerada:");
-                foreach(double ind in populacao_atual){
-                    Console.WriteLine("individuo = {0}", ind);
-                }
-            #endif
-
-            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
-            
-            // Atualiza os melhores
-            fx_melhor = fx_atual;
-            populacao_melhor = populacao_atual;
-            
-            #if DEBUG_CONSOLE
-                Console.WriteLine("fx_atual atualizado para {0}", fx_atual);
-                Console.WriteLine("fx_melhor atualizado para atual = {0}", fx_melhor);
-            #endif
-        }
-       
        
         public virtual void verifica_perturbacoes(){
 
@@ -290,9 +256,6 @@ namespace GEOs_REAIS
         
 
         public virtual RetornoGEOs executar(ParametrosCriterioParada parametros_criterio_parada){
-            
-            geracao_populacao();
-            
             while(true){
                 verifica_perturbacoes();
                 mutacao_do_tau_AGEOs();
@@ -330,6 +293,7 @@ namespace GEOs_REAIS
                     retorno.NFOB = this.NFOB;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFOBs = this.melhores_NFOBs;
+                    retorno.populacao_final = this.populacao_melhor;
                     
                     return retorno;
                 }

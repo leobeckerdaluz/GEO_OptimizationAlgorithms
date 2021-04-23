@@ -12,7 +12,7 @@ namespace GEOs_REAIS
     {
         public int P {get; set;}
         
-        public GEO_real2(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto){
+        public GEO_real2(List<double> populacao_inicial, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(populacao_inicial, tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto){
             this.P = P;
         }
 
@@ -37,6 +37,8 @@ namespace GEOs_REAIS
                     MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
                     
                     double xii = xi;
+
+                    // Perturba a variável dentro dos limites
                     if (tipo_perturbacao_original_ou_SDdireto == (int)EnumTipoPerturbacao.perturbacao_original){
                         xii = xi + (normalDist.Sample() * xi);
                     }

@@ -22,8 +22,18 @@ namespace Classes_Comuns_Enums
         public double SD_melhor_fx { get; set; }
         public List<double> melhores_NFOBs { get; set; }
         public List<double> lista_melhores_fxs { get; set; }
+        public List<double> populacao_final { get; set; }
     }
 
+    public class Retorno_N_Execucoes_GEOs {
+        public int algoritmo_utilizado { get; set; }
+        public int NFOB_medio { get; set; }
+        public double media_melhor_fx { get; set; }
+        public double SD_do_melhor_fx { get; set; }
+        public List<double> media_valor_FO_em_cada_NFOB { get; set; }
+        public List<double> lista_melhores_fxs { get; set; }
+        public List<List<double>> lista_populacao_final { get; set; }
+    }
 
     public class ParametrosCriterioParada {
         public int tipo_criterio_parada { get; set; }
@@ -64,6 +74,7 @@ namespace Classes_Comuns_Enums
         public List<int> bits_por_variavel { get; set; }
         public List<RestricoesLaterais> restricoes_laterais_por_variavel { get; set; }
         public ParametrosLivreProblema parametros_livres { get; set; }
+        public List<double> populacao_inicial { get; set; }
     }
 
     public class ParametrosExecucao {
@@ -97,6 +108,7 @@ namespace Classes_Comuns_Enums
         public bool mostrar_media_melhor_fx {get; set;}
         public bool mostrar_SD_melhor_fx {get; set;}
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
+        public bool mostrar_populacao_cada_execucao {get; set;}
     }
 
     public class ParametrosLivreProblema{
