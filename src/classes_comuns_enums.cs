@@ -19,9 +19,7 @@ namespace Classes_Comuns_Enums
         public int algoritmo_utilizado { get; set; }
         public int NFOB { get; set; }
         public double melhor_fx { get; set; }
-        public double SD_melhor_fx { get; set; }
         public List<double> melhores_NFOBs { get; set; }
-        public List<double> lista_melhores_fxs { get; set; }
         public List<double> populacao_final { get; set; }
     }
 
