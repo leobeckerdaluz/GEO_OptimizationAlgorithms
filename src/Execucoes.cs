@@ -803,7 +803,7 @@ namespace Execucoes
                 },
                 o_que_interessa_printar = new OQueInteressaPrintar(){
                     mostrar_header = true,
-                    mostrar_meanNFE_meanFX_sdFX = true,
+                    mostrar_meanNFE_meanFX_sdFX = false,
                     mostrar_melhores_NFOB = true,
                     mostrar_melhores_fx_cada_execucao = true
                 },
