@@ -73,7 +73,7 @@ namespace GEOs_REAIS
             
             double penalidade = 0;
 
-            const double grau_penalidade = 1000;
+            const double grau_penalidade = 2;
 
             // Verifica a penalidade para cada variável do fenótipo desejado
             for(int i=0; i<fenotipos.Count; i++){

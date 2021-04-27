@@ -80,6 +80,7 @@ namespace Classes_Comuns_Enums
         public ParametrosCriterioParada parametros_criterio_parada { get; set; }
         public QuaisAlgoritmosRodar quais_algoritmos_rodar { get; set; }
         public OQueInteressaPrintar o_que_interessa_printar { get; set; }
+        public int tipo_perturbacao { get; set; }
     }
     
     public class CodificacaoBinariaParaFenotipo {
@@ -104,6 +105,7 @@ namespace Classes_Comuns_Enums
         public bool mostrar_melhores_NFOB {get; set;}
         public bool mostrar_meanNFE_meanFX_sdFX {get; set;}
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
+        public bool mostrar_header {get; set;}
     }
 
     public class ParametrosLivreProblema{
