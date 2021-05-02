@@ -68,6 +68,7 @@ namespace Classes_Comuns_Enums
 
     public class ParametrosProblema {
         public int definicao_funcao_objetivo { get; set; }
+        public string nome_funcao { get; set; }
         public int n_variaveis_projeto { get; set; }
         public List<int> bits_por_variavel { get; set; }
         public List<RestricoesLaterais> restricoes_laterais_por_variavel { get; set; }
@@ -130,6 +131,9 @@ namespace Classes_Comuns_Enums
         public double P_GEOreal3 {get; set;}
         public double P_AGEO1real3 {get; set;}
         public double P_AGEO2real3 {get; set;}
+        public double s_GEOreal2 {get; set;}
+        public double s_AGEO1real2 {get; set;}
+        public double s_AGEO2real2 {get; set;}
     }
 
     enum EnumNomesFuncoesObjetivo{

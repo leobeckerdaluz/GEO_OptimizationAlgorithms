@@ -11,9 +11,11 @@ namespace GEOs_REAIS
     public class GEO_real2 : GEO_real1
     {
         public int P {get; set;}
+        public int s {get; set;}
         
-        public GEO_real2(List<double> populacao_inicial, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P) : base(populacao_inicial, tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto){
+        public GEO_real2(List<double> populacao_inicial, double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, double std, int tipo_perturbacao_original_ou_SDdireto, int P, int s) : base(populacao_inicial, tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, std, tipo_perturbacao_original_ou_SDdireto){
             this.P = P;
+            this.s = s;
         }
 
         
@@ -29,11 +31,13 @@ namespace GEOs_REAIS
 
                 double std_atual = this.std;
 
+                // Para cada desvio padrão diferente, calcula as perturbações
                 for(int j=0; j<this.P; j++){
                     // Cria uma população cópia
                     List<double> populacao_para_perturbar = new List<double>(populacao_atual);
 
                     double xi = populacao_para_perturbar[i];
+
                     MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
                     
                     double xii = xi;
@@ -68,6 +72,10 @@ namespace GEOs_REAIS
 
                     // Avalia se a perturbação gera o melhor f(x) da história
                     if (fx < fx_melhor){
+                        #if DEBUG_CONSOLE
+                            Console.WriteLine("NOVO MELHOR FX ATUALIZADO! Era {0} e virou {1}", fx_melhor, fx);
+                        #endif
+
                         fx_melhor = fx;
                         populacao_melhor = populacao_para_perturbar;
                     }
@@ -83,7 +91,7 @@ namespace GEOs_REAIS
                 
                     // Atualiza o novo std ===> std(i+1) = std(i) / (s*i)
                     // Onde i = 1,2...P e s é arbitrário e vale 2.
-                    std_atual = std_atual / (2*(j+1));
+                    std_atual = std_atual / ( (this.s)*(j+1) ) ;
                 }
 
                 #if DEBUG_CONSOLE
@@ -97,7 +105,7 @@ namespace GEOs_REAIS
                 // Adiciona cada perturbação na lista geral de perturbacoes
                 // Console.WriteLine("perturbações.Count = {0}", perturbacoes.Count);
                 for(int k=0; k<perturbacoes.Count; k++){
-                    perturbacoes_da_iteracao.Add( perturbacoes[k] )    ;
+                    perturbacoes_da_iteracao.Add( perturbacoes[k] );
                 }
             }
         }
@@ -158,22 +166,35 @@ namespace GEOs_REAIS
                             Console.WriteLine("Novo f(x) tem que dar {0}", perturbacoes_da_variavel[k].fx_depois_da_perturbacao);
                         #endif
 
-
-                        // Atualiza o f(x) atual com o perturbado
-                        fx_atual = perturbacoes_da_variavel[k].fx_depois_da_perturbacao;
-
                         // Sai do laço
                         break;
                     }
                 }
-
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("População depois de perturbar tudo:");
-                    foreach(double ind in populacao_atual){
-                        Console.WriteLine(ind);
-                    }
-                #endif
             }
+
+            // Depois que perturbou todas as variáveis, precisa calcular a fx_atual novamente
+            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
+
+            #if DEBUG_CONSOLE
+                Console.WriteLine("f(x) atual depois de todas perturbações = {0}", fx_atual);
+            #endif
+
+            // Como perturbou todas variáveis, precisa verificar essa nova combinação
+            if (fx_atual < fx_melhor){
+                #if DEBUG_CONSOLE
+                    Console.WriteLine("f(x) atual é melhor que o melhor_fx que era {0}", fx_melhor);
+                #endif
+                
+                fx_melhor = this.fx_atual;
+                populacao_melhor = this.populacao_atual;
+            }
+
+            #if DEBUG_CONSOLE
+                Console.WriteLine("População depois de perturbar tudo:");
+                foreach(double ind in populacao_atual){
+                    Console.WriteLine(ind);
+                }
+            #endif
         }
     }
 }

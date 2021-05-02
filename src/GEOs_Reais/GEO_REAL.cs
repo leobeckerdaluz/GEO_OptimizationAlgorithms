@@ -158,9 +158,8 @@ namespace GEOs_REAIS
 
                 // Avalia se a perturbação é a melhor de todas
                 if (fx < fx_melhor){
-
-                    #if NOVO_MELHOR_FX
-                        Console.WriteLine("AVALIAÇÃO: fx = {0} < fx_melhor = {1}", fx, fx_melhor);
+                    #if DEBUG_CONSOLE
+                        Console.WriteLine("NOVO MELHOR FX ATUALIZADO! Era {0} e virou {1}", fx_melhor, fx);
                     #endif
 
                     fx_melhor = fx;
@@ -185,7 +184,6 @@ namespace GEOs_REAIS
 
 
         public virtual void mutacao_do_tau_AGEOs(){}
-
 
 
         public virtual void ordena_e_perturba(){
@@ -253,6 +251,39 @@ namespace GEOs_REAIS
                 }
             #endif
         }
+
+
+        public virtual bool criterio_parada(ParametrosCriterioParada parametros_criterio_parada){
+
+            // Verifica o critério de parada
+            bool parada_por_precisao = ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
+            bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
+            
+            // Antes de verificar a parada, começa com falso.
+            bool parada = false;
+
+            // Se o critério for por NFOB...
+            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB){
+                if (parada_por_NFOB){
+                    parada = true;
+                }
+            }
+            // Se o critério for por precisão...
+            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO){
+                if (parada_por_precisao){
+                    parada = true;
+                }
+            }
+            // Se o critério for por precisão ou por NFOB...
+            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB){
+                if (parada_por_NFOB || parada_por_precisao){
+                    parada = true;
+                }
+            }
+
+            // Retorna o status da parada
+            return parada;
+        }
         
 
         public virtual RetornoGEOs executar(ParametrosCriterioParada parametros_criterio_parada){
@@ -261,34 +292,16 @@ namespace GEOs_REAIS
                 mutacao_do_tau_AGEOs();
                 ordena_e_perturba();
 
-                // Verifica o critério de parada
-                bool parada_por_precisao = ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
-                bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
-                
-                // Antes de verificar a parada, começa com falso.
-                bool parada = false;
+                if ( criterio_parada(parametros_criterio_parada) ){
+                    #if DEBUG_CONSOLE
+                        Console.WriteLine("==================================");
+                        Console.WriteLine("==================================");
+                        Console.WriteLine("CRITÉRIO DE PARADA ATINGIDO!");
+                        Console.WriteLine("NFOB = {0} E MELHORFX = {1}", NFOB, fx_melhor);
+                        Console.WriteLine("==================================");
+                        Console.WriteLine("==================================");
+                    #endif
 
-                // Se o critério for por NFOB...
-                if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB){
-                    if (parada_por_NFOB){
-                        parada = true;
-                    }
-                }
-                // Se o critério for por precisão...
-                else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO){
-                    if (parada_por_precisao){
-                        parada = true;
-                    }
-                }
-                // Se o critério for por precisão ou por NFOB...
-                else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB){
-                    if (parada_por_NFOB || parada_por_precisao){
-                        parada = true;
-                    }
-                }
-
-                // Se a parada foi atingida, retorna
-                if (parada){
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFOB = this.NFOB;
                     retorno.melhor_fx = this.fx_melhor;
