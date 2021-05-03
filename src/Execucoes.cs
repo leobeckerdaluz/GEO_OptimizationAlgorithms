@@ -530,11 +530,11 @@ namespace Execucoes
 
             // Cria uma lista contendo as funções a serem executadas
             List<int> function_values = new List<int>(){
-                (int)EnumNomesFuncoesObjetivo.griewangk
-                // (int)EnumNomesFuncoesObjetivo.rastringin,
-                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                // (int)EnumNomesFuncoesObjetivo.schwefel,
-                // (int)EnumNomesFuncoesObjetivo.ackley
+                (int)EnumNomesFuncoesObjetivo.griewangk,
+                (int)EnumNomesFuncoesObjetivo.rastringin,
+                (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                (int)EnumNomesFuncoesObjetivo.schwefel,
+                (int)EnumNomesFuncoesObjetivo.ackley,
             };
 
             // Para cada função, executa os algoritmos
@@ -561,25 +561,23 @@ namespace Execucoes
                         parametros_problema.parametros_livres = new ParametrosLivreProblema(){
                             tau_GEO = 1.00,
                             tau_GEOvar = 1.75,
-                            tau_GEOreal1 = 1.75,
-                            tau_GEOreal2 = 2.25,
-                            tau_GEOreal3 = 2.25,
+                            // tau_GEOreal1 = 1.75,
+                            tau_GEOreal1 = 1.5,
+                            // tau_GEOreal2 = 2.25,
+                            tau_GEOreal2 = 6.0,
                             tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
-                            std_GEOreal2 = 8.0,
-                            std_AGEO1real2 = 8.0,
-                            std_AGEO2real2 = 8.0,
-                            std_GEOreal3 = 8.0,
-                            std_AGEO1real3 = 8.0,
-                            std_AGEO2real3 = 8.0,
+                            // std_GEOreal2 = 8.0,
+                            // std_AGEO1real2 = 8.0,
+                            // std_AGEO2real2 = 8.0,
+                            std_GEOreal2 = 2.0,
+                            std_AGEO1real2 = 2.0,
+                            std_AGEO2real2 = 2.0,
                             P_GEOreal2 = 8,
                             P_AGEO1real2 = 8,
                             P_AGEO2real2 = 8,
-                            P_GEOreal3 = 8,
-                            P_AGEO1real3 = 8,
-                            P_AGEO2real3 = 8,
                             s_GEOreal2 = 2,
                             s_AGEO1real2 = 2,
                             s_AGEO2real2 = 2
@@ -598,25 +596,26 @@ namespace Execucoes
                         parametros_problema.parametros_livres = new ParametrosLivreProblema(){
                             tau_GEO = 1.25,
                             tau_GEOvar = 3.0,
-                            tau_GEOreal1 = 1.25,
-                            tau_GEOreal2 = 1.75,
-                            tau_GEOreal3 = 1.75,
+                            // tau_GEOreal1 = 1.25,
+                            tau_GEOreal1 = 1.5,
+                            // tau_GEOreal2 = 1.75,
+                            tau_GEOreal2 = 1.5,
                             tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
-                            std_GEOreal2 = 8.0,
-                            std_AGEO1real2 = 8.0,
-                            std_AGEO2real2 = 8.0,
-                            std_GEOreal3 = 8.0,
-                            std_AGEO1real3 = 8.0,
-                            std_AGEO2real3 = 8.0,
-                            P_GEOreal2 = 16,
-                            P_AGEO1real2 = 16,
-                            P_AGEO2real2 = 16,
-                            P_GEOreal3 = 16,
-                            P_AGEO1real3 = 16,
-                            P_AGEO2real3 = 16,
+                            // std_GEOreal2 = 8.0,
+                            // std_AGEO1real2 = 8.0,
+                            // std_AGEO2real2 = 8.0,
+                            std_GEOreal2 = 2.0,
+                            std_AGEO1real2 = 2.0,
+                            std_AGEO2real2 = 2.0,
+                            // P_GEOreal2 = 16,
+                            // P_AGEO1real2 = 16,
+                            // P_AGEO2real2 = 16,
+                            P_GEOreal2 = 8,
+                            P_AGEO1real2 = 8,
+                            P_AGEO2real2 = 8,
                             s_GEOreal2 = 2,
                             s_AGEO1real2 = 2,
                             s_AGEO2real2 = 2
@@ -635,25 +634,23 @@ namespace Execucoes
                         parametros_problema.parametros_livres = new ParametrosLivreProblema(){
                             tau_GEO = 1.00,
                             tau_GEOvar = 1.25,
-                            tau_GEOreal1 = 1.00,
-                            tau_GEOreal2 = 1.25,
-                            tau_GEOreal3 = 1.25,
+                            // tau_GEOreal1 = 1.00,
+                            tau_GEOreal1 = 6.25,
+                            // tau_GEOreal2 = 1.25,
+                            tau_GEOreal2 = 1.5,
                             tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
-                            std_GEOreal2 = 1.0,
-                            std_AGEO1real2 = 1.0,
-                            std_AGEO2real2 = 1.0,
-                            std_GEOreal3 = 1.0,
-                            std_AGEO1real3 = 1.0,
-                            std_AGEO2real3 = 1.0,
+                            // std_GEOreal2 = 1.0,
+                            // std_AGEO1real2 = 1.0,
+                            // std_AGEO2real2 = 1.0,
+                            std_GEOreal2 = 4.0,
+                            std_AGEO1real2 = 4.0,
+                            std_AGEO2real2 = 4.0,
                             P_GEOreal2 = 8,
                             P_AGEO1real2 = 8,
                             P_AGEO2real2 = 8,
-                            P_GEOreal3 = 8,
-                            P_AGEO1real3 = 8,
-                            P_AGEO2real3 = 8,
                             s_GEOreal2 = 2,
                             s_AGEO1real2 = 2,
                             s_AGEO2real2 = 2
@@ -672,25 +669,23 @@ namespace Execucoes
                         parametros_problema.parametros_livres = new ParametrosLivreProblema(){
                             tau_GEO = 1.00,
                             tau_GEOvar = 1.75,
-                            tau_GEOreal1 = 6.25,
-                            tau_GEOreal2 = 9,
-                            tau_GEOreal3 = 9,
+                            // tau_GEOreal1 = 6.25,
+                            tau_GEOreal1 = 5.25,
+                            // tau_GEOreal2 = 9,
+                            tau_GEOreal2 = 6.0,
                             tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
-                            std_GEOreal2 = 8.0,
-                            std_AGEO1real2 = 8.0,
-                            std_AGEO2real2 = 8.0,
-                            std_GEOreal3 = 8.0,
-                            std_AGEO1real3 = 8.0,
-                            std_AGEO2real3 = 8.0,
+                            // std_GEOreal2 = 8.0,
+                            // std_AGEO1real2 = 8.0,
+                            // std_AGEO2real2 = 8.0,
+                            std_GEOreal2 = 2.0,
+                            std_AGEO1real2 = 2.0,
+                            std_AGEO2real2 = 2.0,
                             P_GEOreal2 = 16,
                             P_AGEO1real2 = 16,
                             P_AGEO2real2 = 16,
-                            P_GEOreal3 = 16,
-                            P_AGEO1real3 = 16,
-                            P_AGEO2real3 = 16,
                             s_GEOreal2 = 2,
                             s_AGEO1real2 = 2,
                             s_AGEO2real2 = 2
@@ -711,9 +706,10 @@ namespace Execucoes
                             parametros_livres = new ParametrosLivreProblema(){
                                 tau_GEO = 2.25,
                                 tau_GEOvar = 2.50,
-                                tau_GEOreal1 = 2.25,
-                                tau_GEOreal2 = 2.50,
-                                tau_GEOreal3 = 2.50,
+                                // tau_GEOreal1 = 2.25,
+                                tau_GEOreal1 = 0.75,
+                                // tau_GEOreal2 = 2.50,
+                                tau_GEOreal2 = 5.5,
                                 tau_minimo_AGEOs = 0.5,
                                 std_GEOreal1 = 1.0,
                                 std_AGEO1real1 = 1.0,
@@ -721,15 +717,12 @@ namespace Execucoes
                                 std_GEOreal2 = 1.0,
                                 std_AGEO1real2 = 1.0,
                                 std_AGEO2real2 = 1.0,
-                                std_GEOreal3 = 1.0,
-                                std_AGEO1real3 = 1.0,
-                                std_AGEO2real3 = 1.0,
-                                P_GEOreal2 = 8,
-                                P_AGEO1real2 = 8,
-                                P_AGEO2real2 = 8,
-                                P_GEOreal3 = 8,
-                                P_AGEO1real3 = 8,
-                                P_AGEO2real3 = 8,
+                                // P_GEOreal2 = 8,
+                                // P_AGEO1real2 = 8,
+                                // P_AGEO2real2 = 8,
+                                P_GEOreal2 = 16,
+                                P_AGEO1real2 = 16,
+                                P_AGEO2real2 = 16,
                                 s_GEOreal2 = 2,
                                 s_AGEO1real2 = 2,
                                 s_AGEO2real2 = 2
@@ -750,7 +743,6 @@ namespace Execucoes
                             tau_GEOvar = 1.75,
                             tau_GEOreal1 = 1.50,
                             tau_GEOreal2 = 1.75,
-                            tau_GEOreal3 = 1.75,
                             tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
@@ -758,15 +750,9 @@ namespace Execucoes
                             std_GEOreal2 = 1.0,
                             std_AGEO1real2 = 1.0,
                             std_AGEO2real2 = 1.0,
-                            std_GEOreal3 = 1.0,
-                            std_AGEO1real3 = 1.0,
-                            std_AGEO2real3 = 1.0,
                             P_GEOreal2 = 8,
                             P_AGEO1real2 = 8,
                             P_AGEO2real2 = 8,
-                            P_GEOreal3 = 8,
-                            P_AGEO1real3 = 8,
-                            P_AGEO2real3 = 8,
                             s_GEOreal2 = 2,
                             s_AGEO1real2 = 2,
                             s_AGEO2real2 = 2
@@ -786,7 +772,6 @@ namespace Execucoes
                             tau_GEOvar = 8.0,
                             tau_GEOreal1 = 3.0,
                             tau_GEOreal2 = 8.0,
-                            tau_GEOreal3 = 8.0,
                             tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
@@ -794,15 +779,9 @@ namespace Execucoes
                             std_GEOreal2 = 1.0,
                             std_AGEO1real2 = 1.0,
                             std_AGEO2real2 = 1.0,
-                            std_GEOreal3 = 1.0,
-                            std_AGEO1real3 = 1.0,
-                            std_AGEO2real3 = 1.0,
                             P_GEOreal2 = 8,
                             P_AGEO1real2 = 8,
                             P_AGEO2real2 = 8,
-                            P_GEOreal3 = 8,
-                            P_AGEO1real3 = 8,
-                            P_AGEO2real3 = 8,
                             s_GEOreal2 = 2,
                             s_AGEO1real2 = 2,
                             s_AGEO2real2 = 2
@@ -827,27 +806,27 @@ namespace Execucoes
                 // DEFINE OS PARÂMETROS DA EXECUÇÃO
                 // ======================================================================
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao(){
-                    quantidade_execucoes = 2,
+                    quantidade_execucoes = 50,
                     parametros_criterio_parada = new ParametrosCriterioParada(){
                         tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB,
                         PRECISAO_criterio_parada = 0,
-                        step_para_obter_NFOBs = 5,
-                        NFOB_criterio_parada = 100,
+                        step_para_obter_NFOBs = 500,
+                        NFOB_criterio_parada = 100000,
                         fx_esperado = 0.0
                     },
                     quais_algoritmos_rodar = new QuaisAlgoritmosRodar(){
-                        rodar_GEO           = false,
-                        rodar_GEOvar        = false,
-                        rodar_AGEO1         = false,
-                        rodar_AGEO2         = false,
-                        rodar_AGEO1var      = false,
-                        rodar_AGEO2var      = false,
+                        rodar_GEO           = true,
+                        rodar_GEOvar        = true,
+                        rodar_AGEO1         = true,
+                        rodar_AGEO2         = true,
+                        rodar_AGEO1var      = true,
+                        rodar_AGEO2var      = true,
                         rodar_GEOreal1      = true,
-                        rodar_AGEO1real1    = false,
-                        rodar_AGEO2real1    = false,
-                        rodar_GEOreal2      = false,
-                        rodar_AGEO1real2    = false,
-                        rodar_AGEO2real2    = false,
+                        rodar_AGEO1real1    = true,
+                        rodar_AGEO2real1    = true,
+                        rodar_GEOreal2      = true,
+                        rodar_AGEO1real2    = true,
+                        rodar_AGEO2real2    = true,
                         // rodar_GEOreal3      = false,
                         // rodar_AGEO1real3    = false,
                         // rodar_AGEO2real3    = false
@@ -863,29 +842,10 @@ namespace Execucoes
 
 
 
-                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
-                // double porcentagem = 0.2;
-
-                // // O std será a porcentam do intervalo de variação das variáveis
-                // double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
-                // double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
-                // double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
-                // double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
-
-                // // Atualiza os parâmetros do problema com esse std gerado
-                // parametros_problema.parametros_livres.std_GEOreal1   = std; 
-                // parametros_problema.parametros_livres.std_AGEO1real1 = std; 
-                // parametros_problema.parametros_livres.std_AGEO2real1 = std; 
-                // parametros_problema.parametros_livres.std_GEOreal2   = std; 
-                // parametros_problema.parametros_livres.std_AGEO1real2 = std; 
-                // parametros_problema.parametros_livres.std_AGEO2real2 = std; 
 
 
 
-                // =========================================
-                // EXECUÇÕES POR NFOB
-                // =========================================
-                
+
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
                 List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                 
@@ -894,6 +854,177 @@ namespace Execucoes
                 
                 // Apresenta os resultados finais
                 apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+
+
+
+
+
+
+
+
+                // // ====================================================================================
+                // // Executa o GEOreal1 em cada função variando o std com o tau da tese
+                // // ====================================================================================
+                // // Define o valor de tau
+                // if (parametros_problema.definicao_funcao_objetivo == (int)EnumNomesFuncoesObjetivo.griewangk)
+                //     parametros_problema.parametros_livres.tau_GEOreal1 = 1.25;
+                // if (parametros_problema.definicao_funcao_objetivo == (int)EnumNomesFuncoesObjetivo.rastringin)
+                //     parametros_problema.parametros_livres.tau_GEOreal1 = 1.00;
+                // if (parametros_problema.definicao_funcao_objetivo == (int)EnumNomesFuncoesObjetivo.rosenbrock)
+                //     parametros_problema.parametros_livres.tau_GEOreal1 = 1.00;
+                // if (parametros_problema.definicao_funcao_objetivo == (int)EnumNomesFuncoesObjetivo.schwefel)
+                //     parametros_problema.parametros_livres.tau_GEOreal1 = 1.00;
+                // if (parametros_problema.definicao_funcao_objetivo == (int)EnumNomesFuncoesObjetivo.ackley)
+                //     parametros_problema.parametros_livres.tau_GEOreal1 = 2.25;
+                
+                // // Executa o algoritmo variando o std
+                // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
+                // foreach (double std in valores_std){
+                //     // Define o valor de std
+                //     parametros_problema.parametros_livres.std_GEOreal1 = std; 
+
+                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    
+                //     // Organiza os resultados de todas as excuções por algoritmo
+                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                    
+                //     // Apresenta os resultados finais
+                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // }
+                // // ====================================================================================
+
+
+
+
+
+
+
+                // // ====================================================================================
+                // // Com o std=1, faz o tuning do tau no GEOreal1
+                // // ====================================================================================
+
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+
+                // // Executa o algoritmo variando o std
+                // // List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.25, 3.5, 3.75, 4.0, 4.25, 4.5, 4.75, 5.0, 5.25, 5.5, 5.75, 6}; 
+                // List<double> valores_tau = new List<double>(){5.5, 5.75, 6.0, 6.25, 6.5, 6.75, 7.0, 7.25, 7.5, 7.75, 8, 8.25, 8.5, 8.75, 9}; 
+                // foreach (double tau in valores_tau){
+                //     // Atualiza o valor de tau
+                //     parametros_problema.parametros_livres.tau_GEOreal1 = tau;
+
+                //     Console.WriteLine("========================================================");
+                //     Console.WriteLine("tau GEOreal1: {0}", tau);
+
+                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    
+                //     // Organiza os resultados de todas as excuções por algoritmo
+                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                    
+                //     // Apresenta os resultados finais
+                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // }
+                // // ====================================================================================
+
+
+
+
+
+
+
+
+
+                // // ====================================================================================
+                // // Varia a porcentagem do intervalo
+                // // ====================================================================================
+
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+
+                // // Executa o algoritmo variando a porcentagem do intervalo
+                // List<double> valores_porcentagem = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                // foreach (double porcentagem in valores_porcentagem){
+                //     // Muda o tipo de perturbação
+                //     parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+                    
+                //     // O std será a porcentam do intervalo de variação das variáveis
+                //     double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
+                //     double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
+                //     double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
+                //     double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
+
+                //     // Atualiza os parâmetros do problema com esse std gerado
+                //     parametros_problema.parametros_livres.std_GEOreal1   = std; 
+                //     parametros_problema.parametros_livres.std_GEOreal2   = std; 
+
+                //     Console.WriteLine("========================================================");
+                //     Console.WriteLine("std;porcentagem");
+                //     Console.WriteLine( String.Format("{0};{1}", std, porcentagem).Replace('.',',') );
+
+                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    
+                //     // Organiza os resultados de todas as excuções por algoritmo
+                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                    
+                //     // Apresenta os resultados finais
+                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // }
+                // // ====================================================================================
+
+
+
+
+
+
+                // // ====================================================================================
+                // // Tuning completo do GEOreal2
+                // // ====================================================================================
+
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+
+                // List<int> valores_P = new List<int>(){8, 16};
+                // List<int> valores_s = new List<int>(){1, 2};
+                // List<double> valores_std1 = new List<double>(){1, 2, 4, 8};
+                // List<double> valores_tau = new List<double>(){1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0};
+                // // Realiza todas as combinações possíveis
+                // foreach (int P in valores_P){
+                //     foreach (int s in valores_s){
+                //         foreach (double std in valores_std1){
+                //             foreach (double tau in valores_tau){
+                //                 parametros_problema.parametros_livres = new ParametrosLivreProblema(){
+                //                     tau_GEOreal2 = tau,
+                //                     std_GEOreal2 = std,
+                //                     P_GEOreal2 = P,
+                //                     s_GEOreal2 = s,
+                //                 };
+
+                //                 Console.WriteLine("=====================================================");
+                //                 Console.WriteLine("=====================================================");
+                //                 Console.WriteLine("P = {0} | s = {1} | std1 = {2} | tau = {3}", P, s, std, tau);
+                //                 Console.WriteLine("=====================================================");
+
+                //                 // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //                 List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                                
+                //                 // Organiza os resultados de todas as excuções por algoritmo
+                //                 List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                                
+                //                 // Apresenta os resultados finais
+                //                 apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                //             }
+                //         }
+                //     }
+                // }
+
+
+
             }
 
 
@@ -1196,12 +1327,19 @@ namespace Execucoes
             // Seta a saída para o arquivo
             // ============================================================================
             // ============================================================================
+            
+            string filename = "./Redirect.txt";
+
+            // Deleta o arquivo caso ele exista
+            if (File.Exists(filename))  File.Delete(filename);
+
+            // Seta a saída do Console
             FileStream ostrm;
             StreamWriter writer;
             TextWriter oldOut = Console.Out;
             try
             {
-                ostrm = new FileStream ("./Redirect.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                ostrm = new FileStream (filename, FileMode.OpenOrCreate, FileAccess.Write);
                 writer = new StreamWriter (ostrm);
             }
             catch (Exception e)

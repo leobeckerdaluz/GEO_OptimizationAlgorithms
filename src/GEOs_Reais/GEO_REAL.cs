@@ -1,7 +1,4 @@
-// #define DEBUG_FUNCTION
 // #define DEBUG_CONSOLE
-// #define DEBUG_FUNCTION_OVERLIMIT
-// #define NOVO_MELHOR_FX
 
 using System;
 using System.Collections.Generic;
@@ -87,7 +84,7 @@ namespace GEOs_REAIS
                     
                     penalidade += penalidade_inferior;
 
-                    #if DEBUG_FUNCTION_OVERLIMIT
+                    #if DEBUG_CONSOLE
                         Console.WriteLine("Fora do limite inferior! xi = {0} e limite inferior = {1}. Penalidade = {2}", xi, limite_inferior, penalidade_inferior);
                     #endif
                 }
@@ -96,7 +93,7 @@ namespace GEOs_REAIS
                     
                     penalidade += penalidade_superior;
 
-                    #if DEBUG_FUNCTION_OVERLIMIT
+                    #if DEBUG_CONSOLE
                         Console.WriteLine("Fora do limite superior! xi = {0} e limite superior = {1}. Penalidade = {2}", xi, limite_superior, penalidade_superior);
                     #endif
                 }
@@ -104,7 +101,7 @@ namespace GEOs_REAIS
 
             double penalidade_aplicada = fx + penalidade;
 
-            #if DEBUG_FUNCTION
+            #if DEBUG_CONSOLE
             Console.WriteLine("Penalidade total = {0} aplicada na fx = {1} transforma em {2}", penalidade, fx, penalidade_aplicada);
             #endif
 

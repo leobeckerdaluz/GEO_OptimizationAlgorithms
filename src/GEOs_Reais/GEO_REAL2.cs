@@ -1,4 +1,3 @@
-// #define DEBUG_FUNCTION
 // #define DEBUG_CONSOLE
 
 using System;
