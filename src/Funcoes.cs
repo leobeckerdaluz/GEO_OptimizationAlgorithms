@@ -189,9 +189,9 @@ namespace Funcoes_Definidas
             // Obtém o número total de variáveis
             int N = fenotipo_variaveis_projeto.Count;
 
-            // Calculaos Exp antes para depois juntar
-            double Exp1 = Math.Exp(-0.2 * Math.Sqrt(1.0/N * laco_somatorio_1 ));
-            double Exp2 = Math.Exp(1.0/N * laco_somatorio_2 );
+            // Calcula os Exp antes para depois juntar
+            double Exp1 = Math.Exp(-0.2 * Math.Sqrt( (1.0/N) * laco_somatorio_1 ));
+            double Exp2 = Math.Exp( (1.0/N) * laco_somatorio_2 );
 
             // Expressão final de f(x)
             double fx = 20.0 + Math.Exp(1.0) - 20.0*Exp1 - Exp2;
