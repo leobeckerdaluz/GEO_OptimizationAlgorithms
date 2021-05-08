@@ -1,0 +1,42 @@
+
+BINÁRIOS:
+- Foram testados o GEO, GEOvar, A-GEO1 e A-GEO2. 
+- A versão adaptativa foi aplicada no GEOvar. Então nos problemas que o GEOvar é melhor, realmente o A-GEO2var foi melhor.
+- A-GEO2var, GEOvar, A-GEO2, GEO, A-GEO1var, A-GEO1
+- Os algoritmos foram avaliados para um set de 5 funções.
+
+REAIS:
+- Foram testados o GEOreal1 e GEOreal2.
+- Além disso, foram implementadas as versões adaptativas para esses algoritmos, que são A-GEO1real1, A-GEO2real1, A-GEO1real2 e A-GEO2real2.
+- O mesmo set de 5 funções foi utilizado para avaliar a performance.
+
+PERTURBAÇÃO:
+- Nos GEOs Reais, a forma de perturbar as variáveis depende do valor de std.
+- O valor de std é fixo no real1.
+    - Foi feito um estudo do tuning do std para o GEOreal1 e encontramos que o melhor valor para std varia entre 0,8 e 1,2 (PARA TODAS FUNÇÕES??????)
+    - No caso do GEOreal2, além do std há outros 2 parâmetros chamados de 'P' e 's'. O tuning precisa ser feito com todas essas variáveis.
+- Percebe-se que a forma de perturbar as variáveis depende do valor da própria variável. Ou seja, matematicamente, quanto menor o número, menor a perturbação na variável.
+    - Foi feito um estudo testando uma nova forma de perturbar as variáveis, onde a perturbação é uma porcentagem do intervalo de variação das variáveis de projeto. Esse estudo mostrou que é interessante variar o std, visto que um valor de porcentagem diferente foi encontrado para cada função.
+        - PODERIA SER FEITO UM ARTIGO AQUI COM ESSA NOVA IMPLEMENTAÇÃO do GEOreal1 E MOSTRAR OS VALORES DO TUNING DE STD.
+    - É preciso testar novas formas de perturbar a variável utilizando o std.
+    - STD adaptativo:
+        - Para tornar o STD adaptativo, uma forma seria ter um std maior durante o exploration, permitindo a exploração do espaço de projeto, e um std menor durante o exploitation, com pequenas perturbações.
+
+ESTUDO DE PERFORMANCE:
+    - Dentre todos os algoritmos, comprova-se que para essas funções a codificação real é muito melhor que a codificação binária, visto que é possível perturbar diretamente a variável de projeto para um valor ótimo, diferentemente dos bits que podem nunca chegar no valor correto em razão da precisão (número de bits por variável de projeto).
+    - Já que os A-GEOreais foram os que tiveram melhores desempenho, então escolhe-se as versões A-GEO2real1 e A-GEO2real2 para o proseguimento da pesquisa.
+
+
+Estudar a influência entre o 'std', o 'P' e o 's'. Talvez é possível deixar os parâmetros 'P' (quantidade de desvios) e 's' (o quanto o desvio diminui a cada quantidade de desvios) fixos.
+
+Tornar a penalidade adaptativa?
+    - Usar penalidade exterior? Penalidade estática? Death penalty?
+    - A penalidade influencia muito?
+
+
+
+
+
+=====> FAZER TABELA DIFERENCIANDO OS 12 ALGORITMOS
+
+=====> FAZER TABELA COM PERFORMANCE DOS 12 PRA PROVAR QUE O REAL É MELHOR
