@@ -1,0 +1,46 @@
+,'#ff0004','#868686','#774b0a','#10d22c','#ffff52','#0000ff','#818181','#c0c0c0','#f1f1f1','#bac5eb','#52fff9'
+
+
+
+
+Principais resultados:
+
+-> AGEO2var tão bom quanto GEOvar
+    ---> Controle de parâmetros adaptativo
+    ---> Sem necessidade do tuning
+    ---> Iguais estatisticamente para todas as funções
+
+-> AGEO1var pior que AGEO1
+    ---> AGEO1 reinicia com mais frequência --> tau=0,5 --> busca estocástica
+
+
+
+
+
+
+
+FUNÇÕES:
+http://benchmarkfcns.xyz/fcns
+https://www.sfu.ca/~ssurjano/optimization.html
+
+https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#newton-conjugate-gradient-algorithm-method-newton-cg
+https://docs.scipy.org/doc/scipy/reference/optimize.minimize-cg.html
+https://nikstoyanov.me/post/2019-04-14-numerical-optimizations/
+
+
+
+
+
+
+Conclusões:
+
+---> Quanto maior o P, real2 demora mais a cada iteração (calcula vários NFEs), mas é bom em algumas porque fica testando vários sd
+
+---> A perturbação com porcentagem do valor atual tem que mudar. É injusta com a Rosenbrock que x* = [1,1]
+
+
+
+
+SCHWEFEL negativa:
+
+363.418484974382, 253.228093848204, 285.444351278918, -390.682233446595, 466.598284880909, 10.2029892197824, -70.0670674303859, 376.606174687206, 209.68477926668, -4555.08713260943
