@@ -18,21 +18,41 @@ namespace SpaceDesignTeste
 {
     public class TesteOptimizer
     {
+        public double fx_calculada { get; set; }
+        public bool valid_solution { get; set; }
+        public double FOV_payload { get; set; }
+        public double FOV_min { get; set; }
+        public int I { get; set; }
+        public int D { get; set; }
+        public int N { get; set; }
+
+
         // public SunSyncOrbitRPT Ss_orb { get; set; }
         // public Camera ReferencePayload { get; set; }
         // public double FovMin { get; set; }
         // public Satellite Satellite { get; set; }
         // public Orbit Deorbit { get; set; }
 
-        // public static bool ValidateRestrictions(int N, int D, double FOV_CameraPayload, double FovMin){
-        //     return N < D 
-        //         && FOV_CameraPayload >=1.05*FovMin
-        //         && (double)N%D!=0;
-        // }
+        public TesteOptimizer(List<double> fenotipo_variaveis_projeto)
+        {
+            this.I = (int)fenotipo_variaveis_projeto[0];
+            this.D = (int)fenotipo_variaveis_projeto[1];
+            this.N = (int)fenotipo_variaveis_projeto[2];
+            
+            this.fx_calculada = ObjectiveFunction();
+            this.valid_solution = ValidateRestrictions();
+        }
+
+        public bool ValidateRestrictions()
+        {
+            return N < D 
+                && FOV_payload >=1.05*FOV_min
+                && (double)N%D!=0;
+        }
 
 
-        public static double ObjectiveFunction(List<double> fenotipo_variaveis_projeto){
-           
+        public double ObjectiveFunction()
+        {   
             Settings.SolarModes = new List<SolarModeModel>();
             Settings.SolarModes.Add(new SolarModeModel(SolarMode.High, 1));
             Settings.SolarModes.Add(new SolarModeModel(SolarMode.MediumHigh, 3));
@@ -52,10 +72,6 @@ namespace SpaceDesignTeste
 
             double fx = 0;
 
-            int I = (int)fenotipo_variaveis_projeto[0];
-            int D = (int)fenotipo_variaveis_projeto[1];
-            int N = (int)fenotipo_variaveis_projeto[2];
-            
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
 
 #if DEBUG_CONSOLE
@@ -125,6 +141,13 @@ namespace SpaceDesignTeste
             Console.WriteLine("designedPayload.FOV: "+designedPayload.FOV);
 #endif
 
+            // ======================================================
+            // Atualiza os atributos para a verificação da restrição
+            this.FOV_payload = designedPayload.FOV;
+            this.FOV_min = FovMin;
+            // ======================================================
+
+
             Satellite Satellite = new Satellite();
             Satellite.Payload = designedPayload;
             Satellite.T = 4;
@@ -176,6 +199,9 @@ namespace SpaceDesignTeste
 #endif
 
             fx = Satellite.M;
+
+            fx_calculada = fx;
+
             return fx;
         }
     }

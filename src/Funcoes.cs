@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+using SpaceDesignTeste;
+
 using Classes_Comuns_Enums;
 
 
@@ -35,10 +37,13 @@ namespace Funcoes_Definidas
                 case (int)EnumNomesFuncoesObjetivo.spacecraft:
                     int D = (int)fenotipo_variaveis_projeto[1];
                     int N = (int)fenotipo_variaveis_projeto[2];
+
+                    SpaceDesignTeste.TesteOptimizer spacecraft_model = new SpaceDesignTeste.TesteOptimizer(fenotipo_variaveis_projeto);
                     
-                    if ( (N < D) && ((double)N%D != 0) ){ //&& (Satellite.Payload.FOV >= 1.05*FovMin);
+                    if (spacecraft_model.valid_solution)
+                    {
                         // Critério aceito. Espaço viável.
-                        return SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                        return spacecraft_model.fx_calculada;
                     }
                     else{
                         // Espaço inviável. Retorna o máximo

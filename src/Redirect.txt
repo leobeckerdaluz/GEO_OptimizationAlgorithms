@@ -1,0 +1,5 @@
+Melhor fx função switch case: 196.949433192159
+Fx Final Função diretamente: 196.949433192159
+Melhor fx função switch case: 196.949433192159
+Fx Final Função diretamente: 196.949433192159
+Execution Time: 174 ms
