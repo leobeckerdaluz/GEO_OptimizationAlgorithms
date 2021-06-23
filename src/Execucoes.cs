@@ -33,20 +33,23 @@ namespace Execucoes
         // ROTINAS PARA EXECUÇÃO
         // =====================================
 
-        public string populacao_real_em_string(List<double> populacao){
+        public string populacao_real_em_string(List<double> populacao)
+        {
             string populacao_str = populacao[0].ToString();
-            for(int i=1; i<populacao.Count; i++){
+            for(int i=1; i<populacao.Count; i++)
+            {
                 populacao_str += "," + populacao[i].ToString();
             }
             return populacao_str;
         }
 
 
-        public List<double> geracao_populacao_real(int n_variaveis_projeto, List<RestricoesLaterais> restricoes_laterais_variaveis){
-            
+        public List<double> geracao_populacao_real(int n_variaveis_projeto, List<RestricoesLaterais> restricoes_laterais_variaveis)
+        {    
             List<double> nova_populacao = new List<double>();
 
-            for(int i=0; i<n_variaveis_projeto; i++){
+            for(int i=0; i<n_variaveis_projeto; i++)
+            {
                 double limite_inferior_variavel = restricoes_laterais_variaveis[i].limite_inferior_variavel;
                 double limite_superior_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel;
                 double rand = random.NextDouble();
@@ -62,7 +65,8 @@ namespace Execucoes
 
             #if DEBUG_CONSOLE
                 Console.WriteLine("População gerada:");
-                foreach(double ind in populacao_atual){
+                foreach(double ind in populacao_atual)
+                {
                     Console.WriteLine("individuo = {0}", ind);
                 }
             #endif
@@ -72,7 +76,8 @@ namespace Execucoes
         }
 
 
-        public List<Retorno_N_Execucoes_GEOs> organiza_os_resultados_de_cada_execucao(List<RetornoGEOs> todas_execucoes, ParametrosExecucao parametros_execucao){
+        public List<Retorno_N_Execucoes_GEOs> organiza_os_resultados_de_cada_execucao(List<RetornoGEOs> todas_execucoes, ParametrosExecucao parametros_execucao)
+        {
             // Obtém a lista de algoritmos que foram executados
             List<int> algoritmos_executados = new List<int>();
             if (parametros_execucao.quais_algoritmos_rodar.rodar_GEO)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.GEO_can );
@@ -95,7 +100,8 @@ namespace Execucoes
             List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos = new List<Retorno_N_Execucoes_GEOs>();
 
             // Para cada algoritmo executado, processa as execuções
-            for (int i=0; i<algoritmos_executados.Count; i++){
+            for (int i=0; i<algoritmos_executados.Count; i++)
+            {
                 int algoritmo_executado = algoritmos_executados[i];
 
                 // Console.WriteLine("Chegou aqui!! todas_execucoes Count: {0}", todas_execucoes.Count);
@@ -117,7 +123,8 @@ namespace Execucoes
                 List<List<double>> lista_populacoes_finais = new List<List<double>>();
 
                 // Para cada execução, vai acumulando os resultados
-                for (int j=0; j<execucoes_algoritmo_executado.Count; j++){
+                for (int j=0; j<execucoes_algoritmo_executado.Count; j++)
+                {
                     RetornoGEOs ret = execucoes_algoritmo_executado[j];
 
                     // Adiciona a lista de fxs em cada NFOBs da execução em uma lista geral
@@ -139,11 +146,14 @@ namespace Execucoes
                 int quantidade_NFOBs = NFOBs_todas_execucoes[0].Count;
 
                 // Se o critério de parada é por NFOB, calcula a média das N execuções para cada NFOB desejado.
-                if (parametros_execucao.parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB){
-                    for(int k=0; k<quantidade_NFOBs; k++){
+                if (parametros_execucao.parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
+                {
+                    for(int k=0; k<quantidade_NFOBs; k++)
+                    {
                         // Percorre aquele NFOB em cada execução para calcular a média de f(x) naquele NFOB
                         double sum = 0;
-                        foreach(List<double> execution in NFOBs_todas_execucoes){
+                        foreach(List<double> execution in NFOBs_todas_execucoes)
+                        {
                             sum += execution[k];
                         }
                         double media = sum / NFOBs_todas_execucoes.Count;
@@ -161,7 +171,8 @@ namespace Execucoes
 
                 // Calcula o desvio padrão final com base nos melhores f(x) das execuções
                 double somatorio_sd = 0;
-                foreach (double melhor_fx in lista_melhores_fx){
+                foreach (double melhor_fx in lista_melhores_fx)
+                {
                     somatorio_sd += Math.Pow((melhor_fx - media_melhor_fx), 2);
                 }
                 int n = lista_melhores_fx.Count - 1;
@@ -186,15 +197,16 @@ namespace Execucoes
         }
 
 
-        public void apresenta_resultados_finais(OQueInteressaPrintar o_que_interessa_printar, List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos, ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema){
-
+        public void apresenta_resultados_finais(OQueInteressaPrintar o_que_interessa_printar, List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos, ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema)
+        {
             // ===========================================================
             // Mostra as estatísticas das execuções
             // ===========================================================
 
             Console.WriteLine("");
 
-            if (o_que_interessa_printar.mostrar_header){
+            if (o_que_interessa_printar.mostrar_header)
+            {
                 Console.WriteLine("\n\n==========================================================");
                 Console.WriteLine("Apresenta todas estatísticas");
                 Console.WriteLine("==========================================================\n");
@@ -232,7 +244,8 @@ namespace Execucoes
             // ... para cada um dos algoritmos executados.
             
             
-            if (parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX){
+            if (parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX)
+            {
                 Console.WriteLine("==========================================================");
                 Console.WriteLine("===> Média de NFE, média de f(x) e desvio padrão de f(x):");
                 
@@ -243,7 +256,8 @@ namespace Execucoes
                 string sd_dos_fx_finais_nas_execucoes = "sdFX;";
 
                 // Para cada algoritmo executado da lista de estatísticas dos algoritmos
-                for (int i=0; i<estatisticas_algoritmos.Count; i++){
+                for (int i=0; i<estatisticas_algoritmos.Count; i++)
+                {
                     
                     int media_NFE = estatisticas_algoritmos[i].NFOB_medio;
                     double media_fx = estatisticas_algoritmos[i].media_melhor_fx;
@@ -263,7 +277,8 @@ namespace Execucoes
             }
 
 
-            if (o_que_interessa_printar.mostrar_melhores_NFOB){
+            if (o_que_interessa_printar.mostrar_melhores_NFOB)
+            {
                 Console.WriteLine("==========================================================");
                 Console.WriteLine("===> Médias para cada NFOB:");
                 Console.WriteLine("NFOB;" + string_algoritmos_executados);
@@ -274,13 +289,13 @@ namespace Execucoes
                 int quantidade_NFOBs = estatisticas_algoritmos[0].media_valor_FO_em_cada_NFOB.Count;
                 
                 // Para cada execução dos algoritmos
-                for (int i=0; i<quantidade_NFOBs; i++){
-                    
+                for (int i=0; i<quantidade_NFOBs; i++)
+                {    
                     string fxs_naquele_NFOB = NFOB_atual.ToString() + ';';
                     
                     // Para cada algoritmo executado da lista de estatísticas dos algoritmos
-                    for (int j=0; j<estatisticas_algoritmos.Count; j++){
-
+                    for (int j=0; j<estatisticas_algoritmos.Count; j++)
+                    {
                         // Obtém o valor da média f(x) naquele NFOB
                         double fx_naquele_NFOB = estatisticas_algoritmos[j].media_valor_FO_em_cada_NFOB[i];
 
@@ -296,19 +311,20 @@ namespace Execucoes
             }
 
 
-            if (o_que_interessa_printar.mostrar_melhores_fx_cada_execucao){
+            if (o_que_interessa_printar.mostrar_melhores_fx_cada_execucao)
+            {
                 Console.WriteLine("==========================================================");
                 Console.WriteLine("===> Melhores f(x) para cada execução:");
                 Console.WriteLine("execucao;" + string_algoritmos_executados);
                 
                 // Para cada execução dos algoritmos
-                for (int i=0; i<parametros_execucao.quantidade_execucoes; i++){
-                    
+                for (int i=0; i<parametros_execucao.quantidade_execucoes; i++)
+                {    
                     string melhores_fx_algoritmos = (i+1).ToString() + ';';
                     
                     // Para cada algoritmo executado da lista de estatísticas dos algoritmos
-                    for (int j=0; j<estatisticas_algoritmos.Count; j++){
-
+                    for (int j=0; j<estatisticas_algoritmos.Count; j++)
+                    {
                         // Obtém o valor da média f(x) naquele NFOB
                         double melhor_fx_da_execucao = estatisticas_algoritmos[j].lista_melhores_fxs[i];
 
@@ -323,14 +339,15 @@ namespace Execucoes
         }
 
 
-        public List<RetornoGEOs> executa_algoritmos_n_vezes(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema){
-            
+        public List<RetornoGEOs> executa_algoritmos_n_vezes(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema)
+        {    
             // Lista armazenará o retorno de todas as execuções
             List<RetornoGEOs> todas_execucoes = new List<RetornoGEOs>();
 
             // Executa os algoritmos por N vezes
             Console.WriteLine("");
-            for(int i=0; i<parametros_execucao.quantidade_execucoes; i++){
+            for(int i=0; i<parametros_execucao.quantidade_execucoes; i++)
+            {
                 Console.Write((i+1) +"...");
 
                 // Para cada execução, gera uma nova população inicial com base nos limites de cada variável
@@ -339,7 +356,8 @@ namespace Execucoes
                 // Console.WriteLine("População inicial GERADA: {0}", populacao_real_em_string(parametros_problema.populacao_inicial) );
             
                 // GEO
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEO){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEO)
+                {
                     // Console.Write("\nGEO...");
 
                     GEO_BINARIO geo = new GEO_BINARIO(
@@ -357,7 +375,8 @@ namespace Execucoes
                 }
 
                 // GEOvar
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar)
+                {
                     // Console.Write("\nGEOvar...");
 
                     GEOvar_BINARIO geo_var = new GEOvar_BINARIO(
@@ -375,7 +394,8 @@ namespace Execucoes
                 }
 
                 // AGEO1
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1)
+                {
                     // Console.Write("\nAGEO1...");
 
                     AGEOs_BINARIO ageo1 = new AGEOs_BINARIO(
@@ -394,7 +414,8 @@ namespace Execucoes
                 }
 
                 // AGEO2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2)
+                {
                     // Console.Write("\nAGEO2...");
                     
                     AGEOs_BINARIO ageo2 = new AGEOs_BINARIO(
@@ -413,7 +434,8 @@ namespace Execucoes
                 }
 
                 // AGEO1var
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var)
+                {
                     // Console.Write("\nAGEO1var...");
                     
                     AGEOsvar_BINARIO ageo1_var = new AGEOsvar_BINARIO(
@@ -432,7 +454,8 @@ namespace Execucoes
                 }
 
                 // AGEO2var
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var)
+                {
                     // Console.Write("\nAGEO2var...");
 
                     AGEOsvar_BINARIO ageo2_var = new AGEOsvar_BINARIO(
@@ -451,7 +474,8 @@ namespace Execucoes
                 }
 
                 // GEOreal1
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1)
+                {
                     // Console.Write("\nGEOreal1...");
 
                     GEO_real1 geo_real1 = new GEO_real1(
@@ -472,7 +496,8 @@ namespace Execucoes
 
                
                 // AGEO1real1
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real1){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real1)
+                {
                     // Console.Write("\nAGEO1real1...");
 
                     AGEOs_REAL1 AGEO1real1 = new AGEOs_REAL1(
@@ -493,7 +518,8 @@ namespace Execucoes
                 }
 
                 // AGEO2real1
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1)
+                {
                     // Console.Write("\nAGEO2real1...");
 
                     AGEOs_REAL1 AGEO2real1 = new AGEOs_REAL1(
@@ -514,7 +540,8 @@ namespace Execucoes
                 }
 
                  // GEOreal2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2)
+                {
                     // Console.Write("\nGEOreal2...");
 
                     GEO_real2 geo_real2 = new GEO_real2(
@@ -536,7 +563,8 @@ namespace Execucoes
                 }
 
                 // AGEO1real2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2)
+                {
                     // Console.Write("\nAGEO1real2...");
 
                     AGEOs_REAL2 AGEO1real2 = new AGEOs_REAL2(
@@ -558,7 +586,8 @@ namespace Execucoes
                 }
 
                 // AGEO2real2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2){
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2)
+                {
                     // Console.Write("\nAGEO2real2...");
 
                     AGEOs_REAL2 AGEO2real2 = new AGEOs_REAL2(
@@ -588,10 +617,11 @@ namespace Execucoes
         // FUNÇÕES CONHECIDAS
         // =====================================
 
-        public void Execucoes(){
-
+        public void Execucoes()
+        {
             // Cria uma lista contendo as funções a serem executadas
-            List<int> function_values = new List<int>(){
+            List<int> function_values = new List<int>()
+            {
                 // (int)EnumNomesFuncoesObjetivo.griewangk,
                 // (int)EnumNomesFuncoesObjetivo.rastringin,
                 // (int)EnumNomesFuncoesObjetivo.rosenbrock,
@@ -601,8 +631,8 @@ namespace Execucoes
             };
 
             // Para cada função, executa os algoritmos
-            foreach (int definicao_funcao_objetivo in function_values){
-                
+            foreach (int definicao_funcao_objetivo in function_values)
+            {    
                 // ======================================================================
                 // DEFINE OS PARÂMETROS DO PROBLEMA
                 // ======================================================================
@@ -739,7 +769,8 @@ namespace Execucoes
 
                         int n_variaveis_projeto = 30;
 
-                        parametros_problema = new ParametrosProblema(){
+                        parametros_problema = new ParametrosProblema()
+                        {
                             nome_funcao = "Ackley",
                             n_variaveis_projeto = n_variaveis_projeto,
                             definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.ackley,
@@ -835,7 +866,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 3;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = new List<int>(){2,6,6};
-                        parametros_problema.restricoes_laterais_por_variavel = new List<RestricoesLaterais>(){
+                        parametros_problema.restricoes_laterais_por_variavel = new List<RestricoesLaterais>()
+                        {
                             new RestricoesLaterais(){limite_inferior_variavel=13, limite_superior_variavel=15},
                             new RestricoesLaterais(){limite_inferior_variavel=1, limite_superior_variavel=60},
                             new RestricoesLaterais(){limite_inferior_variavel=0, limite_superior_variavel=59},
@@ -877,6 +909,7 @@ namespace Execucoes
                     break;
                 }
 
+                
                 // ======================================================================
                 // DEFINE OS PARÂMETROS DA EXECUÇÃO
                 // ======================================================================
@@ -1363,15 +1396,19 @@ namespace Execucoes
         // SPACECRAFT OPTIMIZATION
         // =====================================
 
-        public void ExtensiveSearch_SpacecraftOptimization(){
+        public void ExtensiveSearch_SpacecraftOptimization()
+        {
             double menor_fx_historia = Double.MaxValue;
             double menor_i_historia = Double.MaxValue;
             double menor_n_historia = Double.MaxValue;
             double menor_d_historia = Double.MaxValue;
 
-            for (int i = 13; i <= 15; i++){
-                for (int d = 1; d <= 60; d++){
-                    for (int n = 1; n <= d; n++){
+            for (int i = 13; i <= 15; i++)
+            {
+                for (int d = 1; d <= 60; d++)
+                {
+                    for (int n = 1; n <= d; n++)
+                    {
                         
                         // Se o espaço for viável, executa
                         if( (n < d) && ((double)n%d != 0) ) { //&& (Satellite.Payload.FOV >= 1.05*FovMin);
@@ -1388,7 +1425,8 @@ namespace Execucoes
                             // Console.WriteLine("Espaço válido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
 
                             // Verifica se essa execução é a melhor da história
-                            if (fx < menor_fx_historia){
+                            if (fx < menor_fx_historia)
+                            {
                                 Console.WriteLine("Atualiza o melhor fx para {0} e restrição nesse é {1}", fx, spacecraft_model.valid_solution);
                                 menor_fx_historia = fx;
                                 menor_i_historia = i;
@@ -1406,8 +1444,8 @@ namespace Execucoes
             Console.WriteLine("Menor d história: " + menor_d_historia);
         }
 
-        public void Teste_FuncoesObjetivo_SpacecraftOptimization(){
-            
+        public void Teste_FuncoesObjetivo_SpacecraftOptimization()
+        {    
             // Define qual função chamar e o fenótipo
             int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.spacecraft;
             List<double> fenotipo_variaveis_projeto = new List<double>(){14,60,59};
@@ -1440,8 +1478,8 @@ namespace Execucoes
         // MAIN
         // =====================================
 
-        public static void Main(string[] args){
-            
+        public static void Main(string[] args)
+        {    
             Console.WriteLine("Rodando!");
             
             // ============================================================================
