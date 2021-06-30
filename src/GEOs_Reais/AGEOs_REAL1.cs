@@ -1,4 +1,5 @@
 // #define DEBUG_CONSOLE
+// #define DEBUG_MUTACAO_TAU
 
 using System;
 using System.Collections.Generic;
@@ -41,23 +42,19 @@ namespace GEOs_REAIS
         {
             // Conta quantas mudanças que flipando dá melhor
             int melhoraram = 0;
-
-            if (this.tipo_AGEO == 1)
-            {
-                // Verifica quantos melhora em comparação com o MELHOR FX
-                melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao <= this.fx_melhor).ToList().Count;
-            }
-            else if (this.tipo_AGEO == 2)
-            {
-                // Verifica quantos melhora em comparação com o ATUAL FX
-                melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao <= this.fx_atual).ToList().Count;
-            }
+            // Define o valor de referência
+            double valor_ref = (this.tipo_AGEO == 1) ? fx_melhor : fx_atual;
+            
+            // Verifica quantos melhora em comparação com o valor de referência
+            melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao < valor_ref).ToList().Count;
 
             // Calcula a Chance of Improvement
             double CoI = (double) melhoraram / populacao_atual.Count;
+            // Armazena o tau a ser alterado
+            double tau_antigo = tau;
 
             // Se a CoI for zero, restarta o TAU
-            if (CoI <= 0.0 || tau > 5)
+            if (CoI == 0.0)// || tau > 5)
             {
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
@@ -70,9 +67,10 @@ namespace GEOs_REAIS
                 tau += (0.5 + CoI) * random.NextDouble();
             }
             
-            #if DEBUG_CONSOLE
-                Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
-                Console.WriteLine("Valor TAU: {0}", tau);
+            #if DEBUG_MUTACAO_TAU
+                Console.WriteLine("NFOB = {0} | melhoraram {1}/{2} | tau era {3} e virou {4} | fx={5}", this.NFOB, melhoraram,populacao_atual.Count, tau_antigo, tau, fx_melhor);
+                // Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
+                // Console.WriteLine("Valor TAU era {0} e virou {1}", tau_antigo, tau);
             #endif
 
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)

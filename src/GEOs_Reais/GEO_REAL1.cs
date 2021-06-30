@@ -1,4 +1,5 @@
 // #define DEBUG_CONSOLE
+// #define DEBUG_VAI_PERTURBAR
 
 using System;
 using System.Collections.Generic;
@@ -164,15 +165,13 @@ namespace GEOs_REAIS
                 // Perturba a variável
                 double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao);
 
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("Verificando a variável {0}", i);
-                    Console.WriteLine("xi vale {0} e perturbando vai para {1}", xi, xii);
-                #endif
-
                 // Atribui a variável perturbada
                 populacao_para_perturbar[i] = xii;
 
                 #if DEBUG_CONSOLE
+                    Console.WriteLine("--------------");
+                    Console.WriteLine("Verificando a variável {0}", i);
+                    Console.WriteLine("xi vale {0} e perturbando vai para {1} com std={2}", xi, xii, this.std);
                     Console.WriteLine("População perturbada para calcular fx:");
                     foreach (double ind in populacao_para_perturbar)
                     {
@@ -218,6 +217,7 @@ namespace GEOs_REAIS
         public virtual void ordena_e_perturba()
         {    
             #if DEBUG_CONSOLE
+                Console.WriteLine("---------------------");
                 Console.WriteLine("Agora que criou as perturbações, mostra as perturbações:");
                 foreach(Perturbacao p in perturbacoes_da_iteracao)
                 {
@@ -248,12 +248,12 @@ namespace GEOs_REAIS
                 // Probabilidade Pk => k^(-tau)
                 double Pk = Math.Pow(k, -tau);
 
+                #if DEBUG_VAI_PERTURBAR
+                    Console.WriteLine("Gerou ALE = {0} e Pk = {1} para k = {2} e tau = {3}", ALE, Pk, k, tau);
+                #endif
+                
                 // k precisa ser de 1 a N, mas aqui nos índices começa em 0
                 k -= 1;
-
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("Gerou ALE = {0} e Pk = {1} para k = {2}", ALE, Pk, k+1);
-                #endif
 
                 // Se o Pk é maior ou igual ao aleatório, então flipa o bit
                 if (Pk >= ALE)
@@ -274,6 +274,7 @@ namespace GEOs_REAIS
             }
 
             #if DEBUG_CONSOLE
+                Console.WriteLine("---------------------");
                 Console.WriteLine("População depois de perturbar tudo:");
                 foreach(double ind in populacao_atual)
                 {
@@ -297,21 +298,27 @@ namespace GEOs_REAIS
             if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
             {
                 if (parada_por_NFOB)
+                {
                     parada = true;
+                }
             }
-            
+
             // Se o critério for por precisão...
             else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO)
             {
                 if (parada_por_precisao)
+                {
                     parada = true;
+                }
             }
             
             // Se o critério for por precisão ou por NFOB...
             else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB)
             {
                 if (parada_por_NFOB || parada_por_precisao)
+                {
                     parada = true;
+                }
             }
 
             // Retorna o status da parada
