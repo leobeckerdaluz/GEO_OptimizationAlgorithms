@@ -34,7 +34,8 @@ namespace GEOs_BINARIOS
             double CoI = (double) melhoraram / this.populacao_atual.Count;
 
             // Se a CoI for zero, restarta o TAU
-            if (CoI <= 0.0 || tau > 5){
+            if (CoI <= 0.0 || tau > 5)
+            {
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
                 tau = 0.5 * Math.Exp(this.random.NextDouble() * (1.0 / Math.Pow( (this.populacao_atual.Count), 1.0/2.0 )));

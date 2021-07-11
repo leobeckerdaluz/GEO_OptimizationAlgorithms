@@ -1,4 +1,4 @@
-filename = "tuningGEOreal2_schwefel_completo_50ex.txt"
+filename = "Redirect.txt"
 
 with open(filename) as f:
     content = f.readlines()
@@ -10,7 +10,9 @@ for line in content:
         s = line.split(";")
         valor = float( s[1].replace(",",".") )
         valores.append(valor)
+        print(valor)
 
-print(valores)
 
-print( min(valores) )
+# print(valores)
+
+# print( min(valores) )

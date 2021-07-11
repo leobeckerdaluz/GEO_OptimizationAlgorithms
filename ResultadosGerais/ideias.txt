@@ -1,0 +1,7 @@
+
+
+
+Restrições:
+--> Penalidade vai aumentando conforme x % da população vai sendo unfeasible
+
+GEO_REAL ---> Evolui o desvio padrão com o tau (quando reseta o tau, reseta o desvio)
