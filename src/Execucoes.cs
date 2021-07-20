@@ -622,10 +622,10 @@ namespace Execucoes
             // Cria uma lista contendo as funções a serem executadas
             List<int> function_values = new List<int>()
             {
-                (int)EnumNomesFuncoesObjetivo.griewangk,
-                (int)EnumNomesFuncoesObjetivo.rastringin,
-                (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                (int)EnumNomesFuncoesObjetivo.schwefel,
+                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                // (int)EnumNomesFuncoesObjetivo.rastringin,
+                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                // (int)EnumNomesFuncoesObjetivo.schwefel,
                 (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
             };
@@ -1066,66 +1066,20 @@ namespace Execucoes
 
 
 
-                // // ====================================================================================
-                // // Tuning do std para os A-GEOsreal1
-                // // ====================================================================================
+                // ====================================================================================
+                // Tuning do std para os A-GEOsreal1
+                // ====================================================================================
                 
-                // Console.WriteLine("============================================================================");
-                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                // Console.WriteLine("============================================================================");
-
-                // // Executa o algoritmo variando o std
-                // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
-                // foreach (double std in valores_std){
-
-                //     Console.WriteLine("========================================================");
-                //     Console.WriteLine("std = {0}", std);
-
-                //     // Define o valor de std
-                //     parametros_problema.parametros_livres.std_AGEO1real1 = std;
-                //     parametros_problema.parametros_livres.std_AGEO2real1 = std;
-
-                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
-                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                    
-                //     // Organiza os resultados de todas as excuções por algoritmo
-                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                    
-                //     // Apresenta os resultados finais
-                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                // }
-                // // ====================================================================================
-
-
-
-
-
-
-                // ====================================================================================
-                // Tuning do std para PERTURBAÇÃO DIRETA os A-GEOs real1
-                // ====================================================================================
-
                 Console.WriteLine("============================================================================");
                 Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
                 Console.WriteLine("============================================================================");
-                
-                parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-                // Executa o algoritmo variando a porcentagem do intervalo
-                // List<double> valores_porcentagem = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
-                // List<double> valores_porcentagem = new List<double>(){1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0,12.5,13.0,13.5,14.0,14.5,15.0};
-                List<double> valores_porcentagem = new List<double>(){1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-                foreach (double porcentagem in valores_porcentagem){
-                    // Muda o tipo de perturbação
-                    
-                    // O std será a porcentam do intervalo de variação das variáveis
-                    double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
-                    double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
-                    double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
-                    double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
+                // Executa o algoritmo variando o std
+                List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
+                foreach (double std in valores_std){
 
                     Console.WriteLine("========================================================");
-                    Console.WriteLine("std | porcentagem = {0};{1}", std, porcentagem);
+                    Console.WriteLine("std = {0}", std);
 
                     // Define o valor de std
                     parametros_problema.parametros_livres.std_AGEO1real1 = std;
@@ -1141,6 +1095,52 @@ namespace Execucoes
                     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
                 }
                 // ====================================================================================
+
+
+
+
+
+
+                // // ====================================================================================
+                // // Tuning do std para PERTURBAÇÃO DIRETA os A-GEOs real1
+                // // ====================================================================================
+
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+                
+                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+
+                // // Executa o algoritmo variando a porcentagem do intervalo
+                // // List<double> valores_porcentagem = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                // // List<double> valores_porcentagem = new List<double>(){1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0,12.5,13.0,13.5,14.0,14.5,15.0};
+                // List<double> valores_porcentagem = new List<double>(){1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+                // foreach (double porcentagem in valores_porcentagem){
+                //     // Muda o tipo de perturbação
+                    
+                //     // O std será a porcentam do intervalo de variação das variáveis
+                //     double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
+                //     double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
+                //     double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
+                //     double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
+
+                //     Console.WriteLine("========================================================");
+                //     Console.WriteLine("std | porcentagem = {0};{1}", std, porcentagem);
+
+                //     // Define o valor de std
+                //     parametros_problema.parametros_livres.std_AGEO1real1 = std;
+                //     parametros_problema.parametros_livres.std_AGEO2real1 = std;
+
+                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    
+                //     // Organiza os resultados de todas as excuções por algoritmo
+                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                    
+                //     // Apresenta os resultados finais
+                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // }
+                // // ====================================================================================
 
 
                
