@@ -24,6 +24,7 @@ namespace GEOs_REAIS
         public List<double> populacao_atual {get; set;}
         public List<double> populacao_melhor {get; set;}
         public List<double> melhores_NFOBs {get; set;}
+        public List<double> melhores_TAUs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
 
         public GEO_real1(
@@ -50,6 +51,7 @@ namespace GEOs_REAIS
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial);
             this.fx_melhor = this.fx_atual;
             this.melhores_NFOBs = new List<double>();
+            this.melhores_TAUs = new List<double>();
             this.perturbacoes_da_iteracao = new List<Perturbacao>();
         }
 
@@ -65,6 +67,7 @@ namespace GEOs_REAIS
             if (NFOB % step_obter_NFOBs == 0)
             {
                 melhores_NFOBs.Add(fx_melhor);
+                melhores_TAUs.Add(tau);
                 #if DEBUG_CONSOLE    
                     Console.WriteLine("melhor NFOB {0} = {1}", NFOB, fx_melhor);
                 #endif
@@ -123,20 +126,25 @@ namespace GEOs_REAIS
         }
         
         
-        public double perturba_variavel(double xi, double std_atual, int tipo_perturbacao)
+        public double perturba_variavel(double xi, double std_atual, int tipo_perturbacao, double intervalo_variacao_variavel)
         {
-            MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
-            
             // Varíavel perturbada
             double xii = xi;
 
             // Perturba a variável dentro dos limites
             if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_original)
             {
+                // Distribuição normal com desvio padrão = std
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
                 xii = xi + (normalDist.Sample() * xi);
             }
             else if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_SDdireto)
             {
+                // Distribuição normal onde desvio padrão é porcentagem.
+                double intervalo_variacao = intervalo_variacao_variavel;
+                double intervalo_porcentado = intervalo_variacao * std_atual / 100.0;
+                // Console.WriteLine("Intervalo é {0}, então o std={1} dá {2}", intervalo_variacao, std_atual, intervalo_porcentado);
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, intervalo_porcentado);
                 xii = xi + normalDist.Sample();
             }
 
@@ -163,7 +171,8 @@ namespace GEOs_REAIS
                 double xi = populacao_para_perturbar[i];
 
                 // Perturba a variável
-                double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao);
+                double intervalo_variacao_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel - restricoes_laterais_variaveis[i].limite_inferior_variavel;
+                double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao, intervalo_variacao_variavel);
 
                 // Atribui a variável perturbada
                 populacao_para_perturbar[i] = xii;
@@ -349,6 +358,7 @@ namespace GEOs_REAIS
                     retorno.NFOB = this.NFOB;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFOBs = this.melhores_NFOBs;
+                    retorno.melhores_TAUs = this.melhores_TAUs;
                     retorno.populacao_final = this.populacao_melhor;
                     
                     return retorno;

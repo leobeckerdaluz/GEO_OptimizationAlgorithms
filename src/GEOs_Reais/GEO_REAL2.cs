@@ -58,7 +58,8 @@ namespace GEOs_REAIS
                     double xi = populacao_para_perturbar[i];
 
                     // Perturba a variável
-                    double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao);
+                    double intervalo_variacao_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel - restricoes_laterais_variaveis[i].limite_inferior_variavel;
+                    double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
 
                     // Atribui a variável perturbada
                     populacao_para_perturbar[i] = xii;

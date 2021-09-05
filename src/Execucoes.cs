@@ -1,5 +1,5 @@
 
-#define CONSOLE_OUT_FILE
+// #define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
@@ -92,9 +92,7 @@ namespace Execucoes
             if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.GEOreal2 );
             if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.AGEO1real2 );
             if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.AGEO2real2 );
-            // if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal3)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.GEOreal3 );
-            // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real3)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.AGEO1real3 );
-            // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real3)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.AGEO2real3 );
+            if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1 );
 
             // Cria uma lista que irá conter as estatísticas para cada algoritmo que foi executado
             List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos = new List<Retorno_N_Execucoes_GEOs>();
@@ -233,9 +231,7 @@ namespace Execucoes
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2 ? "GEOreal2;" : "");
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2 ? "AGEO1real2;" : "");
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2 ? "AGEO2real2;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal3 ? "GEOreal3;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real3 ? "AGEO1real3;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real3 ? "AGEO2real3;" : "");
+            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1 ? "ASGEO2real1;" : "");
             
 
 
@@ -607,6 +603,25 @@ namespace Execucoes
 
                     todas_execucoes.Add(ret);
                 }
+
+                // ASGEO2real1
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1)
+                {
+                    // Console.Write("\rodar_ASGEO2real1...");
+
+                    ASGEO2_REAL1 ASGEO2real1 = new ASGEO2_REAL1(
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.tipo_perturbacao);
+                        
+                    RetornoGEOs ret = ASGEO2real1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1;
+                        
+                    todas_execucoes.Add(ret);
+                }
             }
 
             // Retorna a lista com todas as N execuções para os algoritmos a serem executados
@@ -622,11 +637,11 @@ namespace Execucoes
             // Cria uma lista contendo as funções a serem executadas
             List<int> function_values = new List<int>()
             {
-                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                (int)EnumNomesFuncoesObjetivo.griewangk,
                 // (int)EnumNomesFuncoesObjetivo.rastringin,
                 // (int)EnumNomesFuncoesObjetivo.rosenbrock,
                 // (int)EnumNomesFuncoesObjetivo.schwefel,
-                (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
             };
 
@@ -946,22 +961,22 @@ namespace Execucoes
 
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao()
                 {
-                    quantidade_execucoes = 50,
+                    quantidade_execucoes = 3,
                     parametros_criterio_parada = new ParametrosCriterioParada()
                     {
-                        // // EXECUÇÃO NORMAL
-                        // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB,
-                        // PRECISAO_criterio_parada = 0,
-                        // step_para_obter_NFOBs = 500,
-                        // NFOB_criterio_parada = 100000,
-                        // fx_esperado = 0
-
-                        // TUNING FUNÇÕES TESTE
-                        tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
-                        PRECISAO_criterio_parada = 1e-16,
+                        // EXECUÇÃO NORMAL
+                        tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB,
+                        PRECISAO_criterio_parada = 0,
                         step_para_obter_NFOBs = 500,
                         NFOB_criterio_parada = 100000,
-                        fx_esperado = 0.0
+                        fx_esperado = 0
+
+                        // // TUNING FUNÇÕES TESTE
+                        // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
+                        // PRECISAO_criterio_parada = 1e-16,
+                        // step_para_obter_NFOBs = 500,
+                        // NFOB_criterio_parada = 100000,
+                        // fx_esperado = 0.0
 
                         // // TUNING SPACECRAFT
                         // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
@@ -979,25 +994,26 @@ namespace Execucoes
                         rodar_AGEO1var      = false,
                         rodar_AGEO2var      = false,
                         rodar_GEOreal1      = false,
-                        rodar_AGEO1real1    = true,
-                        rodar_AGEO2real1    = true,
+                        rodar_AGEO1real1    = false,
+                        rodar_AGEO2real1    = false,
                         rodar_GEOreal2      = false,
                         rodar_AGEO1real2    = false,
                         rodar_AGEO2real2    = false,
+                        rodar_ASGEO2real1    = true,
                     },
                     o_que_interessa_printar = new OQueInteressaPrintar()
                     {
-                        // // EXECUÇÃO NORMAL
-                        // mostrar_header = true,
-                        // mostrar_meanNFE_meanFX_sdFX = true,
-                        // mostrar_melhores_NFOB = true,
-                        // mostrar_melhores_fx_cada_execucao = true
-
-                        // TUNING
-                        mostrar_header = false,
+                        // EXECUÇÃO NORMAL
+                        mostrar_header = true,
                         mostrar_meanNFE_meanFX_sdFX = true,
-                        mostrar_melhores_NFOB = false,
-                        mostrar_melhores_fx_cada_execucao = false
+                        mostrar_melhores_NFOB = true,
+                        mostrar_melhores_fx_cada_execucao = true
+
+                        // // TUNING
+                        // mostrar_header = false,
+                        // mostrar_meanNFE_meanFX_sdFX = true,
+                        // mostrar_melhores_NFOB = false,
+                        // mostrar_melhores_fx_cada_execucao = false
                     },
                     tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_original
                 };
@@ -1007,16 +1023,17 @@ namespace Execucoes
 
 
 
+                // parametros_problema.parametros_livres.std_AGEO2real1 = 5;
+                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-
-                // // Executa cada algoritmo por N vezes e obtém todas as execuções
-                // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                // Executa cada algoritmo por N vezes e obtém todas as execuções
+                List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                 
-                // // Organiza os resultados de todas as excuções por algoritmo
-                // List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                // Organiza os resultados de todas as excuções por algoritmo
+                List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                 
-                // // Apresenta os resultados finais
-                // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // Apresenta os resultados finais
+                apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
 
 
 
@@ -1066,35 +1083,35 @@ namespace Execucoes
 
 
 
-                // ====================================================================================
-                // Tuning do std para os A-GEOsreal1
-                // ====================================================================================
+                // // ====================================================================================
+                // // Tuning do std para os A-GEOsreal1
+                // // ====================================================================================
                 
-                Console.WriteLine("============================================================================");
-                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                Console.WriteLine("============================================================================");
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
 
-                // Executa o algoritmo variando o std
-                List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
-                foreach (double std in valores_std){
+                // // Executa o algoritmo variando o std
+                // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
+                // foreach (double std in valores_std){
 
-                    Console.WriteLine("========================================================");
-                    Console.WriteLine("std = {0}", std);
+                //     Console.WriteLine("========================================================");
+                //     Console.WriteLine("std = {0}", std);
 
-                    // Define o valor de std
-                    parametros_problema.parametros_livres.std_AGEO1real1 = std;
-                    parametros_problema.parametros_livres.std_AGEO2real1 = std;
+                //     // Define o valor de std
+                //     parametros_problema.parametros_livres.std_AGEO1real1 = std;
+                //     parametros_problema.parametros_livres.std_AGEO2real1 = std;
 
-                    // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                     
-                    // Organiza os resultados de todas as excuções por algoritmo
-                    List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                //     // Organiza os resultados de todas as excuções por algoritmo
+                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                     
-                    // Apresenta os resultados finais
-                    apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                }
-                // ====================================================================================
+                //     // Apresenta os resultados finais
+                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // }
+                // // ====================================================================================
 
 
 

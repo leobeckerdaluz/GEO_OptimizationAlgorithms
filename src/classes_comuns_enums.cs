@@ -20,6 +20,7 @@ namespace Classes_Comuns_Enums
         public int NFOB { get; set; }
         public double melhor_fx { get; set; }
         public List<double> melhores_NFOBs { get; set; }
+        public List<double> melhores_TAUs { get; set; }
         public List<double> populacao_final { get; set; }
     }
 
@@ -60,9 +61,7 @@ namespace Classes_Comuns_Enums
         public bool rodar_GEOreal2 { get; set; }
         public bool rodar_AGEO1real2 { get; set; }
         public bool rodar_AGEO2real2 { get; set; }
-        public bool rodar_GEOreal3 { get; set; }
-        public bool rodar_AGEO1real3 { get; set; }
-        public bool rodar_AGEO2real3 { get; set; }
+        public bool rodar_ASGEO2real1 { get; set; }
     }
 
 
@@ -161,9 +160,7 @@ namespace Classes_Comuns_Enums
         GEOreal2,
         AGEO1real2,
         AGEO2real2,
-        GEOreal3,
-        AGEO1real3,
-        AGEO2real3,
+        ASGEO2real1
     }
 
     enum EnumTipoCriterioParada{
