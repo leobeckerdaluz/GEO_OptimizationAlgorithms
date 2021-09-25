@@ -16,7 +16,8 @@ namespace GEOs_BINARIOS
         public double tau {get; set;}
         public int n_variaveis_projeto {get; set;}
         public int definicao_funcao_objetivo {get; set;}
-        public List<RestricoesLaterais> restricoes_laterais_variaveis {get; set;}
+        public List<double> lower_bounds {get; set;}
+        public List<double> upper_bounds {get; set;}
         public int step_obter_NFOBs {get; set;}
         public List<int> bits_por_variavel_variaveis {get; set;}
 
@@ -33,14 +34,16 @@ namespace GEOs_BINARIOS
             double tau,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
-            List<RestricoesLaterais> restricoes_laterais_variaveis,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
             int step_obter_NFOBs,
             List<int> bits_por_variavel_variaveis)
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
-            this.restricoes_laterais_variaveis = restricoes_laterais_variaveis;
+            this.lower_bounds = lower_bounds;
+            this.upper_bounds = upper_bounds;
             this.step_obter_NFOBs = step_obter_NFOBs;
             this.bits_por_variavel_variaveis = bits_por_variavel_variaveis;
             this.NFOB = 0;
@@ -91,8 +94,8 @@ namespace GEOs_BINARIOS
             int iterator = 0;
             for (int i=0; i<n_variaveis_projeto; i++)
             {
-                double limite_superior_variavel = this.restricoes_laterais_variaveis[i].limite_superior_variavel;
-                double limite_inferior_variavel = this.restricoes_laterais_variaveis[i].limite_inferior_variavel;
+                double lower = this.lower_bounds[i];
+                double upper = this.upper_bounds[i];
                 double bits_variavel_projeto = this.bits_por_variavel_variaveis[i];
                 // Cria string representando os bits da variável
                 string fenotipo_xi = "";
@@ -116,7 +119,7 @@ namespace GEOs_BINARIOS
                 // (max-min) / (2^bits - 0) ======> Variação de valor por bit
                 // min + [(max-min) / (2^bits - 0)] * binario
                 
-                double fenotipo_variavel_projeto = limite_inferior_variavel + ((limite_superior_variavel - limite_inferior_variavel) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto) - 1));
+                double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto) - 1));
 
                 #if DEBUG_FUNCTION
                     Console.WriteLine("Fenótipo " + i + ": " + fenotipo_xi);

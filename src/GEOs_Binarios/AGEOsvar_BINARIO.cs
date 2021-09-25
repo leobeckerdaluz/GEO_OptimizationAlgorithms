@@ -15,13 +15,15 @@ namespace GEOs_BINARIOS
             double tau_minimo,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
-            List<RestricoesLaterais> restricoes_laterais_variaveis,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
             int step_obter_NFOBs,
             List<int> bits_por_variavel_variaveis) : base(
                 tau_minimo,
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
-                restricoes_laterais_variaveis,
+                lower_bounds,
+                upper_bounds,
                 step_obter_NFOBs,
                 bits_por_variavel_variaveis)
         {

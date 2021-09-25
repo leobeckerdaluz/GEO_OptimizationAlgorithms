@@ -17,7 +17,8 @@ namespace GEOs_REAIS
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
-            List<RestricoesLaterais> restricoes_laterais,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
             int step_obter_NFOBs,
             int tipo_perturbacao,
             double tau,
@@ -25,18 +26,30 @@ namespace GEOs_REAIS
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 populacao_inicial,
-                restricoes_laterais,
+                lower_bounds,
+                upper_bounds,
                 step_obter_NFOBs,
                 tipo_perturbacao,
                 tau,
                 std)
         {
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
+            this.tau = 0.5;
+            this.std = 0.5;
         }
 
 
         public override void mutacao_do_tau_AGEOs()
         {
+            // Armazena o tau a ser alterado
+            double tau_antigo = tau;
+            // Armazena o sigma a ser alterado
+            double std_antigo = std;
+            
+            
+            // ====================================================================================
+            // TAU CoI
+
             // Conta quantas mudanças que flipando dá melhor
             int melhoraram = 0;
             // Define o valor de referência (AGEO2)
@@ -48,16 +61,6 @@ namespace GEOs_REAIS
             // Calcula a Chance of Improvement
             double CoI = (double) melhoraram / populacao_atual.Count;
             
-            // Armazena o tau a ser alterado
-            double tau_antigo = tau;
-            // Armazena o sigma a ser alterado
-            double std_antigo = std;
-
-
-
-
-            // ====================================================================================
-            // TAU COI
 
             // Se a CoI for zero, restarta o TAU
             if (CoI == 0.0)// || tau > 5)
@@ -72,29 +75,36 @@ namespace GEOs_REAIS
 
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)
             CoI_1 = CoI;
-
+            
 
 
             // ====================================================================================
             // SIGMA 1/5
+            int q = 200;
             double c = 0.9;
+            double std_minimo = 0.5;
             
-            if (CoI < 0.2)
-                std = std*c;
-            else if (CoI > 0.2)
-                std = std/c;
-            else
-                std = std;
+            // A cada q iterações, verifica
+            if ((melhoras_nas_iteracoes.Count > 0) && ((melhoras_nas_iteracoes.Count % q) == 0))
+            {
+                // Pega os últimos melhores NFOBs
+                List<bool> ultimas_melhorias_iteracoes = melhoras_nas_iteracoes.GetRange(melhoras_nas_iteracoes.Count - q, q);
 
-            // Controla o std mínimo
-            if (std <= 0.2)
-                std = 0.2;
-
+                int melhoraram_its = ultimas_melhorias_iteracoes.Count(i => i == true);
                 
+                double razao = (double)melhoraram_its / q;
 
-            #if DEBUG_MUTACAO_TAU
-                Console.WriteLine("NFOB = {0} | melhoraram {1}/{2} | std era {3} e virou {4} | fx={5}", this.NFOB, melhoraram,populacao_atual.Count, std_antigo, std, fx_melhor);
-            #endif
+                if (razao < 0.2)
+                    std = std * c;
+                else if (razao > 0.2)
+                    std = std / c;
+                else
+                    std = std;
+
+                // Controla o std mínimo
+                if (std <= std_minimo)
+                    std = std_minimo;
+            }
         }
     }
 }

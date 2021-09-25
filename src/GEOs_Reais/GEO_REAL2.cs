@@ -17,7 +17,8 @@ namespace GEOs_REAIS
             double tau,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
-            List<RestricoesLaterais> restricoes_laterais_variaveis,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
             int step_obter_NFOBs,
             double std,
             int tipo_perturbacao,
@@ -26,7 +27,8 @@ namespace GEOs_REAIS
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 populacao_inicial,
-                restricoes_laterais_variaveis,
+                lower_bounds,
+                upper_bounds,
                 step_obter_NFOBs,
                 tipo_perturbacao,
                 tau,
@@ -58,7 +60,7 @@ namespace GEOs_REAIS
                     double xi = populacao_para_perturbar[i];
 
                     // Perturba a variável
-                    double intervalo_variacao_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel - restricoes_laterais_variaveis[i].limite_inferior_variavel;
+                    double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                     double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
 
                     // Atribui a variável perturbada

@@ -27,7 +27,7 @@ namespace Execucoes
 {
     public class Execucoes_GEO
     {
-        public Random random = new Random();
+        // public Random random = new Random();
 
         // =====================================
         // ROTINAS PARA EXECUÇÃO
@@ -44,21 +44,21 @@ namespace Execucoes
         }
 
 
-        public List<double> geracao_populacao_real(int n_variaveis_projeto, List<RestricoesLaterais> restricoes_laterais_variaveis)
-        {    
+        public static List<double> geracao_populacao_real(List<double> lower_bounds, List<double> upper_bounds, int seed)
+        {
+            double size = lower_bounds.Count;
+            
             List<double> nova_populacao = new List<double>();
+            Random rnd = new Random(seed);
 
-            for(int i=0; i<n_variaveis_projeto; i++)
+            for(int i=0; i<size; i++)
             {
-                double limite_inferior_variavel = restricoes_laterais_variaveis[i].limite_inferior_variavel;
-                double limite_superior_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel;
-                double rand = random.NextDouble();
+                double lower = lower_bounds[i];
+                double upper = upper_bounds[i];
+                
+                double rand = rnd.NextDouble();
 
-                double xi = limite_inferior_variavel + ((limite_superior_variavel - limite_inferior_variavel) * rand);
-
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("xi gerado = {0}", xi);
-                #endif
+                double xi = lower + ((upper - lower) * rand);
 
                 nova_populacao.Add(xi);
             }
@@ -70,7 +70,7 @@ namespace Execucoes
                     Console.WriteLine("individuo = {0}", ind);
                 }
             #endif
-
+            
             // Retorna a população criada
             return nova_populacao;
         }
@@ -350,8 +350,10 @@ namespace Execucoes
             {
                 Console.Write((i+1) +"...");
 
+                int seed = i;
+
                 // Para cada execução, gera uma nova população inicial com base nos limites de cada variável
-                parametros_problema.populacao_inicial = new List<double>(geracao_populacao_real(parametros_problema.n_variaveis_projeto, parametros_problema.restricoes_laterais_por_variavel));
+                parametros_problema.populacao_inicial = new List<double>(geracao_populacao_real(parametros_problema.lower_bounds, parametros_problema.upper_bounds, seed));
 
                 // Console.WriteLine("População inicial GERADA: {0}", populacao_real_em_string(parametros_problema.populacao_inicial) );
             
@@ -364,7 +366,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_GEO, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.bits_por_variavel);
 
@@ -383,7 +386,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_GEOvar, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.bits_por_variavel);
 
@@ -403,7 +407,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.bits_por_variavel);
 
@@ -423,7 +428,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.bits_por_variavel);
 
@@ -443,7 +449,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.bits_por_variavel);
 
@@ -463,7 +470,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.bits_por_variavel);
 
@@ -482,7 +490,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.populacao_inicial, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_GEOreal1, 
@@ -505,7 +514,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.parametros_livres.std_AGEO1real1, 
                         1, 
@@ -527,7 +537,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.parametros_livres.std_AGEO2real1, 
                         2, 
@@ -549,7 +560,8 @@ namespace Execucoes
                         parametros_problema.parametros_livres.tau_GEOreal2, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.parametros_livres.std_GEOreal2, 
                         parametros_execucao.tipo_perturbacao, 
@@ -572,7 +584,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.populacao_inicial, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.parametros_livres.std_AGEO1real2, 
                         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
@@ -595,7 +608,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.populacao_inicial, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
                         parametros_problema.parametros_livres.std_AGEO1real2, 
                         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
@@ -619,7 +633,8 @@ namespace Execucoes
                         parametros_problema.populacao_inicial, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_1, 
@@ -635,11 +650,12 @@ namespace Execucoes
                 {
                     // Console.Write("\rodar_ASGEO2real1_2...");
 
-                    ASGEO2_REAL1_1 ASGEO2real1_2 = new ASGEO2_REAL1_1(
+                    ASGEO2_REAL1_2 ASGEO2real1_2 = new ASGEO2_REAL1_2(
                         parametros_problema.populacao_inicial, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_2, 
@@ -655,11 +671,12 @@ namespace Execucoes
                 {
                     // Console.Write("\rodar_ASGEO2real1_3...");
 
-                    ASGEO2_REAL1_1 ASGEO2real1_3 = new ASGEO2_REAL1_1(
+                    ASGEO2_REAL1_3 ASGEO2real1_3 = new ASGEO2_REAL1_3(
                         parametros_problema.populacao_inicial, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.restricoes_laterais_por_variavel, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_3, 
@@ -686,10 +703,13 @@ namespace Execucoes
             List<int> function_values = new List<int>()
             {
                 (int)EnumNomesFuncoesObjetivo.griewangk,
-                (int)EnumNomesFuncoesObjetivo.rastringin,
-                (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                (int)EnumNomesFuncoesObjetivo.schwefel,
-                (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.rastringin,
+                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                // (int)EnumNomesFuncoesObjetivo.schwefel,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.beale,
+                // (int)EnumNomesFuncoesObjetivo.levy13,
+                // (int)EnumNomesFuncoesObjetivo.nova,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
             };
 
@@ -712,7 +732,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 10;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(14, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-600.0, limite_superior_variavel=600.0} , parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-600.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(600.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1.25,
@@ -757,7 +778,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = n_variaveis;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-5.12, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(5.12, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1,
@@ -800,7 +822,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 2;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-2.048, limite_superior_variavel=2.048} , parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-2.048, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(2.048, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1.25,
@@ -843,7 +866,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 10;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-500.0, limite_superior_variavel=500.0} , parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-500.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(500.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 0.75,
@@ -890,7 +914,8 @@ namespace Execucoes
                             n_variaveis_projeto = n_variaveis_projeto,
                             definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.ackley,
                             bits_por_variavel = Enumerable.Repeat(16, n_variaveis_projeto).ToList(),
-                            restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-30.0, limite_superior_variavel=30.0} , n_variaveis_projeto).ToList(),
+                            lower_bounds = Enumerable.Repeat(-30.0, n_variaveis_projeto).ToList(),
+                            upper_bounds = Enumerable.Repeat(30.0, n_variaveis_projeto).ToList(),
                             parametros_livres = new ParametrosLivreProblema()
                             {
                                 tau_GEO = 3.25,
@@ -927,6 +952,50 @@ namespace Execucoes
                         };
                     break;
 
+                    // ROSENBROCK
+                    case (int)EnumNomesFuncoesObjetivo.levy13:
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Levy13";
+                        parametros_problema.n_variaveis_projeto = 2;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // tau_GEOreal1 = 4,
+                            // std_GEOreal1 = 2.2,
+                            
+                            // tau_GEOreal2 = 5,
+                            // std_GEOreal2 = 1,
+                            // P_GEOreal2 = 4,
+                            // s_GEOreal2 = 2,
+                            
+                            // std_AGEO1real1 = 1.6,
+                            // std_AGEO2real1 = 1.8,
+                            
+                            // std_AGEO1real2 = 2,
+                            // P_AGEO1real2 = 8,
+                            // s_AGEO1real2 = 1,
+                            
+                            // std_AGEO2real2 = 2,
+                            // P_AGEO2real2 = 4,
+                            // s_AGEO2real2 = 2,
+                            
+                            tau_minimo_AGEOs = 0.5,
+
+                            // tau_ASGEO2_REAL1_1 = 4,
+                            // std_ASGEO2_REAL1_1 = 1.8,
+                            // tau_ASGEO2_REAL1_2 = 4,
+                            // std_ASGEO2_REAL1_2 = 1.8,
+                            // tau_ASGEO2_REAL1_3 = 4,
+                            // std_ASGEO2_REAL1_3 = 1.8,
+                        };
+                    break;
+
                     // F9 TESE
                     case (int)EnumNomesFuncoesObjetivo.F09:
                         parametros_problema = new ParametrosProblema();
@@ -934,7 +1003,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 2;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(18, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-10.0, limite_superior_variavel=10.0} , parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1.50,
@@ -964,7 +1034,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 5;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(11, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.restricoes_laterais_por_variavel = Enumerable.Repeat( new RestricoesLaterais(){limite_inferior_variavel=-5.12, limite_superior_variavel=5.12} , parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-5.12, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(5.12, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 3.0,
@@ -994,12 +1065,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 3;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = new List<int>(){2,6,6};
-                        parametros_problema.restricoes_laterais_por_variavel = new List<RestricoesLaterais>()
-                        {
-                            new RestricoesLaterais(){limite_inferior_variavel=13, limite_superior_variavel=15},
-                            new RestricoesLaterais(){limite_inferior_variavel=1, limite_superior_variavel=60},
-                            new RestricoesLaterais(){limite_inferior_variavel=0, limite_superior_variavel=59},
-                        };
+                        parametros_problema.lower_bounds = new List<double>(){13,1,0};
+                        parametros_problema.upper_bounds = new List<double>(){15,60,59};
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 3.0,
@@ -1031,7 +1098,8 @@ namespace Execucoes
                         parametros_problema.n_variaveis_projeto = 0;
                         parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
                         parametros_problema.bits_por_variavel = new List<int>();
-                        parametros_problema.restricoes_laterais_por_variavel = new List<RestricoesLaterais>();
+                        parametros_problema.lower_bounds = new List<double>();
+                        parametros_problema.upper_bounds = new List<double>();
                         parametros_problema.parametros_livres = new ParametrosLivreProblema();
                         parametros_problema.populacao_inicial = new List<double>();
                     break;
@@ -1044,7 +1112,7 @@ namespace Execucoes
 
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao()
                 {
-                    quantidade_execucoes = 30,
+                    quantidade_execucoes = 40,
                     parametros_criterio_parada = new ParametrosCriterioParada()
                     {
                         // EXECUÇÃO NORMAL
@@ -1076,23 +1144,23 @@ namespace Execucoes
                         rodar_AGEO2         = false,
                         rodar_AGEO1var      = false,
                         rodar_AGEO2var      = false,
-                        rodar_GEOreal1      = false,
-                        rodar_AGEO1real1    = false,
+                        rodar_GEOreal1      = true,
+                        rodar_AGEO1real1    = true,
                         rodar_AGEO2real1    = true,
                         rodar_GEOreal2      = false,
                         rodar_AGEO1real2    = false,
                         rodar_AGEO2real2    = false,
-                        rodar_ASGEO2real1_1 = true,
-                        rodar_ASGEO2real1_2 = true,
-                        rodar_ASGEO2real1_3 = true,
+                        rodar_ASGEO2real1_1 = false,
+                        rodar_ASGEO2real1_2 = false,
+                        rodar_ASGEO2real1_3 = false,
                     },
                     o_que_interessa_printar = new OQueInteressaPrintar()
                     {
                         // EXECUÇÃO NORMAL
-                        mostrar_header = true,
+                        mostrar_header = false,
                         mostrar_meanNFE_meanFX_sdFX = true,
-                        mostrar_melhores_NFOB = true,
-                        mostrar_melhores_fx_cada_execucao = true
+                        mostrar_melhores_NFOB = false,
+                        mostrar_melhores_fx_cada_execucao = false
 
                         // // TUNING
                         // mostrar_header = false,
@@ -1108,9 +1176,15 @@ namespace Execucoes
 
 
 
-                // parametros_problema.parametros_livres.std_AGEO2real1 = 5;
-                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
-
+                Console.WriteLine("============================================================================");
+                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                Console.WriteLine("============================================================================");
+                
+                parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
                 List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                 
@@ -1120,6 +1194,57 @@ namespace Execucoes
                 // Apresenta os resultados finais
                 apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
 
+
+
+
+
+
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+                
+                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+
+                // switch(definicao_funcao_objetivo){
+                //     case (int)EnumNomesFuncoesObjetivo.griewangk:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.2;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.rastringin:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 5.2;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 4.8;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.rosenbrock:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.4;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.schwefel:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 5;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 8.4;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.ackley:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 3.6;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1;
+                //     break;
+                // }
+
+                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+               
+                // // Executa cada algoritmo por N vezes e obtém todas as execuções
+                // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                
+                // // Organiza os resultados de todas as excuções por algoritmo
+                // List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                
+                // // Apresenta os resultados finais
+                // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+
+                
+                
+                
 
 
 
@@ -1216,13 +1341,16 @@ namespace Execucoes
                 // // Executa o algoritmo variando a porcentagem do intervalo
                 // // List<double> valores_porcentagem = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
                 // // List<double> valores_porcentagem = new List<double>(){1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0,12.5,13.0,13.5,14.0,14.5,15.0};
-                // List<double> valores_porcentagem = new List<double>(){1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+                // // List<double> valores_porcentagem = new List<double>(){1,2,3,4,5,6,7,8,9,10};
+                // // List<double> valores_porcentagem = new List<double>(){0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10};
+                // // List<double> valores_porcentagem = new List<double>(){0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8,4.0,4.2,4.4,4.6,4.8,5.0};
+                // List<double> valores_porcentagem = new List<double>(){5.2,5.4,5.6,5.8,6.0,6.2,6.4,6.6,6.8,7.0,7.2,7.4,7.6,7.8,8.0,8.2,8.4,8.6,8.8,9.0,9.2,9.4,9.6,9.8,10.0};
                 // foreach (double porcentagem in valores_porcentagem){
                 //     // Muda o tipo de perturbação
                     
                 //     // O std será a porcentam do intervalo de variação das variáveis
-                //     double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
-                //     double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
+                //     double inf_limit = parametros_problema.lower_bounds[0];
+                //     double sup_limit = parametros_problema.upper_bounds[0];
                 //     double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
                 //     double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
 
@@ -1230,8 +1358,8 @@ namespace Execucoes
                 //     Console.WriteLine("std | porcentagem = {0};{1}", std, porcentagem);
 
                 //     // Define o valor de std
-                //     parametros_problema.parametros_livres.std_AGEO1real1 = std;
-                //     parametros_problema.parametros_livres.std_AGEO2real1 = std;
+                //     parametros_problema.parametros_livres.std_AGEO1real1 = porcentagem;
+                //     parametros_problema.parametros_livres.std_AGEO2real1 = porcentagem;
 
                 //     // Executa cada algoritmo por N vezes e obtém todas as execuções
                 //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1390,8 +1518,8 @@ namespace Execucoes
                 //     parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
                     
                 //     // O std será a porcentam do intervalo de variação das variáveis
-                //     double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
-                //     double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
+                //     double inf_limit = parametros_problema.lower_bounds[0];
+                //     double sup_limit = parametros_problema.upper_bounds[0];
                 //     double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
                 //     double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
 
@@ -1482,8 +1610,8 @@ namespace Execucoes
             //     double porcentagem = valores_porcentagem_do_total_p_perturbar[n];
 
             //     // O std será a porcentam do intervalo de variação das variáveis
-            //     double inf_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_inferior_variavel;
-            //     double sup_limit = parametros_problema.restricoes_laterais_por_variavel[0].limite_superior_variavel;
+            //     double inf_limit = parametros_problema.lower_bounds[0];
+            //     double sup_limit = parametros_problema.upper_bounds[0];
             //     double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
             //     double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
 
@@ -1525,7 +1653,7 @@ namespace Execucoes
             //     Console.WriteLine("\n==========================================");
             //     Console.WriteLine("{0}", tau.ToString().Replace('.',','));
             
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, );
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper,bounds, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, );
             // }
 
             
@@ -1545,7 +1673,7 @@ namespace Execucoes
 
             // List<double> valores_porcentagem_do_total_p_perturbar = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
             
-            // double total_intervalo_variacao_variaveis = (restricoes_laterais_por_variavel[0].limite_superior_variavel - restricoes_laterais_por_variavel[0].limite_inferior_variavel);
+            // double total_intervalo_variacao_variaveis = (upper_bounds[0] - lower_bounds[0]);
             
             // foreach(double porcentagem in valores_porcentagem_do_total_p_perturbar){
             //     double std = porcentagem/100.0 * total_intervalo_variacao_variaveis;
@@ -1554,7 +1682,7 @@ namespace Execucoes
             //     Console.WriteLine("porcentagem;std");
             //     Console.WriteLine( String.Format("{0};{1}", porcentagem, std).Replace('.',',') );
 
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper_bounds, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
             // }
 
 
@@ -1598,7 +1726,7 @@ namespace Execucoes
             //     Console.WriteLine("std");
             //     Console.WriteLine( String.Format("{0}", std).Replace('.',',') );
 
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, restricoes_laterais_por_variavel, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper_bounds, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
             // }
         }
 
@@ -1734,23 +1862,32 @@ namespace Execucoes
             Execucoes_GEO ex = new Execucoes_GEO();
             ex.Execucoes();
 
-            // // Testes
-            // GEO_real1 g = new GEO_real1(
-            //     4, 
-            //     (int)EnumNomesFuncoesObjetivo.griewangk, 
-            //     new List<double>(){1,1,1,1},
-            //     new List<RestricoesLaterais>(){
-            //         new RestricoesLaterais(){limite_inferior_variavel=-30,limite_superior_variavel=30},
-            //         new RestricoesLaterais(){limite_inferior_variavel=-30,limite_superior_variavel=30},
-            //         new RestricoesLaterais(){limite_inferior_variavel=-30,limite_superior_variavel=30},
-            //         new RestricoesLaterais(){limite_inferior_variavel=-30,limite_superior_variavel=30}
-            //     },
-            //     500,
+            
+
+            // // GEOreal1
+            // List<double> lower_bounds = new List<double>(){-10,-10};
+            // List<double> upper_bounds = new List<double>(){ 10, 10};
+            // double tau = 1;
+            // double std = 1;
+            // GEO_real1 geo_real1 = new GEO_real1(
+            //     2,
+            //     (int)EnumNomesFuncoesObjetivo.griewangk,
+            //     lower_bounds,
+            //     upper_bounds,
+            //     Execucoes_GEO.geracao_populacao_real(lower_bounds, upper_bounds, 64),
+            //     500, 
             //     (int)EnumTipoPerturbacao.perturbacao_original,
-            //     1.5,
-            //     1
+            //     tau, 
+            //     std
             // );
-            // g.
+            // RetornoGEOs ret = geo_real1.executar(new ParametrosCriterioParada(){
+            //     step_para_obter_NFOBs = 500,
+            //     PRECISAO_criterio_parada = 0,
+            //     NFOB_criterio_parada = 100000,
+            //     tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB
+            // });
+                
+
 
             // ex.ExtensiveSearch_SpacecraftOptimization();
             // ex.Teste_FuncoesObjetivo_SpacecraftOptimization();

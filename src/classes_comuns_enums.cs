@@ -72,7 +72,8 @@ namespace Classes_Comuns_Enums
         public string nome_funcao { get; set; }
         public int n_variaveis_projeto { get; set; }
         public List<int> bits_por_variavel { get; set; }
-        public List<RestricoesLaterais> restricoes_laterais_por_variavel { get; set; }
+        public List<double> lower_bounds { get; set; }
+        public List<double> upper_bounds { get; set; }
         public ParametrosLivreProblema parametros_livres { get; set; }
         public List<double> populacao_inicial { get; set; }
     }
@@ -148,7 +149,9 @@ namespace Classes_Comuns_Enums
         schwefel,
         ackley,
         F09,
-        F10
+        F10,
+        levy13,
+        beale
     }
 
     enum EnumNomesAlgoritmos{

@@ -14,24 +14,29 @@ namespace GEOs_REAIS
         public double tau {get; set;}
         public int n_variaveis_projeto {get; set;}
         public int definicao_funcao_objetivo {get; set;}
-        public List<RestricoesLaterais> restricoes_laterais_variaveis {get; set;}
+        public List<double> lower_bounds {get; set;}
+        public List<double> upper_bounds {get; set;}
         public int step_obter_NFOBs {get; set;}
         public double std {get; set;}
         public int tipo_perturbacao {get; set;}
         public int NFOB {get; set;}
         public double fx_atual {get; set;}
         public double fx_melhor {get; set;}
+        public double fx_atual_comeco_it {get; set;}
         public List<double> populacao_atual {get; set;}
         public List<double> populacao_melhor {get; set;}
         public List<double> melhores_NFOBs {get; set;}
         public List<double> melhores_TAUs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
+        public int iterations {get; set;}
+        public List<bool> melhoras_nas_iteracoes {get; set;}
 
         public GEO_real1(
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
             List<double> populacao_inicial,
-            List<RestricoesLaterais> restricoes_laterais_variaveis,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
             int step_obter_NFOBs,
             int tipo_perturbacao,
             double tau,
@@ -40,7 +45,8 @@ namespace GEOs_REAIS
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
-            this.restricoes_laterais_variaveis = restricoes_laterais_variaveis;
+            this.lower_bounds = lower_bounds;
+            this.upper_bounds = upper_bounds;
             this.step_obter_NFOBs = step_obter_NFOBs;
             this.std = std;
             this.tipo_perturbacao = tipo_perturbacao;
@@ -50,9 +56,13 @@ namespace GEOs_REAIS
             this.populacao_melhor = new List<double>(populacao_inicial);
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial);
             this.fx_melhor = this.fx_atual;
+            this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFOBs = new List<double>();
             this.melhores_TAUs = new List<double>();
             this.perturbacoes_da_iteracao = new List<Perturbacao>();
+            this.iterations = 0;
+            this.melhoras_nas_iteracoes = new List<bool>();
+
         }
 
 
@@ -89,29 +99,29 @@ namespace GEOs_REAIS
             // Verifica a penalidade para cada variável do fenótipo desejado
             for(int i=0; i<fenotipos.Count; i++)
             {
-                double limite_inferior = restricoes_laterais_variaveis[i].limite_inferior_variavel;
-                double limite_superior = restricoes_laterais_variaveis[i].limite_superior_variavel;
+                double lower = lower_bounds[i];
+                double upper = upper_bounds[i];
                 double xi = fenotipos[i];
 
                 // Verifica se a variável está fora dos limites
-                if (xi < limite_inferior)
+                if (xi < lower)
                 {
-                    double penalidade_inferior = grau_penalidade * Math.Pow(xi - limite_inferior, 2);
+                    double penalidade_inferior = grau_penalidade * Math.Pow(xi - lower, 2);
                     
                     penalidade += penalidade_inferior;
 
                     #if DEBUG_CONSOLE
-                        Console.WriteLine("Fora do limite inferior! xi = {0} e limite inferior = {1}. Penalidade = {2}", xi, limite_inferior, penalidade_inferior);
+                        Console.WriteLine("Fora do limite inferior! xi = {0} e limite inferior = {1}. Penalidade = {2}", xi, lower, penalidade_inferior);
                     #endif
                 }
-                else if (xi > limite_superior)
+                else if (xi > upper)
                 {
-                    double penalidade_superior = grau_penalidade * Math.Pow(xi - limite_superior, 2);
+                    double penalidade_superior = grau_penalidade * Math.Pow(xi - upper, 2);
                     
                     penalidade += penalidade_superior;
 
                     #if DEBUG_CONSOLE
-                        Console.WriteLine("Fora do limite superior! xi = {0} e limite superior = {1}. Penalidade = {2}", xi, limite_superior, penalidade_superior);
+                        Console.WriteLine("Fora do limite superior! xi = {0} e limite superior = {1}. Penalidade = {2}", xi, upper, penalidade_superior);
                     #endif
                 }
             }
@@ -171,7 +181,7 @@ namespace GEOs_REAIS
                 double xi = populacao_para_perturbar[i];
 
                 // Perturba a variável
-                double intervalo_variacao_variavel = restricoes_laterais_variaveis[i].limite_superior_variavel - restricoes_laterais_variaveis[i].limite_inferior_variavel;
+                double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                 double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao, intervalo_variacao_variavel);
 
                 // Atribui a variável perturbada
@@ -339,9 +349,14 @@ namespace GEOs_REAIS
         {
             while(true)
             {
+                fx_atual_comeco_it = fx_atual;
+                
                 verifica_perturbacoes();
                 mutacao_do_tau_AGEOs();
                 ordena_e_perturba();
+
+                iterations++;
+                melhoras_nas_iteracoes.Add( (fx_atual < fx_atual_comeco_it) ? true : false );
 
                 if ( criterio_parada(parametros_criterio_parada) )
                 {

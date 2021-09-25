@@ -6,7 +6,22 @@ namespace GEOs_BINARIOS
 {
     public class GEOvar_BINARIO: GEO_BINARIO
     {
-        public GEOvar_BINARIO(double tau, int n_variaveis_projeto, int definicao_funcao_objetivo, List<RestricoesLaterais> restricoes_laterais_variaveis, int step_obter_NFOBs, List<int> bits_por_variavel_variaveis): base(tau, n_variaveis_projeto, definicao_funcao_objetivo, restricoes_laterais_variaveis, step_obter_NFOBs, bits_por_variavel_variaveis){}
+        public GEOvar_BINARIO(
+            double tau,
+            int n_variaveis_projeto,
+            int definicao_funcao_objetivo,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
+            int step_obter_NFOBs,
+            List<int> bits_por_variavel_variaveis) : base(
+                tau,
+                n_variaveis_projeto,
+                definicao_funcao_objetivo,
+                lower_bounds,
+                upper_bounds,
+                step_obter_NFOBs,
+                bits_por_variavel_variaveis)
+        {}
 
 
         public override void ordena_e_perturba(){

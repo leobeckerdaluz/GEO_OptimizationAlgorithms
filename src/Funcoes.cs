@@ -66,6 +66,14 @@ namespace Funcoes_Definidas
                 case (int)EnumNomesFuncoesObjetivo.F09:
                     return funcao_F9(fenotipo_variaveis_projeto);
 
+                // Beale
+                case (int)EnumNomesFuncoesObjetivo.beale:
+                    return funcao_Beale(fenotipo_variaveis_projeto);
+                    
+                // Levy13
+                case (int)EnumNomesFuncoesObjetivo.levy13:
+                    return funcao_Levy13(fenotipo_variaveis_projeto);
+
                 // F10
                 case (int)EnumNomesFuncoesObjetivo.F10:
                     double xi1 = fenotipo_variaveis_projeto[0];
@@ -83,6 +91,18 @@ namespace Funcoes_Definidas
             return fx;
         }
 
+
+        public static double funcao_Levy13(List<double> fenotipo_variaveis_projeto){
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+            
+            double f1 = Math.Pow(Math.Sin(3*Math.PI*x1), 2);
+            double f2 = Math.Pow((x1 - 1), 2) * (1 + Math.Pow(Math.Sin(3*Math.PI*x2), 2));
+            double f3 = Math.Pow((x2 - 1), 2) * (1 + Math.Pow(Math.Sin(2*Math.PI*x2), 2));
+            double fx = f1 + f2 + f3;
+            
+            return fx;
+        }
 
         public static double funcao_DeJong3_inteiro(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
@@ -202,6 +222,19 @@ namespace Funcoes_Definidas
             double fx = 20.0 + Math.Exp(1.0) - 20.0*Exp1 - Exp2;
 
             // Retorna o valor de f(x)
+            return fx;
+        }
+
+
+        public static double funcao_Beale(List<double> fenotipo_variaveis_projeto){
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+            
+            double f1 = Math.Pow( (1.5 - x1 + x1*x2), 2);
+            double f2 = Math.Pow( (2.25 - x1 + x1*Math.Pow(x2,2)), 2);
+            double f3 = Math.Pow( (2.625 - x1 + x1*Math.Pow(x2,3)), 2);
+            double fx = f1 + f2 + f3;
+            
             return fx;
         }
 

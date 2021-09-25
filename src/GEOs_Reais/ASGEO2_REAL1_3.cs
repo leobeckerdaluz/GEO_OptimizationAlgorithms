@@ -17,7 +17,8 @@ namespace GEOs_REAIS
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
-            List<RestricoesLaterais> restricoes_laterais,
+            List<double> lower_bounds,
+            List<double> upper_bounds,
             int step_obter_NFOBs,
             int tipo_perturbacao,
             double tau,
@@ -25,18 +26,30 @@ namespace GEOs_REAIS
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 populacao_inicial,
-                restricoes_laterais,
+                lower_bounds,
+                upper_bounds,
                 step_obter_NFOBs,
                 tipo_perturbacao,
                 tau,
                 std)
         {
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
+            this.tau = 0.5;
+            // this.std = 0.5;
         }
 
 
         public override void mutacao_do_tau_AGEOs()
         {
+            // Armazena o tau a ser alterado
+            double tau_antigo = tau;
+            // Armazena o sigma a ser alterado
+            double std_antigo = std;
+            
+            
+            // ====================================================================================
+            // TAU CoI
+
             // Conta quantas mudanças que flipando dá melhor
             int melhoraram = 0;
             // Define o valor de referência (AGEO2)
@@ -48,49 +61,50 @@ namespace GEOs_REAIS
             // Calcula a Chance of Improvement
             double CoI = (double) melhoraram / populacao_atual.Count;
             
-            // Armazena o tau a ser alterado
-            double tau_antigo = tau;
-            // Armazena o sigma a ser alterado
-            double std_antigo = std;
-
-
-
-
-
-            // ====================================================================================
-            // TAU FIXO
-            tau = tau;
-            
-
-
-
-            // ====================================================================================
-            // SIGMA COI
 
             // Se a CoI for zero, restarta o TAU
             if (CoI == 0.0)// || tau > 5)
-                std = 2 * Math.Exp(random.NextDouble() * (1.0 / Math.Sqrt( (double)populacao_atual.Count)));
-
+                tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
             // Senão, se for menor que o CoI anterior, aumenta o TAU
             else if(CoI <= CoI_1)
-            {
-                std = std - CoI;// * random.NextDouble();
-                if (std < 0.2)  
-                    std = 0.2;
-            }
+                tau += (0.5 + CoI) * random.NextDouble();
             
-
-
-
-
             #if DEBUG_MUTACAO_TAU
                 Console.WriteLine("NFOB = {0} | melhoraram {1}/{2} | tau era {3} e virou {4} | fx={5}", this.NFOB, melhoraram,populacao_atual.Count, tau_antigo, tau, fx_melhor);
-                // Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
-                // Console.WriteLine("Valor TAU era {0} e virou {1}", tau_antigo, tau);
             #endif
 
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)
             CoI_1 = CoI;
+            
+
+
+        //     // ====================================================================================
+        //     // SIGMA 1/5
+        //     int q = 100;
+        //     double c = 0.9;
+        //     double std_minimo = 0.2;
+            
+        //     // A cada q iterações, verifica
+        //     if ((melhoras_nas_iteracoes.Count > 0) && ((melhoras_nas_iteracoes.Count % q) == 0))
+        //     {
+        //         // Pega os últimos melhores NFOBs
+        //         List<bool> ultimas_melhorias_iteracoes = melhoras_nas_iteracoes.GetRange(melhoras_nas_iteracoes.Count - q, q);
+
+        //         int melhoraram_its = ultimas_melhorias_iteracoes.Count(i => i == true);
+                
+        //         double razao = (double)melhoraram_its / q;
+
+        //         if (razao < 0.2)
+        //             std = std * c;
+        //         else if (razao > 0.2)
+        //             std = std / c;
+        //         else
+        //             std = std;
+
+        //         // Controla o std mínimo
+        //         if (std <= std_minimo)
+        //             std = std_minimo;
+        //     }
         }
     }
 }
