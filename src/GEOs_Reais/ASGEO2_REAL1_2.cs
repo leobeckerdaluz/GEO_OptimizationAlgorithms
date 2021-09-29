@@ -11,6 +11,9 @@ namespace GEOs_REAIS
     public class ASGEO2_REAL1_2 : GEO_real1
     {
         public double CoI_1 {get; set;}
+        public int q_OF_rule {get; set;}
+        public double c_OF_rule {get; set;}
+        public double std_minimo_OF_rule {get; set;}
 
         
         public ASGEO2_REAL1_2(
@@ -22,7 +25,10 @@ namespace GEOs_REAIS
             int step_obter_NFOBs,
             int tipo_perturbacao,
             double tau,
-            double std) : base(
+            double std,
+            int q,
+            double c,
+            double std_minimo) : base(
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 populacao_inicial,
@@ -36,6 +42,9 @@ namespace GEOs_REAIS
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
             this.tau = 0.5;
             this.std = 0.5;
+            this.q_OF_rule = q;
+            this.c_OF_rule = c;
+            this.std_minimo_OF_rule = std_minimo;
         }
 
 
@@ -80,9 +89,9 @@ namespace GEOs_REAIS
 
             // ====================================================================================
             // SIGMA 1/5
-            int q = 200;
-            double c = 0.9;
-            double std_minimo = 0.5;
+            int q = q_OF_rule;
+            double c = c_OF_rule;
+            double std_minimo = std_minimo_OF_rule;
             
             // A cada q iterações, verifica
             if ((melhoras_nas_iteracoes.Count > 0) && ((melhoras_nas_iteracoes.Count % q) == 0))

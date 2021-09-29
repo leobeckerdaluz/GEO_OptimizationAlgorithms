@@ -638,7 +638,10 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_1, 
-                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1);
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1,
+                        parametros_problema.parametros_livres.q_one_fifth_rule,
+                        parametros_problema.parametros_livres.c_one_fifth_rule,
+                        parametros_problema.parametros_livres.stdmin_one_fifth_rule);
                         
                     RetornoGEOs ret = ASGEO2real1_1.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_1;
@@ -659,7 +662,10 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_2, 
-                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_2);
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_2,
+                        parametros_problema.parametros_livres.q_one_fifth_rule,
+                        parametros_problema.parametros_livres.c_one_fifth_rule,
+                        parametros_problema.parametros_livres.stdmin_one_fifth_rule);
                         
                     RetornoGEOs ret = ASGEO2real1_2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_2;
@@ -705,9 +711,9 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.griewangk,
                 // (int)EnumNomesFuncoesObjetivo.rastringin,
                 // (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                // (int)EnumNomesFuncoesObjetivo.schwefel,
+                (int)EnumNomesFuncoesObjetivo.schwefel,
                 // (int)EnumNomesFuncoesObjetivo.ackley,
-                (int)EnumNomesFuncoesObjetivo.beale,
+                // (int)EnumNomesFuncoesObjetivo.beale,
                 // (int)EnumNomesFuncoesObjetivo.levy13,
                 // (int)EnumNomesFuncoesObjetivo.nova,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
@@ -1032,11 +1038,11 @@ namespace Execucoes
                             tau_minimo_AGEOs = 0.5,
 
                             tau_ASGEO2_REAL1_1 = 5,
-                            std_ASGEO2_REAL1_1 = 2,
+                            std_ASGEO2_REAL1_1 = 1.8,
                             tau_ASGEO2_REAL1_2 = 5,
-                            std_ASGEO2_REAL1_2 = 2,
+                            std_ASGEO2_REAL1_2 = 1.8,
                             tau_ASGEO2_REAL1_3 = 5,
-                            std_ASGEO2_REAL1_3 = 2,
+                            std_ASGEO2_REAL1_3 = 1.8
                         };
                     break;
 
@@ -1156,22 +1162,22 @@ namespace Execucoes
 
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao()
                 {
-                    quantidade_execucoes = 40,
+                    quantidade_execucoes = 30,
                     parametros_criterio_parada = new ParametrosCriterioParada()
                     {
-                        // EXECUÇÃO NORMAL
-                        tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB,
-                        PRECISAO_criterio_parada = 0,
-                        step_para_obter_NFOBs = 500,
-                        NFOB_criterio_parada = 100000,
-                        fx_esperado = 0
-
-                        // // TUNING FUNÇÕES TESTE
-                        // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
-                        // PRECISAO_criterio_parada = 1e-16,
+                        // // EXECUÇÃO NORMAL
+                        // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB,
+                        // PRECISAO_criterio_parada = 0,
                         // step_para_obter_NFOBs = 500,
                         // NFOB_criterio_parada = 100000,
-                        // fx_esperado = 0.0
+                        // fx_esperado = 0
+
+                        // TUNING FUNÇÕES TESTE
+                        tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
+                        PRECISAO_criterio_parada = 1e-16,
+                        step_para_obter_NFOBs = 500,
+                        NFOB_criterio_parada = 100000,
+                        fx_esperado = 0.0
 
                         // // TUNING SPACECRAFT
                         // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
@@ -1189,12 +1195,12 @@ namespace Execucoes
                         rodar_AGEO1var      = false,
                         rodar_AGEO2var      = false,
                         rodar_GEOreal1      = false,
-                        rodar_AGEO1real1    = true,
-                        rodar_AGEO2real1    = true,
+                        rodar_AGEO1real1    = false,
+                        rodar_AGEO2real1    = false,
                         rodar_GEOreal2      = false,
                         rodar_AGEO1real2    = false,
                         rodar_AGEO2real2    = false,
-                        rodar_ASGEO2real1_1 = false,
+                        rodar_ASGEO2real1_1 = true,
                         rodar_ASGEO2real1_2 = false,
                         rodar_ASGEO2real1_3 = false,
                     },
@@ -1224,10 +1230,10 @@ namespace Execucoes
                 // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
                 // Console.WriteLine("============================================================================");
                 
-                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                 
                 // // Executa cada algoritmo por N vezes e obtém todas as execuções
                 // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1237,6 +1243,7 @@ namespace Execucoes
                 
                 // // Apresenta os resultados finais
                 // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+
 
 
 
@@ -1271,15 +1278,15 @@ namespace Execucoes
                 //         parametros_problema.parametros_livres.std_AGEO2real1 = 1;
                 //     break;
                 //     case (int)EnumNomesFuncoesObjetivo.beale:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 1;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1;
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 1.2;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1.4;
                 //     break;
                 // }
 
-                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                
                 // // Executa cada algoritmo por N vezes e obtém todas as execuções
                 // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1291,6 +1298,76 @@ namespace Execucoes
                 // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
 
                 
+
+
+
+                // ====================================================================================
+                // Tuning do c e q para 1/5 rule dos A-GEOsreal1
+                // ====================================================================================
+
+                parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+                switch(definicao_funcao_objetivo){
+                    case (int)EnumNomesFuncoesObjetivo.griewangk:
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1 = 0.2;
+                    break;
+                    case (int)EnumNomesFuncoesObjetivo.rastringin:
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1 = 4.8;
+                    break;
+                    case (int)EnumNomesFuncoesObjetivo.rosenbrock:
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1 = 0.2;
+                    break;
+                    case (int)EnumNomesFuncoesObjetivo.schwefel:
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1 = 8.4;
+                    break;
+                    case (int)EnumNomesFuncoesObjetivo.ackley:
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1 = 1;
+                    break;
+                    case (int)EnumNomesFuncoesObjetivo.beale:
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_1 = 1.4;
+                    break;
+                }
+
+
+                // Executa o algoritmo variando o std
+                List<double> valores_stdmin = new List<double>(){0.1, 0.2, 0.5, 1};
+                List<int> valores_q = new List<int>(){50, 100, 200, 500};
+                List<double> valores_c = new List<double>(){0.85, 0.9, 0.95};
+                
+                Console.WriteLine("============================================================================");
+                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                Console.WriteLine("============================================================================");
+
+                parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = false;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = false;
+
+                // Itera cada std e cada tau
+                foreach (double stdmin in valores_stdmin){
+                    foreach (int q in valores_q){
+                        foreach (double c in valores_c){
+                            parametros_problema.parametros_livres.stdmin_one_fifth_rule = stdmin; 
+                            parametros_problema.parametros_livres.q_one_fifth_rule = q; 
+                            parametros_problema.parametros_livres.c_one_fifth_rule = c; 
+
+                            Console.WriteLine("========================================================");
+                            Console.WriteLine("stdmin = {0} | q = {1} | c = {2}", stdmin, q, c);
+
+                            // Executa cada algoritmo por N vezes e obtém todas as execuções
+                            List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            
+                            // Organiza os resultados de todas as excuções por algoritmo
+                            List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                            
+                            // Apresenta os resultados finais
+                            apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                        }
+                    }
+                }
+                // ====================================================================================
+
+
+
                 
                 
 
@@ -1376,49 +1453,49 @@ namespace Execucoes
 
 
 
-                // ====================================================================================
-                // Tuning do std para PERTURBAÇÃO DIRETA os A-GEOs real1
-                // ====================================================================================
+                // // ====================================================================================
+                // // Tuning do std para PERTURBAÇÃO DIRETA os A-GEOs real1
+                // // ====================================================================================
 
-                Console.WriteLine("============================================================================");
-                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                Console.WriteLine("============================================================================");
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
                 
-                parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-                // Executa o algoritmo variando a porcentagem do intervalo
-                // List<double> valores_porcentagem = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
-                // List<double> valores_porcentagem = new List<double>(){1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0,12.5,13.0,13.5,14.0,14.5,15.0};
-                // List<double> valores_porcentagem = new List<double>(){1,2,3,4,5,6,7,8,9,10};
-                // List<double> valores_porcentagem = new List<double>(){0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10};
-                List<double> valores_porcentagem = new List<double>(){0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8,4.0,4.2,4.4,4.6,4.8,5.0};
+                // // Executa o algoritmo variando a porcentagem do intervalo
+                // // List<double> valores_porcentagem = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                // // List<double> valores_porcentagem = new List<double>(){1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0,12.5,13.0,13.5,14.0,14.5,15.0};
+                // // List<double> valores_porcentagem = new List<double>(){1,2,3,4,5,6,7,8,9,10};
+                // // List<double> valores_porcentagem = new List<double>(){0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10};
+                // // List<double> valores_porcentagem = new List<double>(){0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8,4.0,4.2,4.4,4.6,4.8,5.0};
                 // List<double> valores_porcentagem = new List<double>(){5.2,5.4,5.6,5.8,6.0,6.2,6.4,6.6,6.8,7.0,7.2,7.4,7.6,7.8,8.0,8.2,8.4,8.6,8.8,9.0,9.2,9.4,9.6,9.8,10.0};
-                foreach (double porcentagem in valores_porcentagem){
-                    // Muda o tipo de perturbação
+                // foreach (double porcentagem in valores_porcentagem){
+                //     // Muda o tipo de perturbação
                     
-                    // O std será a porcentam do intervalo de variação das variáveis
-                    double inf_limit = parametros_problema.lower_bounds[0];
-                    double sup_limit = parametros_problema.upper_bounds[0];
-                    double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
-                    double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
+                //     // O std será a porcentam do intervalo de variação das variáveis
+                //     double inf_limit = parametros_problema.lower_bounds[0];
+                //     double sup_limit = parametros_problema.upper_bounds[0];
+                //     double total_intervalo_variacao_variaveis = Math.Abs(sup_limit - inf_limit);
+                //     double std = (porcentagem/100.0) * total_intervalo_variacao_variaveis;
 
-                    Console.WriteLine("========================================================");
-                    Console.WriteLine("std | porcentagem = {0};{1}", std, porcentagem);
+                //     Console.WriteLine("========================================================");
+                //     Console.WriteLine("std | porcentagem = {0};{1}", std, porcentagem);
 
-                    // Define o valor de std
-                    parametros_problema.parametros_livres.std_AGEO1real1 = porcentagem;
-                    parametros_problema.parametros_livres.std_AGEO2real1 = porcentagem;
+                //     // Define o valor de std
+                //     parametros_problema.parametros_livres.std_AGEO1real1 = porcentagem;
+                //     parametros_problema.parametros_livres.std_AGEO2real1 = porcentagem;
 
-                    // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                //     // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                     
-                    // Organiza os resultados de todas as excuções por algoritmo
-                    List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                //     // Organiza os resultados de todas as excuções por algoritmo
+                //     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                     
-                    // Apresenta os resultados finais
-                    apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                }
-                // ====================================================================================
+                //     // Apresenta os resultados finais
+                //     apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // }
+                // // ====================================================================================
 
 
                

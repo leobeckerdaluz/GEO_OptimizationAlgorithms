@@ -138,6 +138,9 @@ namespace Classes_Comuns_Enums
         public double s_GEOreal2 {get; set;}
         public double s_AGEO1real2 {get; set;}
         public double s_AGEO2real2 {get; set;}
+        public int q_one_fifth_rule {get; set;}
+        public double c_one_fifth_rule {get; set;}
+        public double stdmin_one_fifth_rule {get; set;}
     }
 
     enum EnumNomesFuncoesObjetivo{
