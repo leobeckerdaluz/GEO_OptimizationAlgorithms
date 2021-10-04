@@ -1,5 +1,5 @@
 ============================================================================
-Função: Schwefel
+Função: Rosenbrock
 ============================================================================
 ========================================================
 stdmin = 0.1 | q = 50 | c = 0.85
@@ -9,8 +9,8 @@ stdmin = 0.1 | q = 50 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;378,2923336837458;
-sdFX;127,9284735614106;
+meanFX;0,007661170435988978;
+sdFX;0,009029880522979873;
 
 ========================================================
 stdmin = 0.1 | q = 50 | c = 0.9
@@ -20,8 +20,8 @@ stdmin = 0.1 | q = 50 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;305,39965668749727;
-sdFX;107,37259726627988;
+meanFX;0,005411388384812816;
+sdFX;0,009224040985636426;
 
 ========================================================
 stdmin = 0.1 | q = 50 | c = 0.95
@@ -31,8 +31,8 @@ stdmin = 0.1 | q = 50 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;220,1766835833114;
-sdFX;83,92053781666804;
+meanFX;0,0004940948281875589;
+sdFX;0,000790625590254503;
 
 ========================================================
 stdmin = 0.1 | q = 100 | c = 0.85
@@ -42,8 +42,8 @@ stdmin = 0.1 | q = 100 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;265,61296983460653;
-sdFX;89,3055864420432;
+meanFX;0,002911077777080869;
+sdFX;0,006959310972676786;
 
 ========================================================
 stdmin = 0.1 | q = 100 | c = 0.9
@@ -53,8 +53,8 @@ stdmin = 0.1 | q = 100 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;207,1097997578406;
-sdFX;64,58214800939452;
+meanFX;0,0010293357914589474;
+sdFX;0,003359585668041997;
 
 ========================================================
 stdmin = 0.1 | q = 100 | c = 0.95
@@ -64,8 +64,8 @@ stdmin = 0.1 | q = 100 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;176,37667684207744;
-sdFX;64,52854798766899;
+meanFX;0,00017117039000594199;
+sdFX;0,0006550754419294449;
 
 ========================================================
 stdmin = 0.1 | q = 200 | c = 0.85
@@ -75,8 +75,8 @@ stdmin = 0.1 | q = 200 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;189,28430663693763;
-sdFX;77,25030169414822;
+meanFX;0,0004171491220884486;
+sdFX;0,0008714505461755897;
 
 ========================================================
 stdmin = 0.1 | q = 200 | c = 0.9
@@ -86,8 +86,8 @@ stdmin = 0.1 | q = 200 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;159,2515334478188;
-sdFX;49,04880848855381;
+meanFX;8,156404071507983E-05;
+sdFX;0,00016779334185187012;
 
 ========================================================
 stdmin = 0.1 | q = 200 | c = 0.95
@@ -97,8 +97,8 @@ stdmin = 0.1 | q = 200 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;114,68371769270655;
-sdFX;44,389110731719995;
+meanFX;1,2529710347687838E-05;
+sdFX;1,9638179692657073E-05;
 
 ========================================================
 stdmin = 0.1 | q = 500 | c = 0.85
@@ -108,8 +108,8 @@ stdmin = 0.1 | q = 500 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;144,72448635711103;
-sdFX;59,9352096865578;
+meanFX;2,2045232137345716E-05;
+sdFX;4,053476822760857E-05;
 
 ========================================================
 stdmin = 0.1 | q = 500 | c = 0.9
@@ -119,8 +119,8 @@ stdmin = 0.1 | q = 500 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;114,87144079590294;
-sdFX;47,210585617240895;
+meanFX;6,302817625420445E-06;
+sdFX;9,993837213706626E-06;
 
 ========================================================
 stdmin = 0.1 | q = 500 | c = 0.95
@@ -130,8 +130,8 @@ stdmin = 0.1 | q = 500 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;86,94134187193201;
-sdFX;37,97542977485709;
+meanFX;2,145039139961447E-06;
+sdFX;2,9256472233478107E-06;
 
 ========================================================
 stdmin = 0.2 | q = 50 | c = 0.85
@@ -141,8 +141,8 @@ stdmin = 0.2 | q = 50 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;371,8719894630065;
-sdFX;133,09165266360066;
+meanFX;0,011192960817537652;
+sdFX;0,018164725194252218;
 
 ========================================================
 stdmin = 0.2 | q = 50 | c = 0.9
@@ -152,8 +152,8 @@ stdmin = 0.2 | q = 50 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;310,6988305860729;
-sdFX;111,91521884580895;
+meanFX;0,004451188123224768;
+sdFX;0,007129534337222997;
 
 ========================================================
 stdmin = 0.2 | q = 50 | c = 0.95
@@ -163,8 +163,8 @@ stdmin = 0.2 | q = 50 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;239,04332425386062;
-sdFX;71,18034432103508;
+meanFX;0,0006474198457036827;
+sdFX;0,0008087048376138389;
 
 ========================================================
 stdmin = 0.2 | q = 100 | c = 0.85
@@ -174,8 +174,8 @@ stdmin = 0.2 | q = 100 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;281,5224784471779;
-sdFX;95,57312261207105;
+meanFX;0,003664235037305619;
+sdFX;0,008411136152608668;
 
 ========================================================
 stdmin = 0.2 | q = 100 | c = 0.9
@@ -185,8 +185,8 @@ stdmin = 0.2 | q = 100 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;237,56666922418225;
-sdFX;76,54875574037683;
+meanFX;0,000743374100832046;
+sdFX;0,001382675939519653;
 
 ========================================================
 stdmin = 0.2 | q = 100 | c = 0.95
@@ -196,8 +196,8 @@ stdmin = 0.2 | q = 100 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;159,2672539328035;
-sdFX;79,1466861265282;
+meanFX;0,00017787462083359272;
+sdFX;0,0003645985948597686;
 
 ========================================================
 stdmin = 0.2 | q = 200 | c = 0.85
@@ -207,8 +207,8 @@ stdmin = 0.2 | q = 200 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;226,94311529157682;
-sdFX;84,22571702632243;
+meanFX;0,000357035270629596;
+sdFX;0,0007834056426389526;
 
 ========================================================
 stdmin = 0.2 | q = 200 | c = 0.9
@@ -218,8 +218,8 @@ stdmin = 0.2 | q = 200 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;146,00446024391616;
-sdFX;60,70737423407721;
+meanFX;0,00010525068601583233;
+sdFX;0,00013000723426731674;
 
 ========================================================
 stdmin = 0.2 | q = 200 | c = 0.95
@@ -229,8 +229,8 @@ stdmin = 0.2 | q = 200 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;99,33001552211525;
-sdFX;40,75712074628909;
+meanFX;2,4223868710573072E-05;
+sdFX;3,602092259326319E-05;
 
 ========================================================
 stdmin = 0.2 | q = 500 | c = 0.85
@@ -240,8 +240,8 @@ stdmin = 0.2 | q = 500 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;122,71414020398744;
-sdFX;56,293835828087964;
+meanFX;3,490058315336012E-05;
+sdFX;4,9843989964615136E-05;
 
 ========================================================
 stdmin = 0.2 | q = 500 | c = 0.9
@@ -251,8 +251,8 @@ stdmin = 0.2 | q = 500 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;90,58872190259966;
-sdFX;35,75315650996367;
+meanFX;1,631232041926565E-05;
+sdFX;4,0368618121447477E-05;
 
 ========================================================
 stdmin = 0.2 | q = 500 | c = 0.95
@@ -262,8 +262,8 @@ stdmin = 0.2 | q = 500 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;59,051530830719244;
-sdFX;29,291413665456624;
+meanFX;7,304211177156594E-06;
+sdFX;1,3519173953997673E-05;
 
 ========================================================
 stdmin = 0.5 | q = 50 | c = 0.85
@@ -273,8 +273,8 @@ stdmin = 0.5 | q = 50 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;383,04504965735015;
-sdFX;133,8892757735878;
+meanFX;0,013032707637651578;
+sdFX;0,017682826137166357;
 
 ========================================================
 stdmin = 0.5 | q = 50 | c = 0.9
@@ -284,8 +284,8 @@ stdmin = 0.5 | q = 50 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;333,5395620634254;
-sdFX;78,58657912196823;
+meanFX;0,008193112704452103;
+sdFX;0,011719262332116911;
 
 ========================================================
 stdmin = 0.5 | q = 50 | c = 0.95
@@ -295,8 +295,8 @@ stdmin = 0.5 | q = 50 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;255,81801902945034;
-sdFX;56,01135826891916;
+meanFX;0,0008167169040680732;
+sdFX;0,0013527979944477943;
 
 ========================================================
 stdmin = 0.5 | q = 100 | c = 0.85
@@ -306,8 +306,8 @@ stdmin = 0.5 | q = 100 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;254,63726464912608;
-sdFX;100,1965035915975;
+meanFX;0,004985436637661322;
+sdFX;0,008587042828981973;
 
 ========================================================
 stdmin = 0.5 | q = 100 | c = 0.9
@@ -317,8 +317,8 @@ stdmin = 0.5 | q = 100 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;244,74048474056036;
-sdFX;86,40303808102418;
+meanFX;0,001079173112027738;
+sdFX;0,0018484963458022718;
 
 ========================================================
 stdmin = 0.5 | q = 100 | c = 0.95
@@ -328,8 +328,8 @@ stdmin = 0.5 | q = 100 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;151,45819835435245;
-sdFX;63,01219971442667;
+meanFX;0,0003320647684453007;
+sdFX;0,0006754471460568619;
 
 ========================================================
 stdmin = 0.5 | q = 200 | c = 0.85
@@ -339,8 +339,8 @@ stdmin = 0.5 | q = 200 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;181,8239859813623;
-sdFX;73,5395087111768;
+meanFX;0,0005356962126978569;
+sdFX;0,0010152478779552516;
 
 ========================================================
 stdmin = 0.5 | q = 200 | c = 0.9
@@ -350,8 +350,8 @@ stdmin = 0.5 | q = 200 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;155,45004568303597;
-sdFX;49,71456545848879;
+meanFX;0,00020526094275804074;
+sdFX;0,00028232060583196025;
 
 ========================================================
 stdmin = 0.5 | q = 200 | c = 0.95
@@ -361,8 +361,8 @@ stdmin = 0.5 | q = 200 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;101,70232603760522;
-sdFX;49,628919772993385;
+meanFX;0,00010047795436839477;
+sdFX;0,00015847629808171941;
 
 ========================================================
 stdmin = 0.5 | q = 500 | c = 0.85
@@ -372,8 +372,8 @@ stdmin = 0.5 | q = 500 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;115,97497629911595;
-sdFX;57,69806509898351;
+meanFX;0,0001662904405075145;
+sdFX;0,0003412329025553261;
 
 ========================================================
 stdmin = 0.5 | q = 500 | c = 0.9
@@ -383,8 +383,8 @@ stdmin = 0.5 | q = 500 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;94,3713258250234;
-sdFX;43,87420552707777;
+meanFX;5,0478442136649436E-05;
+sdFX;4,6541470258166785E-05;
 
 ========================================================
 stdmin = 0.5 | q = 500 | c = 0.95
@@ -394,8 +394,8 @@ stdmin = 0.5 | q = 500 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;66,76857686120272;
-sdFX;34,530857373081545;
+meanFX;2,2280702474861213E-05;
+sdFX;2,4183979792264417E-05;
 
 ========================================================
 stdmin = 1 | q = 50 | c = 0.85
@@ -405,8 +405,8 @@ stdmin = 1 | q = 50 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;365,1045601873115;
-sdFX;131,32291717045266;
+meanFX;0,014464038753249541;
+sdFX;0,026031725504855423;
 
 ========================================================
 stdmin = 1 | q = 50 | c = 0.9
@@ -416,8 +416,8 @@ stdmin = 1 | q = 50 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;299,5235468033568;
-sdFX;92,68991384071576;
+meanFX;0,01321109333511799;
+sdFX;0,021333892714948094;
 
 ========================================================
 stdmin = 1 | q = 50 | c = 0.95
@@ -427,8 +427,8 @@ stdmin = 1 | q = 50 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;238,28405801747874;
-sdFX;83,6968418485439;
+meanFX;0,0025940023981320557;
+sdFX;0,00501515937122426;
 
 ========================================================
 stdmin = 1 | q = 100 | c = 0.85
@@ -438,8 +438,8 @@ stdmin = 1 | q = 100 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;255,31042499702463;
-sdFX;102,35478804547866;
+meanFX;0,004038578930151573;
+sdFX;0,006614170893848153;
 
 ========================================================
 stdmin = 1 | q = 100 | c = 0.9
@@ -449,8 +449,8 @@ stdmin = 1 | q = 100 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;224,1836870144896;
-sdFX;85,10132626081872;
+meanFX;0,0036003128444103928;
+sdFX;0,006015016477634033;
 
 ========================================================
 stdmin = 1 | q = 100 | c = 0.95
@@ -460,8 +460,8 @@ stdmin = 1 | q = 100 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;179,98939928621581;
-sdFX;73,8000625337561;
+meanFX;0,0005846376675571624;
+sdFX;0,000654014076190282;
 
 ========================================================
 stdmin = 1 | q = 200 | c = 0.85
@@ -471,8 +471,8 @@ stdmin = 1 | q = 200 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;213,8027608821593;
-sdFX;82,93128449389742;
+meanFX;0,0012410133129831112;
+sdFX;0,002179071973735134;
 
 ========================================================
 stdmin = 1 | q = 200 | c = 0.9
@@ -482,8 +482,8 @@ stdmin = 1 | q = 200 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;156,52047264597041;
-sdFX;53,347997910236856;
+meanFX;0,0013248699671753216;
+sdFX;0,0027749968036492136;
 
 ========================================================
 stdmin = 1 | q = 200 | c = 0.95
@@ -493,8 +493,8 @@ stdmin = 1 | q = 200 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;131,19939992816734;
-sdFX;53,67244145132608;
+meanFX;0,00019023778946773058;
+sdFX;0,00017736714343289978;
 
 ========================================================
 stdmin = 1 | q = 500 | c = 0.85
@@ -504,8 +504,8 @@ stdmin = 1 | q = 500 | c = 0.85
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;127,97362796048517;
-sdFX;54,764016940697864;
+meanFX;0,00014725045510166653;
+sdFX;0,0001355608227065111;
 
 ========================================================
 stdmin = 1 | q = 500 | c = 0.9
@@ -515,8 +515,8 @@ stdmin = 1 | q = 500 | c = 0.9
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;99,10703831011688;
-sdFX;46,15876248889829;
+meanFX;0,00010027285093004919;
+sdFX;0,00012349511401932357;
 
 ========================================================
 stdmin = 1 | q = 500 | c = 0.95
@@ -526,7 +526,7 @@ stdmin = 1 | q = 500 | c = 0.95
 ===> Média de NFE, média de f(x) e desvio padrão de f(x):
 parameter;ASGEO2real1_1;
 meanNFE;100001;
-meanFX;75,32289509961174;
-sdFX;44,01540789756249;
+meanFX;6,0102758210989526E-05;
+sdFX;6,66156252587474E-05;
 
-Execution Time: 202570 ms
+Execution Time: 132471 ms

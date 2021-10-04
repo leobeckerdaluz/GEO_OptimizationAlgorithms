@@ -44,6 +44,7 @@ namespace GEOs_REAIS
             this.q_OF_rule = q;
             this.c_OF_rule = c;
             this.std_minimo_OF_rule = std_minimo;
+            this.std = std_minimo;
         }
 
 

@@ -35,7 +35,7 @@ namespace GEOs_REAIS
         {
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
             this.tau = 0.5;
-            // this.std = 0.5;
+            this.std = 0.5;
         }
 
 
@@ -47,8 +47,6 @@ namespace GEOs_REAIS
             double std_antigo = std;
             
             
-            // ====================================================================================
-            // TAU CoI
 
             // Conta quantas mudanças que flipando dá melhor
             int melhoraram = 0;
@@ -62,6 +60,8 @@ namespace GEOs_REAIS
             double CoI = (double) melhoraram / populacao_atual.Count;
             
 
+            // ====================================================================================
+            // TAU CoI
             // Se a CoI for zero, restarta o TAU
             if (CoI == 0.0)// || tau > 5)
                 tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
@@ -78,33 +78,22 @@ namespace GEOs_REAIS
             
 
 
-        //     // ====================================================================================
-        //     // SIGMA 1/5
-        //     int q = 100;
-        //     double c = 0.9;
-        //     double std_minimo = 0.2;
+            // ====================================================================================
+            // SIGMA 1/5
+            double std_minimo = 0.2;
             
-        //     // A cada q iterações, verifica
-        //     if ((melhoras_nas_iteracoes.Count > 0) && ((melhoras_nas_iteracoes.Count % q) == 0))
-        //     {
-        //         // Pega os últimos melhores NFOBs
-        //         List<bool> ultimas_melhorias_iteracoes = melhoras_nas_iteracoes.GetRange(melhoras_nas_iteracoes.Count - q, q);
+            if (CoI == 0.0){
+                // Reinicia o sigma
+                std = 2;
+            }
+            else if(CoI <= CoI_1){
+                // Diminui sigma
+                std = std * 0.90;
+            }
 
-        //         int melhoraram_its = ultimas_melhorias_iteracoes.Count(i => i == true);
-                
-        //         double razao = (double)melhoraram_its / q;
-
-        //         if (razao < 0.2)
-        //             std = std * c;
-        //         else if (razao > 0.2)
-        //             std = std / c;
-        //         else
-        //             std = std;
-
-        //         // Controla o std mínimo
-        //         if (std <= std_minimo)
-        //             std = std_minimo;
-        //     }
+            // Controla o std mínimo
+            if (std <= std_minimo)
+                std = std_minimo;
         }
     }
 }
