@@ -1,5 +1,5 @@
 
-// #define CONSOLE_OUT_FILE
+#define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
@@ -95,6 +95,8 @@ namespace Execucoes
             if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_1)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1_1 );
             if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_2)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1_2 );
             if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1_3 );
+            if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1_4 );
+            if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real2_1 );
 
             // Cria uma lista que irá conter as estatísticas para cada algoritmo que foi executado
             List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos = new List<Retorno_N_Execucoes_GEOs>();
@@ -236,6 +238,8 @@ namespace Execucoes
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_1 ? "ASGEO2real1_1;" : "");
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_2 ? "ASGEO2real1_2;" : "");
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3 ? "ASGEO2real1_3;" : "");
+            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4 ? "ASGEO2real1_4;" : "");
+            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1 ? "ASGEO2real2_1;" : "");
             
 
 
@@ -247,7 +251,7 @@ namespace Execucoes
             if (parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX)
             {
                 Console.WriteLine("==========================================================");
-                Console.WriteLine("===> Média de NFE, média de f(x) e desvio padrão de f(x):");
+                // Console.WriteLine("===> Média de NFE, média de f(x) e desvio padrão de f(x):");
                 
                 string resultados_finais = "";
                 resultados_finais = "parameter;" + string_algoritmos_executados + '\n';
@@ -503,7 +507,6 @@ namespace Execucoes
                     todas_execucoes.Add(ret);
                 }
 
-               
                 // AGEO1real1
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real1)
                 {
@@ -621,8 +624,6 @@ namespace Execucoes
 
                     todas_execucoes.Add(ret);
                 }
-
-                
                 
                 // ASGEO2real1_1
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_1)
@@ -648,6 +649,7 @@ namespace Execucoes
                         
                     todas_execucoes.Add(ret);
                 }
+                
                 // ASGEO2real1_2
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_2)
                 {
@@ -672,6 +674,7 @@ namespace Execucoes
                         
                     todas_execucoes.Add(ret);
                 }
+                
                 // ASGEO2real1_3
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3)
                 {
@@ -693,6 +696,54 @@ namespace Execucoes
                         
                     todas_execucoes.Add(ret);
                 }
+
+                // ASGEO2real1_4
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4)
+                {
+                    // Console.Write("\rodar_ASGEO2real1_4...");
+
+                    ASGEO2_REAL1_4 ASGEO2real1_4 = new ASGEO2_REAL1_4(
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
+                        parametros_execucao.tipo_perturbacao,
+                        parametros_problema.parametros_livres.tau_ASGEO2_REAL1_4, 
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_4,
+                        parametros_problema.parametros_livres.q_one_fifth_rule,
+                        parametros_problema.parametros_livres.c_one_fifth_rule,
+                        parametros_problema.parametros_livres.stdmin_one_fifth_rule);
+                        
+                    RetornoGEOs ret = ASGEO2real1_4.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_4;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // ASGEO2real2_1
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1)
+                {
+                    // Console.Write("\nASGEO2real2_1...");
+
+                    ASGEO2_REAL2_1 ASGEO2real2_1 = new ASGEO2_REAL2_1(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
+                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_problema.parametros_livres.ASGEO2_REAL2_1_P,
+                        parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1,
+                        parametros_problema.parametros_livres.ASGEO2_REAL2_1_s,
+                        parametros_execucao.tipo_perturbacao);
+                        
+                    RetornoGEOs ret = ASGEO2real2_1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real2_1;
+
+                    todas_execucoes.Add(ret);
+                }
             }
 
             // Retorna a lista com todas as N execuções para os algoritmos a serem executados
@@ -708,12 +759,12 @@ namespace Execucoes
             // Cria uma lista contendo as funções a serem executadas
             List<int> function_values = new List<int>()
             {
-                (int)EnumNomesFuncoesObjetivo.griewangk,
-                (int)EnumNomesFuncoesObjetivo.rastringin,
+                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                // (int)EnumNomesFuncoesObjetivo.rastringin,
                 (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                (int)EnumNomesFuncoesObjetivo.schwefel,
-                (int)EnumNomesFuncoesObjetivo.ackley,
-                (int)EnumNomesFuncoesObjetivo.beale,
+                // (int)EnumNomesFuncoesObjetivo.schwefel,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.beale,
                 // (int)EnumNomesFuncoesObjetivo.levy13,
                 // (int)EnumNomesFuncoesObjetivo.nova,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
@@ -733,6 +784,7 @@ namespace Execucoes
                 {
                     // GRIEWANGK
                     case (int)EnumNomesFuncoesObjetivo.griewangk:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "Griewangk";
                         parametros_problema.n_variaveis_projeto = 10;
@@ -772,11 +824,15 @@ namespace Execucoes
                             std_ASGEO2_REAL1_2 = 1.2,
                             tau_ASGEO2_REAL1_3 = 1.5,
                             std_ASGEO2_REAL1_3 = 1.2,
+                            tau_ASGEO2_REAL1_4 = 1.5,
+                            std_ASGEO2_REAL1_4 = 1.2,
                         };
                     break;
+                    }
 
                     // RASTRINGIN
                     case (int)EnumNomesFuncoesObjetivo.rastringin:
+                    {
                         int n_variaveis = 20;
 
                         parametros_problema = new ParametrosProblema();
@@ -818,11 +874,15 @@ namespace Execucoes
                             std_ASGEO2_REAL1_2 = 1,
                             tau_ASGEO2_REAL1_3 = 1.5,
                             std_ASGEO2_REAL1_3 = 1,
+                            tau_ASGEO2_REAL1_4 = 1.5,
+                            std_ASGEO2_REAL1_4 = 1,
                         };
                     break;
+                    }
 
                     // ROSENBROCK
                     case (int)EnumNomesFuncoesObjetivo.rosenbrock:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "Rosenbrock";
                         parametros_problema.n_variaveis_projeto = 2;
@@ -862,11 +922,15 @@ namespace Execucoes
                             std_ASGEO2_REAL1_2 = 1.8,
                             tau_ASGEO2_REAL1_3 = 4,
                             std_ASGEO2_REAL1_3 = 1.8,
+                            tau_ASGEO2_REAL1_4 = 4,
+                            std_ASGEO2_REAL1_4 = 1.8,
                         };
                     break;
+                    }
 
                     // SCHWEFEL
                     case (int)EnumNomesFuncoesObjetivo.schwefel:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "Schwefel";
                         parametros_problema.n_variaveis_projeto = 10;
@@ -905,13 +969,16 @@ namespace Execucoes
                             tau_ASGEO2_REAL1_2 = 5,
                             std_ASGEO2_REAL1_2 = 2.4,
                             tau_ASGEO2_REAL1_3 = 5,
-                            std_ASGEO2_REAL1_3 = 2.4
+                            std_ASGEO2_REAL1_3 = 2.4,
+                            tau_ASGEO2_REAL1_4 = 5,
+                            std_ASGEO2_REAL1_4 = 2.4
                         };
                     break;
+                    }
 
                     // ACKLEY
                     case (int)EnumNomesFuncoesObjetivo.ackley:
-
+                    {
                         int n_variaveis_projeto = 30;
 
                         parametros_problema = new ParametrosProblema()
@@ -954,12 +1021,16 @@ namespace Execucoes
                                 std_ASGEO2_REAL1_2 = 0.8,
                                 tau_ASGEO2_REAL1_3 = 1,
                                 std_ASGEO2_REAL1_3 = 0.8,
+                                tau_ASGEO2_REAL1_4 = 1,
+                                std_ASGEO2_REAL1_4 = 0.8,
                             }
                         };
                     break;
+                    }
 
                     // LEVY13
                     case (int)EnumNomesFuncoesObjetivo.levy13:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "Levy13";
                         parametros_problema.n_variaveis_projeto = 2;
@@ -999,11 +1070,15 @@ namespace Execucoes
                             // std_ASGEO2_REAL1_2 = 2,
                             // tau_ASGEO2_REAL1_3 = 5,
                             // std_ASGEO2_REAL1_3 = 2,
+                            // tau_ASGEO2_REAL1_4 = 5,
+                            // std_ASGEO2_REAL1_4 = 2,
                         };
                     break;
+                    }
 
                     // BEALE
                     case (int)EnumNomesFuncoesObjetivo.beale:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "Beale";
                         parametros_problema.n_variaveis_projeto = 2;
@@ -1042,12 +1117,16 @@ namespace Execucoes
                             tau_ASGEO2_REAL1_2 = 5,
                             std_ASGEO2_REAL1_2 = 1.8,
                             tau_ASGEO2_REAL1_3 = 5,
-                            std_ASGEO2_REAL1_3 = 1.8
+                            std_ASGEO2_REAL1_3 = 1.8,
+                            tau_ASGEO2_REAL1_4 = 5,
+                            std_ASGEO2_REAL1_4 = 1.8,
                         };
                     break;
+                    }
 
                     // F9 TESE
                     case (int)EnumNomesFuncoesObjetivo.F09:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "F9";
                         parametros_problema.n_variaveis_projeto = 2;
@@ -1076,9 +1155,11 @@ namespace Execucoes
                             s_AGEO2real2 = 2
                         };
                     break;
+                    }
 
                     // DEJONG3
                     case (int)EnumNomesFuncoesObjetivo.dejong3:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "DeJong#3";
                         parametros_problema.n_variaveis_projeto = 5;
@@ -1107,9 +1188,11 @@ namespace Execucoes
                             s_AGEO2real2 = 2
                         };
                     break;
+                    }
 
                     // SPACECRAFT
                     case (int)EnumNomesFuncoesObjetivo.spacecraft:
+                    {
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "SPACECRAFT";
                         parametros_problema.n_variaveis_projeto = 3;
@@ -1139,9 +1222,11 @@ namespace Execucoes
                             s_AGEO2real2 = 2
                         };
                     break;
+                    }
 
                     // DEFAULT
                     default:
+                    {
                         Console.WriteLine("DEFAULT PARAMETERS!");
                         parametros_problema = new ParametrosProblema();
                         parametros_problema.nome_funcao = "DEFAULT";
@@ -1153,6 +1238,7 @@ namespace Execucoes
                         parametros_problema.parametros_livres = new ParametrosLivreProblema();
                         parametros_problema.populacao_inicial = new List<double>();
                     break;
+                    }
                 }
 
                 
@@ -1202,7 +1288,9 @@ namespace Execucoes
                         rodar_AGEO2real2    = false,
                         rodar_ASGEO2real1_1 = false,
                         rodar_ASGEO2real1_2 = false,
-                        rodar_ASGEO2real1_3 = true,
+                        rodar_ASGEO2real1_3 = false,
+                        rodar_ASGEO2real1_4 = false,
+                        rodar_ASGEO2real2_1 = true,
                     },
                     o_que_interessa_printar = new OQueInteressaPrintar()
                     {
@@ -1230,10 +1318,10 @@ namespace Execucoes
                 // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
                 // Console.WriteLine("============================================================================");
                 
-                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                 
                 // // Executa cada algoritmo por N vezes e obtém todas as execuções
                 // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1250,54 +1338,158 @@ namespace Execucoes
 
 
 
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+                
+                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+
+                // switch(definicao_funcao_objetivo){
+                //     case (int)EnumNomesFuncoesObjetivo.griewangk:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.2;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.rastringin:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 5.2;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 4.8;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.rosenbrock:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.4;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.schwefel:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 5;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 8.4;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.ackley:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 3.6;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1;
+                //     break;
+                //     case (int)EnumNomesFuncoesObjetivo.beale:
+                //         parametros_problema.parametros_livres.std_AGEO1real1 = 1.2;
+                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1.4;
+                //     break;
+                // }
+
+                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+               
+                // // Executa cada algoritmo por N vezes e obtém todas as execuções
+                // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                
+                // // Organiza os resultados de todas as excuções por algoritmo
+                // List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                
+                // // Apresenta os resultados finais
+                // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+
+
+
+
+
+
+                // ====================================================================================
+                // ASGEO2 REAL2 1
+                // ====================================================================================
                 Console.WriteLine("============================================================================");
                 Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
                 Console.WriteLine("============================================================================");
                 
                 parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-                switch(definicao_funcao_objetivo){
-                    case (int)EnumNomesFuncoesObjetivo.griewangk:
-                        parametros_problema.parametros_livres.std_AGEO1real1 = 0.2;
-                        parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
-                    break;
-                    case (int)EnumNomesFuncoesObjetivo.rastringin:
-                        parametros_problema.parametros_livres.std_AGEO1real1 = 5.2;
-                        parametros_problema.parametros_livres.std_AGEO2real1 = 4.8;
-                    break;
-                    case (int)EnumNomesFuncoesObjetivo.rosenbrock:
-                        parametros_problema.parametros_livres.std_AGEO1real1 = 0.4;
-                        parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
-                    break;
-                    case (int)EnumNomesFuncoesObjetivo.schwefel:
-                        parametros_problema.parametros_livres.std_AGEO1real1 = 5;
-                        parametros_problema.parametros_livres.std_AGEO2real1 = 8.4;
-                    break;
-                    case (int)EnumNomesFuncoesObjetivo.ackley:
-                        parametros_problema.parametros_livres.std_AGEO1real1 = 3.6;
-                        parametros_problema.parametros_livres.std_AGEO2real1 = 1;
-                    break;
-                    case (int)EnumNomesFuncoesObjetivo.beale:
-                        parametros_problema.parametros_livres.std_AGEO1real1 = 1.2;
-                        parametros_problema.parametros_livres.std_AGEO2real1 = 1.4;
-                    break;
+                parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+
+                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 5;
+                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 10;
+                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
+
+
+                // List<int> valores_P = new List<int>(){2,4,6,8,12,16};
+                
+                // List<int> valores_P = new List<int>(){5};
+                // List<double> valores_std1 = new List<double>(){10};
+                // List<int> valores_s = new List<int>(){10};
+
+                // BOM
+                // List<int> valores_P = new List<int>(){8};
+                // List<double> valores_std1 = new List<double>(){10};
+                // List<int> valores_s = new List<int>(){2};
+
+                List<int> valores_P = new List<int>(){4};
+                List<double> valores_std1 = new List<double>(){10};
+                List<int> valores_s = new List<int>(){10};
+                
+                foreach (int P in valores_P){
+                    foreach (double std1 in valores_std1){
+                        foreach (int s in valores_s){
+                            Console.WriteLine("=====================================================");
+                            Console.WriteLine("P = {0} | std1 = {1} | s = {2}", P, std1, s);
+
+                            parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = P;
+                            parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = std1;
+                            parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = s;
+                        
+                            // Executa cada algoritmo por N vezes e obtém todas as execuções
+                            List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            
+                            // Organiza os resultados de todas as excuções por algoritmo
+                            List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                            
+                            // Apresenta os resultados finais
+                            apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                        }
+                    }
                 }
 
-                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-               
-                // Executa cada algoritmo por N vezes e obtém todas as execuções
-                List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                
-                // Organiza os resultados de todas as excuções por algoritmo
-                List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                
-                // Apresenta os resultados finais
-                apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
 
+
+
+                // // ====================================================================================
+                // // ASGEO2 REAL2 1 - PERTURBAÇÃO ORIGINAL
+                // // ====================================================================================
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
+
+                // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 5;
+                // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 10;
+                // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
+
+                // // List<int> valores_P = new List<int>(){4,8,12,16};
+                // List<int> valores_P = new List<int>(){2,4,8};
+                // List<double> valores_std1 = new List<double>(){1,2,3};
+                // // List<double> valores_std1 = new List<double>(){10};
+                // List<int> valores_s = new List<int>(){2,5,10};
+                // // List<int> valores_s = new List<int>(){10};
                 
+                // foreach (int P in valores_P){
+                //     foreach (double std1 in valores_std1){
+                //         foreach (int s in valores_s){
+                //             Console.WriteLine("=====================================================");
+                //             Console.WriteLine("P = {0} | std1 = {1} | s = {2}", P, std1, s);
+
+                //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = P;
+                //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = std1;
+                //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = s;
+                        
+                //             // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            
+                //             // Organiza os resultados de todas as excuções por algoritmo
+                //             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                            
+                //             // Apresenta os resultados finais
+                //             apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                //         }
+                //     }
+                // }
+
+
 
 
 
@@ -1314,14 +1506,14 @@ namespace Execucoes
                 
                 // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-                // parametros_problema.parametros_livres.stdmin_one_fifth_rule = 0.5; 
+                // parametros_problema.parametros_livres.stdmin_one_fifth_rule = 0.2; 
                 // parametros_problema.parametros_livres.q_one_fifth_rule = 200; 
                 // parametros_problema.parametros_livres.c_one_fifth_rule = 0.9;
 
-                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                
                 // // Executa cada algoritmo por N vezes e obtém todas as execuções
                 // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);

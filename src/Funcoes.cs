@@ -219,7 +219,8 @@ namespace Funcoes_Definidas
             double Exp2 = Math.Exp( (1.0/N) * laco_somatorio_2 );
 
             // Expressão final de f(x)
-            double fx = 20.0 + Math.Exp(1.0) - 20.0*Exp1 - Exp2;
+            // double fx = 20.0 + Math.Exp(1.0) - 20.0*Exp1 - Exp2;
+            double fx = -20.0*Exp1 - Exp2 + Math.E + 20.0;
 
             // Retorna o valor de f(x)
             return fx;

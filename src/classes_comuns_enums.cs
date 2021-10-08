@@ -64,6 +64,8 @@ namespace Classes_Comuns_Enums
         public bool rodar_ASGEO2real1_1 { get; set; }
         public bool rodar_ASGEO2real1_2 { get; set; }
         public bool rodar_ASGEO2real1_3 { get; set; }
+        public bool rodar_ASGEO2real1_4 { get; set; }
+        public bool rodar_ASGEO2real2_1 { get; set; }
     }
 
 
@@ -119,6 +121,7 @@ namespace Classes_Comuns_Enums
         public double tau_ASGEO2_REAL1_1 {get; set;}
         public double tau_ASGEO2_REAL1_2 {get; set;}
         public double tau_ASGEO2_REAL1_3 {get; set;}
+        public double tau_ASGEO2_REAL1_4 {get; set;}
         public double tau_minimo_AGEOs {get; set;}
         public double std_GEOreal1 {get; set;}
         public double std_AGEO1real1 {get; set;}
@@ -129,6 +132,7 @@ namespace Classes_Comuns_Enums
         public double std_ASGEO2_REAL1_1 {get; set;}
         public double std_ASGEO2_REAL1_2 {get; set;}
         public double std_ASGEO2_REAL1_3 {get; set;}
+        public double std_ASGEO2_REAL1_4 {get; set;}
         public double P_GEOreal2 {get; set;}
         public double P_AGEO1real2 {get; set;}
         public double P_AGEO2real2 {get; set;}
@@ -141,6 +145,9 @@ namespace Classes_Comuns_Enums
         public int q_one_fifth_rule {get; set;}
         public double c_one_fifth_rule {get; set;}
         public double stdmin_one_fifth_rule {get; set;}
+        public int ASGEO2_REAL2_1_P {get; set;}
+        public double ASGEO2_REAL2_1_std1 {get; set;}
+        public int ASGEO2_REAL2_1_s {get; set;}
     }
 
     enum EnumNomesFuncoesObjetivo{
@@ -173,6 +180,8 @@ namespace Classes_Comuns_Enums
         ASGEO2real1_1,
         ASGEO2real1_2,
         ASGEO2real1_3,
+        ASGEO2real1_4,
+        ASGEO2real2_1,
     }
 
     enum EnumTipoCriterioParada{
