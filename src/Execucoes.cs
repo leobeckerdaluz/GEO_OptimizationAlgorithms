@@ -1,5 +1,5 @@
 
-#define CONSOLE_OUT_FILE
+// #define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
@@ -97,6 +97,8 @@ namespace Execucoes
             if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1_3 );
             if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real1_4 );
             if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real2_1 );
+            if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_2)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real2_2 );
+            if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_3)   algoritmos_executados.Add( (int)EnumNomesAlgoritmos.ASGEO2real2_3 );
 
             // Cria uma lista que irá conter as estatísticas para cada algoritmo que foi executado
             List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos = new List<Retorno_N_Execucoes_GEOs>();
@@ -240,6 +242,8 @@ namespace Execucoes
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3 ? "ASGEO2real1_3;" : "");
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4 ? "ASGEO2real1_4;" : "");
             string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1 ? "ASGEO2real2_1;" : "");
+            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_2 ? "ASGEO2real2_2;" : "");
+            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_3 ? "ASGEO2real2_3;" : "");
             
 
 
@@ -744,6 +748,44 @@ namespace Execucoes
 
                     todas_execucoes.Add(ret);
                 }
+
+                // ASGEO2real2_2
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_2)
+                {
+                    // Console.Write("\nASGEO2real2_2...");
+
+                    ASGEO2_REAL2_2 ASGEO2real2_2 = new ASGEO2_REAL2_2(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
+                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs);
+                        
+                    RetornoGEOs ret = ASGEO2real2_2.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real2_2;
+
+                    todas_execucoes.Add(ret);
+                }
+
+                // ASGEO2real2_3
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_3)
+                {
+                    // Console.Write("\nASGEO2real2_3...");
+
+                    ASGEO2_REAL2_3 ASGEO2real2_3 = new ASGEO2_REAL2_3(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
+                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs);
+                        
+                    RetornoGEOs ret = ASGEO2real2_3.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real2_3;
+
+                    todas_execucoes.Add(ret);
+                }
             }
 
             // Retorna a lista com todas as N execuções para os algoritmos a serem executados
@@ -759,12 +801,12 @@ namespace Execucoes
             // Cria uma lista contendo as funções a serem executadas
             List<int> function_values = new List<int>()
             {
-                // (int)EnumNomesFuncoesObjetivo.griewangk,
-                // (int)EnumNomesFuncoesObjetivo.rastringin,
+                (int)EnumNomesFuncoesObjetivo.griewangk,
+                (int)EnumNomesFuncoesObjetivo.rastringin,
                 (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                // (int)EnumNomesFuncoesObjetivo.schwefel,
-                // (int)EnumNomesFuncoesObjetivo.ackley,
-                // (int)EnumNomesFuncoesObjetivo.beale,
+                (int)EnumNomesFuncoesObjetivo.schwefel,
+                (int)EnumNomesFuncoesObjetivo.ackley,
+                (int)EnumNomesFuncoesObjetivo.beale,
                 // (int)EnumNomesFuncoesObjetivo.levy13,
                 // (int)EnumNomesFuncoesObjetivo.nova,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
@@ -1290,7 +1332,9 @@ namespace Execucoes
                         rodar_ASGEO2real1_2 = false,
                         rodar_ASGEO2real1_3 = false,
                         rodar_ASGEO2real1_4 = false,
-                        rodar_ASGEO2real2_1 = true,
+                        rodar_ASGEO2real2_1 = false,
+                        rodar_ASGEO2real2_2 = false,
+                        rodar_ASGEO2real2_3 = true,
                     },
                     o_que_interessa_printar = new OQueInteressaPrintar()
                     {
@@ -1314,23 +1358,26 @@ namespace Execucoes
 
 
 
-                // Console.WriteLine("============================================================================");
-                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                // Console.WriteLine("============================================================================");
+
+                Console.WriteLine("============================================================================");
+                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                Console.WriteLine("============================================================================");
                 
-                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                 
-                // // Executa cada algoritmo por N vezes e obtém todas as execuções
-                // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                // Executa cada algoritmo por N vezes e obtém todas as execuções
+                List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                 
-                // // Organiza os resultados de todas as excuções por algoritmo
-                // List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                // Organiza os resultados de todas as excuções por algoritmo
+                List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                 
-                // // Apresenta os resultados finais
-                // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                // Apresenta os resultados finais
+                apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+
+
 
 
 
@@ -1344,37 +1391,41 @@ namespace Execucoes
                 
                 // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-                // switch(definicao_funcao_objetivo){
-                //     case (int)EnumNomesFuncoesObjetivo.griewangk:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.2;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
-                //     break;
-                //     case (int)EnumNomesFuncoesObjetivo.rastringin:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 5.2;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 4.8;
-                //     break;
-                //     case (int)EnumNomesFuncoesObjetivo.rosenbrock:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.4;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
-                //     break;
-                //     case (int)EnumNomesFuncoesObjetivo.schwefel:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 5;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 8.4;
-                //     break;
-                //     case (int)EnumNomesFuncoesObjetivo.ackley:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 3.6;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1;
-                //     break;
-                //     case (int)EnumNomesFuncoesObjetivo.beale:
-                //         parametros_problema.parametros_livres.std_AGEO1real1 = 1.2;
-                //         parametros_problema.parametros_livres.std_AGEO2real1 = 1.4;
-                //     break;
-                // }
+                // // switch(definicao_funcao_objetivo){
+                // //     case (int)EnumNomesFuncoesObjetivo.griewangk:
+                // //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.2;
+                // //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
+                // //     break;
+                // //     case (int)EnumNomesFuncoesObjetivo.rastringin:
+                // //         parametros_problema.parametros_livres.std_AGEO1real1 = 5.2;
+                // //         parametros_problema.parametros_livres.std_AGEO2real1 = 4.8;
+                // //     break;
+                // //     case (int)EnumNomesFuncoesObjetivo.rosenbrock:
+                // //         parametros_problema.parametros_livres.std_AGEO1real1 = 0.4;
+                // //         parametros_problema.parametros_livres.std_AGEO2real1 = 0.2;
+                // //     break;
+                // //     case (int)EnumNomesFuncoesObjetivo.schwefel:
+                // //         parametros_problema.parametros_livres.std_AGEO1real1 = 5;
+                // //         parametros_problema.parametros_livres.std_AGEO2real1 = 8.4;
+                // //     break;
+                // //     case (int)EnumNomesFuncoesObjetivo.ackley:
+                // //         parametros_problema.parametros_livres.std_AGEO1real1 = 3.6;
+                // //         parametros_problema.parametros_livres.std_AGEO2real1 = 1;
+                // //     break;
+                // //     case (int)EnumNomesFuncoesObjetivo.beale:
+                // //         parametros_problema.parametros_livres.std_AGEO1real1 = 1.2;
+                // //         parametros_problema.parametros_livres.std_AGEO2real1 = 1.4;
+                // //     break;
+                // // }
 
-                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+
+                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 6;
+                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 50;
+                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
                
                 // // Executa cada algoritmo por N vezes e obtém todas as execuções
                 // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1390,61 +1441,69 @@ namespace Execucoes
 
 
 
-                // ====================================================================================
-                // ASGEO2 REAL2 1
-                // ====================================================================================
-                Console.WriteLine("============================================================================");
-                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                Console.WriteLine("============================================================================");
+
+
+
+                // // ====================================================================================
+                // // ASGEO2 REAL2 1
+                // // ====================================================================================
+                // Console.WriteLine("============================================================================");
+                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+                // Console.WriteLine("============================================================================");
                 
-                parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
+                // parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
 
-                parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
 
-                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 5;
-                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 10;
-                // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
+                // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 5;
+                // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 10;
+                // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
 
 
-                // List<int> valores_P = new List<int>(){2,4,6,8,12,16};
+                // // List<int> valores_P = new List<int>(){4,8,12,16};
+                // // List<double> valores_p1 = new List<double>(){5, 10, 50, 100};
+                // // List<int> valores_s = new List<int>(){2, 10};
+
+                // // List<int> valores_P = new List<int>(){5};
+                // // List<double> valores_p1 = new List<double>(){10};
+                // // List<int> valores_s = new List<int>(){10};
+
+                // // BOM
+                // // List<int> valores_P = new List<int>(){8};
+                // // List<double> valores_p1 = new List<double>(){10};
+                // // List<int> valores_s = new List<int>(){2};
+
+                // List<int> valores_P = new List<int>(){4, 6, 8, 12};
+                // List<double> valores_p1 = new List<double>(){10, 20, 50};
+                // List<int> valores_s = new List<int>(){2, 10};
                 
-                // List<int> valores_P = new List<int>(){5};
-                // List<double> valores_std1 = new List<double>(){10};
-                // List<int> valores_s = new List<int>(){10};
+                // foreach (int P in valores_P){
+                //     foreach (double p1 in valores_p1){
+                //         foreach (int s in valores_s){
+                //             Console.WriteLine("=====================================================");
+                //             Console.WriteLine("P = {0} | p1 = {1} | s = {2}", P, p1, s);
 
-                // BOM
-                // List<int> valores_P = new List<int>(){8};
-                // List<double> valores_std1 = new List<double>(){10};
-                // List<int> valores_s = new List<int>(){2};
-
-                List<int> valores_P = new List<int>(){4};
-                List<double> valores_std1 = new List<double>(){10};
-                List<int> valores_s = new List<int>(){10};
-                
-                foreach (int P in valores_P){
-                    foreach (double std1 in valores_std1){
-                        foreach (int s in valores_s){
-                            Console.WriteLine("=====================================================");
-                            Console.WriteLine("P = {0} | std1 = {1} | s = {2}", P, std1, s);
-
-                            parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = P;
-                            parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = std1;
-                            parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = s;
+                //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = P;
+                //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = p1;
+                //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = s;
                         
-                            // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                //             // Executa cada algoritmo por N vezes e obtém todas as execuções
+                //             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
-                            // Organiza os resultados de todas as excuções por algoritmo
-                            List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                //             // Organiza os resultados de todas as excuções por algoritmo
+                //             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                             
-                            // Apresenta os resultados finais
-                            apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                        }
-                    }
-                }
+                //             // Apresenta os resultados finais
+                //             apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
+                //         }
+                //     }
+                // }
+
+
+
 
 
 

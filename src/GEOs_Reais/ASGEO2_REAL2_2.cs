@@ -8,22 +8,18 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class ASGEO2_REAL2_1 : GEO_real2
+    public class ASGEO2_REAL2_2 : GEO_real2
     {
         public int tipo_AGEO {get; set;}
         public double CoI_1 {get; set;}
 
-         public ASGEO2_REAL2_1(
+         public ASGEO2_REAL2_2(
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
             List<double> populacao_inicial,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs,
-            int P,
-            double std1,
-            int s,
-            int tipo_perturbacao) : base(
+            int step_obter_NFOBs) : base(
                 populacao_inicial,
                 0.5,
                 n_variaveis_projeto,
@@ -31,17 +27,23 @@ namespace GEOs_REAIS
                 lower_bounds,
                 upper_bounds,
                 step_obter_NFOBs,
-                std1,
-                tipo_perturbacao,
-                P,
-                s)
+                1,
+                3,
+                1,
+                1)
         {
             this.tipo_AGEO = 2;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
-            // this.P = 5;
+            this.tau = 0.5;
+            
+            this.P = 8;
+            this.s = 10;
+            this.std = 100;
+
+            // // EXP
+            // this.P = 4;
             // this.s = 10;
             // this.std = 10;
-            this.tau = 0.5;
         }
 
 
@@ -66,9 +68,23 @@ namespace GEOs_REAIS
 
                     double xi = populacao_para_perturbar[i];
 
+
+
+
                     // Perturba a variável
                     double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                    double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
+                    double xii = xi;
+
+                    MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
+                    MathNet.Numerics.Distributions.ContinuousUniform uniformContDist = new MathNet.Numerics.Distributions.ContinuousUniform();
+                    MathNet.Numerics.Distributions.Exponential expDist = new MathNet.Numerics.Distributions.Exponential(std_atual);
+                    
+                    xii = xi + normalDist.Sample();
+                    // xii = xi + uniformContDist.Sample();
+                    
+                    // double exp = expDist.Sample();
+                    // double unif = uniformContDist.Sample();
+                    // xii = xi + ((unif >= 0.5) ? exp : -exp);
 
 
                     
@@ -83,8 +99,8 @@ namespace GEOs_REAIS
                         // 1 ----- max
                         // r ----- xii
 
-                        // xii = r * intervalo
-                        xii = r.NextDouble() * intervalo_variacao_variavel;
+                        // xii = r.NextDouble() * intervalo_variacao_variavel;
+                        xii = lower_bounds[i] + r.NextDouble()*intervalo_variacao_variavel;
                     }
                     
 
@@ -131,9 +147,14 @@ namespace GEOs_REAIS
 
                     perturbacoes.Add(perturbacao);
 
+
+
+
+
                     // Atualiza o novo std ===> std(i+1) = std(i) / (s*i)
-                    // Onde i = 1,2...P e s é arbitrário e vale 2.
-                    std_atual = std_atual / this.s;
+                    if (j>0){
+                        std_atual = std_atual / this.s;
+                    }
                 }
 
                 #if DEBUG_CONSOLE

@@ -66,6 +66,8 @@ namespace Classes_Comuns_Enums
         public bool rodar_ASGEO2real1_3 { get; set; }
         public bool rodar_ASGEO2real1_4 { get; set; }
         public bool rodar_ASGEO2real2_1 { get; set; }
+        public bool rodar_ASGEO2real2_2 { get; set; }
+        public bool rodar_ASGEO2real2_3 { get; set; }
     }
 
 
@@ -182,6 +184,8 @@ namespace Classes_Comuns_Enums
         ASGEO2real1_3,
         ASGEO2real1_4,
         ASGEO2real2_1,
+        ASGEO2real2_2,
+        ASGEO2real2_3,
     }
 
     enum EnumTipoCriterioParada{
