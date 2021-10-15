@@ -8,42 +8,40 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class ASGEO2_REAL2_2 : GEO_real2
+    public class AGEO2_REAL2 : GEO_real2
     {
         public int tipo_AGEO {get; set;}
         public double CoI_1 {get; set;}
+        public bool primeira_perturbacao_random_uniforme {get; set;}
 
-         public ASGEO2_REAL2_2(
+         public AGEO2_REAL2(
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
             List<double> populacao_inicial,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs) : base(
+            List<int> lista_NFOBs_desejados,
+            bool primeira_perturbacao_random_uniforme,
+            int P,
+            int s,
+            double std,
+            int tipo_perturbacao_variavel) : base(
                 populacao_inicial,
                 0.5,
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 lower_bounds,
                 upper_bounds,
-                step_obter_NFOBs,
-                1,
-                3,
-                1,
-                1)
+                lista_NFOBs_desejados,
+                std,
+                tipo_perturbacao_variavel,
+                P,
+                s)
         {
             this.tipo_AGEO = 2;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
             this.tau = 0.5;
-            
-            this.P = 8;
-            this.s = 10;
-            this.std = 100;
-
-            // // EXP
-            // this.P = 4;
-            // this.s = 10;
-            // this.std = 10;
+            this.primeira_perturbacao_random_uniforme = primeira_perturbacao_random_uniforme;
         }
 
 
@@ -68,60 +66,23 @@ namespace GEOs_REAIS
 
                     double xi = populacao_para_perturbar[i];
 
-
-
-
                     // Perturba a variável
                     double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                    double xii = xi;
+                    double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
 
-                    MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
-                    MathNet.Numerics.Distributions.ContinuousUniform uniformContDist = new MathNet.Numerics.Distributions.ContinuousUniform();
-                    MathNet.Numerics.Distributions.Exponential expDist = new MathNet.Numerics.Distributions.Exponential(std_atual);
-                    
-                    xii = xi + normalDist.Sample();
-                    // xii = xi + uniformContDist.Sample();
-                    
-                    // double exp = expDist.Sample();
-                    // double unif = uniformContDist.Sample();
-                    // xii = xi + ((unif >= 0.5) ? exp : -exp);
+                    // Perturbação uniforme caso seja necessária
+                    if (primeira_perturbacao_random_uniforme )
+                    {
+                        if (j==0)
+                        {
+                            Random r = new Random();
+                            xii = lower_bounds[i] + r.NextDouble()*intervalo_variacao_variavel;
+                        }
 
-
-                    
-                    
-                    
-                    
-                    // Na primeira iteração, perturba de forma diferente
-                    if (j==0){
-                        Random r = new Random();
-                        
-                        // 0 ----- min
-                        // 1 ----- max
-                        // r ----- xii
-
-                        // xii = r.NextDouble() * intervalo_variacao_variavel;
-                        xii = lower_bounds[i] + r.NextDouble()*intervalo_variacao_variavel;
                     }
-                    
-
-
-
-                    
 
                     // Atribui a variável perturbada
                     populacao_para_perturbar[i] = xii;
-
-                    #if DEBUG_CONSOLE
-                        Console.WriteLine("--------------");
-                        Console.WriteLine("---> {0}: Verificando a variável {1}", j, i);
-                        Console.WriteLine("xi vale {0} e perturbando vai para {1} com std={2}", xi, xii, std_atual);
-                        Console.WriteLine("População perturbada para calcular fx:");
-                        foreach (double ind in populacao_para_perturbar)
-                        {
-                            Console.Write(ind + " | ");
-                        }
-                        Console.WriteLine("");
-                    #endif
 
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
@@ -130,10 +91,6 @@ namespace GEOs_REAIS
                     // Avalia se a perturbação gera o melhor f(x) da história
                     if (fx < fx_melhor)
                     {
-                        #if DEBUG_CONSOLE
-                            Console.WriteLine("NOVO MELHOR FX ATUALIZADO! Era {0} e virou {1}", fx_melhor, fx);
-                        #endif
-
                         fx_melhor = fx;
                         populacao_melhor = populacao_para_perturbar;
                     }
@@ -147,12 +104,9 @@ namespace GEOs_REAIS
 
                     perturbacoes.Add(perturbacao);
 
-
-
-
-
-                    // Atualiza o novo std ===> std(i+1) = std(i) / (s*i)
-                    if (j>0){
+                    // Só não atualiza o sigma se tiver a primeira perturbação uniforme ativada e j==0
+                    if (!(primeira_perturbacao_random_uniforme && j==0))
+                    {
                         std_atual = std_atual / this.s;
                     }
                 }

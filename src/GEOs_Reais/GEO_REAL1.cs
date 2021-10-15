@@ -142,21 +142,40 @@ namespace GEOs_REAIS
             double xii = xi;
 
             // Perturba a variável dentro dos limites
-            if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_original)
+            if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_igor)
             {
                 // Distribuição normal com desvio padrão = std
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
                 xii = xi + (normalDist.Sample() * xi);
             }
-            else if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_SDdireto)
+            else if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_porcentagem)
             {
                 // Distribuição normal onde desvio padrão é porcentagem.
-                double intervalo_variacao = intervalo_variacao_variavel;
-                double intervalo_porcentado = intervalo_variacao * std_atual / 100.0;
-                // Console.WriteLine("Intervalo é {0}, então o std={1} dá {2}", intervalo_variacao, std_atual, intervalo_porcentado);
+                double intervalo_porcentado = intervalo_variacao_variavel * std_atual / 100.0;
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, intervalo_porcentado);
                 xii = xi + normalDist.Sample();
             }
+            else if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_normal)
+            {
+                // Distribuição normal com desvio padrão = std
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
+                xii = xi + normalDist.Sample();
+            }
+
+
+
+
+            // MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
+            // MathNet.Numerics.Distributions.ContinuousUniform uniformContDist = new MathNet.Numerics.Distributions.ContinuousUniform();
+            // MathNet.Numerics.Distributions.Exponential expDist = new MathNet.Numerics.Distributions.Exponential(std_atual);
+            
+            // xii = xi + normalDist.Sample();
+            // // xii = xi + uniformContDist.Sample();
+            
+            // // double exp = expDist.Sample();
+            // // double unif = uniformContDist.Sample();
+            // // xii = xi + ((unif >= 0.5) ? exp : -exp);
+
 
             // Retorna a variável perturbada
             return xii;

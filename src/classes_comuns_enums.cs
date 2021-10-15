@@ -65,7 +65,14 @@ namespace Classes_Comuns_Enums
         public bool rodar_ASGEO2real1_4 { get; set; }
         public bool rodar_ASGEO2real2_1 { get; set; }
         public bool rodar_ASGEO2real2_2 { get; set; }
-        public bool rodar_ASGEO2real2_3 { get; set; }
+        
+        public bool rodar_AGEO2_REAL1_igor { get; set; }
+        public bool rodar_AGEO2_REAL1_porcentagem { get; set; }
+        public bool rodar_AGEO2_REAL1_normal { get; set; }
+        public bool rodar_AGEO2_REAL2_igor { get; set; }
+        public bool rodar_AGEO2_REAL2_porcentagem { get; set; }
+        public bool rodar_AGEO2_REAL2_normal { get; set; }
+        
     }
 
 
@@ -129,6 +136,8 @@ namespace Classes_Comuns_Enums
         public double std_GEOreal2 {get; set;}
         public double std_AGEO1real2 {get; set;}
         public double std_AGEO2real2 {get; set;}
+        public double p1_AGEO1real1 {get; set;}
+        public double p1_AGEO2real1 {get; set;}
         public double std_ASGEO2_REAL1_1 {get; set;}
         public double std_ASGEO2_REAL1_2 {get; set;}
         public double std_ASGEO2_REAL1_3 {get; set;}
@@ -184,6 +193,14 @@ namespace Classes_Comuns_Enums
         ASGEO2real2_1,
         ASGEO2real2_2,
         ASGEO2real2_3,
+
+        AGEO2_REAL1_igor,
+        AGEO2_REAL1_porcentagem,
+        AGEO2_REAL1_normal,
+        AGEO2_REAL2_igor,
+        AGEO2_REAL2_porcentagem,
+        AGEO2_REAL2_normal,
+
     }
 
     enum EnumTipoCriterioParada{
@@ -193,7 +210,8 @@ namespace Classes_Comuns_Enums
     }
 
     enum EnumTipoPerturbacao{
-        perturbacao_original,
-        perturbacao_SDdireto
+        perturbacao_igor,
+        perturbacao_porcentagem,
+        perturbacao_normal,
     }
 }
