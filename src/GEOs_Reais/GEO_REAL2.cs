@@ -19,7 +19,7 @@ namespace GEOs_REAIS
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs,
+            List<int> lista_NFOBs_desejados,
             double std,
             int tipo_perturbacao,
             int P,
@@ -29,7 +29,7 @@ namespace GEOs_REAIS
                 populacao_inicial,
                 lower_bounds,
                 upper_bounds,
-                step_obter_NFOBs,
+                lista_NFOBs_desejados,
                 tipo_perturbacao,
                 tau,
                 std)

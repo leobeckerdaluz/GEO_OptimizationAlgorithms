@@ -16,7 +16,7 @@ namespace GEOs_REAIS
         public int definicao_funcao_objetivo {get; set;}
         public List<double> lower_bounds {get; set;}
         public List<double> upper_bounds {get; set;}
-        public int step_obter_NFOBs {get; set;}
+        public List<int> lista_NFOBs_desejados {get; set;}
         public double std {get; set;}
         public int tipo_perturbacao {get; set;}
         public int NFOB {get; set;}
@@ -37,7 +37,7 @@ namespace GEOs_REAIS
             List<double> populacao_inicial,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs,
+            List<int> lista_NFOBs_desejados,
             int tipo_perturbacao,
             double tau,
             double std)
@@ -47,7 +47,7 @@ namespace GEOs_REAIS
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
             this.lower_bounds = lower_bounds;
             this.upper_bounds = upper_bounds;
-            this.step_obter_NFOBs = step_obter_NFOBs;
+            this.lista_NFOBs_desejados = lista_NFOBs_desejados;
             this.std = std;
             this.tipo_perturbacao = tipo_perturbacao;
             
@@ -74,7 +74,7 @@ namespace GEOs_REAIS
                 Console.WriteLine("NFOB incrementado = {0}", NFOB);
             #endif
 
-            if (NFOB % step_obter_NFOBs == 0)
+            if (lista_NFOBs_desejados.Contains(NFOB))
             {
                 melhores_NFOBs.Add(fx_melhor);
                 melhores_TAUs.Add(tau);

@@ -18,7 +18,7 @@ namespace GEOs_BINARIOS
         public int definicao_funcao_objetivo {get; set;}
         public List<double> lower_bounds {get; set;}
         public List<double> upper_bounds {get; set;}
-        public int step_obter_NFOBs {get; set;}
+        public List<int> lista_NFOBs_desejados {get; set;}
         public List<int> bits_por_variavel_variaveis {get; set;}
 
         public int NFOB {get; set;}
@@ -36,7 +36,7 @@ namespace GEOs_BINARIOS
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs,
+            List<int> lista_NFOBs_desejados,
             List<int> bits_por_variavel_variaveis)
         {
             this.tau = tau;
@@ -44,7 +44,7 @@ namespace GEOs_BINARIOS
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
             this.lower_bounds = lower_bounds;
             this.upper_bounds = upper_bounds;
-            this.step_obter_NFOBs = step_obter_NFOBs;
+            this.lista_NFOBs_desejados = lista_NFOBs_desejados;
             this.bits_por_variavel_variaveis = bits_por_variavel_variaveis;
             this.NFOB = 0;
             this.fx_atual = Double.MaxValue;
@@ -69,7 +69,7 @@ namespace GEOs_BINARIOS
             //     Console.WriteLine("NFOB = {0} e melhor fx até agora = {1}", NFOB, fx_melhor);
             // }
             
-            if (NFOB % step_obter_NFOBs == 0)
+            if (lista_NFOBs_desejados.Contains(NFOB))
             {
                 melhores_NFOBs.Add(fx_melhor);
                 #if DEBUG_CONSOLE    

@@ -37,11 +37,9 @@ namespace Classes_Comuns_Enums
     public class ParametrosCriterioParada {
         public int tipo_criterio_parada { get; set; }
         public int NFOB_criterio_parada { get; set; }
-        
-        public int step_para_obter_NFOBs { get; set; }
-        
         public double PRECISAO_criterio_parada { get; set; }
         public double fx_esperado { get; set; }
+        public List<int> lista_NFOBs_desejados { get; set; }
     }
     // 'parada_por_NFOB_atingido';
     // 'parada_por_Precisao_atingida';

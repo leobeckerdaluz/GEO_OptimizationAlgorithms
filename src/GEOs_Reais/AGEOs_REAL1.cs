@@ -16,12 +16,11 @@ namespace GEOs_REAIS
         
         public AGEOs_REAL1(
             List<double> populacao_inicial,
-            double tau,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs,
+            List<int> lista_NFOBs_desejados,
             double std,
             int tipo_AGEO,
             int tipo_perturbacao) : base(
@@ -30,9 +29,9 @@ namespace GEOs_REAIS
                 populacao_inicial,
                 lower_bounds,
                 upper_bounds,
-                step_obter_NFOBs,
+                lista_NFOBs_desejados,
                 tipo_perturbacao,
-                tau,
+                0.5,
                 std)
         {
             this.tipo_AGEO = tipo_AGEO;

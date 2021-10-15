@@ -12,14 +12,14 @@ namespace GEOs_BINARIOS
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs,
+            List<int> lista_NFOBs_desejados,
             List<int> bits_por_variavel_variaveis) : base(
                 tau,
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 lower_bounds,
                 upper_bounds,
-                step_obter_NFOBs,
+                lista_NFOBs_desejados,
                 bits_por_variavel_variaveis)
         {}
 

@@ -21,13 +21,13 @@ namespace GEOs_REAIS
             List<double> populacao_inicial,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            int step_obter_NFOBs) : base(
+            List<int> lista_NFOBs_desejados) : base(
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 populacao_inicial,
                 lower_bounds,
                 upper_bounds,
-                step_obter_NFOBs,
+                lista_NFOBs_desejados,
                 1,
                 0.5,
                 1)

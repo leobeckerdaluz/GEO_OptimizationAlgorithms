@@ -113,8 +113,6 @@ namespace Execucoes
                 // Filtra todas as execuções obtendo somente as execuções deste algoritmo
                 List<RetornoGEOs> execucoes_algoritmo_executado = todas_execucoes.Where(p => p.algoritmo_utilizado == algoritmo_executado).ToList();
 
-                // Console.WriteLine("Chegou aqui2!! execucoes_algoritmo_executado Count: {0}", execucoes_algoritmo_executado.Count);
-
                 // Inicializa a lista que irá conter os f(x) em cada NFOB
                 List<List<double>> NFOBs_todas_execucoes = new List<List<double>>();
                 // Inicializa o somatório dos NFOBs finais
@@ -218,7 +216,6 @@ namespace Execucoes
                 Console.WriteLine(String.Format("Número de variáveis de projeto: {0}", parametros_problema.n_variaveis_projeto));
                 Console.WriteLine(String.Format("Quantidade de execuções: {0}", parametros_execucao.quantidade_execucoes));
                 Console.WriteLine(String.Format("Tipo de critério de parada: {0}", parametros_execucao.parametros_criterio_parada.tipo_criterio_parada));
-                Console.WriteLine(String.Format("Step para obter NFE: {0}", parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs));
                 Console.WriteLine(String.Format("NFE limite para execução: {0}", parametros_execucao.parametros_criterio_parada.NFOB_criterio_parada));
                 Console.WriteLine("");
             }
@@ -292,13 +289,12 @@ namespace Execucoes
                 Console.WriteLine("NFOB;" + string_algoritmos_executados);
                 
                 // Apresenta a média para cada NFOB
-                int NFOB_atual = parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs;
-                
                 int quantidade_NFOBs = estatisticas_algoritmos[0].media_valor_FO_em_cada_NFOB.Count;
                 
                 // Para cada execução dos algoritmos
                 for (int i=0; i<quantidade_NFOBs; i++)
                 {    
+                    double NFOB_atual = parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados[i];
                     string fxs_naquele_NFOB = NFOB_atual.ToString() + ';';
                     
                     // Para cada algoritmo executado da lista de estatísticas dos algoritmos
@@ -311,8 +307,6 @@ namespace Execucoes
                     }
 
                     Console.WriteLine( fxs_naquele_NFOB.Replace('.',',') );
-
-                    NFOB_atual += parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs;
                 }
                 
                 Console.WriteLine("");
@@ -376,7 +370,7 @@ namespace Execucoes
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.bits_por_variavel);
 
                     RetornoGEOs ret = geo.executar(parametros_execucao.parametros_criterio_parada);
@@ -396,7 +390,7 @@ namespace Execucoes
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.bits_por_variavel);
 
                     RetornoGEOs ret = geo_var.executar(parametros_execucao.parametros_criterio_parada);
@@ -412,12 +406,11 @@ namespace Execucoes
 
                     AGEOs_BINARIO ageo1 = new AGEOs_BINARIO(
                         1, 
-                        parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.bits_por_variavel);
 
                     RetornoGEOs ret = ageo1.executar(parametros_execucao.parametros_criterio_parada);
@@ -433,12 +426,11 @@ namespace Execucoes
                     
                     AGEOs_BINARIO ageo2 = new AGEOs_BINARIO(
                         2, 
-                        parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.bits_por_variavel);
 
                     RetornoGEOs ret = ageo2.executar(parametros_execucao.parametros_criterio_parada);
@@ -454,12 +446,11 @@ namespace Execucoes
                     
                     AGEOsvar_BINARIO ageo1_var = new AGEOsvar_BINARIO(
                         1, 
-                        parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.bits_por_variavel);
 
                     RetornoGEOs ret = ageo1_var.executar(parametros_execucao.parametros_criterio_parada);
@@ -475,12 +466,11 @@ namespace Execucoes
 
                     AGEOsvar_BINARIO ageo2_var = new AGEOsvar_BINARIO(
                         2, 
-                        parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.bits_por_variavel);
 
                     RetornoGEOs ret = ageo2_var.executar(parametros_execucao.parametros_criterio_parada); 
@@ -500,7 +490,7 @@ namespace Execucoes
                         parametros_problema.populacao_inicial, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_GEOreal1, 
                         parametros_problema.parametros_livres.std_GEOreal1);
@@ -518,12 +508,11 @@ namespace Execucoes
 
                     AGEOs_REAL1 AGEO1real1 = new AGEOs_REAL1(
                         parametros_problema.populacao_inicial, 
-                        parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.parametros_livres.std_AGEO1real1, 
                         1, 
                         parametros_execucao.tipo_perturbacao);
@@ -541,12 +530,11 @@ namespace Execucoes
 
                     AGEOs_REAL1 AGEO2real1 = new AGEOs_REAL1(
                         parametros_problema.populacao_inicial, 
-                        parametros_problema.parametros_livres.tau_minimo_AGEOs, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.parametros_livres.std_AGEO2real1, 
                         2, 
                         parametros_execucao.tipo_perturbacao);
@@ -569,7 +557,7 @@ namespace Execucoes
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.parametros_livres.std_GEOreal2, 
                         parametros_execucao.tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.P_GEOreal2, 
@@ -593,7 +581,7 @@ namespace Execucoes
                         parametros_problema.populacao_inicial, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.parametros_livres.std_AGEO1real2, 
                         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
                         (int)parametros_problema.parametros_livres.s_AGEO1real2,
@@ -617,7 +605,7 @@ namespace Execucoes
                         parametros_problema.populacao_inicial, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
                         parametros_problema.parametros_livres.std_AGEO1real2, 
                         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
                         (int)parametros_problema.parametros_livres.s_AGEO1real2,
@@ -640,7 +628,7 @@ namespace Execucoes
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_1, 
                         parametros_problema.parametros_livres.std_ASGEO2_REAL1_1,
@@ -665,7 +653,7 @@ namespace Execucoes
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.step_para_obter_NFOBs,
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados,
                         parametros_execucao.tipo_perturbacao,
                         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_2, 
                         parametros_problema.parametros_livres.std_ASGEO2_REAL1_2,
@@ -858,8 +846,6 @@ namespace Execucoes
                             P_AGEO2real2 = 4,
                             s_AGEO2real2 = 1,
                             
-                            tau_minimo_AGEOs = 0.5,
-
                             tau_ASGEO2_REAL1_1 = 1.5,
                             std_ASGEO2_REAL1_1 = 1.2,
                             tau_ASGEO2_REAL1_2 = 1.5,
@@ -908,8 +894,6 @@ namespace Execucoes
                             P_AGEO2real2 = 4,
                             s_AGEO2real2 = 1,
                             
-                            tau_minimo_AGEOs = 0.5,
-
                             tau_ASGEO2_REAL1_1 = 1.5,
                             std_ASGEO2_REAL1_1 = 1,
                             tau_ASGEO2_REAL1_2 = 1.5,
@@ -956,8 +940,6 @@ namespace Execucoes
                             P_AGEO2real2 = 4,
                             s_AGEO2real2 = 2,
                             
-                            tau_minimo_AGEOs = 0.5,
-
                             tau_ASGEO2_REAL1_1 = 4,
                             std_ASGEO2_REAL1_1 = 1.8,
                             tau_ASGEO2_REAL1_2 = 4,
@@ -1004,8 +986,6 @@ namespace Execucoes
                             P_AGEO2real2 = 16,
                             s_AGEO2real2 = 1,
                             
-                            tau_minimo_AGEOs = 0.5,
-
                             tau_ASGEO2_REAL1_1 = 5,
                             std_ASGEO2_REAL1_1 = 2.4,
                             tau_ASGEO2_REAL1_2 = 5,
@@ -1055,8 +1035,6 @@ namespace Execucoes
                                 P_AGEO2real2 = 4,
                                 s_AGEO2real2 = 1,
                                 
-                                tau_minimo_AGEOs = 0.5,
-
                                 tau_ASGEO2_REAL1_1 = 1,
                                 std_ASGEO2_REAL1_1 = 0.8,
                                 tau_ASGEO2_REAL1_2 = 1,
@@ -1104,8 +1082,6 @@ namespace Execucoes
                             // // P_AGEO2real2 = 4,
                             // // s_AGEO2real2 = 2,
                             
-                            // tau_minimo_AGEOs = 0.5,
-
                             // tau_ASGEO2_REAL1_1 = 5,
                             // std_ASGEO2_REAL1_1 = 2,
                             // tau_ASGEO2_REAL1_2 = 5,
@@ -1152,8 +1128,6 @@ namespace Execucoes
                             // P_AGEO2real2 = 4,
                             // s_AGEO2real2 = 2,
                             
-                            tau_minimo_AGEOs = 0.5,
-
                             tau_ASGEO2_REAL1_1 = 5,
                             std_ASGEO2_REAL1_1 = 1.8,
                             tau_ASGEO2_REAL1_2 = 5,
@@ -1182,7 +1156,6 @@ namespace Execucoes
                             tau_GEOvar = 1.75,
                             tau_GEOreal1 = 1.50,
                             tau_GEOreal2 = 1.75,
-                            tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
@@ -1215,7 +1188,6 @@ namespace Execucoes
                             tau_GEOvar = 8.0,
                             tau_GEOreal1 = 3.0,
                             tau_GEOreal2 = 8.0,
-                            tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
@@ -1249,7 +1221,6 @@ namespace Execucoes
 
                             tau_GEOreal1 = 1.0,
                             tau_GEOreal2 = 1.0,
-                            tau_minimo_AGEOs = 0.5,
                             std_GEOreal1 = 1.0,
                             std_AGEO1real1 = 1.0,
                             std_AGEO2real1 = 1.0,
@@ -2037,15 +2008,13 @@ namespace Execucoes
             // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             // parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAO;
             // parametros_criterio_parada.PRECISAO_criterio_parada = 0.001;
-            // const int step_para_obter_NFOBs = 10000;
-            // parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
           
             
             // foreach(double tau in valores_TAU){
             //     Console.WriteLine("\n==========================================");
             //     Console.WriteLine("{0}", tau.ToString().Replace('.',','));
             
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, 0, tau_minimo_AGEOs, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper,bounds, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar, );
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau, tau, tau, 0, std_GEOreal1, 0, std_AGEO1real1, std_AGEO2real1, 0, 0, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper,bounds, parametros_criterio_parada, quais_algoritmos_rodar, o_que_interessa_printar, );
             // }
 
             
@@ -2055,8 +2024,6 @@ namespace Execucoes
             // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             // parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB;
             // parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            // const int step_para_obter_NFOBs = 250;
-            // parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
             
           
             // const bool  = true;
@@ -2074,7 +2041,7 @@ namespace Execucoes
             //     Console.WriteLine("porcentagem;std");
             //     Console.WriteLine( String.Format("{0};{1}", porcentagem, std).Replace('.',',') );
 
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper_bounds, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper_bounds, parametros_criterio_parada, quais_algoritmos_rodar, o_que_interessa_printar);
             // }
 
 
@@ -2084,14 +2051,11 @@ namespace Execucoes
             // ParametrosCriterioParada parametros_criterio_parada = new ParametrosCriterioParada();
             // parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB;
             // parametros_criterio_parada.PRECISAO_criterio_parada = 0;
-            // const int step_para_obter_NFOBs = 250;
-            // parametros_criterio_parada.step_para_obter_NFOBs = step_para_obter_NFOBs;
             
             // QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
             // quais_algoritmos_rodar.rodar_GEO        = false;
             // quais_algoritmos_rodar.rodar_GEOvar     = false;
             // quais_algoritmos_rodar.rodar_AGEO1      = false;
-            // parametros_criterio_parada.fx_esperado = ;
             // quais_algoritmos_rodar.rodar_AGEO2      = false;
             // quais_algoritmos_rodar.rodar_AGEO1var   = false;
             // quais_algoritmos_rodar.rodar_AGEO2var   = false;
@@ -2118,7 +2082,7 @@ namespace Execucoes
             //     Console.WriteLine("std");
             //     Console.WriteLine( String.Format("{0}", std).Replace('.',',') );
 
-            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, tau_minimo_AGEOs, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper_bounds, parametros_criterio_parada, step_para_obter_NFOBs, quais_algoritmos_rodar, o_que_interessa_printar);
+            //     Executa_Os_Algoritmos_Por_N_Vezes(quantidade_execucoes, tau_GEO, tau_GEOvar, tau_GEOreal1, 0, std, std, std, std, std, std, 0, 0, 0, tipo_perturbacao_original_ou_SDdireto, parametros_problema, bits_por_variavel_variaveis, lower_bounds, upper_bounds, parametros_criterio_parada, quais_algoritmos_rodar, o_que_interessa_printar);
             // }
         }
 
@@ -2273,7 +2237,6 @@ namespace Execucoes
             //     std
             // );
             // RetornoGEOs ret = geo_real1.executar(new ParametrosCriterioParada(){
-            //     step_para_obter_NFOBs = 500,
             //     PRECISAO_criterio_parada = 0,
             //     NFOB_criterio_parada = 100000,
             //     tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB
