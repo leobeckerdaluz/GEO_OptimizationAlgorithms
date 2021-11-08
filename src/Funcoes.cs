@@ -1,6 +1,3 @@
-// Diretivas de compilação para controle de partes do código
-// #define DEBUG_CONSOLE
-
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -50,14 +50,6 @@ namespace Execucoes
                 nova_populacao.Add(xi);
             }
 
-            #if DEBUG_CONSOLE
-                Console.WriteLine("População gerada:");
-                foreach(double ind in populacao_atual)
-                {
-                    Console.WriteLine("individuo = {0}", ind);
-                }
-            #endif
-            
             // Retorna a população criada
             return nova_populacao;
         }

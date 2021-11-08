@@ -60,11 +60,6 @@ namespace GEOs_BINARIOS
             else if(CoI <= this.CoI_1){
                 tau += (0.5 + CoI) * this.random.NextDouble();
             }
-            
-#if DEBUG_CONSOLE
-            Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
-            Console.WriteLine("Valor TAU: {0}", tau);
-#endif
 
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)
             this.CoI_1 = CoI;

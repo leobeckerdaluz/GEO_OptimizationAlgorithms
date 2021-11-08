@@ -1,6 +1,3 @@
-// #define DEBUG_CONSOLE
-// #define DEBUG_MUTACAO_TAU
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,18 +92,6 @@ namespace GEOs_REAIS
                     // Atribui a variável perturbada
                     populacao_para_perturbar[i] = xii;
 
-                    #if DEBUG_CONSOLE
-                        Console.WriteLine("--------------");
-                        Console.WriteLine("---> {0}: Verificando a variável {1}", j, i);
-                        Console.WriteLine("xi vale {0} e perturbando vai para {1} com std={2}", xi, xii, std_atual);
-                        Console.WriteLine("População perturbada para calcular fx:");
-                        foreach (double ind in populacao_para_perturbar)
-                        {
-                            Console.Write(ind + " | ");
-                        }
-                        Console.WriteLine("");
-                    #endif
-
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
                     add_NFOB();
@@ -114,10 +99,6 @@ namespace GEOs_REAIS
                     // Avalia se a perturbação gera o melhor f(x) da história
                     if (fx < fx_melhor)
                     {
-                        #if DEBUG_CONSOLE
-                            Console.WriteLine("NOVO MELHOR FX ATUALIZADO! Era {0} e virou {1}", fx_melhor, fx);
-                        #endif
-
                         fx_melhor = fx;
                         populacao_melhor = populacao_para_perturbar;
                     }
@@ -135,15 +116,6 @@ namespace GEOs_REAIS
                     // Onde i = 1,2...P e s é arbitrário e vale 2.
                     std_atual = std_atual / this.s;
                 }
-
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("Motrando as perturbacoes:");
-                    foreach(Perturbacao p in perturbacoes)
-                    {
-                        Console.WriteLine("{0}: xi = {1} | xii = {2} | fx = {3}", p.indice_variavel_projeto, p.xi_antes_da_perturbacao, p.xi_depois_da_perturbacao, p.fx_depois_da_perturbacao);
-                    }
-                #endif
-
                 
                 // Adiciona cada perturbação na lista geral de perturbacoes
                 // Console.WriteLine("perturbações.Count = {0}", perturbacoes.Count);
@@ -184,13 +156,6 @@ namespace GEOs_REAIS
                 tau += (0.5 + CoI) * random.NextDouble();
             }
             
-            #if DEBUG_MUTACAO_TAU
-                // Console.WriteLine("perturbações da iteração count: {0}", perturbacoes_da_iteracao.Count);
-                Console.WriteLine("NFOB = {0} | melhoraram {1}/{2} | tau era {3} e virou {4} | fx={5}", this.NFOB, melhoraram,perturbacoes_da_iteracao.Count, tau_antigo, tau, fx_melhor);
-                // Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
-                // Console.WriteLine("Valor TAU era {0} e virou {1}", tau_antigo, tau);
-            #endif
-
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)
             CoI_1 = CoI;
         }

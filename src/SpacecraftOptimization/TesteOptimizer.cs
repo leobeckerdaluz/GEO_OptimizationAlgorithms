@@ -74,6 +74,30 @@ namespace SpaceDesignTeste
 
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
 
+
+
+            SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, N, D, 0.00);
+
+            int iterations = 0;
+            double a = 0;
+            double i = 0;
+
+            SunSyncOrbitsWRptManager ss_mg = new SunSyncOrbitsWRptManager();
+
+            ss_mg.NewtonRaphson(Ss_orb, out iterations);
+
+            a = Ss_orb.a;
+            i = Ss_orb.i;
+            
+            Utility.Convert(ref a, ref i);
+            Ss_orb.i = i.DegreesToRadians();
+
+            double FovMin = FOVManager.FovMin(Ss_orb);
+
+            Camera designedPayload = CameraManager.DesignCamera(ReferencePayload, Ss_orb, FovMin);
+
+
+
 #if DEBUG_CONSOLE
             Console.WriteLine("ReferencePayload.WeightOpt: "+ReferencePayload.WeightOpt);
             Console.WriteLine("ReferencePayload.WeightElec: "+ReferencePayload.WeightElec);
@@ -84,51 +108,15 @@ namespace SpaceDesignTeste
             Console.WriteLine("ReferencePayload.NPixels: "+ReferencePayload.NPixels);
             Console.WriteLine("ReferencePayload.PixelSize: "+ReferencePayload.PixelSize);
             Console.WriteLine("ReferencePayload.FOV: "+ReferencePayload.FOV);
-#endif
-
-            SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, N, D, 0.00);
-
-#if DEBUG_CONSOLE
             Console.WriteLine("Ss_orb.I: "+Ss_orb.I);
             Console.WriteLine("Ss_orb.N: "+Ss_orb.N);
             Console.WriteLine("Ss_orb.D: "+Ss_orb.D);
             Console.WriteLine("Ss_orb.Rev: "+Ss_orb.Rev);
-#endif
-
-            int iterations = 0;
-            double a = 0;
-            double i = 0;
-
-            SunSyncOrbitsWRptManager ss_mg = new SunSyncOrbitsWRptManager();
-
-#if DEBUG_CONSOLE
-            Console.WriteLine("Ss_orb.Rev: "+Ss_orb.Rev);
-#endif
-
-            ss_mg.NewtonRaphson(Ss_orb, out iterations);
-
-            a = Ss_orb.a;
-            i = Ss_orb.i;
-            
-            Utility.Convert(ref a, ref i);
-            Ss_orb.i = i.DegreesToRadians();
-
-#if DEBUG_CONSOLE
             Console.WriteLine("a: "+a);
             Console.WriteLine("i: "+i);
             Console.WriteLine("Ss_orb.i: "+Ss_orb.a);
             Console.WriteLine("Ss_orb.i: "+Ss_orb.i);
-#endif
-
-            double FovMin = FOVManager.FovMin(Ss_orb);
-
-#if DEBUG_CONSOLE
             Console.WriteLine("FovMin: "+FovMin);
-#endif
-
-            Camera designedPayload = CameraManager.DesignCamera(ReferencePayload, Ss_orb, FovMin);
-
-#if DEBUG_CONSOLE
             Console.WriteLine("designedPayload: "+designedPayload);
             Console.WriteLine("designedPayload.WeightOpt: "+designedPayload.WeightOpt);
             Console.WriteLine("designedPayload.WeightElec: "+designedPayload.WeightElec);
@@ -141,12 +129,13 @@ namespace SpaceDesignTeste
             Console.WriteLine("designedPayload.FOV: "+designedPayload.FOV);
 #endif
 
+
+
             // ======================================================
             // Atualiza os atributos para a verificação da restrição
             this.FOV_payload = designedPayload.FOV;
             this.FOV_min = FovMin;
             // ======================================================
-
 
             Satellite Satellite = new Satellite();
             Satellite.Payload = designedPayload;

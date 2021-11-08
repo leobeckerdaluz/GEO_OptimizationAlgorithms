@@ -1,6 +1,3 @@
-// #define DEBUG_CONSOLE
-// #define DEBUG_MUTACAO_TAU
-
 using System;
 using System.Collections.Generic;
 using System.Linq;

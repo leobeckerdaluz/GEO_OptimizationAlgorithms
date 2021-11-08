@@ -29,15 +29,6 @@ namespace GEOs_BINARIOS
             // Ordena os bits conforme os indices fitness
             //============================================================
 
-#if DEBUG_CONSOLE
-            Console.WriteLine("Antes da ordenação:");
-            Console.WriteLine(this.lista_informacoes_mutacao.Count);
-            ApresentaCromossomoBool(this.populacao_atual);
-            for (int i=0; i<this.lista_informacoes_mutacao.Count; i++){
-                Console.WriteLine(i + ": Bit: " + this.lista_informacoes_mutacao[i].indice_bit_mutado + "\t| fx_flipado: " + this.lista_informacoes_mutacao[i].funcao_objetivo_flipando);
-            }
-#endif
-
             // Percorre cada variável de projeto para ordenar os bits e escolher o bit para filpar
             List<BitVerificado> depois_ordenar = new List<BitVerificado>();
             int iterador = 0;
@@ -84,19 +75,8 @@ namespace GEOs_BINARIOS
                     // k precisa ser de 1 a N, mas aqui nos índices começa em 0
                     k -= 1;
 
-    #if DEBUG_CONSOLE
-                    Console.WriteLine("Tentando flipar o indice "+k+", que é o bit "+lista_informacoes_bits_variavel[k].indice_bit_mutado+" com Pk "+Pk+" >= ALE "+ALE);
-    #endif
-
                     // Se o Pk é maior ou igual ao aleatório, então flipa o bit
                     if (Pk >= ALE){
-
-    #if DEBUG_CONSOLE
-                        Console.WriteLine("Antes de flipar:");
-                        ApresentaCromossomoBool(populacao_de_bits);
-                        Console.WriteLine("Flipando o indice " + k + ", que é o bit " + lista_informacoes_bits_variavel[k].indice_bit_mutado);
-    #endif
-
                         // Flipa o bit
                         this.populacao_atual[ lista_informacoes_bits_variavel[k].indice_bit_mutado ] = !this.populacao_atual[ lista_informacoes_bits_variavel[k].indice_bit_mutado ];
 
@@ -105,14 +85,6 @@ namespace GEOs_BINARIOS
                     }
                 }
             }
-
-#if DEBUG_CONSOLE
-            Console.WriteLine("Depois da ordenação:");
-            ApresentaCromossomoBool(this.populacao_atual);
-            for (int m=0; m<depois_ordenar.Count; m++){
-                Console.WriteLine(m + ": Bit: " + depois_ordenar[m].indice_bit_mutado + "\t| fx_flipado: " + depois_ordenar[m].funcao_objetivo_flipando);
-            }
-#endif
         }
     }
 }

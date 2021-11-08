@@ -1,6 +1,3 @@
-// #define DEBUG_CONSOLE
-// #define DEBUG_MUTACAO_TAU
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,10 +89,6 @@ namespace GEOs_REAIS
             else if(CoI <= CoI_1)
                 tau += (0.5 + CoI) * random.NextDouble();
             
-            #if DEBUG_MUTACAO_TAU
-                Console.WriteLine("NFOB = {0} | melhoraram {1}/{2} | tau era {3} e virou {4} | fx={5}", this.NFOB, melhoraram,populacao_atual.Count, tau_antigo, tau, fx_melhor);
-            #endif
-
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)
             CoI_1 = CoI;
             

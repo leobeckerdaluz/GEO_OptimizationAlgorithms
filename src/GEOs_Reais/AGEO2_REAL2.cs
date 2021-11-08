@@ -1,6 +1,3 @@
-// #define DEBUG_CONSOLE
-// #define DEBUG_MUTACAO_TAU
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,15 +108,6 @@ namespace GEOs_REAIS
                     }
                 }
 
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("Motrando as perturbacoes:");
-                    foreach(Perturbacao p in perturbacoes)
-                    {
-                        Console.WriteLine("{0}: xi = {1} | xii = {2} | fx = {3}", p.indice_variavel_projeto, p.xi_antes_da_perturbacao, p.xi_depois_da_perturbacao, p.fx_depois_da_perturbacao);
-                    }
-                #endif
-
-                
                 // Adiciona cada perturbação na lista geral de perturbacoes
                 // Console.WriteLine("perturbações.Count = {0}", perturbacoes.Count);
                 foreach (Perturbacao p in perturbacoes)
@@ -162,13 +150,6 @@ namespace GEOs_REAIS
                 tau += (0.5 + CoI) * random.NextDouble();
                 // tau = 10;
             }
-            
-            #if DEBUG_MUTACAO_TAU
-                // Console.WriteLine("perturbações da iteração count: {0}", perturbacoes_da_iteracao.Count);
-                Console.WriteLine("NFOB = {0} | melhoraram {1}/{2} | tau era {3} e virou {4} | fx={5}", this.NFOB, melhoraram,perturbacoes_da_iteracao.Count, tau_antigo, tau, fx_melhor);
-                // Console.WriteLine("Dos {0}, apenas {1} são melhores!", populacao_atual.Count, melhoraram);
-                // Console.WriteLine("Valor TAU era {0} e virou {1}", tau_antigo, tau);
-            #endif
 
             // Atualiza o CoI(i-1) como sendo o atual CoI(i)
             CoI_1 = CoI;

@@ -1,8 +1,3 @@
-// #define DEBUG_FUNCTION
-// #define DEBUG_CONSOLE
-// #define DEBUG_FUNCTION_OVERLIMIT
-// #define NOVO_MELHOR_FX
-
 using System;
 using System.Collections.Generic;
 using Classes_Comuns_Enums;
@@ -71,21 +66,9 @@ namespace GEOs_BINARIOS
         {
             NFOB++;
 
-            #if DEBUG_CONSOLE
-                Console.WriteLine("NFOB incrementado = {0}", NFOB);
-            #endif
-
-            // if (NFOB % 2000 == 0)
-            // {
-            //     Console.WriteLine("NFOB = {0} e melhor fx até agora = {1}", NFOB, fx_melhor);
-            // }
-            
             if (lista_NFOBs_desejados.Contains(NFOB))
             {
                 melhores_NFOBs.Add(fx_melhor);
-                #if DEBUG_CONSOLE    
-                    Console.WriteLine("melhor NFOB {0} = {1}", NFOB, fx_melhor);
-                #endif
             }
         }
 
@@ -131,12 +114,6 @@ namespace GEOs_BINARIOS
                 // min + [(max-min) / (2^bits - 0)] * binario
                 
                 double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto) - 1));
-
-                #if DEBUG_FUNCTION
-                    Console.WriteLine("Fenótipo " + i + ": " + fenotipo_xi);
-                    Console.WriteLine("variavel_convertida : " + variavel_convertida);
-                    Console.WriteLine("fenotipo_variavel_projeto : " + fenotipo_variavel_projeto);
-                #endif
 
                 // Adiciona o fenótipo da variável na lista de fenótipos
                 fenotipo_variaveis_projeto.Add(fenotipo_variavel_projeto);
@@ -199,9 +176,6 @@ namespace GEOs_BINARIOS
                 // Avalia se a perturbação é a melhor de todas
                 if (fx < fx_melhor)
                 {
-                    #if NOVO_MELHOR_FX
-                        Console.WriteLine("AVALIAÇÃO: fx = {0} < fx_melhor = {1}", fx, fx_melhor);
-                    #endif
                     fx_melhor = fx;
                     populacao_melhor = populacao_de_bits_flipado;
                 }
@@ -227,25 +201,9 @@ namespace GEOs_BINARIOS
             // Ordena os bits conforme os indices fitness
             //============================================================
 
-            #if DEBUG_CONSOLE
-                Console.WriteLine("Antes da ordenação");
-                for (int i=0; i<this.lista_informacoes_mutacao.Count; i++)
-                {
-                    Console.WriteLine(i + ": Bit: " + this.lista_informacoes_mutacao[i].indice_bit_mutado + "\t| fx_flipado: " + this.lista_informacoes_mutacao[i].funcao_objetivo_flipando);
-                }
-            #endif
-
             // Ordena os bits
             this.lista_informacoes_mutacao.Sort(delegate(BitVerificado b1, BitVerificado b2) { return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); });
            
-            #if DEBUG_CONSOLE
-                Console.WriteLine("Depois da ordenação");
-                for (int i=0; i<this.lista_informacoes_mutacao.Count; i++)
-                {
-                    Console.WriteLine(i + ": Bit: " + this.lista_informacoes_mutacao[i].indice_bit_mutado + "\t| fx_flipado: " + this.lista_informacoes_mutacao[i].funcao_objetivo_flipando);
-                }
-            #endif
-            
             //============================================================
             // Flipa um bit com probabilidade Pk
             //============================================================
@@ -265,20 +223,9 @@ namespace GEOs_BINARIOS
                 // k precisa ser de 1 a N, mas aqui nos índices começa em 0
                 k -= 1;
 
-                #if DEBUG_CONSOLE
-                    Console.WriteLine("Tentando flipar o indice "+k+", que é o bit "+this.lista_informacoes_mutacao[k].indice_bit_mutado+" com Pk "+Pk+" >= ALE "+ALE);
-                #endif
-
                 // Se o Pk é maior ou igual ao aleatório, então flipa o bit
                 if (Pk >= ALE)
                 {
-
-                    #if DEBUG_CONSOLE
-                        Console.WriteLine("Antes de flipar:");
-                        // ApresentaCromossomoBool(this.populacao_atual);
-                        Console.WriteLine("Flipando o indice " + k + ", que é o bit " + this.lista_informacoes_mutacao[k].indice_bit_mutado);
-                    #endif
-
                     // Flipa o bit
                     this.populacao_atual[ this.lista_informacoes_mutacao[k].indice_bit_mutado ] = !this.populacao_atual[ this.lista_informacoes_mutacao[k].indice_bit_mutado ];
 
@@ -364,15 +311,6 @@ namespace GEOs_BINARIOS
 
                 if ( criterio_parada(parametros_criterio_parada) )
                 {
-                    #if DEBUG_CONSOLE
-                        Console.WriteLine("==================================");
-                        Console.WriteLine("==================================");
-                        Console.WriteLine("CRITÉRIO DE PARADA ATINGIDO!");
-                        Console.WriteLine("NFOB = {0} E MELHORFX = {1}", NFOB, fx_melhor);
-                        Console.WriteLine("==================================");
-                        Console.WriteLine("==================================");
-                    #endif
-
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFOB = this.NFOB;
                     retorno.iteracoes = this.iterations;
