@@ -29,7 +29,11 @@ namespace GEOs_REAIS
         public List<double> melhores_TAUs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
         public int iterations {get; set;}
-        public List<bool> melhoras_nas_iteracoes {get; set;}
+        public List<int> melhoras_nas_iteracoes {get; set;}
+        public List<double> stats_TAU_per_iteration {get; set;}
+        public List<double> stats_STD_per_iteration {get; set;}
+        public List<double> stats_Mfx_per_iteration {get; set;}
+
 
         public GEO_real1(
             int n_variaveis_projeto,
@@ -58,11 +62,13 @@ namespace GEOs_REAIS
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFOBs = new List<double>();
-            this.melhores_TAUs = new List<double>();
             this.perturbacoes_da_iteracao = new List<Perturbacao>();
             this.iterations = 0;
-            this.melhoras_nas_iteracoes = new List<bool>();
+            this.melhoras_nas_iteracoes = new List<int>();
 
+            this.stats_TAU_per_iteration = new List<double>();
+            this.stats_STD_per_iteration = new List<double>();
+            this.stats_Mfx_per_iteration = new List<double>();
         }
 
 
@@ -76,8 +82,14 @@ namespace GEOs_REAIS
 
             if (lista_NFOBs_desejados.Contains(NFOB))
             {
+                
+                // Atualiza os stats
+                
                 melhores_NFOBs.Add(fx_melhor);
-                melhores_TAUs.Add(tau);
+                // stats_TAU_per_iteration.Add(tau);
+                // stats_STD_per_iteration.Add(std);
+                stats_Mfx_per_iteration.Add(fx_melhor);
+
                 #if DEBUG_CONSOLE    
                     Console.WriteLine("melhor NFOB {0} = {1}", NFOB, fx_melhor);
                 #endif
@@ -329,6 +341,8 @@ namespace GEOs_REAIS
 
             bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
             
+            bool parada_por_ITERATIONS = (iterations >= parametros_criterio_parada.ITERATIONS_criterio_parada);
+            
             // Antes de verificar a parada, começa com falso.
             bool parada = false;
 
@@ -336,6 +350,15 @@ namespace GEOs_REAIS
             if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
             {
                 if (parada_por_NFOB)
+                {
+                    parada = true;
+                }
+            }
+
+            // Se o critério for por ITERACOES...
+            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS)
+            {
+                if (parada_por_ITERATIONS)
                 {
                     parada = true;
                 }
@@ -375,7 +398,10 @@ namespace GEOs_REAIS
                 ordena_e_perturba();
 
                 iterations++;
-                melhoras_nas_iteracoes.Add( (fx_atual < fx_atual_comeco_it) ? true : false );
+                melhoras_nas_iteracoes.Add( (fx_atual < fx_atual_comeco_it) ? 1 : 0 );
+                stats_TAU_per_iteration.Add(tau);
+                stats_STD_per_iteration.Add(std);
+                stats_Mfx_per_iteration.Add(fx_melhor);
 
                 if ( criterio_parada(parametros_criterio_parada) )
                 {
@@ -390,10 +416,14 @@ namespace GEOs_REAIS
 
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFOB = this.NFOB;
+                    retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFOBs = this.melhores_NFOBs;
-                    retorno.melhores_TAUs = this.melhores_TAUs;
                     retorno.populacao_final = this.populacao_melhor;
+                    retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
+                    retorno.stats_STD_per_iteration = this.stats_STD_per_iteration;
+                    retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
+                    
                     
                     return retorno;
                 }

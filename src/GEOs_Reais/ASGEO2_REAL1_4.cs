@@ -111,9 +111,8 @@ namespace GEOs_REAIS
             if ((melhoras_nas_iteracoes.Count > 0) && ((melhoras_nas_iteracoes.Count % q) == 0))
             {
                 // Pega os últimos melhores NFOBs
-                List<bool> ultimas_melhorias_iteracoes = melhoras_nas_iteracoes.GetRange(melhoras_nas_iteracoes.Count - q, q);
-
-                int melhoraram_its = ultimas_melhorias_iteracoes.Count(i => i == true);
+                List<int> ultimas_melhorias_iteracoes = melhoras_nas_iteracoes.GetRange(melhoras_nas_iteracoes.Count - q, q);
+                int melhoraram_its = ultimas_melhorias_iteracoes.Count(i => i == 1);
                 
                 double razao = (double)melhoraram_its / q;
 

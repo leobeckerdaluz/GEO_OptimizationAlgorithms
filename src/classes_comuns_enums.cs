@@ -18,25 +18,35 @@ namespace Classes_Comuns_Enums
     public class RetornoGEOs {
         public int algoritmo_utilizado { get; set; }
         public int NFOB { get; set; }
+        public int iteracoes { get; set; }
         public double melhor_fx { get; set; }
         public List<double> melhores_NFOBs { get; set; }
         public List<double> melhores_TAUs { get; set; }
         public List<double> populacao_final { get; set; }
+        public List<double> stats_TAU_per_iteration { get; set; }
+        public List<double> stats_STD_per_iteration { get; set; }
+        public List<double> stats_Mfx_per_iteration { get; set; }
+        
     }
 
     public class Retorno_N_Execucoes_GEOs {
         public int algoritmo_utilizado { get; set; }
         public int NFOB_medio { get; set; }
+        public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
         public double SD_do_melhor_fx { get; set; }
         public List<double> media_valor_FO_em_cada_NFOB { get; set; }
         public List<double> lista_melhores_fxs { get; set; }
         public List<List<double>> lista_populacao_final { get; set; }
+        public List<double> lista_TAU_medio_per_iteration { get; set; }
+        public List<double> lista_STD_medio_per_iteration { get; set; }
+        public List<double> lista_Mfx_medio_per_iteration { get; set; }
     }
 
     public class ParametrosCriterioParada {
         public int tipo_criterio_parada { get; set; }
         public int NFOB_criterio_parada { get; set; }
+        public int ITERATIONS_criterio_parada { get; set; }
         public double PRECISAO_criterio_parada { get; set; }
         public double fx_esperado { get; set; }
         public List<int> lista_NFOBs_desejados { get; set; }
@@ -118,6 +128,9 @@ namespace Classes_Comuns_Enums
         public bool mostrar_meanNFE_meanFX_sdFX {get; set;}
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
         public bool mostrar_header {get; set;}
+        public bool mostrar_mean_TAU_iteracoes {get; set;}
+        public bool mostrar_mean_STD_iteracoes {get; set;}
+        public bool mostrar_mean_Mfx_iteracoes {get; set;}
     }
 
     public class ParametrosLivreProblema{
@@ -170,7 +183,17 @@ namespace Classes_Comuns_Enums
         F09,
         F10,
         levy13,
-        beale
+        beale,
+        cosine_mixture,
+        mccormick,
+        paviani,
+        salomon,
+        schaffer_2,
+        adjiman,
+        alpine01,
+        bartels_conn,
+        bird,
+        bohachevsky_1,
     }
 
     enum EnumNomesAlgoritmos{
@@ -206,7 +229,8 @@ namespace Classes_Comuns_Enums
     enum EnumTipoCriterioParada{
         parada_por_NFOB,
         parada_por_PRECISAO,
-        parada_por_PRECISAOouNFOB
+        parada_por_PRECISAOouNFOB,
+        parada_por_ITERATIONS
     }
 
     enum EnumTipoPerturbacao{

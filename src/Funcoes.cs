@@ -22,19 +22,22 @@ namespace Funcoes_Definidas
             switch(definicao_funcao_objetivo){
 
                 // Griewangk
-                case (int)EnumNomesFuncoesObjetivo.griewangk:
+                case (int)EnumNomesFuncoesObjetivo.griewangk:{
                     return funcao_griewank(fenotipo_variaveis_projeto);
+                }
 
                 // Rosenbrock
-                case (int)EnumNomesFuncoesObjetivo.rosenbrock:
+                case (int)EnumNomesFuncoesObjetivo.rosenbrock:{
                     return funcao_rosenbrock(fenotipo_variaveis_projeto);
+                }
 
                 // DeJong3
-                case (int)EnumNomesFuncoesObjetivo.dejong3:
+                case (int)EnumNomesFuncoesObjetivo.dejong3:{
                     return funcao_DeJong3_inteiro(fenotipo_variaveis_projeto);
+                }
 
                 // Custom Spacecraft Orbit Function
-                case (int)EnumNomesFuncoesObjetivo.spacecraft:
+                case (int)EnumNomesFuncoesObjetivo.spacecraft:{
                     int D = (int)fenotipo_variaveis_projeto[1];
                     int N = (int)fenotipo_variaveis_projeto[2];
 
@@ -49,33 +52,40 @@ namespace Funcoes_Definidas
                         // Espaço inviável. Retorna o máximo
                         return Double.MaxValue;
                     }
+                }
                 
                 // F6
-                case (int)EnumNomesFuncoesObjetivo.rastringin:
+                case (int)EnumNomesFuncoesObjetivo.rastringin:{
                     return funcao_Rastringin(fenotipo_variaveis_projeto);
+                }
 
                 // F7
-                case (int)EnumNomesFuncoesObjetivo.schwefel:
+                case (int)EnumNomesFuncoesObjetivo.schwefel:{
                     return funcao_Schwefel(fenotipo_variaveis_projeto);
+                }
 
                 // F8
-                case (int)EnumNomesFuncoesObjetivo.ackley:
+                case (int)EnumNomesFuncoesObjetivo.ackley:{
                     return funcao_Ackley(fenotipo_variaveis_projeto);
+                }
 
                 // F9
-                case (int)EnumNomesFuncoesObjetivo.F09:
+                case (int)EnumNomesFuncoesObjetivo.F09:{
                     return funcao_F9(fenotipo_variaveis_projeto);
+                }
 
                 // Beale
-                case (int)EnumNomesFuncoesObjetivo.beale:
+                case (int)EnumNomesFuncoesObjetivo.beale:{
                     return funcao_Beale(fenotipo_variaveis_projeto);
+                }
                     
                 // Levy13
-                case (int)EnumNomesFuncoesObjetivo.levy13:
+                case (int)EnumNomesFuncoesObjetivo.levy13:{
                     return funcao_Levy13(fenotipo_variaveis_projeto);
+                }
 
                 // F10
-                case (int)EnumNomesFuncoesObjetivo.F10:
+                case (int)EnumNomesFuncoesObjetivo.F10:{
                     double xi1 = fenotipo_variaveis_projeto[0];
                     double xi2 = fenotipo_variaveis_projeto[1];
                     
@@ -86,6 +96,57 @@ namespace Funcoes_Definidas
                     else{
                         return funcao_F10(fenotipo_variaveis_projeto);
                     }
+                }
+
+                // Cosine Mixture
+                case (int)EnumNomesFuncoesObjetivo.cosine_mixture:{
+                    return funcao_cosine_mixture(fenotipo_variaveis_projeto);
+                }
+
+                // McCormick
+                case (int)EnumNomesFuncoesObjetivo.mccormick:{
+                    return funcao_mccormick(fenotipo_variaveis_projeto);
+                }
+
+                // Paviani
+                case (int)EnumNomesFuncoesObjetivo.paviani:{
+                    return funcao_paviani(fenotipo_variaveis_projeto);
+                }
+
+                // Salomon
+                case (int)EnumNomesFuncoesObjetivo.salomon:{
+                    return funcao_salomon(fenotipo_variaveis_projeto);
+                }
+
+                // Schaffer 2
+                case (int)EnumNomesFuncoesObjetivo.schaffer_2:{
+                    return funcao_schaffer_2(fenotipo_variaveis_projeto);
+                }
+
+                // Adjiman
+                case (int)EnumNomesFuncoesObjetivo.adjiman:{
+                    return funcao_adjiman(fenotipo_variaveis_projeto);
+                }
+
+                // Alpine 1
+                case (int)EnumNomesFuncoesObjetivo.alpine01:{
+                    return funcao_alpine01(fenotipo_variaveis_projeto);
+                }
+
+                // Bartels Conn
+                case (int)EnumNomesFuncoesObjetivo.bartels_conn:{
+                    return funcao_bartels_conn(fenotipo_variaveis_projeto);
+                }
+
+                // Bird
+                case (int)EnumNomesFuncoesObjetivo.bird:{
+                    return funcao_bird(fenotipo_variaveis_projeto);
+                }
+
+                // Bohachevsky 1
+                case (int)EnumNomesFuncoesObjetivo.bohachevsky_1:{
+                    return funcao_bohachevsky_1(fenotipo_variaveis_projeto);
+                }
             }
 
             return fx;
@@ -117,7 +178,6 @@ namespace Funcoes_Definidas
             return laco_somatorio;
         }
 
-
         public static double funcao_rosenbrock(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
 
@@ -139,7 +199,6 @@ namespace Funcoes_Definidas
             // Retorna o valor de f(x), que é o somatório
             return laco_somatorio;
         }
-
         
         public static double funcao_griewank(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0;
@@ -159,7 +218,6 @@ namespace Funcoes_Definidas
             // Retorna o valor de f(x)
             return fx;
         }
-
 
         public static double funcao_Rastringin(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0.0;
@@ -181,23 +239,20 @@ namespace Funcoes_Definidas
             return fx;
         }
 
-
         public static double funcao_Schwefel(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio = 0.0;
 
-            // Laço para o somatório
-            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+            int n = fenotipo_variaveis_projeto.Count;
+
+            for(int i=0; i<n; i++){
                 double xi = fenotipo_variaveis_projeto[i];
                 laco_somatorio += xi * Math.Sin(Math.Sqrt(Math.Abs(xi)));
             }
 
-            // Expressão final de f(x)
-            double fx = 418.9829 * fenotipo_variaveis_projeto.Count - laco_somatorio;
+            double fx = 418.9829*n - laco_somatorio;
 
-            // Retorna o valor de f(x)
             return fx;
         }
-
 
         public static double funcao_Ackley(List<double> fenotipo_variaveis_projeto){
             double laco_somatorio_1 = 0.0;
@@ -226,7 +281,6 @@ namespace Funcoes_Definidas
             return fx;
         }
 
-
         public static double funcao_Beale(List<double> fenotipo_variaveis_projeto){
             double x1 = fenotipo_variaveis_projeto[0];
             double x2 = fenotipo_variaveis_projeto[1];
@@ -238,7 +292,6 @@ namespace Funcoes_Definidas
             
             return fx;
         }
-
 
         public static double funcao_F9(List<double> fenotipo_variaveis_projeto){
             double xi1 = fenotipo_variaveis_projeto[0];
@@ -255,7 +308,6 @@ namespace Funcoes_Definidas
             return fx;
         }
 
-
         public static double funcao_F10(List<double> fenotipo_variaveis_projeto){
             double xi1 = fenotipo_variaveis_projeto[0];
             double xi2 = fenotipo_variaveis_projeto[1];
@@ -266,5 +318,191 @@ namespace Funcoes_Definidas
             // Retorna o valor de f(x)
             return fx;
         }
+
+        public static double funcao_cosine_mixture(List<double> fenotipo_variaveis_projeto){
+            //http://jakobbossek.github.io/smoof/reference/makeCosineMixtureFunction.html
+            //http://infinity77.net/global_optimization/test_functions_nd_C.html
+            
+            double laco_somatorio_1 = 0.0;
+            double laco_somatorio_2 = 0.0;
+
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+
+                laco_somatorio_1 += Math.Cos(5.0 * Math.PI * xi);
+                laco_somatorio_2 += Math.Pow(xi, 2);
+            }
+
+            double fx = -0.1*laco_somatorio_1 - laco_somatorio_2;
+            return fx;
+        }
+
+        public static double funcao_mccormick(List<double> fenotipo_variaveis_projeto){
+            //https://al-roomi.org/benchmarks/unconstrained/2-dimensions/61-mccormick-s-function
+            //https://www.sfu.ca/~ssurjano/mccorm.html
+            
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+
+            double fx = Math.Sin(x1+x2) + Math.Pow((x1-x2),2) - 1.5*x1 + 2.5*x2 + 1;
+            return fx;
+        }
+
+        public static double funcao_paviani(List<double> fenotipo_variaveis_projeto){
+            //http://infinity77.net/global_optimization/test_functions_nd_P.html
+            //http://www.geocities.ws/eadorio/mvf.pdf
+            
+            double laco_somatorio_1 = 0.0;
+            double laco_produtorio_1 = 1;
+
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+
+                laco_somatorio_1 += (Math.Pow(Math.Log(xi-2), 2) + Math.Pow(Math.Log(10-xi), 2));
+                laco_produtorio_1 *= xi;
+            }
+
+            double fx = laco_somatorio_1 - Math.Pow(laco_produtorio_1, 0.2);
+            return fx;
+        }
+
+        public static double funcao_salomon(List<double> fenotipo_variaveis_projeto){
+            //https://www.indusmic.com/post/salomon-function
+            //https://al-roomi.org/benchmarks/unconstrained/n-dimensions/184-salomon-s-function
+            
+            double laco_somatorio_1 = 0.0;
+
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+                laco_somatorio_1 += Math.Pow(xi, 2);
+            }
+            double sqrt_x = Math.Sqrt(laco_somatorio_1);
+
+            double fx = 1 - Math.Cos(2*Math.PI*sqrt_x) + 0.1*sqrt_x;
+            return fx;
+        }   
+
+        public static double funcao_alpine01(List<double> fenotipo_variaveis_projeto){
+            //http://infinity77.net/global_optimization/test_functions_nd_A.html
+            //https://al-roomi.org/benchmarks/unconstrained/n-dimensions/162-alpine-function-no-1
+
+            double laco_somatorio_1 = 0.0;
+
+            for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+                double xi = fenotipo_variaveis_projeto[i];
+
+                double res = xi*Math.Sin(xi) + 0.1*xi;
+                laco_somatorio_1 += Math.Abs(res);
+            }
+            double fx = laco_somatorio_1;
+
+            return fx;
+        }   
+
+        public static double funcao_schaffer_2(List<double> fenotipo_variaveis_projeto){
+            //https://www.sfu.ca/~ssurjano/schaffer2.html
+            //https://www.indusmic.com/post/python-implementation-of-schaffer-function
+
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+                
+            double soma_quadrados = Math.Pow(x1,2) + Math.Pow(x2,2);
+            double subt_quadrados = Math.Pow(x1,2) - Math.Pow(x2,2);
+            double num = Math.Pow( Math.Sin(subt_quadrados), 2) - 0.5;
+            double den = Math.Pow(1 + 0.001*soma_quadrados, 2);
+            
+            double fx = 0.5 + num/den;
+
+            return fx;
+        }
+
+        public static double funcao_bartels_conn(List<double> fenotipo_variaveis_projeto){
+            //https://al-roomi.org/benchmarks/unconstrained/2-dimensions/72-bartels-conn-s-function
+            //https://www.indusmic.com/post/bartels-conn-function
+
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+                
+            double termo1 = Math.Abs (Math.Pow(x1,2) + Math.Pow(x2,2) + x1*x2);
+            double termo2 = Math.Abs (Math.Sin(x1));
+            double termo3 = Math.Abs (Math.Cos(x2));
+            
+            double fx = termo1 + termo2 + termo3;   
+            return fx;
+        }
+
+        public static double funcao_bird(List<double> fenotipo_variaveis_projeto){
+            //https://www.indusmic.com/post/bird-function
+
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+
+            double exp1 = Math.Pow((1 - Math.Cos(x2)),2);
+            double exp2 = Math.Pow((1 - Math.Sin(x1)),2);
+
+            double termo1 = Math.Sin(x1)*Math.Exp(exp1);
+            double termo2 = Math.Cos(x2)*Math.Exp(exp2);
+            double termo3 = Math.Pow((x1-x2),2);
+            
+            double fx = termo1 + termo2 + termo3;   
+            return fx;
+        }
+
+        public static double funcao_adjiman(List<double> fenotipo_variaveis_projeto){
+            //https://al-roomi.org/benchmarks/unconstrained/2-dimensions/113-adjiman-s-function
+            //https://www.indusmic.com/post/happy-cat-function
+            //http://infinity77.net/global_optimization/test_functions_nd_A.html
+
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+                
+            double fx = Math.Cos(x1)*Math.Sin(x2) - x1/(Math.Pow(x2,2)+1);
+            return fx;
+        }
+
+        public static double funcao_bohachevsky_1(List<double> fenotipo_variaveis_projeto){
+            //http://jakobbossek.github.io/smoof/reference/makeBohachevskyN1Function.html
+            //https://www.sfu.ca/~ssurjano/boha.html
+            
+            double x1 = fenotipo_variaveis_projeto[0];
+            double x2 = fenotipo_variaveis_projeto[1];
+
+            double termo1 = Math.Pow(x1, 2);
+            double termo2 = 2*Math.Pow(x2, 2);
+            double termo3 = -0.3*Math.Cos(3*Math.PI*x1);
+            double termo4 = -0.4*Math.Cos(4*Math.PI*x2);
+
+            double fx = termo1 + termo2 + termo3 + termo4 + 0.7;
+            return fx;
+        }
+    
+
+        // public static double funcao_schaffer____(List<double> fenotipo_variaveis_projeto){
+        //     //https://www.sfu.ca/~ssurjano/schaffer2.html
+
+        //     double x1 = fenotipo_variaveis_projeto[0];
+        //     double x2 = fenotipo_variaveis_projeto[1];
+                
+        //     double soma_quadrados = Math.Pow(x1,2) + Math.Pow(x2,2)
+            
+        //     double fx = Math.Pow(soma_quadrados, 0.25) * (Math.Pow(Math.Sin(50*Math.Pow(soma_quadrados,0.1)), 2) + 1); 
+        //     return fx;
+        // }
+
+
+
+        // public static double funcao_exponential(List<double> fenotipo_variaveis_projeto){
+        //     // ??????????
+
+        //     double laco_somatorio_1 = 0.0;
+
+        //     for(int i=0; i<fenotipo_variaveis_projeto.Count; i++){
+        //         double xi = fenotipo_variaveis_projeto[i];
+        //         laco_somatorio_1 += Math.Pow(xi, 2);
+        //     }
+
+        //     double fx = Math.Exp(-0.5*laco_somatorio_1);
+        //     return fx;
+        // }
     }
 }

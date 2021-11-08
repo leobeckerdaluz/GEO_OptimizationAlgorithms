@@ -146,17 +146,21 @@ namespace GEOs_REAIS
             double tau_antigo = tau;
 
             // Se a CoI for zero, restarta o TAU
+            // if (CoI == 0.0 || tau > 5)
             if (CoI == 0.0)// || tau > 5)
             {
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
+                
                 tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
+                // tau = 0.5;
 
             }
             // Senão, se for menor que o CoI anterior, aumenta o TAU
             else if(CoI <= CoI_1)
             {
                 tau += (0.5 + CoI) * random.NextDouble();
+                // tau = 10;
             }
             
             #if DEBUG_MUTACAO_TAU

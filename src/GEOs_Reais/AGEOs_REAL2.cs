@@ -58,6 +58,7 @@ namespace GEOs_REAIS
             double tau_antigo = tau;
 
             // Se a CoI for zero, restarta o TAU
+            // if (CoI == 0.0 || tau > 5)
             if (CoI == 0.0)// || tau > 5)
             {
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );

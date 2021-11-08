@@ -1,5 +1,5 @@
 
-// #define CONSOLE_OUT_FILE
+#define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
@@ -27,22 +27,9 @@ namespace Execucoes
 {
     public class Execucoes_GEO
     {
-        // public Random random = new Random();
-
         // =====================================
         // ROTINAS PARA EXECUÇÃO
         // =====================================
-
-        public string populacao_real_em_string(List<double> populacao)
-        {
-            string populacao_str = populacao[0].ToString();
-            for(int i=1; i<populacao.Count; i++)
-            {
-                populacao_str += "," + populacao[i].ToString();
-            }
-            return populacao_str;
-        }
-
 
         public static List<double> geracao_populacao_real(List<double> lower_bounds, List<double> upper_bounds, int seed)
         {
@@ -119,12 +106,19 @@ namespace Execucoes
                 List<List<double>> NFOBs_todas_execucoes = new List<List<double>>();
                 // Inicializa o somatório dos NFOBs finais
                 int somatorio_NFOBs = 0;
+
+                int somatorio_iteracoes = 0;
+
                 // Inicializa o somatório dos melhores f(x)
                 double somatorio_melhorFX = 0;
                 // Inicializa a lista que irá conter os melhores f(x) para cada execução
                 List<double> lista_melhores_fx = new List<double>();
                 // Inicializa a lista que irá conter a população final para cada execução
                 List<List<double>> lista_populacoes_finais = new List<List<double>>();
+
+                List<List<double>> stats_TAU_per_iteration = new List<List<double>>();
+                List<List<double>> stats_STD_per_iteration = new List<List<double>>();
+                List<List<double>> stats_Mfx_per_iteration = new List<List<double>>();
 
                 // Para cada execução, vai acumulando os resultados
                 for (int j=0; j<execucoes_algoritmo_executado.Count; j++)
@@ -135,19 +129,37 @@ namespace Execucoes
                     NFOBs_todas_execucoes.Add( ret.melhores_NFOBs );
                     // Somatório de NFOBs para posterior média
                     somatorio_NFOBs += ret.NFOB;
+
+                    somatorio_iteracoes += ret.iteracoes;
+
                     // Somatório de melhorFX para posterior média
                     somatorio_melhorFX += ret.melhor_fx;
                     // Adiciona o melhor f(x) na lista dos melhores f(x)s
                     lista_melhores_fx.Add( ret.melhor_fx );
                     // Adiciona a população da execução na lista de populações das execuções
                     lista_populacoes_finais.Add( ret.populacao_final );
+                    
+                    stats_TAU_per_iteration.Add(ret.stats_TAU_per_iteration);
+                    stats_STD_per_iteration.Add(ret.stats_STD_per_iteration);
+                    stats_Mfx_per_iteration.Add(ret.stats_Mfx_per_iteration);
                 }
 
                 // Lista irá conter o f(x) médio para cada NFOB desejado
                 List<double> lista_fxs_medios_cada_NFOB_desejado = new List<double>();
+                List<double> lista_TAU_medio_per_iteration = new List<double>();
+                List<double> lista_STD_medio_per_iteration = new List<double>();
+                List<double> lista_Mfx_medio_per_iteration = new List<double>();
+                // lista_TAU_medio_per_iteration = stats_TAU_per_iteration[0];
+                // lista_STD_medio_per_iteration = stats_STD_per_iteration[0];
+                // lista_Mfx_medio_per_iteration
 
                 // Obtém a quantidade de NFOBs armazenados
                 int quantidade_NFOBs = NFOBs_todas_execucoes[0].Count;
+
+                // Calcula a média dos NFOBs
+                int media_NFOBs = (int) (somatorio_NFOBs / parametros_execucao.quantidade_execucoes);
+                int media_iteracoes = (int) (somatorio_iteracoes / parametros_execucao.quantidade_execucoes);
+
 
                 // Se o critério de parada é por NFOB, calcula a média das N execuções para cada NFOB desejado.
                 if (parametros_execucao.parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
@@ -155,21 +167,51 @@ namespace Execucoes
                     for(int k=0; k<quantidade_NFOBs; k++)
                     {
                         // Percorre aquele NFOB em cada execução para calcular a média de f(x) naquele NFOB
-                        double sum = 0;
-                        foreach(List<double> execution in NFOBs_todas_execucoes)
+                        double sum_Mfx = 0;
+
+                        // foreach(List<double> execution in NFOBs_todas_execucoes)
+                        for(int g=0; g<NFOBs_todas_execucoes.Count; g++)
                         {
-                            sum += execution[k];
+                            sum_Mfx += NFOBs_todas_execucoes[g][k];
                         }
-                        double media = sum / NFOBs_todas_execucoes.Count;
                     
                         // Adiciona o f(x) médio do NFOB na lista
-                        lista_fxs_medios_cada_NFOB_desejado.Add(media);
+                        lista_fxs_medios_cada_NFOB_desejado.Add( sum_Mfx / NFOBs_todas_execucoes.Count );
+                    }
+
+                    
+
+                }
+
+                // Se o critério de parada é por ITERAÇÕES, calcula a média das N execuções
+                if (parametros_execucao.parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS)
+                {
+                    // Computa os TAU, STD e Mfx médio por cada iteração
+                    for(int it=0; it<media_iteracoes; it++)
+                    {
+                        double sum_TAU = 0;
+                        // double sum_STD = 0;
+                        double sum_Mfx = 0;
+
+                        for(int execs=0; execs<stats_TAU_per_iteration.Count; execs++)
+                        {
+                            sum_TAU += stats_TAU_per_iteration[execs][it];
+                            // sum_STD += stats_STD_per_iteration[execs][it];
+                            sum_Mfx += stats_Mfx_per_iteration[execs][it];
+                        }
+
+                        double media1 = sum_TAU / stats_TAU_per_iteration.Count;
+                        lista_TAU_medio_per_iteration.Add(media1);
+
+                        // double media2 = sum_STD / stats_STD_per_iteration.Count;
+                        // lista_STD_medio_per_iteration.Add(media2);
+
+                        double media3 = sum_Mfx / stats_Mfx_per_iteration.Count;
+                        lista_Mfx_medio_per_iteration.Add(media3);
                     }
                 }
 
-                // Calcula a média dos NFOBs
-                int media_NFOBs = (int) (somatorio_NFOBs / parametros_execucao.quantidade_execucoes);
-
+                
                 // Calcula a média dos melhores f(x)
                 double media_melhor_fx = (double) somatorio_melhorFX / parametros_execucao.quantidade_execucoes;
 
@@ -187,11 +229,15 @@ namespace Execucoes
                 Retorno_N_Execucoes_GEOs media_das_execucoes = new Retorno_N_Execucoes_GEOs();
                 media_das_execucoes.algoritmo_utilizado = algoritmo_executado;
                 media_das_execucoes.NFOB_medio = media_NFOBs;
+                media_das_execucoes.ITERACOES_medio = media_iteracoes;
                 media_das_execucoes.media_melhor_fx = media_melhor_fx;
                 media_das_execucoes.SD_do_melhor_fx = SD_melhor_fx;
                 media_das_execucoes.media_valor_FO_em_cada_NFOB = lista_fxs_medios_cada_NFOB_desejado;
                 media_das_execucoes.lista_melhores_fxs = lista_melhores_fx;
                 media_das_execucoes.lista_populacao_final = lista_populacoes_finais;  
+                media_das_execucoes.lista_TAU_medio_per_iteration = lista_TAU_medio_per_iteration;  
+                media_das_execucoes.lista_STD_medio_per_iteration = lista_STD_medio_per_iteration;  
+                media_das_execucoes.lista_Mfx_medio_per_iteration = lista_Mfx_medio_per_iteration;  
 
                 // Adiciona essa estatística do algoritmo na lista geral de estatísticas
                 estatisticas_algoritmos.Add(media_das_execucoes);
@@ -344,6 +390,63 @@ namespace Execucoes
 
                 Console.WriteLine("");
             }
+
+
+            if (o_que_interessa_printar.mostrar_mean_TAU_iteracoes)
+            {
+                Console.WriteLine("==========================================================");
+                Console.WriteLine("===> TAU para cada iteração:");
+                Console.WriteLine("iteracao;" + string_algoritmos_executados);
+                
+                // Apresenta a média para cada NFOB
+                int quantidade_NFOBs = estatisticas_algoritmos[0].media_valor_FO_em_cada_NFOB.Count;
+                int quantidade_iteracoes = estatisticas_algoritmos[0].ITERACOES_medio;
+                
+                // Para cada execução dos algoritmos
+                for (int i=0; i<quantidade_iteracoes; i++)
+                {    
+                    int iteracao = i+1;
+                    string TAUs_naquela_iteracao = iteracao.ToString() + ';';
+                    
+                    // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                    for (int j=0; j<estatisticas_algoritmos.Count; j++)
+                    {
+                        double TAU_naquela_iteracao = estatisticas_algoritmos[j].lista_TAU_medio_per_iteration[i];
+                        TAUs_naquela_iteracao += TAU_naquela_iteracao.ToString() + ';';
+                    }
+                    Console.WriteLine( TAUs_naquela_iteracao.Replace('.',',') );
+                }
+                
+                Console.WriteLine("");
+            }
+
+
+            if (o_que_interessa_printar.mostrar_mean_Mfx_iteracoes)
+            {
+                Console.WriteLine("==========================================================");
+                Console.WriteLine("===> Mfx para cada iteração:");
+                Console.WriteLine("iteracao;" + string_algoritmos_executados);
+                
+                // Apresenta a média para cada iteração
+                int quantidade_iteracoes = estatisticas_algoritmos[0].ITERACOES_medio;
+                
+                // Para cada execução dos algoritmos
+                for (int i=0; i<quantidade_iteracoes; i++)
+                {    
+                    int iteracao = i+1;
+                    string Mfxs_naquela_iteracao = iteracao.ToString() + ';';
+                    
+                    // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                    for (int j=0; j<estatisticas_algoritmos.Count; j++)
+                    {
+                        double fx = estatisticas_algoritmos[j].lista_Mfx_medio_per_iteration[i];
+                        Mfxs_naquela_iteracao += fx.ToString() + ';';
+                    }
+                    Console.WriteLine( Mfxs_naquela_iteracao.Replace('.',',') );
+                }
+                
+                Console.WriteLine("");
+            }
         }
 
 
@@ -363,8 +466,6 @@ namespace Execucoes
                 // Para cada execução, gera uma nova população inicial com base nos limites de cada variável
                 parametros_problema.populacao_inicial = new List<double>(geracao_populacao_real(parametros_problema.lower_bounds, parametros_problema.upper_bounds, seed));
 
-                // Console.WriteLine("População inicial GERADA: {0}", populacao_real_em_string(parametros_problema.populacao_inicial) );
-            
                 // GEO
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEO)
                 {
@@ -673,75 +774,75 @@ namespace Execucoes
                     todas_execucoes.Add(ret);
                 }
                 
-                // // ASGEO2real1_3
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3)
-                // {
-                //     // Console.Write("\rodar_ASGEO2real1_3...");
+                // ASGEO2real1_3
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3)
+                {
+                    // Console.Write("\rodar_ASGEO2real1_3...");
 
-                //     ASGEO2_REAL1_3 ASGEO2real1_3 = new ASGEO2_REAL1_3(
-                //         parametros_problema.populacao_inicial, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados,
-                //         parametros_execucao.tipo_perturbacao,
-                //         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_3, 
-                //         parametros_problema.parametros_livres.std_ASGEO2_REAL1_3);
+                    ASGEO2_REAL1_3 ASGEO2real1_3 = new ASGEO2_REAL1_3(
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados,
+                        parametros_execucao.tipo_perturbacao,
+                        parametros_problema.parametros_livres.tau_ASGEO2_REAL1_3, 
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_3);
                         
-                //     RetornoGEOs ret = ASGEO2real1_3.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_3;
+                    RetornoGEOs ret = ASGEO2real1_3.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_3;
                         
-                //     todas_execucoes.Add(ret);
-                // }
+                    todas_execucoes.Add(ret);
+                }
 
-                // // ASGEO2real1_4
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4)
-                // {
-                //     // Console.Write("\rodar_ASGEO2real1_4...");
+                // ASGEO2real1_4
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4)
+                {
+                    // Console.Write("\rodar_ASGEO2real1_4...");
 
-                //     ASGEO2_REAL1_4 ASGEO2real1_4 = new ASGEO2_REAL1_4(
-                //         parametros_problema.populacao_inicial, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados,
-                //         parametros_execucao.tipo_perturbacao,
-                //         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_4, 
-                //         parametros_problema.parametros_livres.std_ASGEO2_REAL1_4,
-                //         parametros_problema.parametros_livres.q_one_fifth_rule,
-                //         parametros_problema.parametros_livres.c_one_fifth_rule,
-                //         parametros_problema.parametros_livres.stdmin_one_fifth_rule);
+                    ASGEO2_REAL1_4 ASGEO2real1_4 = new ASGEO2_REAL1_4(
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados,
+                        parametros_execucao.tipo_perturbacao,
+                        parametros_problema.parametros_livres.tau_ASGEO2_REAL1_4, 
+                        parametros_problema.parametros_livres.std_ASGEO2_REAL1_4,
+                        parametros_problema.parametros_livres.q_one_fifth_rule,
+                        parametros_problema.parametros_livres.c_one_fifth_rule,
+                        parametros_problema.parametros_livres.stdmin_one_fifth_rule);
                         
-                //     RetornoGEOs ret = ASGEO2real1_4.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_4;
+                    RetornoGEOs ret = ASGEO2real1_4.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_4;
                         
-                //     todas_execucoes.Add(ret);
-                // }
+                    todas_execucoes.Add(ret);
+                }
 
-                // // ASGEO2real2_1
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1)
-                // {
-                //     // Console.Write("\nASGEO2real2_1...");
+                // ASGEO2real2_1
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1)
+                {
+                    // Console.Write("\nASGEO2real2_1...");
 
-                //     ASGEO2_REAL2_1 ASGEO2real2_1 = new ASGEO2_REAL2_1(
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
-                //         parametros_problema.populacao_inicial, 
-                //         parametros_problema.lower_bounds, 
-                //         parametros_problema.upper_bounds, 
-                //         parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
-                //         parametros_problema.parametros_livres.ASGEO2_REAL2_1_P,
-                //         parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1,
-                //         parametros_problema.parametros_livres.ASGEO2_REAL2_1_s,
-                //         (int)EnumTipoPerturbacao.perturbacao_porcentagem);
+                    ASGEO2_REAL2_1 ASGEO2real2_1 = new ASGEO2_REAL2_1(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial, 
+                        parametros_problema.lower_bounds, 
+                        parametros_problema.upper_bounds, 
+                        parametros_execucao.parametros_criterio_parada.lista_NFOBs_desejados, 
+                        parametros_problema.parametros_livres.ASGEO2_REAL2_1_P,
+                        parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1,
+                        parametros_problema.parametros_livres.ASGEO2_REAL2_1_s,
+                        (int)EnumTipoPerturbacao.perturbacao_porcentagem);
                         
-                //     RetornoGEOs ret = ASGEO2real2_1.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real2_1;
+                    RetornoGEOs ret = ASGEO2real2_1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real2_1;
 
-                //     todas_execucoes.Add(ret);
-                // }
+                    todas_execucoes.Add(ret);
+                }
 
                 
                 
@@ -887,8 +988,19 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.rosenbrock,
                 // (int)EnumNomesFuncoesObjetivo.schwefel,
                 // (int)EnumNomesFuncoesObjetivo.ackley,
-                (int)EnumNomesFuncoesObjetivo.beale,
+                // (int)EnumNomesFuncoesObjetivo.beale,
                 
+                (int)EnumNomesFuncoesObjetivo.paviani,
+                (int)EnumNomesFuncoesObjetivo.salomon,
+                (int)EnumNomesFuncoesObjetivo.schaffer_2,
+                (int)EnumNomesFuncoesObjetivo.bartels_conn,
+                (int)EnumNomesFuncoesObjetivo.bird,
+                (int)EnumNomesFuncoesObjetivo.bohachevsky_1,
+                
+                // (int)EnumNomesFuncoesObjetivo.cosine_mixture,
+                // (int)EnumNomesFuncoesObjetivo.mccormick,
+                // (int)EnumNomesFuncoesObjetivo.alpine01,
+                // (int)EnumNomesFuncoesObjetivo.adjiman,
                 // (int)EnumNomesFuncoesObjetivo.levy13,
                 // (int)EnumNomesFuncoesObjetivo.nova,
                 // (int)EnumNomesFuncoesObjetivo.spacecraft,
@@ -1246,6 +1358,152 @@ namespace Execucoes
                     break;
                     }
 
+
+
+
+
+                    // PAVIANI
+                    case (int)EnumNomesFuncoesObjetivo.paviani:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Paviani";
+                        parametros_problema.n_variaveis_projeto = 10;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(10, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(2.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            // p1_AGEO1real1 = 1.2,
+                            // p1_AGEO2real1 = 1.4,
+                        };
+                    break;
+                    }
+
+                    // SALOMON
+                    case (int)EnumNomesFuncoesObjetivo.salomon:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Salomon";
+                        parametros_problema.n_variaveis_projeto = 10;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(15, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            // p1_AGEO1real1 = 1.2,
+                            // p1_AGEO2real1 = 1.4,
+                        };
+                    break;
+                    }
+
+                    // SCHAFFER 2
+                    case (int)EnumNomesFuncoesObjetivo.schaffer_2:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Schaffer 2";
+                        parametros_problema.n_variaveis_projeto = 2;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(15, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            // p1_AGEO1real1 = 1.2,
+                            // p1_AGEO2real1 = 1.4,
+                        };
+                    break;
+                    }
+
+                    // BARTELS CONN
+                    case (int)EnumNomesFuncoesObjetivo.bartels_conn:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Bartels Conn";
+                        parametros_problema.n_variaveis_projeto = 2;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(17, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-500.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(500.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            // p1_AGEO1real1 = 1.2,
+                            // p1_AGEO2real1 = 1.4,
+                        };
+                    break;
+                    }
+
+                    // BIRD
+                    case (int)EnumNomesFuncoesObjetivo.bird:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Bird";
+                        parametros_problema.n_variaveis_projeto = 2;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(11, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat( -2*Math.PI, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(  2*Math.PI, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            // p1_AGEO1real1 = 1.2,
+                            // p1_AGEO2real1 = 1.4,
+                        };
+                    break;
+                    }
+
+                    // BOHACHEVSKY 1
+                    case (int)EnumNomesFuncoesObjetivo.bohachevsky_1:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Bohachevsky 1";
+                        parametros_problema.n_variaveis_projeto = 2;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(15, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat( -100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(  100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // tau_GEO = 1.25,
+                            // tau_GEOvar = 1.5,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            // p1_AGEO1real1 = 1.2,
+                            // p1_AGEO2real1 = 1.4,
+                        };
+                    break;
+                    }
+
+
+
+
+
                     // F9 TESE
                     case (int)EnumNomesFuncoesObjetivo.F09:
                     {
@@ -1367,18 +1625,23 @@ namespace Execucoes
 
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao()
                 {
-                    quantidade_execucoes = 50,
+                    quantidade_execucoes = 30,
                     parametros_criterio_parada = new ParametrosCriterioParada()
                     {
                         // EXECUÇÃO NORMAL
                         tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFOB,
-                        PRECISAO_criterio_parada = 0,
                         NFOB_criterio_parada = 100000,
-                        lista_NFOBs_desejados = new List<int>(){
-                            500,1000,1500,2000,2500,3000,3500,4000,4500,5000,
-                            6000,7000,8000,9000,10000,
-                            12000,14000,16000,18000,20000,
-                            25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
+                        lista_NFOBs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
+
+
+                        // // PARADA ITERAÇÕES
+                        // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_ITERATIONS,
+                        // ITERATIONS_criterio_parada = 500,
+                        // lista_NFOBs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
+                        
+
+                        
+                        // lista_NFOBs_desejados = Enumerable.Range(1, 200).Select(i => (i*500)).ToList()
 
                         // // TUNING FUNÇÕES TESTE
                         // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB,
@@ -1414,17 +1677,20 @@ namespace Execucoes
 
                         rodar_AGEO2_REAL1_igor =        false,
                         rodar_AGEO2_REAL1_porcentagem = false,
-                        rodar_AGEO2_REAL2_igor =        false,
-                        rodar_AGEO2_REAL2_porcentagem = false,
-                        rodar_AGEO2_REAL2_normal =      false,
+                        rodar_AGEO2_REAL2_igor =        true,
+                        rodar_AGEO2_REAL2_porcentagem = true,
+                        rodar_AGEO2_REAL2_normal =      true,
                     },
                     o_que_interessa_printar = new OQueInteressaPrintar()
                     {
                         // EXECUÇÃO NORMAL
-                        mostrar_header = false,
-                        mostrar_meanNFE_meanFX_sdFX = true,
-                        mostrar_melhores_NFOB = false,
-                        mostrar_melhores_fx_cada_execucao = false
+                        mostrar_header =                    false,
+                        mostrar_meanNFE_meanFX_sdFX =       true,
+                        mostrar_melhores_NFOB =             true,
+                        mostrar_melhores_fx_cada_execucao = true,
+                        mostrar_mean_TAU_iteracoes =        false,
+                        mostrar_mean_STD_iteracoes =        false,
+                        mostrar_mean_Mfx_iteracoes =        false,
 
                         // // TUNING
                         // mostrar_header = false,
@@ -1445,10 +1711,10 @@ namespace Execucoes
                 Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
                 Console.WriteLine("============================================================================");
                 
-                parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
-                parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
+                // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFOB = true;
+                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                 
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
                 List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);

@@ -28,6 +28,11 @@ namespace GEOs_BINARIOS
         public List<bool> populacao_melhor {get; set;}
         public List<double> melhores_NFOBs {get; set;}
         public List<BitVerificado> lista_informacoes_mutacao {get; set;}
+        public int iterations {get; set;}
+        public double fx_atual_comeco_it {get; set;}
+        public List<int> melhoras_nas_iteracoes {get; set;}
+        public List<double> stats_TAU_per_iteration {get; set;}
+        public List<double> stats_Mfx_per_iteration {get; set;}
 
 
         public GEO_BINARIO(
@@ -47,12 +52,18 @@ namespace GEOs_BINARIOS
             this.lista_NFOBs_desejados = lista_NFOBs_desejados;
             this.bits_por_variavel_variaveis = bits_por_variavel_variaveis;
             this.NFOB = 0;
+            this.iterations = 0;
             this.fx_atual = Double.MaxValue;
             this.fx_melhor = Double.MaxValue;
             this.melhores_NFOBs = new List<double>();
             this.populacao_atual = new List<bool>();
             this.populacao_melhor = new List<bool>();
             this.lista_informacoes_mutacao = new List<BitVerificado>();
+
+            this.fx_atual_comeco_it = this.fx_atual;
+            this.melhoras_nas_iteracoes = new List<int>();
+            this.stats_TAU_per_iteration = new List<double>();
+            this.stats_Mfx_per_iteration = new List<double>();
         }
 
 
@@ -286,11 +297,9 @@ namespace GEOs_BINARIOS
             // Verifica o critério de parada
             bool parada_por_precisao = ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
 
-            // Console.WriteLine("fx_melhor={0} - esperado={1} = {2}", Math.Abs(this.fx_melhor), Math.Abs(parametros_criterio_parada.fx_esperado), Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado));
-            
-            // Console.WriteLine("abs disso é {0} e a precisao é {1}", Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)), parametros_criterio_parada.PRECISAO_criterio_parada);
-
             bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
+            
+            bool parada_por_ITERATIONS = (iterations >= parametros_criterio_parada.ITERATIONS_criterio_parada);
             
             // Antes de verificar a parada, começa com falso.
             bool parada = false;
@@ -299,21 +308,36 @@ namespace GEOs_BINARIOS
             if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
             {
                 if (parada_por_NFOB)
+                {
                     parada = true;
+                }
             }
-            
+
+            // Se o critério for por ITERACOES...
+            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS)
+            {
+                if (parada_por_ITERATIONS)
+                {
+                    parada = true;
+                }
+            }
+
             // Se o critério for por precisão...
             else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO)
             {
                 if (parada_por_precisao)
+                {
                     parada = true;
+                }
             }
             
             // Se o critério for por precisão ou por NFOB...
             else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB)
             {
                 if (parada_por_NFOB || parada_por_precisao)
+                {
                     parada = true;
+                }
             }
 
             // Retorna o status da parada
@@ -326,9 +350,17 @@ namespace GEOs_BINARIOS
             
             while(true)
             {
+                fx_atual_comeco_it = fx_atual;
+
                 verifica_perturbacoes();
                 mutacao_do_tau_AGEOs();
                 ordena_e_perturba();
+
+                iterations++;
+                melhoras_nas_iteracoes.Add( (fx_atual < fx_atual_comeco_it) ? 1 : 0 );
+                stats_TAU_per_iteration.Add(tau);
+                stats_Mfx_per_iteration.Add(fx_melhor);
+                
 
                 if ( criterio_parada(parametros_criterio_parada) )
                 {
@@ -343,9 +375,11 @@ namespace GEOs_BINARIOS
 
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFOB = this.NFOB;
+                    retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFOBs = this.melhores_NFOBs;
-                    // retorno.populacao_final = this.populacao_melhor;
+                    retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
+                    retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
                     
                     return retorno;
                 }
