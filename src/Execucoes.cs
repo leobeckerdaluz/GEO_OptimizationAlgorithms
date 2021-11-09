@@ -2189,7 +2189,7 @@ namespace Execucoes
             // ============================================================================
             // ============================================================================
             #if CONSOLE_OUT_FILE
-                string filename = "./Redirect.txt";
+                string filename = "./SaidaRedirect.txt";
 
                 // Deleta o arquivo caso ele exista
                 if (File.Exists(filename))  File.Delete(filename);
@@ -2205,7 +2205,7 @@ namespace Execucoes
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine ("Cannot open Redirect.txt for writing");
+                    Console.WriteLine ("Cannot open SaidaRedirect.txt for writing");
                     Console.WriteLine (e.Message);
                     return;
                 }
