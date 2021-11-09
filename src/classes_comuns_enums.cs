@@ -17,10 +17,10 @@ namespace Classes_Comuns_Enums
     
     public class RetornoGEOs {
         public int algoritmo_utilizado { get; set; }
-        public int NFOB { get; set; }
+        public int NFE { get; set; }
         public int iteracoes { get; set; }
         public double melhor_fx { get; set; }
-        public List<double> melhores_NFOBs { get; set; }
+        public List<double> melhores_NFEs { get; set; }
         public List<double> melhores_TAUs { get; set; }
         public List<double> populacao_final { get; set; }
         public List<double> stats_TAU_per_iteration { get; set; }
@@ -31,11 +31,11 @@ namespace Classes_Comuns_Enums
 
     public class Retorno_N_Execucoes_GEOs {
         public int algoritmo_utilizado { get; set; }
-        public int NFOB_medio { get; set; }
+        public int NFE_medio { get; set; }
         public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
         public double SD_do_melhor_fx { get; set; }
-        public List<double> media_valor_FO_em_cada_NFOB { get; set; }
+        public List<double> media_valor_FO_em_cada_NFE { get; set; }
         public List<double> lista_melhores_fxs { get; set; }
         public List<List<double>> lista_populacao_final { get; set; }
         public List<double> lista_TAU_medio_per_iteration { get; set; }
@@ -45,15 +45,15 @@ namespace Classes_Comuns_Enums
 
     public class ParametrosCriterioParada {
         public int tipo_criterio_parada { get; set; }
-        public int NFOB_criterio_parada { get; set; }
+        public int NFE_criterio_parada { get; set; }
         public int ITERATIONS_criterio_parada { get; set; }
         public double PRECISAO_criterio_parada { get; set; }
         public double fx_esperado { get; set; }
-        public List<int> lista_NFOBs_desejados { get; set; }
+        public List<int> lista_NFEs_desejados { get; set; }
     }
-    // 'parada_por_NFOB_atingido';
+    // 'parada_por_NFE_atingido';
     // 'parada_por_Precisao_atingida';
-    // 'parada_por_Precisao_ou_NFOB_atingidos';
+    // 'parada_por_Precisao_ou_NFE_atingidos';
 
 
     public class QuaisAlgoritmosRodar {
@@ -125,7 +125,7 @@ namespace Classes_Comuns_Enums
     }
 
     public class OQueInteressaPrintar{
-        public bool mostrar_melhores_NFOB {get; set;}
+        public bool mostrar_melhores_NFE {get; set;}
         public bool mostrar_meanNFE_meanFX_sdFX {get; set;}
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
         public bool mostrar_header {get; set;}
@@ -228,9 +228,9 @@ namespace Classes_Comuns_Enums
     }
 
     enum EnumTipoCriterioParada{
-        parada_por_NFOB,
+        parada_por_NFE,
         parada_por_PRECISAO,
-        parada_por_PRECISAOouNFOB,
+        parada_por_PRECISAOouNFE,
         parada_por_ITERATIONS
     }
 

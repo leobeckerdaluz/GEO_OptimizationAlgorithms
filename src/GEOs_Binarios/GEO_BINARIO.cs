@@ -13,14 +13,14 @@ namespace GEOs_BINARIOS
         public int definicao_funcao_objetivo {get; set;}
         public List<double> lower_bounds {get; set;}
         public List<double> upper_bounds {get; set;}
-        public List<int> lista_NFOBs_desejados {get; set;}
+        public List<int> lista_NFEs_desejados {get; set;}
         public List<int> bits_por_variavel_variaveis {get; set;}
-        public int NFOB {get; set;}
+        public int NFE {get; set;}
         public double fx_atual {get; set;}
         public double fx_melhor {get; set;}
         public List<bool> populacao_atual {get; set;}
         public List<bool> populacao_melhor {get; set;}
-        public List<double> melhores_NFOBs {get; set;}
+        public List<double> melhores_NFEs {get; set;}
         public List<BitVerificado> lista_informacoes_mutacao {get; set;}
         public int iterations {get; set;}
         public double fx_atual_comeco_it {get; set;}
@@ -36,7 +36,7 @@ namespace GEOs_BINARIOS
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            List<int> lista_NFOBs_desejados,
+            List<int> lista_NFEs_desejados,
             List<int> bits_por_variavel_variaveis)
         {
             this.tau = tau;
@@ -44,17 +44,17 @@ namespace GEOs_BINARIOS
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
             this.lower_bounds = lower_bounds;
             this.upper_bounds = upper_bounds;
-            this.lista_NFOBs_desejados = lista_NFOBs_desejados;
+            this.lista_NFEs_desejados = lista_NFEs_desejados;
             
             this.bits_por_variavel_variaveis = bits_por_variavel_variaveis;
             
-            this.NFOB = 0;
+            this.NFE = 0;
             this.populacao_atual = populacao_inicial_binaria;
             this.populacao_melhor = populacao_inicial_binaria;
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
-            this.melhores_NFOBs = new List<double>();
+            this.melhores_NFEs = new List<double>();
             this.lista_informacoes_mutacao = new List<BitVerificado>();
             this.iterations = 0;
             this.melhoras_nas_iteracoes = new List<int>();
@@ -64,14 +64,14 @@ namespace GEOs_BINARIOS
         }
 
 
-        public virtual void add_NFOB()
+        public virtual void add_NFE()
         {
-            NFOB++;
+            NFE++;
 
-            // Se está no NFOB a armazenar info, armazena
-            if (lista_NFOBs_desejados.Contains(NFOB))
+            // Se está no NFE a armazenar info, armazena
+            if (lista_NFEs_desejados.Contains(NFE))
             {
-                melhores_NFOBs.Add(fx_melhor);
+                melhores_NFEs.Add(fx_melhor);
             }
         }
 
@@ -81,8 +81,8 @@ namespace GEOs_BINARIOS
             // Calcula o valor da função objetivo com o fenótipo desejado
             int n_variaveis_projeto = this.bits_por_variavel_variaveis.Count;
 
-            // Incrementa o NFOB
-            add_NFOB();
+            // Incrementa o NFE
+            add_NFE();
             
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
@@ -212,23 +212,23 @@ namespace GEOs_BINARIOS
 
         public virtual bool criterio_parada(ParametrosCriterioParada parametros_criterio_parada)
         {
-            // Verifica cada possível critério de parada (por precisão, por NFOB ou por nro de iterações)
+            // Verifica cada possível critério de parada (por precisão, por NFE ou por nro de iterações)
             bool stop = false;
             
             // POR PRECISÃO - Se a precisão é menor que a definida
             double precisao_obtida = Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado));
             bool parada_por_precisao = (precisao_obtida <= parametros_criterio_parada.PRECISAO_criterio_parada);
 
-            // POR NFOB - Se o NFOB é superior ao definido
-            bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
+            // POR NFE - Se o NFE é superior ao definido
+            bool parada_por_NFE = (NFE >= parametros_criterio_parada.NFE_criterio_parada);
             
             // POR NRO ITERAÇÕES - Se o nro de iterações é maior que o definido
             bool parada_por_ITERATIONS = (iterations >= parametros_criterio_parada.ITERATIONS_criterio_parada);
             
 
-            // Se o critério for por NFOB...
-            if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
-            && parada_por_NFOB)
+            // Se o critério for por NFE...
+            if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFE)
+            && parada_por_NFE)
             {
                 stop = true;
             }
@@ -247,9 +247,9 @@ namespace GEOs_BINARIOS
                 stop = true;
             }
             
-            // Se o critério for por precisão ou por NFOB...
-            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB) 
-            && (parada_por_NFOB || parada_por_precisao))
+            // Se o critério for por precisão ou por NFE...
+            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE) 
+            && (parada_por_NFE || parada_por_precisao))
             {
                 stop = true;
             }
@@ -281,10 +281,10 @@ namespace GEOs_BINARIOS
                 if ( criterio_parada(parametros_criterio_parada) )
                 {
                     RetornoGEOs retorno = new RetornoGEOs();
-                    retorno.NFOB = this.NFOB;
+                    retorno.NFE = this.NFE;
                     retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
-                    retorno.melhores_NFOBs = this.melhores_NFOBs;
+                    retorno.melhores_NFEs = this.melhores_NFEs;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
                     retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
                     

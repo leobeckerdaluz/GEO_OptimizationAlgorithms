@@ -19,7 +19,7 @@ namespace GEOs_REAIS
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            List<int> lista_NFOBs_desejados,
+            List<int> lista_NFEs_desejados,
             bool ultima_perturbacao_random_uniforme,
             int tipo_variacao_std_nas_P_perturbacoes,
             double std,
@@ -31,7 +31,7 @@ namespace GEOs_REAIS
                 populacao_inicial,
                 lower_bounds,
                 upper_bounds,
-                lista_NFOBs_desejados,
+                lista_NFEs_desejados,
                 tipo_perturbacao,
                 tau,
                 std)
@@ -72,7 +72,7 @@ namespace GEOs_REAIS
 
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
-                    add_NFOB();
+                    add_NFE();
 
                     // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                     Perturbacao perturbacao = new Perturbacao();

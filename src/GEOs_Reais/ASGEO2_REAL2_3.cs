@@ -18,13 +18,13 @@ namespace GEOs_REAIS
             List<double> populacao_inicial,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            List<int> lista_NFOBs_desejados) : base(
+            List<int> lista_NFEs_desejados) : base(
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
                 populacao_inicial,
                 lower_bounds,
                 upper_bounds,
-                lista_NFOBs_desejados,
+                lista_NFEs_desejados,
                 1,
                 0.5,
                 1)
@@ -110,7 +110,7 @@ namespace GEOs_REAIS
 
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
-                    add_NFOB();
+                    add_NFE();
 
                     // Avalia se a perturbação gera o melhor f(x) da história
                     if (fx < fx_melhor)

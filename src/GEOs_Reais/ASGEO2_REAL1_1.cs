@@ -19,7 +19,7 @@ namespace GEOs_REAIS
             int definicao_funcao_objetivo,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            List<int> lista_NFOBs_desejados,
+            List<int> lista_NFEs_desejados,
             int tipo_perturbacao,
             double tau,
             double std,
@@ -31,7 +31,7 @@ namespace GEOs_REAIS
                 populacao_inicial,
                 lower_bounds,
                 upper_bounds,
-                lista_NFOBs_desejados,
+                lista_NFEs_desejados,
                 tipo_perturbacao,
                 tau,
                 std)
@@ -67,7 +67,7 @@ namespace GEOs_REAIS
             // A cada q iterações, verifica
             if ((melhoras_nas_iteracoes.Count > 0) && ((melhoras_nas_iteracoes.Count % q) == 0))
             {
-                // Pega os últimos melhores NFOBs
+                // Pega os últimos melhores NFEs
                 List<int> ultimas_melhorias_iteracoes = melhoras_nas_iteracoes.GetRange(melhoras_nas_iteracoes.Count - q, q);
                 int melhoraram_its = ultimas_melhorias_iteracoes.Count(i => i == 1);
                 
