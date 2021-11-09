@@ -15,7 +15,6 @@ namespace GEOs_BINARIOS
         public List<double> upper_bounds {get; set;}
         public List<int> lista_NFOBs_desejados {get; set;}
         public List<int> bits_por_variavel_variaveis {get; set;}
-
         public int NFOB {get; set;}
         public double fx_atual {get; set;}
         public double fx_melhor {get; set;}
@@ -31,6 +30,7 @@ namespace GEOs_BINARIOS
 
 
         public GEO_BINARIO(
+            List<bool> populacao_inicial_binaria,
             double tau,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -45,18 +45,20 @@ namespace GEOs_BINARIOS
             this.lower_bounds = lower_bounds;
             this.upper_bounds = upper_bounds;
             this.lista_NFOBs_desejados = lista_NFOBs_desejados;
+            
             this.bits_por_variavel_variaveis = bits_por_variavel_variaveis;
+            
             this.NFOB = 0;
-            this.iterations = 0;
-            this.fx_atual = Double.MaxValue;
-            this.fx_melhor = Double.MaxValue;
-            this.melhores_NFOBs = new List<double>();
-            this.populacao_atual = new List<bool>();
-            this.populacao_melhor = new List<bool>();
-            this.lista_informacoes_mutacao = new List<BitVerificado>();
-
+            this.populacao_atual = populacao_inicial_binaria;
+            this.populacao_melhor = populacao_inicial_binaria;
+            this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual);
+            this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
+            this.melhores_NFOBs = new List<double>();
+            this.lista_informacoes_mutacao = new List<BitVerificado>();
+            this.iterations = 0;
             this.melhoras_nas_iteracoes = new List<int>();
+            
             this.stats_TAU_per_iteration = new List<double>();
             this.stats_Mfx_per_iteration = new List<double>();
         }
@@ -66,6 +68,7 @@ namespace GEOs_BINARIOS
         {
             NFOB++;
 
+            // Se está no NFOB a armazenar info, armazena
             if (lista_NFOBs_desejados.Contains(NFOB))
             {
                 melhores_NFOBs.Add(fx_melhor);
@@ -75,12 +78,12 @@ namespace GEOs_BINARIOS
 
         public virtual double calcula_valor_funcao_objetivo(List<bool> populacao_de_bits)
         {
-            //============================================================
-            // Calcula o fenótipo para cada variável de projeto
-            //============================================================
-
+            // Calcula o valor da função objetivo com o fenótipo desejado
             int n_variaveis_projeto = this.bits_por_variavel_variaveis.Count;
 
+            // Incrementa o NFOB
+            add_NFOB();
+            
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
             
@@ -124,44 +127,24 @@ namespace GEOs_BINARIOS
             //============================================================
 
             double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
-            add_NFOB();
+
+            // Avalia se a perturbação é a melhor de todas
+            if (fx < this.fx_melhor)
+            {
+                fx_melhor = fx;
+                populacao_melhor = populacao_de_bits;
+            }
 
             return fx;
         }
-        
 
-        public virtual void geracao_populacao()
-        {
-            // Inicia a população zerada
-            populacao_atual = new List<bool>();
-            populacao_melhor = new List<bool>();
-            
-            // Soma os bits por variável de projeto para saber o tamanho da população
-            int tamanho_populacao_bits = 0;
-            foreach(int bits_variavel in this.bits_por_variavel_variaveis)
-            {
-                tamanho_populacao_bits += bits_variavel;
-            }
-            
-            // Gera um bit para cada posição da população de bits
-            for (int i=0; i<tamanho_populacao_bits; ++i)
-            {
-                populacao_atual.Add( (random.Next(0, 2)==1) ? true : false );
-            }
 
-            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
-            
-            // Atualiza os melhores
-            fx_melhor = fx_atual;
-            populacao_melhor = populacao_atual;
-        }
-       
-       
         public virtual void verifica_perturbacoes()
         {
+            // Inicia a lista de perturbações zerada
             this.lista_informacoes_mutacao = new List<BitVerificado>();
 
-            // Cria uma cópia da população de bits, flipa o bit e verifica a fitness
+            // Flipa cada variável
             for (int i=0; i<this.populacao_atual.Count; i++)
             {    
                 // Cria uma cópia da população de bits
@@ -172,13 +155,6 @@ namespace GEOs_BINARIOS
 
                 // Calcula o valor da função objetivo
                 double fx = calcula_valor_funcao_objetivo(populacao_de_bits_flipado);
-                
-                // Avalia se a perturbação é a melhor de todas
-                if (fx < fx_melhor)
-                {
-                    fx_melhor = fx;
-                    populacao_melhor = populacao_de_bits_flipado;
-                }
                 
                 // Armazena as informações dessa mutação do bit na lista de informações
                 BitVerificado informacoes_bit = new BitVerificado();
@@ -195,35 +171,30 @@ namespace GEOs_BINARIOS
 
         public virtual void ordena_e_perturba()
         {
-            int tamanho_populacao_bits = this.populacao_atual.Count;
-
-            //============================================================
-            // Ordena os bits conforme os indices fitness
-            //============================================================
-
-            // Ordena os bits
-            this.lista_informacoes_mutacao.Sort(delegate(BitVerificado b1, BitVerificado b2) { return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); });
+            // Ordena as perturbações com base no f(x)
+            this.lista_informacoes_mutacao.Sort(
+                delegate(BitVerificado b1, BitVerificado b2) { 
+                    return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); 
+                }
+            );
            
-            //============================================================
-            // Flipa um bit com probabilidade Pk
-            //============================================================
-
-            // Verifica as probabilidades até que um bit seja mutado
+            // Verifica as probabilidades até que uma variável seja perturbada
             while (true)
             {
-                // Gera um número aleatório com distribuição uniforme
+                // Gera um número aleatório com distribuição uniforme entre 0 e 1
                 double ALE = random.NextDouble();
 
-                // k é o índice da população de bits ordenada
-                int k = random.Next(1, tamanho_populacao_bits+1);
+                // Determina a posição do ranking escolhida, entre 1 e o número de variáveis. +1 é 
+                // ...porque tem que ser de 1 até menor que o 2º parámetro de .Next()
+                int k = random.Next(1, populacao_atual.Count+1);
                 
                 // Probabilidade Pk => k^(-tau)
                 double Pk = Math.Pow(k, -this.tau);
 
-                // k precisa ser de 1 a N, mas aqui nos índices começa em 0
+                // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
                 k -= 1;
 
-                // Se o Pk é maior ou igual ao aleatório, então flipa o bit
+                // Se o Pk é maior ou igual ao aleatório, então confirma a mutação
                 if (Pk >= ALE)
                 {
                     // Flipa o bit
@@ -232,7 +203,7 @@ namespace GEOs_BINARIOS
                     // Atualiza o valor da f(x) para o flipado
                     fx_atual = lista_informacoes_mutacao[k].funcao_objetivo_flipando;
 
-                    // Sai do laço
+                    // Sai do laço while
                     break;
                 }
             }
@@ -241,74 +212,72 @@ namespace GEOs_BINARIOS
 
         public virtual bool criterio_parada(ParametrosCriterioParada parametros_criterio_parada)
         {
-            // Verifica o critério de parada
-            bool parada_por_precisao = ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
+            // Verifica cada possível critério de parada (por precisão, por NFOB ou por nro de iterações)
+            bool stop = false;
+            
+            // POR PRECISÃO - Se a precisão é menor que a definida
+            double precisao_obtida = Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado));
+            bool parada_por_precisao = (precisao_obtida <= parametros_criterio_parada.PRECISAO_criterio_parada);
 
+            // POR NFOB - Se o NFOB é superior ao definido
             bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
             
+            // POR NRO ITERAÇÕES - Se o nro de iterações é maior que o definido
             bool parada_por_ITERATIONS = (iterations >= parametros_criterio_parada.ITERATIONS_criterio_parada);
             
-            // Antes de verificar a parada, começa com falso.
-            bool parada = false;
 
             // Se o critério for por NFOB...
-            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
+            if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
+            && parada_por_NFOB)
             {
-                if (parada_por_NFOB)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
 
             // Se o critério for por ITERACOES...
-            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS)
+            if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS) 
+            && parada_por_ITERATIONS)
             {
-                if (parada_por_ITERATIONS)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
 
             // Se o critério for por precisão...
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO)
+            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO) 
+            && parada_por_precisao)
             {
-                if (parada_por_precisao)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
             
             // Se o critério for por precisão ou por NFOB...
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB)
+            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB) 
+            && (parada_por_NFOB || parada_por_precisao))
             {
-                if (parada_por_NFOB || parada_por_precisao)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
 
             // Retorna o status da parada
-            return parada;
+            return stop;
         }
 
 
-        public virtual RetornoGEOs executar(ParametrosCriterioParada parametros_criterio_parada){
-            geracao_populacao();
-            
+        public virtual RetornoGEOs executar(ParametrosCriterioParada parametros_criterio_parada)
+        {
             while(true)
             {
+                // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
 
-                verifica_perturbacoes();
-                mutacao_do_tau_AGEOs();
-                ordena_e_perturba();
+                verifica_perturbacoes();    // Realiza todas as perturbações nas variáveis
+                mutacao_do_tau_AGEOs();     // Muta o tau se necessário
+                ordena_e_perturba();        // Escolhe as perturbações a serem confirmadas
 
+                // Armazena os dados da iteração
                 iterations++;
                 melhoras_nas_iteracoes.Add( (fx_atual < fx_atual_comeco_it) ? 1 : 0 );
                 stats_TAU_per_iteration.Add(tau);
                 stats_Mfx_per_iteration.Add(fx_melhor);
                 
 
+                // Se o critério de parada for atingido, retorna as informações da execução
                 if ( criterio_parada(parametros_criterio_parada) )
                 {
                     RetornoGEOs retorno = new RetornoGEOs();

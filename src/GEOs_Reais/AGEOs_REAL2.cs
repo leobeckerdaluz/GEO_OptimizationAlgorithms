@@ -18,6 +18,8 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFOBs_desejados,
+            bool ultima_perturbacao_random_uniforme,
+            int tipo_variacao_std_nas_P_perturbacoes,
             double std,
             int P,
             int s,
@@ -29,6 +31,8 @@ namespace GEOs_REAIS
                 lower_bounds,
                 upper_bounds,
                 lista_NFOBs_desejados,
+                ultima_perturbacao_random_uniforme,
+                tipo_variacao_std_nas_P_perturbacoes,
                 std,
                 tipo_perturbacao,
                 P,
@@ -41,35 +45,33 @@ namespace GEOs_REAIS
 
         public override void mutacao_do_tau_AGEOs()
         {
-            // Conta quantas mudanças que flipando dá melhor
-            int melhoraram = 0;
-            // Define o valor de referência
+            // Define o valor de referência (A-GEO1=melhor; A-GEO2=atual)
             double valor_ref = (this.tipo_AGEO == 1) ? fx_melhor : fx_atual;
             
-            // Verifica quantos melhora em comparação com o valor de referência
-            melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao < valor_ref).ToList().Count;
+            // Verifica quantas perturbações melhoraram o valor da função em comparação ao valor de referência
+            int melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao < valor_ref).ToList().Count;
 
-            // Calcula a Chance of Improvement
+            // Calcula a métrica Chance of Improvement
             double CoI = (double) melhoraram / populacao_atual.Count;
-            // Armazena o tau a ser alterado
-            double tau_antigo = tau;
 
-            // Se a CoI for zero, restarta o TAU
+            // Se a população não tem como melhorar, restarta o tau
+            if (CoI == 0.0)
             // if (CoI == 0.0 || tau > 5)
-            if (CoI == 0.0)// || tau > 5)
             {
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
                 // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
-                tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
+                // tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
+                tau = 0.5 * Math.Exp( random.NextDouble() * (1.0/Math.Sqrt(populacao_atual.Count)) );
 
             }
-            // Senão, se for menor que o CoI anterior, aumenta o TAU
+            
+            // Se a população pode melhorar, aumenta o tau
             else if(CoI <= CoI_1)
             {
                 tau += (0.5 + CoI) * random.NextDouble();
             }
-
-            // Atualiza o CoI(i-1) como sendo o atual CoI(i)
+            
+            // CoI atual passa a ser o CoI anterior da próxima iteração
             CoI_1 = CoI;
         }
     }

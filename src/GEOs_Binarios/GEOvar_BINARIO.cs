@@ -7,6 +7,7 @@ namespace GEOs_BINARIOS
     public class GEOvar_BINARIO: GEO_BINARIO
     {
         public GEOvar_BINARIO(
+            List<bool> populacao_inicial_binaria,
             double tau,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -14,6 +15,7 @@ namespace GEOs_BINARIOS
             List<double> upper_bounds,
             List<int> lista_NFOBs_desejados,
             List<int> bits_por_variavel_variaveis) : base(
+                populacao_inicial_binaria,
                 tau,
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,

@@ -28,6 +28,8 @@ namespace GEOs_REAIS
                 lower_bounds,
                 upper_bounds,
                 lista_NFOBs_desejados,
+                false,
+                (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original,
                 std1,
                 tipo_perturbacao,
                 P,

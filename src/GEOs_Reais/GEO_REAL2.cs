@@ -9,6 +9,8 @@ namespace GEOs_REAIS
     {
         public int P {get; set;}
         public int s {get; set;}
+        public int tipo_variacao_std_nas_P_perturbacoes {get; set;}
+        public bool ultima_perturbacao_random_uniforme {get; set;}
         
         public GEO_real2(
             List<double> populacao_inicial,
@@ -18,6 +20,8 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFOBs_desejados,
+            bool ultima_perturbacao_random_uniforme,
+            int tipo_variacao_std_nas_P_perturbacoes,
             double std,
             int tipo_perturbacao,
             int P,
@@ -34,6 +38,8 @@ namespace GEOs_REAIS
         {
             this.P = P;
             this.s = s;
+            this.tipo_variacao_std_nas_P_perturbacoes = tipo_variacao_std_nas_P_perturbacoes;
+            this.ultima_perturbacao_random_uniforme = ultima_perturbacao_random_uniforme;
         }
 
         public override void verifica_perturbacoes()
@@ -41,39 +47,32 @@ namespace GEOs_REAIS
             // Limpa a lista com perturbações da iteração
             perturbacoes_da_iteracao = new List<Perturbacao>();
 
-            // Verifica a perturbação para cada variável
+            // Perturba cada variável
             for(int i=0; i<n_variaveis_projeto; i++)
             {
-                // Inicia a lista de perturbações zerada
+                // Inicia a lista de perturbações dessa variável zerada
                 List<Perturbacao> perturbacoes = new List<Perturbacao>();
 
+                // Define o desvio padrão inicial
                 double std_atual = this.std;
 
-                // Para cada desvio padrão diferente, calcula as perturbações
+                // Realiza P perturbações na variável com diferentes desvios padrão
                 for(int j=0; j<this.P; j++)
                 {
                     // Cria uma população cópia
                     List<double> populacao_para_perturbar = new List<double>(populacao_atual);
 
-                    double xi = populacao_para_perturbar[i];
-
                     // Perturba a variável
+                    double xi = populacao_para_perturbar[i];
                     double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                     double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
 
-                    // Atribui a variável perturbada
+                    // Atribui a variável perturbada na população cópia
                     populacao_para_perturbar[i] = xii;
 
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
                     add_NFOB();
-
-                    // Avalia se a perturbação gera o melhor f(x) da história
-                    if (fx < fx_melhor)
-                    {
-                        fx_melhor = fx;
-                        populacao_melhor = populacao_para_perturbar;
-                    }
 
                     // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                     Perturbacao perturbacao = new Perturbacao();
@@ -82,15 +81,21 @@ namespace GEOs_REAIS
                     perturbacao.fx_depois_da_perturbacao = fx;
                     perturbacao.indice_variavel_projeto = i;
 
+                    // Adiciona na lista de perturbações
                     perturbacoes.Add(perturbacao);
 
-                    // Atualiza o novo std ===> std(i+1) = std(i) / (s*i)
-                    // Onde i = 1,2...P e s é arbitrário e vale 2.
-                    std_atual = std_atual / ( (this.s)*(j+1) ) ;
+                    // Atualiza o std pra próxima perturbação da variável
+                    if (this.tipo_variacao_std_nas_P_perturbacoes == (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original){
+                        // std(i+1) = std(i) / (s*i) ===> originalmente, s=2
+                        std_atual = std_atual / ((this.s)*(j+1)) ;
+                    }
+                    else if (this.tipo_variacao_std_nas_P_perturbacoes == (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s){
+                        // std(i+1) = std(i) / s
+                        std_atual = std_atual / this.s;
+                    }
                 }
                 
-                // Adiciona cada perturbação na lista geral de perturbacoes
-                // Console.WriteLine("perturbações.Count = {0}", perturbacoes.Count);
+                // Adiciona cada perturbação dessa variável na lista geral de perturbacoes da iteração
                 foreach (Perturbacao p in perturbacoes)
                 {
                     perturbacoes_da_iteracao.Add(p);
@@ -101,51 +106,50 @@ namespace GEOs_REAIS
 
         public override void ordena_e_perturba()
         {
+            // Para cada variável, confirma uma perturbação
             for(int i=0; i<n_variaveis_projeto; i++)
             {
-                // Obtem somente as perturbações da variável
+                // Obtem somente as perturbações realizadas naquela variável
                 List<Perturbacao> perturbacoes_da_variavel = new List<Perturbacao>();
                 perturbacoes_da_variavel = perturbacoes_da_iteracao.Where(p => p.indice_variavel_projeto == i).ToList();
                
-                // Ordena elas
-                perturbacoes_da_variavel.Sort(delegate(Perturbacao b1, Perturbacao b2) { return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); });
+                // Ordena as perturbações com base no f(x)
+                perturbacoes_da_variavel.Sort(
+                    delegate(Perturbacao b1, Perturbacao b2) { 
+                        return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); 
+                    }
+                );
 
-                // Perturba a variável
+                // Verifica as probabilidades até que uma das perturbações dessa variável seja aceita
                 while (true)
                 {
-                    // Gera um número aleatório com distribuição uniforme
+                    // Gera um número aleatório com distribuição uniforme entre 0 e 1
                     double ALE = random.NextDouble();
 
-                    // k é o índice da população de bits ordenada
+                    // Determina a posição do ranking escolhida, entre 1 e o número de variáveis. +1 é 
+                    // ...porque tem que ser de 1 até menor que o 2º parámetro de .Next()
                     int k = random.Next(1, perturbacoes_da_variavel.Count+1);
                     
                     // Probabilidade Pk => k^(-tau)
                     double Pk = Math.Pow(k, -tau);
 
-                    // k precisa ser de 1 a N, mas aqui nos índices começa em 0
+                    // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
                     k -= 1;
 
-                    // Se o Pk é maior ou igual ao aleatório, então flipa o bit
+                    // Se o Pk é maior ou igual ao aleatório, então confirma a perturbação
                     if (Pk >= ALE)
                     {
-                        // Lá na variável de projeto da selecionada, coloca o novo xi
-                        populacao_atual[ perturbacoes_da_variavel[k].indice_variavel_projeto ] = perturbacoes_da_variavel[k].xi_depois_da_perturbacao;
+                        // Coloca o novo xi lá na variável escolhida do ranking
+                        populacao_atual[perturbacoes_da_variavel[k].indice_variavel_projeto] = perturbacoes_da_variavel[k].xi_depois_da_perturbacao;
 
-                        // Sai do laço
+                        // Sai do laço while
                         break;
                     }
                 }
             }
 
-            // Depois que perturbou todas as variáveis, precisa calcular a fx_atual novamente
+            // Depois que aceitou uma perturbação de cada variável, precisa calcular o fx_atual novamente
             fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
-
-            // Como perturbou todas variáveis, precisa verificar essa nova combinação
-            if (fx_atual < fx_melhor)
-            {
-                fx_melhor = this.fx_atual;
-                populacao_melhor = this.populacao_atual;
-            }
         }
     }
 }

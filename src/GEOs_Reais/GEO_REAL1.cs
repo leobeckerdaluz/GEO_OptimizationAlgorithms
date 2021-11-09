@@ -23,7 +23,6 @@ namespace GEOs_REAIS
         public List<double> populacao_atual {get; set;}
         public List<double> populacao_melhor {get; set;}
         public List<double> melhores_NFOBs {get; set;}
-        public List<double> melhores_TAUs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
         public int iterations {get; set;}
         public List<int> melhoras_nas_iteracoes {get; set;}
@@ -73,15 +72,10 @@ namespace GEOs_REAIS
         {
             NFOB++;
 
+            // Se está no NFOB a armazenar info, armazena
             if (lista_NFOBs_desejados.Contains(NFOB))
             {
-                
-                // Atualiza os stats
-                
                 melhores_NFOBs.Add(fx_melhor);
-                // stats_TAU_per_iteration.Add(tau);
-                // stats_STD_per_iteration.Add(std);
-                stats_Mfx_per_iteration.Add(fx_melhor);
             }
         }
 
@@ -91,70 +85,76 @@ namespace GEOs_REAIS
             // Calcula o valor da função objetivo com o fenótipo desejado
             double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
             
+            // Incrementa o NFOB
             add_NFOB();
             
+            // Para cada variável de projeto, computa a penalidade se ela está fora dos limites
             double penalidade = 0;
-
             const double grau_penalidade = 2;
 
-            // Verifica a penalidade para cada variável do fenótipo desejado
             for(int i=0; i<fenotipos.Count; i++)
             {
                 double lower = lower_bounds[i];
                 double upper = upper_bounds[i];
                 double xi = fenotipos[i];
 
-                // Verifica se a variável está fora dos limites
                 if (xi < lower)
                 {
-                    double penalidade_inferior = grau_penalidade * Math.Pow(xi - lower, 2);
-                    
+                    double penalidade_inferior = grau_penalidade * Math.Pow((xi-lower), 2);
                     penalidade += penalidade_inferior;
                 }
                 else if (xi > upper)
                 {
-                    double penalidade_superior = grau_penalidade * Math.Pow(xi - upper, 2);
-                    
+                    double penalidade_superior = grau_penalidade * Math.Pow((xi-upper), 2);
                     penalidade += penalidade_superior;
                 }
             }
 
-            double penalidade_aplicada = fx + penalidade;
+            // Aplica a penalidade em f(x)
+            double fx_final = fx + penalidade;
+            
+            // Sempre depois de calcular o f(x), verifica se é o melhor de todos
+            if (fx < fx_melhor)
+            {
+                fx_melhor = fx_final;
+                populacao_melhor = fenotipos;
+            }
 
-            return penalidade_aplicada;
+            return fx_final;
         }
         
         
-        public double perturba_variavel(double xi, double std_atual, int tipo_perturbacao, double intervalo_variacao_variavel)
+        public double perturba_variavel(double xi, double std_or_p, int tipo_perturbacao, double intervalo_variacao_variavel)
         {
-            // Varíavel perturbada
+            // Cria a variável perturbada como cópia da original
             double xii = xi;
 
-            // Perturba a variável dentro dos limites
+            // Caso seja a perturbação igor...
             if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_igor)
             {
                 // Distribuição normal com desvio padrão = std
-                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_or_p);
                 xii = xi + (normalDist.Sample() * xi);
             }
+            
+            // Caso seja a perturbação porcentagem...
             else if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_porcentagem)
             {
-                // Distribuição normal onde desvio padrão é porcentagem.
-                double intervalo_porcentado = intervalo_variacao_variavel * std_atual / 100.0;
+                // Distribuição normal onde desvio padrão é porcentagem
+                double intervalo_porcentado = intervalo_variacao_variavel * std_or_p / 100.0;
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, intervalo_porcentado);
                 xii = xi + normalDist.Sample();
             }
+            
+            // Caso seja a perturbação normal...
             else if (tipo_perturbacao == (int)EnumTipoPerturbacao.perturbacao_normal)
             {
                 // Distribuição normal com desvio padrão = std
-                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_or_p);
                 xii = xi + normalDist.Sample();
             }
 
 
-
-
-            // MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_atual);
             // MathNet.Numerics.Distributions.ContinuousUniform uniformContDist = new MathNet.Numerics.Distributions.ContinuousUniform();
             // MathNet.Numerics.Distributions.Exponential expDist = new MathNet.Numerics.Distributions.Exponential(std_atual);
             
@@ -182,27 +182,19 @@ namespace GEOs_REAIS
                 // Cria uma população cópia
                 List<double> populacao_para_perturbar = new List<double>(populacao_atual);
 
-                double xi = populacao_para_perturbar[i];
-
                 // Perturba a variável
+                double xi = populacao_para_perturbar[i];
                 double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                 double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao, intervalo_variacao_variavel);
 
-                // Atribui a variável perturbada
+                // Atribui a variável perturbada na população cópia
                 populacao_para_perturbar[i] = xii;
 
                 // Calcula f(x) com a variável perturbada
                 double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
+                
 
-                // Avalia se a perturbação é a melhor de todas
-                if (fx < fx_melhor)
-                {
-                    fx_melhor = fx;
-                    populacao_melhor = populacao_para_perturbar;
-                }
-
-
-                // Cria o objeto perturbação
+                // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                 Perturbacao perturbacao = new Perturbacao();
                 perturbacao.xi_antes_da_perturbacao = xi;
                 perturbacao.xi_depois_da_perturbacao = xii;
@@ -213,7 +205,8 @@ namespace GEOs_REAIS
                 perturbacoes.Add(perturbacao);
             }
 
-            // Atualiza a lista de perturbações da iteração
+            // Todas essas perturbações realizadas na população são as perturbações da iteração a 
+            // ...serem processadas posteriormente.
             perturbacoes_da_iteracao = perturbacoes;
         }
 
@@ -224,33 +217,38 @@ namespace GEOs_REAIS
         public virtual void ordena_e_perturba()
         {    
             // Ordena as perturbações com base no f(x)
-            perturbacoes_da_iteracao.Sort(delegate(Perturbacao b1, Perturbacao b2) { return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); });
+            perturbacoes_da_iteracao.Sort(
+                delegate(Perturbacao b1, Perturbacao b2) { 
+                    return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); 
+                }
+            );
 
             // Verifica as probabilidades até que uma variável seja perturbada
-            while (true){
-
-                // Gera um número aleatório com distribuição uniforme
+            while (true)
+            {
+                // Gera um número aleatório com distribuição uniforme entre 0 e 1
                 double ALE = random.NextDouble();
 
-                // k é o índice da população de bits ordenada
+                // Determina a posição do ranking escolhida, entre 1 e o número de variáveis. +1 é 
+                // ...porque tem que ser de 1 até menor que o 2º parámetro de .Next()
                 int k = random.Next(1, populacao_atual.Count+1);
                 
                 // Probabilidade Pk => k^(-tau)
                 double Pk = Math.Pow(k, -tau);
 
-                // k precisa ser de 1 a N, mas aqui nos índices começa em 0
+                // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
                 k -= 1;
 
-                // Se o Pk é maior ou igual ao aleatório, então flipa o bit
+                // Se o Pk é maior ou igual ao aleatório, então confirma a perturbação
                 if (Pk >= ALE)
                 {
-                    // Lá na variável k, coloca o novo xi
-                    populacao_atual[ perturbacoes_da_iteracao[k].indice_variavel_projeto ] = perturbacoes_da_iteracao[k].xi_depois_da_perturbacao;
+                    // Coloca o novo xi lá na variável escolhida do ranking
+                    populacao_atual[perturbacoes_da_iteracao[k].indice_variavel_projeto] = perturbacoes_da_iteracao[k].xi_depois_da_perturbacao;
 
                     // Atualiza o f(x) atual com o perturbado
                     fx_atual = perturbacoes_da_iteracao[k].fx_depois_da_perturbacao;
 
-                    // Sai do laço
+                    // Sai do laço while
                     break;
                 }
             }
@@ -259,54 +257,50 @@ namespace GEOs_REAIS
 
         public virtual bool criterio_parada(ParametrosCriterioParada parametros_criterio_parada)
         {
-            // Verifica o critério de parada
-            bool parada_por_precisao = ( Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado)) <= parametros_criterio_parada.PRECISAO_criterio_parada );
+            // Verifica cada possível critério de parada (por precisão, por NFOB ou por nro de iterações)
+            bool stop = false;
+            
+            // POR PRECISÃO - Se a precisão é menor que a definida
+            double precisao_obtida = Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado));
+            bool parada_por_precisao = (precisao_obtida <= parametros_criterio_parada.PRECISAO_criterio_parada);
 
+            // POR NFOB - Se o NFOB é superior ao definido
             bool parada_por_NFOB = (NFOB >= parametros_criterio_parada.NFOB_criterio_parada);
             
+            // POR NRO ITERAÇÕES - Se o nro de iterações é maior que o definido
             bool parada_por_ITERATIONS = (iterations >= parametros_criterio_parada.ITERATIONS_criterio_parada);
             
-            // Antes de verificar a parada, começa com falso.
-            bool parada = false;
 
             // Se o critério for por NFOB...
-            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
+            if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFOB)
+            && parada_por_NFOB)
             {
-                if (parada_por_NFOB)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
 
             // Se o critério for por ITERACOES...
-            if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS)
+            if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS) 
+            && parada_por_ITERATIONS)
             {
-                if (parada_por_ITERATIONS)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
 
             // Se o critério for por precisão...
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO)
+            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO) 
+            && parada_por_precisao)
             {
-                if (parada_por_precisao)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
             
             // Se o critério for por precisão ou por NFOB...
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB)
+            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFOB) 
+            && (parada_por_NFOB || parada_por_precisao))
             {
-                if (parada_por_NFOB || parada_por_precisao)
-                {
-                    parada = true;
-                }
+                stop = true;
             }
 
             // Retorna o status da parada
-            return parada;
+            return stop;
         }
         
 
@@ -314,18 +308,21 @@ namespace GEOs_REAIS
         {
             while(true)
             {
+                // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
                 
-                verifica_perturbacoes();
-                mutacao_do_tau_AGEOs();
-                ordena_e_perturba();
+                verifica_perturbacoes();    // Realiza todas as perturbações nas variáveis
+                mutacao_do_tau_AGEOs();     // Muta o tau se necessário
+                ordena_e_perturba();        // Escolhe as perturbações a serem confirmadas
 
+                // Armazena os dados da iteração
                 iterations++;
-                melhoras_nas_iteracoes.Add( (fx_atual < fx_atual_comeco_it) ? 1 : 0 );
+                melhoras_nas_iteracoes.Add((fx_atual < fx_atual_comeco_it) ? 1 : 0 );
                 stats_TAU_per_iteration.Add(tau);
                 stats_STD_per_iteration.Add(std);
                 stats_Mfx_per_iteration.Add(fx_melhor);
 
+                // Se o critério de parada for atingido, retorna as informações da execução
                 if ( criterio_parada(parametros_criterio_parada) )
                 {
                     RetornoGEOs retorno = new RetornoGEOs();

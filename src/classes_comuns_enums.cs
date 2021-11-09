@@ -63,12 +63,12 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2 { get; set; }
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
-        public bool rodar_GEOreal1 { get; set; }
-        public bool rodar_AGEO1real1 { get; set; }
-        public bool rodar_AGEO2real1 { get; set; }
-        public bool rodar_GEOreal2 { get; set; }
-        public bool rodar_AGEO1real2 { get; set; }
-        public bool rodar_AGEO2real2 { get; set; }
+        public bool rodar_GEOreal1_igor { get; set; }
+        public bool rodar_AGEO1real1_igor { get; set; }
+        public bool rodar_AGEO2real1_igor { get; set; }
+        public bool rodar_GEOreal2_igor { get; set; }
+        public bool rodar_AGEO1real2_igor { get; set; }
+        public bool rodar_AGEO2real2_igor { get; set; }
         public bool rodar_ASGEO2real1_1 { get; set; }
         public bool rodar_ASGEO2real1_2 { get; set; }
         public bool rodar_ASGEO2real1_3 { get; set; }
@@ -94,7 +94,8 @@ namespace Classes_Comuns_Enums
         public List<double> lower_bounds { get; set; }
         public List<double> upper_bounds { get; set; }
         public ParametrosLivreProblema parametros_livres { get; set; }
-        public List<double> populacao_inicial { get; set; }
+        public List<double> populacao_inicial_real { get; set; }
+        public List<bool> populacao_inicial_binaria { get; set; }
     }
 
     public class ParametrosExecucao {
@@ -203,12 +204,12 @@ namespace Classes_Comuns_Enums
         AGEO2,
         AGEO1var,
         AGEO2var,
-        GEOreal1,
-        AGEO1real1,
-        AGEO2real1,
-        GEOreal2,
-        AGEO1real2,
-        AGEO2real2,
+        GEOreal1_igor,
+        AGEO1real1_igor,
+        AGEO2real1_igor,
+        GEOreal2_igor,
+        AGEO1real2_igor,
+        AGEO2real2_igor,
         ASGEO2real1_1,
         ASGEO2real1_2,
         ASGEO2real1_3,
@@ -237,5 +238,11 @@ namespace Classes_Comuns_Enums
         perturbacao_igor,
         perturbacao_porcentagem,
         perturbacao_normal,
+    }
+
+
+    enum EnumTipoVariacaoStdNasPPerturbacoes{
+        variacao_real_original,
+        variacao_divide_por_s,
     }
 }
