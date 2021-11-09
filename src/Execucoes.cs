@@ -31,6 +31,7 @@ namespace Execucoes
         // ========== PROCESSAMENTO ============
         // =====================================
 
+
         public static List<double> geracao_populacao_real(List<double> lower_bounds, List<double> upper_bounds, int seed)
         {
             // Quantidade de variáveis de projeto
@@ -83,6 +84,7 @@ namespace Execucoes
             // Cria uma lista que irá conter as estatísticas para cada algoritmo que foi executado
             List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos = new List<Retorno_N_Execucoes_GEOs>();
             
+
             // Obtém uma lista de int com o código dos algoritmos que foram executados
             List<int> algoritmos_executados = new List<int>();
             foreach (RetornoGEOs ret in todas_execucoes){
@@ -90,152 +92,154 @@ namespace Execucoes
             }
             algoritmos_executados = algoritmos_executados.Distinct().ToList();            
 
+
             // Para cada algoritmo executado, processa as execuções
+            // --> NFE: Calcula a média de NFE obtido em todas as execuções
+            // --> iteracoes: Calcula a média de NFE obtido em todas as execuções
+            // --> melhor_fx: Calcula a média de melhor f(x) obtido em todas as execuções
+            // --> melhores_NFEs: Calcula a média do valor da função naquele NFE 
+            // --> stats_TAU_per_iteration: Calcula a média do valor de tau por iteração
+            // --> stats_Mfx_per_iteration: Calcula a média do valor de f(x) por iteração
+            
             for (int i=0; i<algoritmos_executados.Count; i++)
             {
-                int algoritmo_executado = algoritmos_executados[i];
+                int codigo_algoritmo_executado = algoritmos_executados[i];
 
                 // Filtra todas as execuções obtendo somente as execuções deste algoritmo
-                List<RetornoGEOs> execucoes_algoritmo_executado = todas_execucoes.Where(p => p.algoritmo_utilizado == algoritmo_executado).ToList();
-
-                // Inicializa a lista que irá conter os f(x) em cada NFE
-                List<List<double>> NFEs_todas_execucoes = new List<List<double>>();
-                // Inicializa o somatório dos NFEs finais
-                int somatorio_NFEs = 0;
-
-                int somatorio_iteracoes = 0;
-
-                // Inicializa o somatório dos melhores f(x)
-                double somatorio_melhorFX = 0;
-                // Inicializa a lista que irá conter os melhores f(x) para cada execução
-                List<double> lista_melhores_fx = new List<double>();
-                // Inicializa a lista que irá conter a população final para cada execução
-                List<List<double>> lista_populacoes_finais = new List<List<double>>();
-
+                List<RetornoGEOs> execucoes_algoritmo_executado = todas_execucoes.Where(p => p.algoritmo_utilizado == codigo_algoritmo_executado).ToList();
+                
+                // Listas temporárias de processamento
+                //-------------------------------------------------------------------------------------------
+                // Lista que irá conter os melhores f(x) por NFE em cada execução
+                List<List<double>> stats_melhorFX_por_NFE = new List<List<double>>();   
+                // Lista que irá conter os tau por iteração em cada execução
                 List<List<double>> stats_TAU_per_iteration = new List<List<double>>();
-                List<List<double>> stats_STD_per_iteration = new List<List<double>>();
+                // Lista que irá conter os melhores f(x) por iteração em cada execução
                 List<List<double>> stats_Mfx_per_iteration = new List<List<double>>();
-
+                // Lista utilizada para armazenar o NFE de cada execução para posterior média
+                List<int> NFEs_para_posterior_media = new List<int>();
+                // Lista utilizada para armazenar a qtde. iterações de cada execução para posterior média
+                List<int> ITEs_para_posterior_media = new List<int>();
+                // Lista utilizada para armazenar o melhor f(x) de cada exeução para posterior média
+                List<double> MelhoresFXs_para_posterior_media = new List<double>();
+                
+                
                 // Para cada execução, vai acumulando os resultados
                 for (int j=0; j<execucoes_algoritmo_executado.Count; j++)
                 {
+                    // Obtém o retorno do algoritmo naquela execução
                     RetornoGEOs ret = execucoes_algoritmo_executado[j];
 
-                    // Adiciona a lista de fxs em cada NFEs da execução em uma lista geral
-                    NFEs_todas_execucoes.Add( ret.melhores_NFEs );
-                    // Somatório de NFEs para posterior média
-                    somatorio_NFEs += ret.NFE;
-
-                    somatorio_iteracoes += ret.iteracoes;
-
-                    // Somatório de melhorFX para posterior média
-                    somatorio_melhorFX += ret.melhor_fx;
-                    // Adiciona o melhor f(x) na lista dos melhores f(x)s
-                    lista_melhores_fx.Add( ret.melhor_fx );
-                    // Adiciona a população da execução na lista de populações das execuções
-                    lista_populacoes_finais.Add( ret.populacao_final );
-                    
+                    // Armazena o melhor f(x) obtido na execução
+                    MelhoresFXs_para_posterior_media.Add(ret.melhor_fx);
+                    // Armazena a lista contendo os fxs em cada NFE nessa execução
+                    stats_melhorFX_por_NFE.Add( ret.melhores_NFEs );
+                    // Armazena o NFE final obtido na execução
+                    NFEs_para_posterior_media.Add(ret.NFE);
+                    // Armazena o nro. de iterações final obtido na execução
+                    ITEs_para_posterior_media.Add(ret.iteracoes);
+                    // Armazena a lista contendo os tau em cada iteração nessa execução
                     stats_TAU_per_iteration.Add(ret.stats_TAU_per_iteration);
-                    stats_STD_per_iteration.Add(ret.stats_STD_per_iteration);
+                    // Armazena a lista contendo os f(x) em cada iteração nessa execução
                     stats_Mfx_per_iteration.Add(ret.stats_Mfx_per_iteration);
                 }
 
-                // Lista irá conter o f(x) médio para cada NFE desejado
-                List<double> lista_fxs_medios_cada_NFE_desejado = new List<double>();
+                // Calcula a média de NFEs com base em todas execuções
+                int media_NFEs = (int) NFEs_para_posterior_media.Average();
+                // Calcula a média de qtde de iterações com base em todas execuções
+                int media_iteracoes = (int) ITEs_para_posterior_media.Average();
+                // Calcula a média de melhor f(x) com base em todas execuções
+                double media_melhor_fx = (double) MelhoresFXs_para_posterior_media.Average();
+                // Calcula o desvio padrão final com base nos melhores f(x) das execuções
+                double somatorio_sd = 0;
+                foreach (double melhor_fx in MelhoresFXs_para_posterior_media)
+                {
+                    somatorio_sd += Math.Pow((melhor_fx - media_melhor_fx), 2);
+                }
+                int n = MelhoresFXs_para_posterior_media.Count - 1;
+                double SD_melhor_fx = Math.Sqrt(somatorio_sd / n);
+
+
+                // Listas com os resultados finais
+                //-------------------------------------------------------------------------------------------
+                // Lista irá conter o tau médio para cada iteração. Essa lista só poderá
+                // ...ser utilizada quando o critério de parada for por número de iterações, visto que só
+                // ...assim que todasas execuções terão a mesma quantidade de iterações
                 List<double> lista_TAU_medio_per_iteration = new List<double>();
-                List<double> lista_STD_medio_per_iteration = new List<double>();
+                // Lista irá conter o melhor f(x) médio para cada iteração. Essa lista só poderá
+                // ...ser utilizada quando o critério de parada for por número de iterações, visto que só
+                // ...assim que todasas execuções terão a mesma quantidade de iterações
                 List<double> lista_Mfx_medio_per_iteration = new List<double>();
-                // lista_TAU_medio_per_iteration = stats_TAU_per_iteration[0];
-                // lista_STD_medio_per_iteration = stats_STD_per_iteration[0];
-                // lista_Mfx_medio_per_iteration
-
-                // Obtém a quantidade de NFEs armazenados
-                int quantidade_NFEs = NFEs_todas_execucoes[0].Count;
-
-                // Calcula a média dos NFEs
-                int media_NFEs = (int) (somatorio_NFEs / parametros_execucao.quantidade_execucoes);
-                int media_iteracoes = (int) (somatorio_iteracoes / parametros_execucao.quantidade_execucoes);
+                // Lista irá conter o f(x) médio para cada NFE desejado. Essa lista só poderá
+                // ...ser utilizada quando o critério de parada por por NFE, visto que só assim
+                // ...todas as execuções terão a mesma quantidade de f(x) por NFE
+                List<double> lista_MelhoresFX_por_NFE = new List<double>();
 
 
-                // Se o critério de parada é por NFE, calcula a média das N execuções para cada NFE desejado.
+                // Se o critério de parada for por NFE, calcula o f(x) médio para cada NFE desejado
                 if (parametros_execucao.parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_NFE)
                 {
-                    for(int k=0; k<quantidade_NFEs; k++)
+                    // Obtém a quantidade de NFEs desejados
+                    int quantidade_NFEs = parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados.Count;
+                    
+                    // Para cada NFE, percorre as execuções pra fazer a média do melhor fx
+                    for(int u=0; u<quantidade_NFEs; u++)
                     {
-                        // Percorre aquele NFE em cada execução para calcular a média de f(x) naquele NFE
-                        double sum_Mfx = 0;
-
-                        // foreach(List<double> execution in NFEs_todas_execucoes)
-                        for(int g=0; g<NFEs_todas_execucoes.Count; g++)
+                        List<double> fxs_no_NFE_desejado = new List<double>();
+                        for(int o=0; o<parametros_execucao.quantidade_execucoes; o++)
                         {
-                            sum_Mfx += NFEs_todas_execucoes[g][k];
+                            // Adiciona o valor de FX de cada execução naquele NFE
+                            fxs_no_NFE_desejado.Add( stats_melhorFX_por_NFE[o][u] );
                         }
                     
-                        // Adiciona o f(x) médio do NFE na lista
-                        lista_fxs_medios_cada_NFE_desejado.Add( sum_Mfx / NFEs_todas_execucoes.Count );
+                        // Gera a média de f(x) naquele NFE
+                        double avg_naquele_NFE = fxs_no_NFE_desejado.Average();
+                        
+                        // Adiciona essa média na lista de fxs médios
+                        lista_MelhoresFX_por_NFE.Add(avg_naquele_NFE);
                     }
-
-                    
-
                 }
 
-                // Se o critério de parada é por ITERAÇÕES, calcula a média das N execuções
+
+                // Se o critério de parada for por ITERAÇÕES, calcula o tau médio e o f(x) médio em cada iteração
                 if (parametros_execucao.parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_ITERATIONS)
                 {
-                    // Computa os TAU, STD e Mfx médio por cada iteração
+                    // Computa os TAU e Mfx médio por cada iteração
                     for(int it=0; it<media_iteracoes; it++)
                     {
                         double sum_TAU = 0;
-                        // double sum_STD = 0;
                         double sum_Mfx = 0;
 
                         for(int execs=0; execs<stats_TAU_per_iteration.Count; execs++)
                         {
                             sum_TAU += stats_TAU_per_iteration[execs][it];
-                            // sum_STD += stats_STD_per_iteration[execs][it];
                             sum_Mfx += stats_Mfx_per_iteration[execs][it];
                         }
 
                         double media1 = sum_TAU / stats_TAU_per_iteration.Count;
                         lista_TAU_medio_per_iteration.Add(media1);
 
-                        // double media2 = sum_STD / stats_STD_per_iteration.Count;
-                        // lista_STD_medio_per_iteration.Add(media2);
-
                         double media3 = sum_Mfx / stats_Mfx_per_iteration.Count;
                         lista_Mfx_medio_per_iteration.Add(media3);
                     }
                 }
 
-                
-                // Calcula a média dos melhores f(x)
-                double media_melhor_fx = (double) somatorio_melhorFX / parametros_execucao.quantidade_execucoes;
 
-                // Calcula o desvio padrão final com base nos melhores f(x) das execuções
-                double somatorio_sd = 0;
-                foreach (double melhor_fx in lista_melhores_fx)
-                {
-                    somatorio_sd += Math.Pow((melhor_fx - media_melhor_fx), 2);
-                }
-                int n = lista_melhores_fx.Count - 1;
-                double SD_melhor_fx = Math.Sqrt(somatorio_sd / n);
-
-                // Cria um objeto contendo os resultados finais do processamento desse algoritmo
-                // ... executado para a N execuções
+                // Cria um objeto contendo os resultados finais do processamento desse
+                // ... algoritmo executado para a N execuções
                 Retorno_N_Execucoes_GEOs media_das_execucoes = new Retorno_N_Execucoes_GEOs();
-                media_das_execucoes.algoritmo_utilizado = algoritmo_executado;
+                media_das_execucoes.codigo_algoritmo_executado = codigo_algoritmo_executado;
+                media_das_execucoes.nome_algoritmo_executado = Enum.GetName(typeof(EnumNomesAlgoritmos), codigo_algoritmo_executado);
                 media_das_execucoes.NFE_medio = media_NFEs;
                 media_das_execucoes.ITERACOES_medio = media_iteracoes;
                 media_das_execucoes.media_melhor_fx = media_melhor_fx;
                 media_das_execucoes.SD_do_melhor_fx = SD_melhor_fx;
-                media_das_execucoes.media_valor_FO_em_cada_NFE = lista_fxs_medios_cada_NFE_desejado;
-                media_das_execucoes.lista_melhores_fxs = lista_melhores_fx;
-                media_das_execucoes.lista_populacao_final = lista_populacoes_finais;  
+                media_das_execucoes.media_valor_FO_em_cada_NFE = lista_MelhoresFX_por_NFE;
+                media_das_execucoes.lista_melhores_fxs = MelhoresFXs_para_posterior_media;
                 media_das_execucoes.lista_TAU_medio_per_iteration = lista_TAU_medio_per_iteration;  
-                media_das_execucoes.lista_STD_medio_per_iteration = lista_STD_medio_per_iteration;  
                 media_das_execucoes.lista_Mfx_medio_per_iteration = lista_Mfx_medio_per_iteration;  
 
-                // Adiciona essa estatística do algoritmo na lista geral de estatísticas
+                // Adiciona essa estrutura na lista geral que contém uma estatística por algoritmo
                 estatisticas_algoritmos.Add(media_das_execucoes);
             }
 
@@ -243,14 +247,24 @@ namespace Execucoes
         }
 
 
+        // Essa função tem por objetivo apresentar as estatísticas das execuções por algoritmo. Aqui, as 
+        // ...informações são apresentadas na tela, como melhor valor da função médio obtido 
         public void apresenta_resultados_finais(OQueInteressaPrintar o_que_interessa_printar, List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos, ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema)
         {
-            // ===========================================================
-            // Mostra as estatísticas das execuções
-            // ===========================================================
+            Console.WriteLine("============================================================================");
+            Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
+            Console.WriteLine("============================================================================");
 
-            Console.WriteLine("");
 
+            // Concatena o nome dos algoritmos executados
+            string string_algoritmos_executados = "";
+            foreach(Retorno_N_Execucoes_GEOs ret_processado in estatisticas_algoritmos)
+            {
+                string_algoritmos_executados += ret_processado.nome_algoritmo_executado + ";";
+            }
+
+            
+            // Se desejado, apresenta as informações de header
             if (o_que_interessa_printar.mostrar_header)
             {
                 Console.WriteLine("\n\n==========================================================");
@@ -259,59 +273,25 @@ namespace Execucoes
                 Console.WriteLine(String.Format("Função objetivo utilizada: {0} - {1}", parametros_problema.definicao_funcao_objetivo, parametros_problema.nome_funcao));
                 Console.WriteLine(String.Format("Número de variáveis de projeto: {0}", parametros_problema.n_variaveis_projeto));
                 Console.WriteLine(String.Format("Quantidade de execuções: {0}", parametros_execucao.quantidade_execucoes));
-                Console.WriteLine(String.Format("Tipo de critério de parada: {0}", parametros_execucao.parametros_criterio_parada.tipo_criterio_parada));
+                Console.WriteLine(String.Format("Tipo de critério de parada: {0}", Enum.GetName(typeof(EnumTipoCriterioParada), parametros_execucao.parametros_criterio_parada.tipo_criterio_parada)));
                 Console.WriteLine(String.Format("NFE limite para execução: {0}", parametros_execucao.parametros_criterio_parada.NFE_criterio_parada));
                 Console.WriteLine("");
             }
-            
-            // Cria um array com o nome dos algoritmos que foram executados
-            string string_algoritmos_executados = "";
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_GEO ? "GEO;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar ? "GEOvar;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 ? "AGEO1;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 ? "AGEO2;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var ? "AGEO1var;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var ? "AGEO2var;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_igor ? "GEOreal1_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real1_igor ? "AGEO1real1_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_igor ? "AGEO2real1_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_igor ? "GEOreal2_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2_igor ? "AGEO1real2_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_igor ? "AGEO2real2_igor;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_1 ? "ASGEO2real1_1;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_2 ? "ASGEO2real1_2;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3 ? "ASGEO2real1_3;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_4 ? "ASGEO2real1_4;" : "");
-            // string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1 ? "ASGEO2real2_1;" : "");
-            
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL1_igor ? "AGEO2_REAL1_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL1_porcentagem ? "AGEO2_REAL1_porcentagem;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL2_igor ? "AGEO2_REAL2_igor;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL2_porcentagem ? "AGEO2_REAL2_porcentagem;" : "");
-            string_algoritmos_executados += (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL2_normal ? "AGEO2_REAL2_normal;" : "");
-            
 
 
-            
-            // Apresenta a média de NFE atingido, a média de f(x) final e o desvio padrão
-            // ... para cada um dos algoritmos executados.
-            
-            
+            // Se desejado, apresenta as médias de NFE atingido, f(x) final e desvio padrão 
             if (parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX)
             {
                 Console.WriteLine("==========================================================");
-                // Console.WriteLine("===> Média de NFE, média de f(x) e desvio padrão de f(x):");
                 
-                string resultados_finais = "";
-                resultados_finais = "parameter;" + string_algoritmos_executados + '\n';
+                string resultados_finais = "parameter;" + string_algoritmos_executados + '\n';
                 string media_do_NFE_atingido_nas_execucoes = "meanNFE;";
                 string media_da_fx_nas_execucoes = "meanFX;";
                 string sd_dos_fx_finais_nas_execucoes = "sdFX;";
 
-                // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                // Obtém os valores de cada algoritmo
                 for (int i=0; i<estatisticas_algoritmos.Count; i++)
                 {
-                    
                     int media_NFE = estatisticas_algoritmos[i].NFE_medio;
                     double media_fx = estatisticas_algoritmos[i].media_melhor_fx;
                     double sd_melhores_fx = estatisticas_algoritmos[i].SD_do_melhor_fx;
@@ -322,45 +302,49 @@ namespace Execucoes
                 }
 
                 // Substitui os pontos por vírgulas e printa
-                resultados_finais += media_do_NFE_atingido_nas_execucoes.Replace('.',',') + '\n';
-                resultados_finais += media_da_fx_nas_execucoes.Replace('.',',') + '\n';
-                resultados_finais += sd_dos_fx_finais_nas_execucoes.Replace('.',',') + '\n';
+                resultados_finais += media_do_NFE_atingido_nas_execucoes + '\n';
+                resultados_finais += media_da_fx_nas_execucoes + '\n';
+                resultados_finais += sd_dos_fx_finais_nas_execucoes + '\n';
+                resultados_finais = resultados_finais.Replace('.',',');
                 
+                // Printa essa linha processada
                 Console.WriteLine(resultados_finais);
             }
 
 
+            // Se desejado, apresenta os f(x) médio obtido em cada NFE
             if (o_que_interessa_printar.mostrar_melhores_NFE)
             {
                 Console.WriteLine("==========================================================");
-                Console.WriteLine("===> Médias para cada NFE:");
+                Console.WriteLine("===> f(x) médio para cada NFE:");
                 Console.WriteLine("NFE;" + string_algoritmos_executados);
                 
-                // Apresenta a média para cada NFE
-                int quantidade_NFEs = estatisticas_algoritmos[0].media_valor_FO_em_cada_NFE.Count;
+                // Obtém a quantidade de NFEs
+                int quantidade_NFEs = parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados.Count;
                 
-                // Para cada execução dos algoritmos
+                // Para cada NFE, apresenta o f(x) médio obtido em cada algoritmo
                 for (int i=0; i<quantidade_NFEs; i++)
                 {    
                     double NFE_atual = parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados[i];
-                    string fxs_naquele_NFE = NFE_atual.ToString() + ';';
+                    string fxs_string = NFE_atual.ToString() + ';';
                     
-                    // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                    // Para cada algoritmo, concatena o f(x) médio
                     for (int j=0; j<estatisticas_algoritmos.Count; j++)
                     {
-                        // Obtém o valor da média f(x) naquele NFE
+                        // Obtém o valor do f(x) médio naquele NFE para esse algoritmo
                         double fx_naquele_NFE = estatisticas_algoritmos[j].media_valor_FO_em_cada_NFE[i];
-
-                        fxs_naquele_NFE += fx_naquele_NFE.ToString() + ';';
+                        // Concatena
+                        fxs_string += fx_naquele_NFE.ToString() + ';';
                     }
 
-                    Console.WriteLine( fxs_naquele_NFE.Replace('.',',') );
+                    // Apresenta a linha concatenada
+                    Console.WriteLine( fxs_string.Replace('.',',') );
                 }
-                
                 Console.WriteLine("");
             }
 
 
+            // Se desejado, apresenta os f(x) obtidos em cada execução
             if (o_que_interessa_printar.mostrar_melhores_fx_cada_execucao)
             {
                 Console.WriteLine("==========================================================");
@@ -370,41 +354,42 @@ namespace Execucoes
                 // Para cada execução dos algoritmos
                 for (int i=0; i<parametros_execucao.quantidade_execucoes; i++)
                 {    
-                    string melhores_fx_algoritmos = (i+1).ToString() + ';';
+                    string execucao_string = (i+1).ToString() + ';';
+                    string melhores_fx_algoritmos = execucao_string;
                     
-                    // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                    // Para cada algoritmo, concatena o f(x) final médio
                     for (int j=0; j<estatisticas_algoritmos.Count; j++)
                     {
-                        // Obtém o valor da média f(x) naquele NFE
+                        // Obtém o f(x) final médio
                         double melhor_fx_da_execucao = estatisticas_algoritmos[j].lista_melhores_fxs[i];
-
+                        // Concatena
                         melhores_fx_algoritmos += melhor_fx_da_execucao.ToString() + ';';
                     }
 
+                    // Apresenta a linha concatenada
                     Console.WriteLine( melhores_fx_algoritmos.Replace('.',',') );
                 }
-
                 Console.WriteLine("");
             }
 
 
+            // Se desejado, apresenta os tau obtidos por iteração
+            // Somente usado quando o critério de parada for por qtde de iterações
             if (o_que_interessa_printar.mostrar_mean_TAU_iteracoes)
             {
                 Console.WriteLine("==========================================================");
                 Console.WriteLine("===> TAU para cada iteração:");
                 Console.WriteLine("iteracao;" + string_algoritmos_executados);
                 
-                // Apresenta a média para cada NFE
-                int quantidade_NFEs = estatisticas_algoritmos[0].media_valor_FO_em_cada_NFE.Count;
-                int quantidade_iteracoes = estatisticas_algoritmos[0].ITERACOES_medio;
+                int quantidade_iteracoes = parametros_execucao.parametros_criterio_parada.ITERATIONS_criterio_parada;
                 
-                // Para cada execução dos algoritmos
+                // Concatena o tau por iteração para cada algoritmo executado
                 for (int i=0; i<quantidade_iteracoes; i++)
                 {    
-                    int iteracao = i+1;
-                    string TAUs_naquela_iteracao = iteracao.ToString() + ';';
+                    string iteracao_string = (i+1).ToString();
+                    string TAUs_naquela_iteracao = iteracao_string + ';';
                     
-                    // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                    // Para cada algoritmo, concatena o tau por iteração
                     for (int j=0; j<estatisticas_algoritmos.Count; j++)
                     {
                         double TAU_naquela_iteracao = estatisticas_algoritmos[j].lista_TAU_medio_per_iteration[i];
@@ -412,27 +397,27 @@ namespace Execucoes
                     }
                     Console.WriteLine( TAUs_naquela_iteracao.Replace('.',',') );
                 }
-                
                 Console.WriteLine("");
             }
 
 
+            // Se desejado, apresenta os f(x) obtidos por iteração
+            // Somente usado quando o critério de parada for por qtde de iterações
             if (o_que_interessa_printar.mostrar_mean_Mfx_iteracoes)
             {
                 Console.WriteLine("==========================================================");
                 Console.WriteLine("===> Mfx para cada iteração:");
                 Console.WriteLine("iteracao;" + string_algoritmos_executados);
                 
-                // Apresenta a média para cada iteração
-                int quantidade_iteracoes = estatisticas_algoritmos[0].ITERACOES_medio;
+                int quantidade_iteracoes = parametros_execucao.parametros_criterio_parada.ITERATIONS_criterio_parada;
                 
-                // Para cada execução dos algoritmos
+                // Concatena o f(x) por iteração para cada algoritmo executado
                 for (int i=0; i<quantidade_iteracoes; i++)
                 {    
-                    int iteracao = i+1;
-                    string Mfxs_naquela_iteracao = iteracao.ToString() + ';';
+                    string iteracao_string = (i+1).ToString();
+                    string Mfxs_naquela_iteracao = iteracao_string + ';';
                     
-                    // Para cada algoritmo executado da lista de estatísticas dos algoritmos
+                    // Para cada algoritmo, concatena o f(x) por iteração
                     for (int j=0; j<estatisticas_algoritmos.Count; j++)
                     {
                         double fx = estatisticas_algoritmos[j].lista_Mfx_medio_per_iteration[i];
@@ -440,7 +425,6 @@ namespace Execucoes
                     }
                     Console.WriteLine( Mfxs_naquela_iteracao.Replace('.',',') );
                 }
-                
                 Console.WriteLine("");
             }
         }
@@ -1607,7 +1591,7 @@ namespace Execucoes
                 // Define os parâmetros de execução
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao()
                 {
-                    quantidade_execucoes = 40,
+                    quantidade_execucoes = 30,
                     parametros_criterio_parada = new ParametrosCriterioParada()
                     {
                         // EXECUÇÃO NORMAL
@@ -1681,14 +1665,6 @@ namespace Execucoes
                 // =======================================================================================
                 // Após definir os parâmetros do problema e de execução, executa os algoritmos desejados
 
-                Console.WriteLine("============================================================================");
-                Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                Console.WriteLine("============================================================================");
-
-
-
-
-                
                 parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
                 parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
 
@@ -2078,10 +2054,6 @@ namespace Execucoes
                 // // ====================================================================================
                 // // Tuning completo do GEOreal2
                 // // ====================================================================================
-
-                // Console.WriteLine("============================================================================");
-                // Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
-                // Console.WriteLine("============================================================================");
 
                 // List<int> valores_P = new List<int>(){4, 8, 16};
                 // List<int> valores_s = new List<int>(){1, 2};

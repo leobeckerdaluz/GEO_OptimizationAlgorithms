@@ -30,7 +30,8 @@ namespace Classes_Comuns_Enums
     }
 
     public class Retorno_N_Execucoes_GEOs {
-        public int algoritmo_utilizado { get; set; }
+        public int codigo_algoritmo_executado { get; set; }
+        public string nome_algoritmo_executado { get; set; }
         public int NFE_medio { get; set; }
         public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
