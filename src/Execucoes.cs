@@ -27,22 +27,10 @@ namespace Execucoes
 {
     public class Execucoes_GEO
     {
-        // =====================================
-        // ========== PROCESSAMENTO ============
-        // =====================================
-
-        public static void ordena_e_apresenta_resultados_tuning(List<Tuning> tuning_results)
-        {
-            // Ordena os resultados do tuning com base no f(x)
-            List<Tuning> sortedList = tuning_results.OrderBy(i => i.fx).ThenBy(i => i.NFE).ToList();
-            
-            // Apresenta os resultados linha por linha
-            foreach (Tuning tun in sortedList){
-                Console.WriteLine("{0} \t --> \t NFE: {1} \t --> fx: {2}", tun.parameters, tun.NFE, tun.fx);
-            }
-        }
-        
-
+        // =========================================================================
+        // ====================== GERAÇÃO DAS POPULAÇÕES ===========================
+        // =========================================================================
+       
         public static List<double> geracao_populacao_real(List<double> lower_bounds, List<double> upper_bounds, int seed)
         {
             // Quantidade de variáveis de projeto
@@ -90,6 +78,12 @@ namespace Execucoes
         }
 
 
+
+
+        // =========================================================================
+        // ====================== PROCESSAMENTO EXECUÇÕES ==========================
+        // =========================================================================
+        
         public List<Retorno_N_Execucoes_GEOs> organiza_os_resultados_de_cada_execucao(List<RetornoGEOs> todas_execucoes, ParametrosExecucao parametros_execucao)
         {
             // Cria uma lista que irá conter as estatísticas para cada algoritmo que foi executado
@@ -641,8 +635,78 @@ namespace Execucoes
 
 
 
-                // GEOreal2_I_VO  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO ORIGINAL
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_VO)
+
+
+                // GEOreal1_I  =  GEOreal1 + PERTURBAÇÃO IGOR
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_I)
+                {
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
+
+                    GEO_real1 geo_real1 = new GEO_real1(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial_real, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        tipo_perturbacao,
+                        parametros_problema.parametros_livres.GEOreal1_I__tau, 
+                        parametros_problema.parametros_livres.GEOreal1_I__std);
+                        
+                    RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_I;
+
+                    todas_execucoes.Add(ret);
+                }
+
+                // GEOreal1_P  =  GEOreal1 + PERTURBAÇÃO PORCENTAGEM
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P)
+                {
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
+
+                    GEO_real1 geo_real1 = new GEO_real1(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial_real, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        tipo_perturbacao,
+                        parametros_problema.parametros_livres.GEOreal1_P__tau, 
+                        parametros_problema.parametros_livres.GEOreal1_P__porc);
+                        
+                    RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_P;
+
+                    todas_execucoes.Add(ret);
+                }
+
+                // GEOreal1_N  =  GEOreal1 + PERTURBAÇÃO DISTNORMAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N)
+                {
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_normal;
+
+                    GEO_real1 geo_real1 = new GEO_real1(
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.populacao_inicial_real, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        tipo_perturbacao,
+                        parametros_problema.parametros_livres.GEOreal1_N__tau, 
+                        parametros_problema.parametros_livres.GEOreal1_N__std);
+                        
+                    RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_N;
+
+                    todas_execucoes.Add(ret);
+                }
+
+
+
+                // GEOreal2_I_OI  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO ORIGINAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_OI)
                 {
                     bool ultima_perturbacao_random_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
@@ -650,7 +714,7 @@ namespace Execucoes
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_I_VO__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_I_OI__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
@@ -658,19 +722,19 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         ultima_perturbacao_random_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_I_VO__std, 
+                        parametros_problema.parametros_livres.GEOreal2_I_OI__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_I_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_I_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_I_OI__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_I_OI__s);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_I_VO;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_I_OI;
                         
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_P_VO  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO ORIGINAL
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO)
+                // GEOreal2_P_OI  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO ORIGINAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_OI)
                 {
                     bool ultima_perturbacao_random_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
@@ -678,7 +742,7 @@ namespace Execucoes
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_P_VO__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_P_OI__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
@@ -686,19 +750,19 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         ultima_perturbacao_random_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_P_VO__porc, 
+                        parametros_problema.parametros_livres.GEOreal2_P_OI__porc, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_OI__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_OI__s);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_VO;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_OI;
                         
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_N_VO  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO)
+                // GEOreal2_N_OI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_OI)
                 {
                     bool ultima_perturbacao_random_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
@@ -706,7 +770,7 @@ namespace Execucoes
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_N_VO__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_N_OI__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
@@ -714,21 +778,21 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         ultima_perturbacao_random_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
+                        parametros_problema.parametros_livres.GEOreal2_N_OI__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_OI__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_OI__s);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_VO;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_OI;
                         
                     todas_execucoes.Add(ret);
                 }
 
 
 
-                // GEOreal2_I_VN  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO DIVIDE POR S
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_VN)
+                // GEOreal2_I_DS  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_DS)
                 {
                     bool ultima_perturbacao_random_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -736,7 +800,7 @@ namespace Execucoes
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_I_VN__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_I_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
@@ -744,19 +808,19 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         ultima_perturbacao_random_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_I_VN__std, 
+                        parametros_problema.parametros_livres.GEOreal2_I_DS__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_I_VN__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_I_VN__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_I_DS__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_I_DS__s);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_I_VN;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_I_DS;
                         
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_P_VN  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VN)
+                // GEOreal2_P_DS  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS)
                 {
                     bool ultima_perturbacao_random_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -764,7 +828,7 @@ namespace Execucoes
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_P_VN__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_P_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
@@ -772,19 +836,19 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         ultima_perturbacao_random_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_P_VN__porc, 
+                        parametros_problema.parametros_livres.GEOreal2_P_DS__porc, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_VN__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_VN__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_DS__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_DS__s);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_VN;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_DS;
                         
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_N_VN  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VN)
+                // GEOreal2_N_DS  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS)
                 {
                     bool ultima_perturbacao_random_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -792,7 +856,7 @@ namespace Execucoes
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_N_VN__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_N_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
@@ -800,13 +864,13 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         ultima_perturbacao_random_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_N_VN__std, 
+                        parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VN__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VN__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_VN;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_DS;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1104,23 +1168,44 @@ namespace Execucoes
             // Retorna a lista com todas as N execuções para os algoritmos a serem executados
             return todas_execucoes;
         }
-            
         
-        public List<Tuning> tuning_GEOreal1_igor_e_normal(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
+
+
+
+        // =========================================================================
+        // ============================= TUNINGS ===================================
+        // =========================================================================
+
+        // =========================================================================
+        // Ordena o tuning e apresenta
+        
+        public static void ordena_e_apresenta_resultados_tuning(List<Tuning> tuning_results)
         {
-            // ====================================================================================
-            // Tuning do GEOreal1 IGOR - parâmetros tau e std
-           
+            // Ordena os resultados do tuning com base no f(x)
+            List<Tuning> sortedList = tuning_results.OrderBy(i => i.fx).ThenBy(i => i.NFE).ToList();
+            
+            // Apresenta os resultados linha por linha
+            foreach (Tuning tun in sortedList){
+                Console.WriteLine("{0} \t --> \t NFE: {1} \t --> fx: {2} \t --> sd:{3}", tun.parameters, tun.NFE, tun.fx, tun.sd);
+            }
+        }
+        
+
+        // =========================================================================
+        // Tuning GEOreal1
+
+        public List<Tuning> tuning_GEOreal1_I(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
+        {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_igor = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_I = true;
             
             // Itera cada std e cada tau
             foreach (double tau in valores_tau){
                 foreach (double std in valores_std){
-                    parametros_problema.parametros_livres.std_GEOreal1 = std; 
-                    parametros_problema.parametros_livres.tau_GEOreal1 = tau; 
+                    parametros_problema.parametros_livres.GEOreal1_I__tau = tau; 
+                    parametros_problema.parametros_livres.GEOreal1_I__std = std; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
                     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1132,6 +1217,7 @@ namespace Execucoes
                     tuning_results.Add(new Tuning(){
                         parameters = String.Format("tau = {0};\tstd = {1}", tau, std),
                         fx = resultados_por_algoritmo[0].media_melhor_fx,
+                        sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                         NFE = resultados_por_algoritmo[0].NFE_medio,
                     });
                 }
@@ -1140,22 +1226,18 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-        public List<Tuning> tuning_GEOreal1_porcentagem(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_porcentagem, List<double> valores_std)
+        public List<Tuning> tuning_GEOreal1_P(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_porcent)
         {
-            // ====================================================================================
-            // Tuning do GEOreal1 IGOR - parâmetros tau e std
-           
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_igor = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
             
             // Itera cada std e cada tau
-            foreach (double porcentagem in valores_porcentagem){
-                foreach (double std in valores_std){
-                    parametros_problema.parametros_livres.std_GEOreal1 = std; 
-                    parametros_problema.parametros_livres.p1_GEOreal1 = porcentagem; 
+            foreach (double tau in valores_tau){
+                foreach (double porc in valores_porcent){
+                    parametros_problema.parametros_livres.GEOreal1_P__tau = tau; 
+                    parametros_problema.parametros_livres.GEOreal1_P__porc = porc; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
                     List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1165,8 +1247,41 @@ namespace Execucoes
 
                     // Para essa combinação de parâmetros, armazena o melhor valor de f(x)
                     tuning_results.Add(new Tuning(){
-                        parameters = String.Format("porcent = {0};\tstd = {1}", porcentagem, std),
+                        parameters = String.Format("tau = {0};\tporc = {1}", tau, porc),
                         fx = resultados_por_algoritmo[0].media_melhor_fx,
+                        sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
+                        NFE = resultados_por_algoritmo[0].NFE_medio,
+                    });
+                }
+            }
+
+            return tuning_results;
+        }
+        
+        public List<Tuning> tuning_GEOreal1_N(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
+        {
+            List<Tuning> tuning_results = new List<Tuning>();
+
+            parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N = true;
+            
+            // Itera cada std e cada tau
+            foreach (double tau in valores_tau){
+                foreach (double std in valores_std){
+                    parametros_problema.parametros_livres.GEOreal1_N__tau = tau; 
+                    parametros_problema.parametros_livres.GEOreal1_N__std = std; 
+
+                    // Executa cada algoritmo por N vezes e obtém todas as execuções
+                    List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    
+                    // Organiza os resultados de todas as excuções por algoritmo
+                    List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+
+                    // Para essa combinação de parâmetros, armazena o melhor valor de f(x)
+                    tuning_results.Add(new Tuning(){
+                        parameters = String.Format("tau = {0};\tstd = {1}", tau, std),
+                        fx = resultados_por_algoritmo[0].media_melhor_fx,
+                        sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                         NFE = resultados_por_algoritmo[0].NFE_medio,
                     });
                 }
@@ -1175,29 +1290,26 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-
-
+        
         // =========================================================================
-        // ======================= TUNING GEOreal2 =================================
-        // =========================================================================
+        // Tuning GEOreal2
 
-        public List<Tuning> tuning_GEOreal2_I_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_I_OI(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_VO = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_OI = true;
             
             // Itera cada std e cada tau
             foreach (double P in valores_P){
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_I_VO__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_I_VO__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_I_VO__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_I_VO__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_I_OI__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_I_OI__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_I_OI__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_I_OI__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1209,6 +1321,7 @@ namespace Execucoes
                             tuning_results.Add(new Tuning(){
                                 parameters = String.Format("P = {0}; \t s = {1}; \t std1 = {2}; \t tau = {3}", P, s, std1, tau),
                                 fx = resultados_por_algoritmo[0].media_melhor_fx,
+                                sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                                 NFE = resultados_por_algoritmo[0].NFE_medio,
                             });
                         }
@@ -1219,23 +1332,22 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-        public List<Tuning> tuning_GEOreal2_P_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_porcentagem, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_P_OI(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_porcentagem, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_OI = true;
             
             // Itera cada std e cada tau
             foreach (double P in valores_P){
                 foreach (double s in valores_s){
                     foreach (double porcent in valores_porcentagem){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_P_VO__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_P_VO__porc = porcent; 
-                            parametros_problema.parametros_livres.GEOreal2_P_VO__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_P_VO__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_P_OI__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_P_OI__porc = porcent; 
+                            parametros_problema.parametros_livres.GEOreal2_P_OI__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_P_OI__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1247,6 +1359,7 @@ namespace Execucoes
                             tuning_results.Add(new Tuning(){
                                 parameters = String.Format("P = {0}; \t s = {1}; \t porc = {2}; \t tau = {3}", P, s, porcent, tau),
                                 fx = resultados_por_algoritmo[0].media_melhor_fx,
+                                sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                                 NFE = resultados_por_algoritmo[0].NFE_medio,
                             });
                         }
@@ -1257,23 +1370,22 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-        public List<Tuning> tuning_GEOreal2_N_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_N_OI(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_OI = true;
             
             // Itera cada std e cada tau
             foreach (double P in valores_P){
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_N_OI__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_N_OI__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_N_OI__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_N_OI__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1285,6 +1397,7 @@ namespace Execucoes
                             tuning_results.Add(new Tuning(){
                                 parameters = String.Format("P = {0}; \t s = {1}; \t std1 = {2}; \t tau = {3}", P, s, std1, tau),
                                 fx = resultados_por_algoritmo[0].media_melhor_fx,
+                                sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                                 NFE = resultados_por_algoritmo[0].NFE_medio,
                             });
                         }
@@ -1295,25 +1408,22 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-
-
-        public List<Tuning> tuning_GEOreal2_I_VN(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_I_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_VN = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_I_DS = true;
             
             // Itera cada std e cada tau
             foreach (double P in valores_P){
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_I_VN__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_I_VN__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_I_VN__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_I_VN__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_I_DS__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_I_DS__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_I_DS__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_I_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1325,6 +1435,7 @@ namespace Execucoes
                             tuning_results.Add(new Tuning(){
                                 parameters = String.Format("P = {0}; \t s = {1}; \t std1 = {2}; \t tau = {3}", P, s, std1, tau),
                                 fx = resultados_por_algoritmo[0].media_melhor_fx,
+                                sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                                 NFE = resultados_por_algoritmo[0].NFE_medio,
                             });
                         }
@@ -1335,23 +1446,22 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-        public List<Tuning> tuning_GEOreal2_P_VN(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_porcentagem, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_P_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_porcentagem, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VN = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
             
             // Itera cada std e cada tau
             foreach (double P in valores_P){
                 foreach (double s in valores_s){
                     foreach (double porcent in valores_porcentagem){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_P_VN__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_P_VN__porc = porcent; 
-                            parametros_problema.parametros_livres.GEOreal2_P_VN__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_P_VN__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_P_DS__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_P_DS__porc = porcent; 
+                            parametros_problema.parametros_livres.GEOreal2_P_DS__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_P_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1363,6 +1473,7 @@ namespace Execucoes
                             tuning_results.Add(new Tuning(){
                                 parameters = String.Format("P = {0}; \t s = {1}; \t porc = {2}; \t tau = {3}", P, s, porcent, tau),
                                 fx = resultados_por_algoritmo[0].media_melhor_fx,
+                                sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                                 NFE = resultados_por_algoritmo[0].NFE_medio,
                             });
                         }
@@ -1373,23 +1484,22 @@ namespace Execucoes
             return tuning_results;
         }
 
-
-        public List<Tuning> tuning_GEOreal2_N_VN(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_N_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VN = true;
+            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;
             
             // Itera cada std e cada tau
             foreach (double P in valores_P){
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_N_VN__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VN__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VN__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VN__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_N_DS__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_N_DS__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_N_DS__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_N_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
@@ -1401,6 +1511,7 @@ namespace Execucoes
                             tuning_results.Add(new Tuning(){
                                 parameters = String.Format("P = {0}; \t s = {1}; \t std1 = {2}; \t tau = {3}", P, s, std1, tau),
                                 fx = resultados_por_algoritmo[0].media_melhor_fx,
+                                sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
                                 NFE = resultados_por_algoritmo[0].NFE_medio,
                             });
                         }
@@ -1413,15 +1524,10 @@ namespace Execucoes
         
 
 
-
-
-
-
         
-        
-        // =====================================
-        // ============== MAIN =================
-        // =====================================
+        // =========================================================================
+        // =============================== MAIN ====================================
+        // =========================================================================
 
         public void Execucoes()
         {
@@ -1469,6 +1575,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(14, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-600.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(600.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 0.0;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1.25,
@@ -1517,6 +1624,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-5.12, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(5.12, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 0.0;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1,
@@ -1563,6 +1671,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-2.048, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(2.048, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 0.0;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1.25,
@@ -1609,6 +1718,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(16, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-500.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(500.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 0.0;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 0.75,
@@ -1658,6 +1768,7 @@ namespace Execucoes
                             bits_por_variavel = Enumerable.Repeat(16, n_variaveis_projeto).ToList(),
                             lower_bounds = Enumerable.Repeat(-30.0, n_variaveis_projeto).ToList(),
                             upper_bounds = Enumerable.Repeat(30.0, n_variaveis_projeto).ToList(),
+                            fx_esperado = 0.0,
                             parametros_livres = new ParametrosLivreProblema()
                             {
                                 tau_GEO = 3.25,
@@ -1695,50 +1806,6 @@ namespace Execucoes
                     break;
                     }
 
-                    // LEVY13
-                    case (int)EnumNomesFuncoesObjetivo.levy13:
-                    {
-                        parametros_problema = new ParametrosProblema();
-                        parametros_problema.nome_funcao = "Levy13";
-                        parametros_problema.n_variaveis_projeto = 2;
-                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
-                        parametros_problema.bits_por_variavel = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.lower_bounds = Enumerable.Repeat(-10.0, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
-                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
-                        {
-                            // // tau_GEO = 1.25,
-                            // // tau_GEOvar = 1.5,
-                            
-                            // tau_GEOreal1 = 5,
-                            // std_GEOreal1 = 2,
-                            
-                            // // tau_GEOreal2 = 5,
-                            // // std_GEOreal2 = 1,
-                            // // P_GEOreal2 = 4,
-                            // // s_GEOreal2 = 2,
-                            
-                            // std_AGEO1real1 = 1.8,
-                            // std_AGEO2real1 = 1.8,
-                            
-                            // // std_AGEO1real2 = 2,
-                            // // P_AGEO1real2 = 8,
-                            // // s_AGEO1real2 = 1,
-                            
-                            // // std_AGEO2real2 = 2,
-                            // // P_AGEO2real2 = 4,
-                            // // s_AGEO2real2 = 2,
-                            
-                            // tau_ASGEO2_REAL1_1 = 5,
-                            // std_ASGEO2_REAL1_1 = 2,
-                            // tau_ASGEO2_REAL1_2 = 5,
-                            // std_ASGEO2_REAL1_2 = 2,
-                            // tau_ASGEO2_REAL1_3 = 5,
-                            // std_ASGEO2_REAL1_3 = 2,
-                        };
-                    break;
-                    }
-
                     // BEALE
                     case (int)EnumNomesFuncoesObjetivo.beale:
                     {
@@ -1749,6 +1816,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-4.5, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(4.5, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 0.0;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             // tau_GEO = 1.25,
@@ -1784,10 +1852,54 @@ namespace Execucoes
                         };
                     break;
                     }
-
-
-
-
+                    
+                    
+                    
+                    
+                    // LEVY13
+                    case (int)EnumNomesFuncoesObjetivo.levy13:
+                    {
+                        parametros_problema = new ParametrosProblema();
+                        parametros_problema.nome_funcao = "Levy13";
+                        parametros_problema.n_variaveis_projeto = 2;
+                        parametros_problema.definicao_funcao_objetivo = definicao_funcao_objetivo;
+                        parametros_problema.bits_por_variavel = Enumerable.Repeat(13, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.lower_bounds = Enumerable.Repeat(-10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
+                        parametros_problema.parametros_livres = new ParametrosLivreProblema()
+                        {
+                            // // tau_GEO = 1.25,
+                            // // tau_GEOvar = 1.5,
+                            
+                            // tau_GEOreal1 = 5,
+                            // std_GEOreal1 = 2,
+                            
+                            // // tau_GEOreal2 = 5,
+                            // // std_GEOreal2 = 1,
+                            // // P_GEOreal2 = 4,
+                            // // s_GEOreal2 = 2,
+                            
+                            // std_AGEO1real1 = 1.8,
+                            // std_AGEO2real1 = 1.8,
+                            
+                            // // std_AGEO1real2 = 2,
+                            // // P_AGEO1real2 = 8,
+                            // // s_AGEO1real2 = 1,
+                            
+                            // // std_AGEO2real2 = 2,
+                            // // P_AGEO2real2 = 4,
+                            // // s_AGEO2real2 = 2,
+                            
+                            // tau_ASGEO2_REAL1_1 = 5,
+                            // std_ASGEO2_REAL1_1 = 2,
+                            // tau_ASGEO2_REAL1_2 = 5,
+                            // std_ASGEO2_REAL1_2 = 2,
+                            // tau_ASGEO2_REAL1_3 = 5,
+                            // std_ASGEO2_REAL1_3 = 2,
+                        };
+                    break;
+                    }
 
                     // PAVIANI
                     case (int)EnumNomesFuncoesObjetivo.paviani:
@@ -1799,6 +1911,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(10, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(2.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             // tau_GEO = 1.25,
@@ -1845,6 +1958,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(15, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-100.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             // tau_GEO = 1.25,
@@ -1868,6 +1982,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(17, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-500.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(500.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             // tau_GEO = 1.25,
@@ -1891,6 +2006,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(11, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat( -2*Math.PI, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(  2*Math.PI, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             // tau_GEO = 1.25,
@@ -1914,6 +2030,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(15, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat( -100.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(  100.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             // tau_GEO = 1.25,
@@ -1941,6 +2058,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(18, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-10.0, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(10.0, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 1.50,
@@ -1973,6 +2091,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = Enumerable.Repeat(11, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.lower_bounds = Enumerable.Repeat(-5.12, parametros_problema.n_variaveis_projeto).ToList();
                         parametros_problema.upper_bounds = Enumerable.Repeat(5.12, parametros_problema.n_variaveis_projeto).ToList();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 3.0,
@@ -2005,6 +2124,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = new List<int>(){2,6,6};
                         parametros_problema.lower_bounds = new List<double>(){13,1,0};
                         parametros_problema.upper_bounds = new List<double>(){15,60,59};
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema()
                         {
                             tau_GEO = 3.0,
@@ -2039,6 +2159,7 @@ namespace Execucoes
                         parametros_problema.bits_por_variavel = new List<int>();
                         parametros_problema.lower_bounds = new List<double>();
                         parametros_problema.upper_bounds = new List<double>();
+                        parametros_problema.fx_esperado = 9999;
                         parametros_problema.parametros_livres = new ParametrosLivreProblema();
                         parametros_problema.populacao_inicial_real = new List<double>();
                         parametros_problema.populacao_inicial_binaria = new List<bool>();
@@ -2068,56 +2189,25 @@ namespace Execucoes
                         // // PARADA POR PRECISÃO
                         // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAO,
                         // PRECISAO_criterio_parada = 1e-13,
+                        // fx_esperado = 0.0,
                         
                         // TUNING FUNÇÕES TESTE
                         tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE,
                         PRECISAO_criterio_parada = 1e-16,
                         NFE_criterio_parada = 100000,
-                        lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000},
-                        fx_esperado = 0.0
+                        lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
 
                         // Lista a cada 500
                         // lista_NFEs_desejados = Enumerable.Range(1, 200).Select(i => (i*500)).ToList()
 
-                        // // TUNING SPACECRAFT
-                        // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE,
-                        // PRECISAO_criterio_parada = 2e-13,
-                        // NFE_criterio_parada = 50000,
+                        // f(x) esperado Spacecraft
                         // fx_esperado = 196.949433192159
-                    },
-                    quais_algoritmos_rodar = new QuaisAlgoritmosRodar()
-                    {
-                        rodar_GEO                       = false,
-                        rodar_GEOvar                    = false,
-                        rodar_AGEO1                     = false,
-                        rodar_AGEO2                     = false,
-                        rodar_AGEO1var                  = false,
-                        rodar_AGEO2var                  = false,
-                        rodar_GEOreal1_igor             = false,
-                        rodar_AGEO1real1_igor           = false,
-                        rodar_AGEO2real1_igor           = false,
-                        rodar_GEOreal2_igor             = false,
-                        rodar_AGEO1real2_igor           = false,
-                        rodar_AGEO2real2_igor           = false,
-                        rodar_AGEO2_REAL1_igor          = false,
-                        rodar_AGEO2_REAL1_porcentagem   = false,
-                        rodar_AGEO2_REAL2_igor          = false,
-                        rodar_AGEO2_REAL2_porcentagem   = false,
-                        rodar_AGEO2_REAL2_normal        = false,
-                        // rodar_ASGEO2real1_1             = false, //NÃODEU
-                        // rodar_ASGEO2real1_2             = false, //NÃODEU
-                        // rodar_ASGEO2real1_3             = false,
-                        // rodar_ASGEO2real1_4             = false,
-                        // rodar_ASGEO2real2_1             = false,
-                        rodar_GEOreal2_I_VO             = true,
-                        rodar_GEOreal2_P_VO             = false,
-                        rodar_GEOreal2_N_VO             = false,
                     },
                     o_que_interessa_printar = new OQueInteressaPrintar()
                     {
                         mostrar_header                      = false,
                         mostrar_meanNFE_meanFX_sdFX         = true,
-                        mostrar_melhores_NFE               = false,
+                        mostrar_melhores_NFE                = false,
                         mostrar_melhores_fx_cada_execucao   = false,
                         mostrar_mean_TAU_iteracoes          = false,
                         mostrar_mean_STD_iteracoes          = false,
@@ -2139,7 +2229,11 @@ namespace Execucoes
 
 
 
-
+                // // Quais algoritmos executar
+                // parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
+                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_I = true;
+                
+                // // O que interessa printar no arquivo de saída
                 // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
                 // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
 
@@ -2335,7 +2429,7 @@ namespace Execucoes
 
 
 
-                // // ================================================================================================================================================
+                // // ======================================================================================================
                 // // Tuning do GEOreal1 IGOR - parâmetros tau e std
                 
                 // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
@@ -2344,11 +2438,11 @@ namespace Execucoes
 
                 // List<Tuning> resultados_tuning = tuning_GEOreal1_igor_e_normal(parametros_execucao, parametros_problema, valores_tau, valores_std);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
                 
                 
-                // // ================================================================================================================================================
+                // // ======================================================================================================
                 // // Tuning do GEOreal1 NORMAL - parâmetros tau e std
                 
                 // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
@@ -2357,11 +2451,11 @@ namespace Execucoes
 
                 // List<Tuning> resultados_tuning = tuning_GEOreal1_igor_e_normal(parametros_execucao, parametros_problema, valores_tau, valores_std);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
 
 
-                // // ================================================================================================================================================
+                // // ======================================================================================================
                 // // Tuning do GEOreal1 PORCENTAGEM - parâmetros tau e std
                 
                 // List<double> valores_porcentagem = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
@@ -2370,7 +2464,7 @@ namespace Execucoes
 
                 // List<Tuning> resultados_tuning = tuning_GEOreal1_porcentagem(parametros_execucao, parametros_problema, valores_tau, valores_porcentagem);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
 
 
@@ -2530,71 +2624,71 @@ namespace Execucoes
                 
                 
                 
-                // // ================================================================================================================================================
-                // // Tuning do GEOreal2_I_VO
-                // List<double> valores_tau = new List<double>(){0.2, 0.4};
-                // List<double> valores_std1 = new List<double>(){0.2, 0.4};
-                // List<double> valores_P = new List<double>(){4, 8};
-                // List<double> valores_s = new List<double>(){1, 2};
+                // ======================================================================================================
+                // Tuning do GEOreal2_I_OI
+                List<double> valores_tau = new List<double>(){1, 2};
+                List<double> valores_std1 = new List<double>(){1, 4};
+                List<double> valores_P = new List<double>(){4, 8};
+                List<double> valores_s = new List<double>(){1, 2};
                 
-                // List<Tuning> resultados_tuning = tuning_GEOreal2_I_VO(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
-                // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                List<Tuning> resultados_tuning = tuning_GEOreal2_I_OI(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
+                ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                // ======================================================================================================
 
-                // // ================================================================================================================================================
-                // // Tuning do GEOreal2_P_VO
+                // // ======================================================================================================
+                // // Tuning do GEOreal2_P_OI
                 // List<double> valores_tau = new List<double>(){0.2, 0.4};
                 // List<double> valores_porcent = new List<double>(){0.2, 0.4};
                 // List<double> valores_P = new List<double>(){4, 8};
                 // List<double> valores_s = new List<double>(){1, 2};
                 
-                // List<Tuning> resultados_tuning = tuning_GEOreal2_P_VO(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
+                // List<Tuning> resultados_tuning = tuning_GEOreal2_P_OI(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
-                // // ================================================================================================================================================
-                // // Tuning do GEOreal2_N_VO                
+                // // ======================================================================================================
+                // // Tuning do GEOreal2_N_OI                
                 // List<double> valores_tau = new List<double>(){0.2, 0.4};
                 // List<double> valores_std = new List<double>(){0.2, 0.4};
                 // List<double> valores_P = new List<double>(){4, 8};
                 // List<double> valores_s = new List<double>(){1, 2};
                 
-                // List<Tuning> resultados_tuning = tuning_GEOreal2_N_VO(parametros_execucao, parametros_problema, valores_tau, valores_std, valores_P, valores_s);
+                // List<Tuning> resultados_tuning = tuning_GEOreal2_N_OI(parametros_execucao, parametros_problema, valores_tau, valores_std, valores_P, valores_s);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
-                // // ================================================================================================================================================
-                // // Tuning do GEOreal2_I_VN
+                // // ======================================================================================================
+                // // Tuning do GEOreal2_I_DS
                 // List<double> valores_tau = new List<double>(){0.2, 0.4};
                 // List<double> valores_std1 = new List<double>(){0.2, 0.4};
                 // List<double> valores_P = new List<double>(){4, 8};
                 // List<double> valores_s = new List<double>(){1, 2};
                 
-                // List<Tuning> resultados_tuning = tuning_GEOreal2_I_VN(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
+                // List<Tuning> resultados_tuning = tuning_GEOreal2_I_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
-                // // ================================================================================================================================================
-                // // Tuning do GEOreal2_P_VN
+                // // ======================================================================================================
+                // // Tuning do GEOreal2_P_DS
                 // List<double> valores_tau = new List<double>(){0.2, 0.4};
                 // List<double> valores_porcent = new List<double>(){0.2, 0.4};
                 // List<double> valores_P = new List<double>(){4, 8};
                 // List<double> valores_s = new List<double>(){1, 2};
                 
-                // List<Tuning> resultados_tuning = tuning_GEOreal2_P_VN(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
+                // List<Tuning> resultados_tuning = tuning_GEOreal2_P_DS(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ================================================================================================================================================
+                // // ======================================================================================================
 
-                // ================================================================================================================================================
-                // Tuning do GEOreal2_N_VN                
-                List<double> valores_tau = new List<double>(){0.2, 0.4};
-                List<double> valores_std = new List<double>(){0.2, 0.4};
-                List<double> valores_P = new List<double>(){4, 8};
-                List<double> valores_s = new List<double>(){1, 2};
+                // // ======================================================================================================
+                // // Tuning do GEOreal2_N_DS                
+                // List<double> valores_tau = new List<double>(){0.2, 0.4};
+                // List<double> valores_std = new List<double>(){0.2, 0.4};
+                // List<double> valores_P = new List<double>(){4, 8};
+                // List<double> valores_s = new List<double>(){1, 2};
                 
-                List<Tuning> resultados_tuning = tuning_GEOreal2_N_VN(parametros_execucao, parametros_problema, valores_tau, valores_std, valores_P, valores_s);
-                ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // ================================================================================================================================================
+                // List<Tuning> resultados_tuning = tuning_GEOreal2_N_DS(parametros_execucao, parametros_problema, valores_tau, valores_std, valores_P, valores_s);
+                // ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                // // ======================================================================================================
 
                
 
