@@ -110,14 +110,6 @@ namespace GEOs_REAIS
 
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
-                    add_NFE();
-
-                    // Avalia se a perturbação gera o melhor f(x) da história
-                    if (fx < fx_melhor)
-                    {
-                        fx_melhor = fx;
-                        populacao_melhor = populacao_para_perturbar;
-                    }
 
                     // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                     Perturbacao perturbacao = new Perturbacao();

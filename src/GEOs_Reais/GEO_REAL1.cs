@@ -114,7 +114,7 @@ namespace GEOs_REAIS
             double fx_final = fx + penalidade;
             
             // Sempre depois de calcular o f(x), verifica se é o melhor de todos
-            if (fx < fx_melhor)
+            if (fx_final < fx_melhor)
             {
                 fx_melhor = fx_final;
                 populacao_melhor = fenotipos;

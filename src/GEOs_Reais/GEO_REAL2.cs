@@ -72,7 +72,6 @@ namespace GEOs_REAIS
 
                     // Calcula f(x) com a variável perturbada
                     double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
-                    add_NFE();
 
                     // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                     Perturbacao perturbacao = new Perturbacao();
