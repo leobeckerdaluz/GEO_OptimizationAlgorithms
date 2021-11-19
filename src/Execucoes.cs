@@ -1666,46 +1666,46 @@ namespace Execucoes
                             GEO__tau = 1.25,
                             GEOvar__tau = 2.75,
                             
+                            GEOreal1_O__std = 1,
                             GEOreal1_O__tau = 1.5,
-                            GEOreal1_O__std = 0.8,
 
-                            GEOreal1_P__tau = 4.5,
                             GEOreal1_P__porc = 0.5,
+                            GEOreal1_P__tau = 6,
 
+                            GEOreal1_N__std = 2,
                             GEOreal1_N__tau = 1.5,
-                            GEOreal1_N__std = 1.8,
 
                             GEOreal2_O_OI__P = 4,
                             GEOreal2_O_OI__s = 1,
                             GEOreal2_O_OI__std = 1,
-                            GEOreal2_O_OI__tau = 3,
+                            GEOreal2_O_OI__tau = 2.5,
 
                             GEOreal2_P_OI__P = 12,
                             GEOreal2_P_OI__s = 1,
-                            GEOreal2_P_OI__porc = 5,
-                            GEOreal2_P_OI__tau = 2.5,
+                            GEOreal2_P_OI__porc = 10,
+                            GEOreal2_P_OI__tau = 3,
 
-                            GEOreal2_N_OI__P = 8,
-                            GEOreal2_N_OI__s = 1,
-                            GEOreal2_N_OI__std = 8,
-                            GEOreal2_N_OI__tau = 3,
+                            GEOreal2_N_OI__P = 4,
+                            GEOreal2_N_OI__s = 2,
+                            GEOreal2_N_OI__std = 2,
+                            GEOreal2_N_OI__tau = 2.5,
 
                             GEOreal2_O_DS__P = 4,
                             GEOreal2_O_DS__s = 2,
                             GEOreal2_O_DS__std = 5,
-                            GEOreal2_O_DS__tau = 4,
+                            GEOreal2_O_DS__tau = 5,
 
                             GEOreal2_P_DS__P = 12,
                             GEOreal2_P_DS__s = 2,
                             GEOreal2_P_DS__porc = 5,
-                            GEOreal2_P_DS__tau = 2.5,
+                            GEOreal2_P_DS__tau = 3,
 
                             // 8/2/10/...
                             // 4/10/10/...
                             GEOreal2_N_DS__P = 4,
                             GEOreal2_N_DS__s = 10,
-                            GEOreal2_N_DS__std = 10,
-                            GEOreal2_N_DS__tau = 4.5,
+                            GEOreal2_N_DS__std = 5,
+                            GEOreal2_N_DS__tau = 4,
 
 
 
@@ -1750,28 +1750,28 @@ namespace Execucoes
                             GEO__tau = 1,
                             GEOvar__tau = 1.75,
 
-                            GEOreal1_O__tau = 1.5,
-                            GEOreal1_O__std = 1.2,
+                            GEOreal1_O__std = 1.8,
+                            GEOreal1_O__tau = 2,
 
-                            GEOreal1_P__tau = 5,
                             GEOreal1_P__porc = 3,
+                            GEOreal1_P__tau = 5,
 
-                            GEOreal1_N__tau = 6,
                             GEOreal1_N__std = 0.4,
+                            GEOreal1_N__tau = 6,
                             
                             GEOreal2_O_OI__P = 4,
                             GEOreal2_O_OI__s = 1,
                             GEOreal2_O_OI__std = 1,
-                            GEOreal2_O_OI__tau = 5,
+                            GEOreal2_O_OI__tau = 4.5,
 
                             GEOreal2_P_OI__P = 12,
                             GEOreal2_P_OI__s = 2,
                             GEOreal2_P_OI__porc = 10,
                             GEOreal2_P_OI__tau = 5,
 
-                            GEOreal2_N_OI__P = 16,
-                            GEOreal2_N_OI__s = 1,
-                            GEOreal2_N_OI__std = 4,
+                            GEOreal2_N_OI__P = 12,
+                            GEOreal2_N_OI__s = 2,
+                            GEOreal2_N_OI__std = 1,
                             GEOreal2_N_OI__tau = 5,
 
                             GEOreal2_O_DS__P = 4,
@@ -1782,7 +1782,7 @@ namespace Execucoes
                             GEOreal2_P_DS__P = 12,
                             GEOreal2_P_DS__s = 10,
                             GEOreal2_P_DS__porc = 10,
-                            GEOreal2_P_DS__tau = 5,
+                            GEOreal2_P_DS__tau = 4.5,
 
                             GEOreal2_N_DS__P = 16,
                             GEOreal2_N_DS__s = 10,
@@ -1830,14 +1830,14 @@ namespace Execucoes
                             GEO__tau = 1.25,
                             GEOvar__tau = 1.5,
                             
-                            GEOreal1_O__tau = 6.5,
-                            GEOreal1_O__std = 2.4,
+                            GEOreal1_O__std = 2.5,
+                            GEOreal1_O__tau = 6,
 
-                            GEOreal1_P__tau = 4.5,
                             GEOreal1_P__porc = 0.5,
+                            GEOreal1_P__tau = 6,
 
-                            GEOreal1_N__tau = 5.5,
                             GEOreal1_N__std = 0.2,
+                            GEOreal1_N__tau = 5,
                             
                             GEOreal2_O_OI__P = 4,
                             GEOreal2_O_OI__s = 2,
@@ -1846,32 +1846,32 @@ namespace Execucoes
 
                             GEOreal2_P_OI__P = 4,
                             GEOreal2_P_OI__s = 1,
-                            GEOreal2_P_OI__porc = 0.3,
-                            GEOreal2_P_OI__tau = 5,
+                            GEOreal2_P_OI__porc = 0.1,
+                            GEOreal2_P_OI__tau = 4,
 
                             GEOreal2_N_OI__P = 4,
                             GEOreal2_N_OI__s = 2,
-                            GEOreal2_N_OI__std = 1,
-                            GEOreal2_N_OI__tau = 4.5,
+                            GEOreal2_N_OI__std = 0.5,
+                            GEOreal2_N_OI__tau = 5,
 
                             // 8/2/5/...
                             // 4/10/10/...
-                            GEOreal2_O_DS__P = 8,
+                            GEOreal2_O_DS__P = 12,
                             GEOreal2_O_DS__s = 2,
                             GEOreal2_O_DS__std = 5,
-                            GEOreal2_O_DS__tau = 4,
+                            GEOreal2_O_DS__tau = 5,
 
                             GEOreal2_P_DS__P = 4,
                             GEOreal2_P_DS__s = 2,
-                            GEOreal2_P_DS__porc = 1,
+                            GEOreal2_P_DS__porc = 0.1,
                             GEOreal2_P_DS__tau = 5,
 
                             // 4/10/1/...
                             // 8/2/1/...
-                            GEOreal2_N_DS__P = 4,
-                            GEOreal2_N_DS__s = 10,
+                            GEOreal2_N_DS__P = 8,
+                            GEOreal2_N_DS__s = 2,
                             GEOreal2_N_DS__std = 1,
-                            GEOreal2_N_DS__tau = 4,
+                            GEOreal2_N_DS__tau = 5,
 
 
 
@@ -1914,32 +1914,32 @@ namespace Execucoes
                             GEO__tau = 0.75,
                             GEOvar__tau = 1.5,
                             
-                            GEOreal1_O__tau = 8,
-                            GEOreal1_O__std = 0.6,
+                            GEOreal1_O__std = 1.8,
+                            GEOreal1_O__tau = 6,
 
-                            GEOreal1_P__tau = 3,
-                            GEOreal1_P__porc = 7.5,
+                            GEOreal1_P__porc = 8,
+                            GEOreal1_P__tau = 2.5,
 
-                            GEOreal1_N__tau = 2,
-                            GEOreal1_N__std = 1.8,
+                            GEOreal1_N__std = 1.4,
+                            GEOreal1_N__tau = 1.5,
 
                             GEOreal2_O_OI__P = 16,
                             GEOreal2_O_OI__s = 2,
-                            GEOreal2_O_OI__std = 4,
-                            GEOreal2_O_OI__tau = 5,
+                            GEOreal2_O_OI__std = 8,
+                            GEOreal2_O_OI__tau = 4,
 
-                            GEOreal2_P_OI__P = 4,
-                            GEOreal2_P_OI__s = 1,
-                            GEOreal2_P_OI__porc = 10,
-                            GEOreal2_P_OI__tau = 3,
+                            GEOreal2_P_OI__P = 12,
+                            GEOreal2_P_OI__s = 2,
+                            GEOreal2_P_OI__porc = 50,
+                            GEOreal2_P_OI__tau = 5,
 
-                            GEOreal2_N_OI__P = 8, //4-8-16
+                            GEOreal2_N_OI__P = 4,
                             GEOreal2_N_OI__s = 1,
-                            GEOreal2_N_OI__std = 4,
-                            GEOreal2_N_OI__tau = 3,
+                            GEOreal2_N_OI__std = 2,
+                            GEOreal2_N_OI__tau = 4,
 
-                            GEOreal2_O_DS__P = 16,
-                            GEOreal2_O_DS__s = 2,
+                            GEOreal2_O_DS__P = 12,
+                            GEOreal2_O_DS__s = 10,
                             GEOreal2_O_DS__std = 5,
                             GEOreal2_O_DS__tau = 5,
 
@@ -1948,10 +1948,10 @@ namespace Execucoes
                             GEOreal2_P_DS__porc = 50,
                             GEOreal2_P_DS__tau = 4.5,
 
-                            GEOreal2_N_DS__P = 8,
-                            GEOreal2_N_DS__s = 10,
+                            GEOreal2_N_DS__P = 4,
+                            GEOreal2_N_DS__s = 2,
                             GEOreal2_N_DS__std = 10,
-                            GEOreal2_N_DS__tau = 2,
+                            GEOreal2_N_DS__tau = 0.5,
 
 
 
@@ -1997,14 +1997,14 @@ namespace Execucoes
                                 GEO__tau = 3.25,
                                 GEOvar__tau = 2.25,
 
-                                GEOreal1_O__tau = 1,
                                 GEOreal1_O__std = 0.8,
+                                GEOreal1_O__tau = 1,
 
-                                GEOreal1_P__tau = 5,
                                 GEOreal1_P__porc = 1,
+                                GEOreal1_P__tau = 5,
 
-                                GEOreal1_N__tau = 6.5,
-                                GEOreal1_N__std = 0.4,
+                                GEOreal1_N__std = 0.6,
+                                GEOreal1_N__tau = 6,
 
                                 GEOreal2_O_OI__P = 4,
                                 GEOreal2_O_OI__s = 1,
@@ -2013,13 +2013,13 @@ namespace Execucoes
 
                                 GEOreal2_P_OI__P = 12,
                                 GEOreal2_P_OI__s = 2,
-                                GEOreal2_P_OI__porc = 5,
+                                GEOreal2_P_OI__porc = 10,
                                 GEOreal2_P_OI__tau = 5,
 
-                                GEOreal2_N_OI__P = 16,
-                                GEOreal2_N_OI__s = 1,
-                                GEOreal2_N_OI__std = 4,
-                                GEOreal2_N_OI__tau = 5,
+                                GEOreal2_N_OI__P = 12,
+                                GEOreal2_N_OI__s = 2,
+                                GEOreal2_N_OI__std = 2,
+                                GEOreal2_N_OI__tau = 4.5,
 
                                 GEOreal2_O_DS__P = 4,
                                 GEOreal2_O_DS__s = 2,
@@ -2028,13 +2028,13 @@ namespace Execucoes
 
                                 GEOreal2_P_DS__P = 12,
                                 GEOreal2_P_DS__s = 10,
-                                GEOreal2_P_DS__porc = 10,
+                                GEOreal2_P_DS__porc = 5,
                                 GEOreal2_P_DS__tau = 5,
 
                                 GEOreal2_N_DS__P = 16,
                                 GEOreal2_N_DS__s = 10,
-                                GEOreal2_N_DS__std = 10,
-                                GEOreal2_N_DS__tau = 4.5,
+                                GEOreal2_N_DS__std = 5,
+                                GEOreal2_N_DS__tau = 5,
                                 
 
 
@@ -2078,44 +2078,44 @@ namespace Execucoes
                             GEO__tau = 1.25,
                             GEOvar__tau = 1.5,
                             
-                            GEOreal1_O__tau = 6,
                             GEOreal1_O__std = 2,
+                            GEOreal1_O__tau = 5,
 
-                            GEOreal1_P__tau = 4,
-                            GEOreal1_P__porc = 3,
+                            GEOreal1_P__porc = 1.5,
+                            GEOreal1_P__tau = 1.5,
 
-                            GEOreal1_N__tau = 2,
                             GEOreal1_N__std = 0.2,
+                            GEOreal1_N__tau = 2,
 
                             GEOreal2_O_OI__P = 8,
-                            GEOreal2_O_OI__s = 1,
-                            GEOreal2_O_OI__std = 1,
-                            GEOreal2_O_OI__tau = 3.5,
+                            GEOreal2_O_OI__s = 2,
+                            GEOreal2_O_OI__std = 2,
+                            GEOreal2_O_OI__tau = 4,
 
-                            GEOreal2_P_OI__P = 4,
-                            GEOreal2_P_OI__s = 2,
-                            GEOreal2_P_OI__porc = 10,
-                            GEOreal2_P_OI__tau = 4,
+                            GEOreal2_P_OI__P = 12,
+                            GEOreal2_P_OI__s = 1,
+                            GEOreal2_P_OI__porc = 50,
+                            GEOreal2_P_OI__tau = 3.5,
 
-                            GEOreal2_N_OI__P = 8,
+                            GEOreal2_N_OI__P = 12,
                             GEOreal2_N_OI__s = 1,
                             GEOreal2_N_OI__std = 2,
-                            GEOreal2_N_OI__tau = 3.5,
+                            GEOreal2_N_OI__tau = 2.5,
 
-                            GEOreal2_O_DS__P = 8,
+                            GEOreal2_O_DS__P = 4,
                             GEOreal2_O_DS__s = 10,
                             GEOreal2_O_DS__std = 1,
-                            GEOreal2_O_DS__tau = 3,
+                            GEOreal2_O_DS__tau = 5,
 
-                            GEOreal2_P_DS__P = 4,
-                            GEOreal2_P_DS__s = 10,
-                            GEOreal2_P_DS__porc = 10,
-                            GEOreal2_P_DS__tau = 3.5,
+                            GEOreal2_P_DS__P = 12,
+                            GEOreal2_P_DS__s = 2,
+                            GEOreal2_P_DS__porc = 50,
+                            GEOreal2_P_DS__tau = 3,
 
                             GEOreal2_N_DS__P = 16,
                             GEOreal2_N_DS__s = 2,
-                            GEOreal2_N_DS__std = 10,
-                            GEOreal2_N_DS__tau = 3,
+                            GEOreal2_N_DS__std = 5,
+                            GEOreal2_N_DS__tau = 2.5,
 
 
                             
@@ -2462,13 +2462,14 @@ namespace Execucoes
                 // =======================================================================================
                 // Define os parâmetros de execução
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao();
-                parametros_execucao.quantidade_execucoes = 28;
+                // parametros_execucao.quantidade_execucoes = 28;
+                parametros_execucao.quantidade_execucoes = 50;
                 parametros_execucao.parametros_criterio_parada = new ParametrosCriterioParada()
                 {
-                    // // EXECUÇÃO NORMAL
-                    // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE,
-                    // NFE_criterio_parada = 100000,
-                    // lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
+                    // EXECUÇÃO NORMAL
+                    tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE,
+                    NFE_criterio_parada = 100000,
+                    lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
 
                     // // PARADA POR ITERAÇÕES
                     // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_ITERATIONS,
@@ -2480,12 +2481,12 @@ namespace Execucoes
                     // PRECISAO_criterio_parada = 1e-13,
                     // fx_esperado = 0.0,
                     
-                    // TUNING FUNÇÕES TESTE
-                    tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE,
-                    PRECISAO_criterio_parada = 1e-16,
-                    NFE_criterio_parada = 100000,
-                    lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000},
-                    fx_esperado = 0.0,
+                    // // TUNING FUNÇÕES TESTE
+                    // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE,
+                    // PRECISAO_criterio_parada = 1e-16,
+                    // NFE_criterio_parada = 100000,
+                    // lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000},
+                    // fx_esperado = 0.0,
 
                     // Lista a cada 500
                     // lista_NFEs_desejados = Enumerable.Range(1, 200).Select(i => (i*500)).ToList()
@@ -2520,70 +2521,70 @@ namespace Execucoes
 
 
 
-                // // ======================================================================================================
-                
-                // // Quais algoritmos executar
-                // parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-                // // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                // // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
-                // // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
-                // // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
-
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N = true;
-
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_OI = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_OI = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_OI = true;
-
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;
-                
-                // // O que interessa printar no arquivo de saída
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
-                // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-
-                // // Executa cada algoritmo por N vezes e obtém todas as execuções
-                // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                
-                // // Organiza os resultados de todas as excuções por algoritmo
-                // List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                
-                // // Apresenta os resultados finais
-                // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                // // ======================================================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-                
-                
-                
                 // ======================================================================================================
-                // Tuning do GEOreal2_O_OI
-                List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
-                List<double> valores_std1 = new List<double>(){1, 2, 4, 8};
-                List<double> valores_P = new List<double>(){4, 8, 16};
-                List<double> valores_s = new List<double>(){1, 2};
                 
-                List<Tuning> resultados_tuning = tuning_GEOreal2_O_OI(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
-                ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                // Quais algoritmos executar
+                parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
+                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
+                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
+                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
+
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N = true;
+
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_OI = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_OI = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_OI = true;
+
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;
+                
+                // O que interessa printar no arquivo de saída
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
+                parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+
+                // Executa cada algoritmo por N vezes e obtém todas as execuções
+                List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                
+                // Organiza os resultados de todas as excuções por algoritmo
+                List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+                
+                // Apresenta os resultados finais
+                apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
                 // ======================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                
+                
+                // // ======================================================================================================
+                // // Tuning do GEOreal2_O_OI
+                // List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
+                // List<double> valores_std1 = new List<double>(){1, 2, 4, 8};
+                // List<double> valores_P = new List<double>(){4, 8, 16};
+                // List<double> valores_s = new List<double>(){1, 2};
+                
+                // List<Tuning> resultados_tuning = tuning_GEOreal2_O_OI(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
+                // ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                // // ======================================================================================================
 
                 // // ======================================================================================================
                 // // Tuning do GEOreal2_P_OI
                 // List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
-                // List<double> valores_porcent = new List<double>(){0.1, 0.3, 0.5, 1, 3, 5, 10};
+                // List<double> valores_porcent = new List<double>(){0.1, 1, 10, 50};
                 // List<double> valores_P = new List<double>(){4, 12};
                 // List<double> valores_s = new List<double>(){1, 2};
                 
@@ -2593,10 +2594,10 @@ namespace Execucoes
 
                 // // ======================================================================================================
                 // // Tuning do GEOreal2_N_OI                
-                // List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
-                // List<double> valores_std1 = new List<double>(){1, 2, 4, 8};
-                // List<double> valores_P = new List<double>(){4, 8, 16};
-                // List<double> valores_s = new List<double>(){1, 2};
+                // List<double>valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
+                // List<double> valores_std1 = new List<double>(){0.5, 1, 2};
+                // List<double>valores_P = new List<double>(){4, 12};
+                // List<double>valores_s = new List<double>(){1, 2};
                 
                 // List<Tuning> resultados_tuning = tuning_GEOreal2_N_OI(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
@@ -2606,7 +2607,7 @@ namespace Execucoes
                 // // Tuning do GEOreal2_O_DS
                 // List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                 // List<double> valores_std1 = new List<double>(){1, 5, 10};
-                // List<double> valores_P = new List<double>(){4, 8, 16};
+                // List<double> valores_P = new List<double>(){4, 12};
                 // List<double> valores_s = new List<double>(){2, 10};
                 
                 // List<Tuning> resultados_tuning = tuning_GEOreal2_O_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
@@ -2667,7 +2668,7 @@ namespace Execucoes
                 // // ======================================================================================================
                 // // Tuning do GEOreal1 IGOR - parâmetros tau e std
                 
-                // List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8};
+                // List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6};
                 // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
 
                 // List<Tuning> resultados_tuning = tuning_GEOreal1_O(parametros_execucao, parametros_problema, valores_tau, valores_std);
@@ -2675,27 +2676,28 @@ namespace Execucoes
                 // // ======================================================================================================
 
                 
+
                 // // ======================================================================================================
-                // // Tuning do GEOreal1 NORMAL - parâmetros tau e std
+                // // Tuning do GEOreal1 PORCENTAGEM - parâmetros tau e porcentagem
                 
-                // List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7};
-                // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6};
-
-                // List<Tuning> resultados_tuning = tuning_GEOreal1_N(parametros_execucao, parametros_problema, valores_tau, valores_std);
-                // ordena_e_apresenta_resultados_tuning(resultados_tuning);
-                // // ======================================================================================================
-
-
-                // // ======================================================================================================
-                // // Tuning do GEOreal1 PORCENTAGEM - parâmetros tau e std
-                
-                // List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5};
+                // List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6};
                 // List<double> valores_porcentagem = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8};
                 
                 // List<Tuning> resultados_tuning = tuning_GEOreal1_P(parametros_execucao, parametros_problema, valores_tau, valores_porcentagem);
                 // ordena_e_apresenta_resultados_tuning(resultados_tuning);
                 // // ======================================================================================================
 
+
+
+                // // ======================================================================================================
+                // // Tuning do GEOreal1 NORMAL - parâmetros tau e std
+                
+                // List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6};
+                // List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4};
+
+                // List<Tuning> resultados_tuning = tuning_GEOreal1_N(parametros_execucao, parametros_problema, valores_tau, valores_std);
+                // ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                // // ======================================================================================================
 
 
 
