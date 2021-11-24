@@ -68,12 +68,37 @@ namespace Classes_Comuns_Enums
 
 
     public class QuaisAlgoritmosRodar {
+        // Binários
         public bool rodar_GEO { get; set; }
         public bool rodar_GEOvar { get; set; }
         public bool rodar_AGEO1 { get; set; }
         public bool rodar_AGEO2 { get; set; }
+        public bool rodar_AGEO3 { get; set; }
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
+        
+        // GEOreal2
+        public bool rodar_GEOreal2_O_VO { get; set; }
+        public bool rodar_GEOreal2_P_VO { get; set; }
+        public bool rodar_GEOreal2_N_VO { get; set; }
+        public bool rodar_GEOreal2_O_DS { get; set; }
+        public bool rodar_GEOreal2_P_DS { get; set; }
+        public bool rodar_GEOreal2_N_DS { get; set; }
+
+        // GEOreal2 + 1 Uniforme
+        public bool rodar_GEOreal2_P_VO_UNI { get; set; }
+        public bool rodar_GEOreal2_N_VO_UNI { get; set; }
+        public bool rodar_GEOreal2_P_DS_UNI { get; set; }
+        public bool rodar_GEOreal2_N_DS_UNI { get; set; }
+        
+        // GEOreal1
+        public bool rodar_GEOreal1_O { get; set; }
+        public bool rodar_GEOreal1_P { get; set; }
+        public bool rodar_GEOreal1_N { get; set; }
+
+
+        
+        // OUTROS
         public bool rodar_GEOreal1_igor { get; set; }
         public bool rodar_AGEO1real1_igor { get; set; }
         public bool rodar_AGEO2real1_igor { get; set; }
@@ -93,21 +118,6 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2_REAL2_igor { get; set; }
         public bool rodar_AGEO2_REAL2_porcentagem { get; set; }
         public bool rodar_AGEO2_REAL2_normal { get; set; }
-        
-        // GEOreal2
-        public bool rodar_GEOreal2_O_OI { get; set; }
-        public bool rodar_GEOreal2_P_OI { get; set; }
-        public bool rodar_GEOreal2_N_OI { get; set; }
-        public bool rodar_GEOreal2_O_DS { get; set; }
-        public bool rodar_GEOreal2_P_DS { get; set; }
-        public bool rodar_GEOreal2_N_DS { get; set; }
-        
-        // GEOreal1
-        public bool rodar_GEOreal1_O { get; set; }
-        public bool rodar_GEOreal1_P { get; set; }
-        public bool rodar_GEOreal1_N { get; set; }
-
-
         
         
     }
@@ -198,21 +208,21 @@ namespace Classes_Comuns_Enums
         public double GEOreal1_N__std {get; set;}
 
 
-        // GEOreal2_O_OI
-        public double GEOreal2_O_OI__tau {get; set;}
-        public double GEOreal2_O_OI__std {get; set;}
-        public double GEOreal2_O_OI__P {get; set;}
-        public double GEOreal2_O_OI__s {get; set;}
-        // GEOreal2_P_OI
-        public double GEOreal2_P_OI__tau {get; set;}
-        public double GEOreal2_P_OI__porc {get; set;}
-        public double GEOreal2_P_OI__P {get; set;}
-        public double GEOreal2_P_OI__s {get; set;}
-        // GEOreal2_N_OI
-        public double GEOreal2_N_OI__tau {get; set;}
-        public double GEOreal2_N_OI__std {get; set;}
-        public double GEOreal2_N_OI__P {get; set;}
-        public double GEOreal2_N_OI__s {get; set;}
+        // GEOreal2_O_VO
+        public double GEOreal2_O_VO__tau {get; set;}
+        public double GEOreal2_O_VO__std {get; set;}
+        public double GEOreal2_O_VO__P {get; set;}
+        public double GEOreal2_O_VO__s {get; set;}
+        // GEOreal2_P_VO
+        public double GEOreal2_P_VO__tau {get; set;}
+        public double GEOreal2_P_VO__porc {get; set;}
+        public double GEOreal2_P_VO__P {get; set;}
+        public double GEOreal2_P_VO__s {get; set;}
+        // GEOreal2_N_VO
+        public double GEOreal2_N_VO__tau {get; set;}
+        public double GEOreal2_N_VO__std {get; set;}
+        public double GEOreal2_N_VO__P {get; set;}
+        public double GEOreal2_N_VO__s {get; set;}
 
         // GEOreal2_O_DS
         public double GEOreal2_O_DS__tau {get; set;}
@@ -229,6 +239,28 @@ namespace Classes_Comuns_Enums
         public double GEOreal2_N_DS__std {get; set;}
         public double GEOreal2_N_DS__P {get; set;}
         public double GEOreal2_N_DS__s {get; set;}
+
+
+        // GEOreal2_P_VO
+        public double GEOreal2_P_VO_UNI__tau {get; set;}
+        public double GEOreal2_P_VO_UNI__porc {get; set;}
+        public double GEOreal2_P_VO_UNI__P {get; set;}
+        public double GEOreal2_P_VO_UNI__s {get; set;}
+        // GEOreal2_N_VO
+        public double GEOreal2_N_VO_UNI__tau {get; set;}
+        public double GEOreal2_N_VO_UNI__std {get; set;}
+        public double GEOreal2_N_VO_UNI__P {get; set;}
+        public double GEOreal2_N_VO_UNI__s {get; set;}
+        // GEOreal2_P_DS
+        public double GEOreal2_P_DS_UNI__tau {get; set;}
+        public double GEOreal2_P_DS_UNI__porc {get; set;}
+        public double GEOreal2_P_DS_UNI__P {get; set;}
+        public double GEOreal2_P_DS_UNI__s {get; set;}
+        // GEOreal2_N_DS
+        public double GEOreal2_N_DS_UNI__tau {get; set;}
+        public double GEOreal2_N_DS_UNI__std {get; set;}
+        public double GEOreal2_N_DS_UNI__P {get; set;}
+        public double GEOreal2_N_DS_UNI__s {get; set;}
         
 
 
@@ -276,12 +308,36 @@ namespace Classes_Comuns_Enums
     }
 
     enum EnumNomesAlgoritmos{
+        // Binários
         GEO_can,
         GEO_var,
         AGEO1,
         AGEO2,
+        AGEO3,
         AGEO1var,
         AGEO2var,
+
+        // GEOreal1
+        GEOreal1_O,
+        GEOreal1_P,
+        GEOreal1_N,
+        
+        // GEOreal2
+        GEOreal2_O_VO,
+        GEOreal2_P_VO,
+        GEOreal2_N_VO,
+        GEOreal2_O_DS,
+        GEOreal2_P_DS,
+        GEOreal2_N_DS,
+        
+        // GEOreal2 + 1 Uniforme
+        GEOreal2_P_VO_UNI,
+        GEOreal2_N_VO_UNI,
+        GEOreal2_P_DS_UNI,
+        GEOreal2_N_DS_UNI,
+
+
+        // OUTROS
         GEOreal1_igor,
         AGEO1real1_igor,
         AGEO2real1_igor,
@@ -302,19 +358,6 @@ namespace Classes_Comuns_Enums
         AGEO2_REAL2_igor,
         AGEO2_REAL2_porcentagem,
         AGEO2_REAL2_normal,
-
-        // GEOreal1
-        GEOreal1_O,
-        GEOreal1_P,
-        GEOreal1_N,
-        
-        // GEOreal2
-        GEOreal2_O_OI,
-        GEOreal2_P_OI,
-        GEOreal2_N_OI,
-        GEOreal2_O_DS,
-        GEOreal2_P_DS,
-        GEOreal2_N_DS,
 
     }
 
