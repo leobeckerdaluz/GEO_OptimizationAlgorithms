@@ -33,41 +33,17 @@ namespace GEOs_BINARIOS
         }
 
 
+
         public override void mutacao_do_tau_AGEOs()
         {
-            // Conta quantas mudanças que flipando dá melhor
-            int melhoraram = 0;
+            int tamanho_populacao = this.populacao_atual.Count;
 
-            if (this.tipo_AGEO == 1)
-            {
-                // Verifica quantos melhora em comparação com o MELHOR FX
-                melhoraram = this.lista_informacoes_mutacao.Where(p => p.funcao_objetivo_flipando <= this.fx_melhor).ToList().Count;
-            }
-            else if (this.tipo_AGEO == 2)
-            {
-                // Verifica quantos melhora em comparação com o ATUAL FX
-                melhoraram = this.lista_informacoes_mutacao.Where(p => p.funcao_objetivo_flipando <= this.fx_atual).ToList().Count;                 
-            }
+            double fx_referencia = (this.tipo_AGEO==1 ? fx_melhor : fx_atual);
 
-            // Calcula a Chance of Improvement
-            double CoI = (double) melhoraram / this.populacao_atual.Count;
-
-            // Se a CoI for zero, restarta o TAU
-            if (CoI <= 0.0 || tau > 5)
-            {
-                // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
-                // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
-                tau = 0.5 * Math.Exp(this.random.NextDouble() * (1.0 / Math.Pow( (this.populacao_atual.Count), 1.0/2.0 )));
-
-            }
-            // Senão, se for menor que o CoI anterior, aumenta o TAU
-            else if(CoI <= this.CoI_1)
-            {
-                tau += (0.5 + CoI) * this.random.NextDouble();
-            }
-
-            // Atualiza o CoI(i-1) como sendo o atual CoI(i)
+            double CoI = MecanismoAGEO.MecanismoAGEO.calcula_CoI_bin(lista_informacoes_mutacao, fx_referencia, tamanho_populacao);
             this.CoI_1 = CoI;
+            
+            tau = MecanismoAGEO.MecanismoAGEO.obtem_novo_tau(this.tipo_AGEO, tau, CoI, CoI_1, tamanho_populacao);
         }
     }
 }

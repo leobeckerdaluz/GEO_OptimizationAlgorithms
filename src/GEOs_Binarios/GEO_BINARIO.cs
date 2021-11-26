@@ -240,12 +240,12 @@ namespace GEOs_BINARIOS
                 stop = true;
             }
 
-            // Se o critério for por precisão...
-            else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO) 
-            && parada_por_precisao)
-            {
-                stop = true;
-            }
+            // // Se o critério for por precisão...
+            // else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO) 
+            // && parada_por_precisao)
+            // {
+            //     stop = true;
+            // }
             
             // Se o critério for por precisão ou por NFE...
             else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE) 

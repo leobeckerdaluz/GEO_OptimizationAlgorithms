@@ -74,8 +74,14 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO1 { get; set; }
         public bool rodar_AGEO2 { get; set; }
         public bool rodar_AGEO3 { get; set; }
+        public bool rodar_AGEO4 { get; set; }
+        public bool rodar_AGEO9 { get; set; }
+        
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
+        public bool rodar_AGEO3var { get; set; }
+        public bool rodar_AGEO4var { get; set; }
+        public bool rodar_AGEO9var { get; set; }
         
         // GEOreal2
         public bool rodar_GEOreal2_O_VO { get; set; }
@@ -178,23 +184,23 @@ namespace Classes_Comuns_Enums
         
         public double GEO__tau {get; set;}
         public double GEOvar__tau {get; set;}
-        public double tau_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_porcentagem, GEOreal1_normal
-        public double std_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_normal
-        public double p1_GEOreal1 {get; set;}       // GEOreal1_porcentagem
-        public double tau_GEOreal2 {get; set;}      // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_normal
-        public double std_AGEO1real1 {get; set;}    // AGEOs real1
-        public double std_AGEO2real1 {get; set;}    // AGEOs real1
-        public double std_GEOreal2 {get; set;}      // GEOreal2_igor, GEOreal2_normal
-        public double std_AGEO1real2 {get; set;}    // AGEOs real2
-        public double std_AGEO2real2 {get; set;}    // AGEOs real2
-        public double p1_AGEO1real1 {get; set;}     // AGEOs_real1 porcentagem
-        public double p1_AGEO2real1 {get; set;}     // AGEOs_real1 porcentagem
-        public double P_GEOreal2 {get; set;}        // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_normal
-        public double P_AGEO1real2 {get; set;}      // AGEOs_real2
-        public double P_AGEO2real2 {get; set;}      // AGEOs_real2
-        public double s_GEOreal2 {get; set;}        // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_normal
-        public double s_AGEO1real2 {get; set;}      // AGEOs_real2
-        public double s_AGEO2real2 {get; set;}      // AGEOs_real2
+        // public double tau_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_porcentagem, GEOreal1_normal
+        // public double std_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_normal
+        // public double p1_GEOreal1 {get; set;}       // GEOreal1_porcentagem
+        // public double tau_GEOreal2 {get; set;}      // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_normal
+        // public double std_AGEO1real1 {get; set;}    // AGEOs real1
+        // public double std_AGEO2real1 {get; set;}    // AGEOs real1
+        // public double std_GEOreal2 {get; set;}      // GEOreal2_igor, GEOreal2_normal
+        // public double std_AGEO1real2 {get; set;}    // AGEOs real2
+        // public double std_AGEO2real2 {get; set;}    // AGEOs real2
+        // public double p1_AGEO1real1 {get; set;}     // AGEOs_real1 porcentagem
+        // public double p1_AGEO2real1 {get; set;}     // AGEOs_real1 porcentagem
+        // public double P_GEOreal2 {get; set;}        // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_normal
+        // public double P_AGEO1real2 {get; set;}      // AGEOs_real2
+        // public double P_AGEO2real2 {get; set;}      // AGEOs_real2
+        // public double s_GEOreal2 {get; set;}        // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_normal
+        // public double s_AGEO1real2 {get; set;}      // AGEOs_real2
+        // public double s_AGEO2real2 {get; set;}      // AGEOs_real2
         
         
         // GEOreal1_O
@@ -266,21 +272,21 @@ namespace Classes_Comuns_Enums
 
         
         
-        // Não essenciais atualmente
-        public double std_ASGEO2_REAL1_1 {get; set;}
-        public double std_ASGEO2_REAL1_2 {get; set;}
-        public double std_ASGEO2_REAL1_3 {get; set;}
-        public double std_ASGEO2_REAL1_4 {get; set;}
-        public int q_one_fifth_rule {get; set;}
-        public double c_one_fifth_rule {get; set;}
-        public double stdmin_one_fifth_rule {get; set;}
-        public int ASGEO2_REAL2_1_P {get; set;}
-        public double ASGEO2_REAL2_1_std1 {get; set;}
-        public int ASGEO2_REAL2_1_s {get; set;}
-        public double tau_ASGEO2_REAL1_1 {get; set;}
-        public double tau_ASGEO2_REAL1_2 {get; set;}
-        public double tau_ASGEO2_REAL1_3 {get; set;}
-        public double tau_ASGEO2_REAL1_4 {get; set;}
+        // // Não essenciais atualmente
+        // public double std_ASGEO2_REAL1_1 {get; set;}
+        // public double std_ASGEO2_REAL1_2 {get; set;}
+        // public double std_ASGEO2_REAL1_3 {get; set;}
+        // public double std_ASGEO2_REAL1_4 {get; set;}
+        // public int q_one_fifth_rule {get; set;}
+        // public double c_one_fifth_rule {get; set;}
+        // public double stdmin_one_fifth_rule {get; set;}
+        // public int ASGEO2_REAL2_1_P {get; set;}
+        // public double ASGEO2_REAL2_1_std1 {get; set;}
+        // public int ASGEO2_REAL2_1_s {get; set;}
+        // public double tau_ASGEO2_REAL1_1 {get; set;}
+        // public double tau_ASGEO2_REAL1_2 {get; set;}
+        // public double tau_ASGEO2_REAL1_3 {get; set;}
+        // public double tau_ASGEO2_REAL1_4 {get; set;}
     }
 
     enum EnumNomesFuncoesObjetivo{
@@ -314,8 +320,13 @@ namespace Classes_Comuns_Enums
         AGEO1,
         AGEO2,
         AGEO3,
+        AGEO4,
+        AGEO9,
         AGEO1var,
         AGEO2var,
+        AGEO3var,
+        AGEO4var,
+        AGEO9var,
 
         // GEOreal1
         GEOreal1_O,
@@ -337,33 +348,33 @@ namespace Classes_Comuns_Enums
         GEOreal2_N_DS_UNI,
 
 
-        // OUTROS
-        GEOreal1_igor,
-        AGEO1real1_igor,
-        AGEO2real1_igor,
-        GEOreal2_igor,
-        AGEO1real2_igor,
-        AGEO2real2_igor,
-        ASGEO2real1_1,
-        ASGEO2real1_2,
-        ASGEO2real1_3,
-        ASGEO2real1_4,
-        ASGEO2real2_1,
-        ASGEO2real2_2,
-        ASGEO2real2_3,
+        // // OUTROS
+        // GEOreal1_igor,
+        // AGEO1real1_igor,
+        // AGEO2real1_igor,
+        // GEOreal2_igor,
+        // AGEO1real2_igor,
+        // AGEO2real2_igor,
+        // ASGEO2real1_1,
+        // ASGEO2real1_2,
+        // ASGEO2real1_3,
+        // ASGEO2real1_4,
+        // ASGEO2real2_1,
+        // ASGEO2real2_2,
+        // ASGEO2real2_3,
 
-        AGEO2_REAL1_igor,
-        AGEO2_REAL1_porcentagem,
-        AGEO2_REAL1_normal,
-        AGEO2_REAL2_igor,
-        AGEO2_REAL2_porcentagem,
-        AGEO2_REAL2_normal,
+        // AGEO2_REAL1_igor,
+        // AGEO2_REAL1_porcentagem,
+        // AGEO2_REAL1_normal,
+        // AGEO2_REAL2_igor,
+        // AGEO2_REAL2_porcentagem,
+        // AGEO2_REAL2_normal,
 
     }
 
     enum EnumTipoCriterioParada{
         parada_por_NFE,
-        parada_por_PRECISAO,
+        // parada_por_PRECISAO,
         parada_por_PRECISAOouNFE,
         parada_por_ITERATIONS
     }
