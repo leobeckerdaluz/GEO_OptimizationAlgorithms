@@ -71,7 +71,7 @@ namespace GEOs_REAIS
                     populacao_para_perturbar[i] = xii;
 
                     // Calcula f(x) com a variável perturbada
-                    double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
+                    double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
 
                     // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                     Perturbacao perturbacao = new Perturbacao();
@@ -148,7 +148,7 @@ namespace GEOs_REAIS
             }
 
             // Depois que aceitou uma perturbação de cada variável, precisa calcular o fx_atual novamente
-            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual);
+            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, false);
         }
     }
 }

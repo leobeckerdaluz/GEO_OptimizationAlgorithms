@@ -45,6 +45,7 @@ namespace Classes_Comuns_Enums
         public int NFE_medio { get; set; }
         public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
+        public double mediana_melhor_fx { get; set; }
         public double SD_do_melhor_fx { get; set; }
         public List<double> media_valor_FO_em_cada_NFE { get; set; }
         public List<double> lista_melhores_fxs { get; set; }

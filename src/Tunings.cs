@@ -115,7 +115,9 @@ namespace Tunings
                 parametros_problema.parametros_livres.GEOvar__tau = tau; 
 
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
-                List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                 
                 // Organiza os resultados de todas as excuções por algoritmo
                 List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -151,7 +153,9 @@ namespace Tunings
                     parametros_problema.parametros_livres.GEOreal1_O__std = std; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                    List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                     
                     // Organiza os resultados de todas as excuções por algoritmo
                     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -183,7 +187,9 @@ namespace Tunings
                     parametros_problema.parametros_livres.GEOreal1_P__porc = porc; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                    List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                     
                     // Organiza os resultados de todas as excuções por algoritmo
                     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -215,7 +221,9 @@ namespace Tunings
                     parametros_problema.parametros_livres.GEOreal1_N__std = std; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                    ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                    List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                     
                     // Organiza os resultados de todas as excuções por algoritmo
                     List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -256,7 +264,9 @@ namespace Tunings
                             parametros_problema.parametros_livres.GEOreal2_O_VO__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                            List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
                             // Organiza os resultados de todas as excuções por algoritmo
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -294,7 +304,9 @@ namespace Tunings
                             parametros_problema.parametros_livres.GEOreal2_P_VO__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                            List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
                             // Organiza os resultados de todas as excuções por algoritmo
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -332,7 +344,9 @@ namespace Tunings
                             parametros_problema.parametros_livres.GEOreal2_N_VO__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                            List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
                             // Organiza os resultados de todas as excuções por algoritmo
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -370,7 +384,9 @@ namespace Tunings
                             parametros_problema.parametros_livres.GEOreal2_O_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                            List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
                             // Organiza os resultados de todas as excuções por algoritmo
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -408,7 +424,9 @@ namespace Tunings
                             parametros_problema.parametros_livres.GEOreal2_P_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                            List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
                             // Organiza os resultados de todas as excuções por algoritmo
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -446,7 +464,9 @@ namespace Tunings
                             parametros_problema.parametros_livres.GEOreal2_N_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                            List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                            List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                             
                             // Organiza os resultados de todas as excuções por algoritmo
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);

@@ -95,7 +95,7 @@ namespace GEOs_REAIS
                     populacao_para_perturbar[i] = xii;
 
                     // Calcula f(x) com a variável perturbada
-                    double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
+                    double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
 
                     // // Avalia se a perturbação gera o melhor f(x) da história
                     // if (fx < fx_melhor)

@@ -54,7 +54,7 @@ namespace GEOs_REAIS
             this.NFE = 0;
             this.populacao_atual = new List<double>(populacao_inicial);
             this.populacao_melhor = new List<double>(populacao_inicial);
-            this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial);
+            this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial, false);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFEs = new List<double>();
@@ -80,13 +80,14 @@ namespace GEOs_REAIS
         }
 
 
-        public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos)
+        public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos, bool addNFE)
         {
             // Calcula o valor da função objetivo com o fenótipo desejado
             double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
             
             // Incrementa o NFE
-            add_NFE();
+            if(addNFE)
+                add_NFE();
             
             // Para cada variável de projeto, computa a penalidade se ela está fora dos limites
             double penalidade = 0;
@@ -191,7 +192,7 @@ namespace GEOs_REAIS
                 populacao_para_perturbar[i] = xii;
 
                 // Calcula f(x) com a variável perturbada
-                double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar);
+                double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
                 
 
                 // Cria a perturbação e adiciona ela na lista de perturbações da iteração

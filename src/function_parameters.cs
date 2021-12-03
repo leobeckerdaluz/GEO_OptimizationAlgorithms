@@ -826,8 +826,6 @@ namespace FunctionParameters
                     parametros_problema.upper_bounds = new List<double>();
                     parametros_problema.fx_esperado = 9999;
                     parametros_problema.parametros_livres = new ParametrosLivreProblema();
-                    parametros_problema.populacao_inicial_real = new List<double>();
-                    parametros_problema.populacao_inicial_binaria = new List<bool>();
                 break;
                 }
             }

@@ -97,6 +97,10 @@ namespace ExecutaOrganizaApresenta
                 int media_iteracoes = (int) ITEs_para_posterior_media.Average();
                 // Calcula a média de melhor f(x) com base em todas execuções
                 double media_melhor_fx = (double) MelhoresFXs_para_posterior_media.Average();
+                // Calcula a mediana de melhor f(x) com base em todas execuções
+                List<double> lista = new List<double>(MelhoresFXs_para_posterior_media);
+                lista.Sort(delegate(double x, double y){return x.CompareTo(y);});
+		        double mediana_melhor_fx = lista[(lista.Count / 2)];
                 // Calcula o desvio padrão final com base nos melhores f(x) das execuções
                 double somatorio_sd = 0;
                 foreach (double melhor_fx in MelhoresFXs_para_posterior_media)
@@ -180,6 +184,7 @@ namespace ExecutaOrganizaApresenta
                 media_das_execucoes.NFE_medio = media_NFEs;
                 media_das_execucoes.ITERACOES_medio = media_iteracoes;
                 media_das_execucoes.media_melhor_fx = media_melhor_fx;
+                media_das_execucoes.mediana_melhor_fx = mediana_melhor_fx;
                 media_das_execucoes.SD_do_melhor_fx = SD_melhor_fx;
                 media_das_execucoes.media_valor_FO_em_cada_NFE = lista_MelhoresFX_por_NFE;
                 media_das_execucoes.lista_melhores_fxs = MelhoresFXs_para_posterior_media;
@@ -226,7 +231,8 @@ namespace ExecutaOrganizaApresenta
             {
                 string resultados_finais = "parameter;" + string_algoritmos_executados + '\n';
                 string media_do_NFE_atingido_nas_execucoes = "meanNFE;";
-                string media_da_fx_nas_execucoes = "meanFX;";
+                string media_de_fx_nas_execucoes = "meanFX;";
+                string mediana_de_fx_nas_execucoes = "medianFX;";
                 string sd_dos_fx_finais_nas_execucoes = "sdFX;";
 
                 // Obtém os valores de cada algoritmo
@@ -234,16 +240,19 @@ namespace ExecutaOrganizaApresenta
                 {
                     int media_NFE = estatisticas_algoritmos[i].NFE_medio;
                     double media_fx = estatisticas_algoritmos[i].media_melhor_fx;
+                    double mediana_fx = estatisticas_algoritmos[i].mediana_melhor_fx;
                     double sd_melhores_fx = estatisticas_algoritmos[i].SD_do_melhor_fx;
 
                     media_do_NFE_atingido_nas_execucoes += media_NFE.ToString() + ';';
-                    media_da_fx_nas_execucoes += media_fx.ToString() + ';';
+                    media_de_fx_nas_execucoes += media_fx.ToString() + ';';
+                    mediana_de_fx_nas_execucoes += mediana_fx.ToString() + ';';
                     sd_dos_fx_finais_nas_execucoes += sd_melhores_fx.ToString() + ';';
                 }
 
                 // Substitui os pontos por vírgulas e printa
                 resultados_finais += media_do_NFE_atingido_nas_execucoes + '\n';
-                resultados_finais += media_da_fx_nas_execucoes + '\n';
+                resultados_finais += media_de_fx_nas_execucoes + '\n';
+                resultados_finais += mediana_de_fx_nas_execucoes + '\n';
                 resultados_finais += sd_dos_fx_finais_nas_execucoes;
                 resultados_finais = resultados_finais.Replace('.',',');
                 
@@ -370,7 +379,7 @@ namespace ExecutaOrganizaApresenta
         }
 
 
-        public static List<RetornoGEOs> executa_algoritmos_n_vezes(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema)
+        public List<RetornoGEOs> executa_algoritmos_n_vezes(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema)
         {    
             // Essa lista irá conter todas as N execuções de cada um dos 
             // ...algoritmos a serem executados. Posteriormente, essa lista
@@ -381,7 +390,8 @@ namespace ExecutaOrganizaApresenta
             for(int i=0; i<parametros_execucao.quantidade_execucoes; i++)
             {
                 // Seta o seed pra gerar a população
-                int seed = i;
+                Random r = new Random();
+                int seed = r.Next();
 
                 // Para cada execução, gera uma nova população inicial com base nos limites de cada variável
                 
@@ -399,7 +409,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEO)
                 {
                     GEO_BINARIO geo = new GEO_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         parametros_problema.parametros_livres.GEO__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -418,7 +428,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar)
                 {
                     GEOvar_BINARIO geo_var = new GEOvar_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         parametros_problema.parametros_livres.GEOvar__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -437,7 +447,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1)
                 {
                     AGEOs_BINARIO ageo1 = new AGEOs_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -456,7 +466,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2)
                 {
                     AGEOs_BINARIO ageo2 = new AGEOs_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -477,7 +487,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3)
                 {
                     AGEOs_BINARIO ageo3 = new AGEOs_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         3, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -496,7 +506,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4)
                 {
                     AGEOs_BINARIO ageo4 = new AGEOs_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         4, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -515,7 +525,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9)
                 {
                     AGEOs_BINARIO ageo9 = new AGEOs_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         9, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -524,10 +534,10 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel);
 
-                    RetornoGEOs ret = ageo9.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO9;
+                    RetornoGEOs ret2 = ageo9.executar(parametros_execucao.parametros_criterio_parada);
+                    ret2.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO9;
                         
-                    todas_execucoes.Add(ret);
+                    todas_execucoes.Add(ret2);
                 }
 
 
@@ -537,7 +547,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var)
                 {
                     AGEOsvar_BINARIO ageo1_var = new AGEOsvar_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -556,7 +566,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var)
                 {
                     AGEOsvar_BINARIO ageo2_var = new AGEOsvar_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -576,7 +586,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var)
                 {
                     AGEOsvar_BINARIO alg = new AGEOsvar_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         3, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -596,7 +606,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var)
                 {
                     AGEOsvar_BINARIO alg = new AGEOsvar_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         4, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -616,7 +626,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9var)
                 {
                     AGEOsvar_BINARIO alg = new AGEOsvar_BINARIO(
-                        parametros_problema.populacao_inicial_binaria,
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
                         9, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 

@@ -15,11 +15,11 @@ namespace Execucoes
             // Cria uma lista contendo as funções a serem executadas
             List<int> function_values = new List<int>()
             {
-                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                (int)EnumNomesFuncoesObjetivo.griewangk,
                 // (int)EnumNomesFuncoesObjetivo.rastringin,
                 // (int)EnumNomesFuncoesObjetivo.rosenbrock,
                 // (int)EnumNomesFuncoesObjetivo.schwefel,
-                (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.beale,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
@@ -43,17 +43,16 @@ namespace Execucoes
             // Define os parâmetros de execução
             ParametrosExecucao parametros_execucao = new ParametrosExecucao();
             parametros_execucao.quantidade_execucoes = 40;
-            // parametros_execucao.quantidade_execucoes = 28;
             parametros_execucao.parametros_criterio_parada = new ParametrosCriterioParada()
             {
-                // // // EXECUÇÃO NORMAL
-                // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE,
-                // NFE_criterio_parada = 100000,
-                // lista_NFEs_desejados = new List<int>(){500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
-
+                // EXECUÇÃO NORMAL
                 tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE,
-                NFE_criterio_parada = 5000,
-                lista_NFEs_desejados = new List<int>(){50,100,200,300,400,500,600,700,800,900,1000,1250,1500,1750,2000,2500,3000,4000,5000}
+                NFE_criterio_parada = 100000,
+                // NFE_criterio_parada = 1000000,
+                // NFE_criterio_parada = 5000,
+                lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000}
+                // lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000,200000,300000,400000,500000,600000,700000,800000,900000,1000000}
+                // lista_NFEs_desejados = new List<int>(){50,80,100,200,300,400,500,1000,1500,2000,3000,4000,5000}
 
                 // // PARADA POR ITERAÇÕES
                 // tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_ITERATIONS,
@@ -113,14 +112,17 @@ namespace Execucoes
                 // Quais algoritmos executar
                 parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
                 
+                // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
+                
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
-                parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
+                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
 
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
-                // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
+                parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var = true;
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var = true;
                 // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9var = true;
@@ -146,8 +148,11 @@ namespace Execucoes
                 parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
                 parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
 
+                
+                ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+                
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
-                List<RetornoGEOs> todas_execucoes_algoritmos = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
                 
                 // Organiza os resultados de todas as excuções por algoritmo
                 List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
@@ -469,6 +474,95 @@ namespace Execucoes
 
             }
         }
+    
+        public void Teste1(){
+
+            ParametrosExecucao parametros_execucao = new ParametrosExecucao();
+            parametros_execucao.quantidade_execucoes = 2;
+            parametros_execucao.parametros_criterio_parada = new ParametrosCriterioParada()
+            {
+                tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE,
+                NFE_criterio_parada = 5000,
+                lista_NFEs_desejados = new List<int>(){100,200,300,400,500,600,700,800,900,1000}
+            };
+
+
+            // List<RetornoGEOs> todas_execucoes = new List<RetornoGEOs>()
+            // {
+            //     new RetornoGEOs(){
+            //         algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_can,
+            //         iteracoes = 60,
+            //         melhor_fx = 10,
+            //         melhores_NFEs = new List<double> (){10,20,30,40,50,60,70,80,90,100},
+            //         melhores_TAUs = new List<double> (){1,2,3,4,5,6,7,8,9,10},
+            //         NFE = 100000
+            //     },
+            //     new RetornoGEOs(){
+            //         algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_can,
+            //         iteracoes = 30,
+            //         melhor_fx = 20,
+            //         melhores_NFEs = new List<double> (){5,15,25,35,45,55,65,75,85,95},
+            //         melhores_TAUs = new List<double> (){2,4,6,8,10,12,14,16,18,20},
+            //         NFE = 90000
+            //     },
+            //     new RetornoGEOs(){
+            //         algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var,
+            //         iteracoes = 60,
+            //         melhor_fx = 10,
+            //         melhores_NFEs = new List<double> (){10,20,30,40,50,60,70,80,90,100},
+            //         melhores_TAUs = new List<double> (){1,2,3,4,5,6,7,8,9,10},
+            //         NFE = 100000
+            //     },
+            //     new RetornoGEOs(){
+            //         algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var,
+            //         iteracoes = 30,
+            //         melhor_fx = 20,
+            //         melhores_NFEs = new List<double> (){5,15,25,35,45,55,65,75,85,95},
+            //         melhores_TAUs = new List<double> (){2,4,6,8,10,12,14,16,18,20},
+            //         NFE = 90000
+            //     }
+            // };
+
+            List<RetornoGEOs> todas_execucoes = new List<RetornoGEOs>()
+            {
+                new RetornoGEOs(){
+                    algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_can,
+                    iteracoes = 5,
+                    melhor_fx = 10,
+                    melhores_NFEs = new List<double> (){10,20},
+                    melhores_TAUs = new List<double> (){1,2,3,4,5},
+                    NFE = 2000
+                },
+                new RetornoGEOs(){
+                    algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_can,
+                    iteracoes = 30,
+                    melhor_fx = 20,
+                    melhores_NFEs = new List<double> (){5,15,25,35,45,55,65,75,85,95},
+                    melhores_TAUs = new List<double> (){2,4,6,8,10,12,14,16,18,20},
+                    NFE = 90000
+                },
+                new RetornoGEOs(){
+                    algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var,
+                    iteracoes = 12,
+                    melhor_fx = 10,
+                    melhores_NFEs = new List<double> (){10,20,30,40,50,60,70,80,90,100},
+                    melhores_TAUs = new List<double> (){1,2,3,4,5,6,7,8,9,10},
+                    NFE = 100000
+                },
+                new RetornoGEOs(){
+                    algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var,
+                    iteracoes = 30,
+                    melhor_fx = 20,
+                    melhores_NFEs = new List<double> (){5,15,25,35,45,55,65,75,85,95},
+                    melhores_TAUs = new List<double> (){2,4,6,8,10,12,14,16,18,20},
+                    NFE = 90000
+                }
+            };
+
+            List<Retorno_N_Execucoes_GEOs> ret = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes, parametros_execucao);
+
+            int a = 2;
+        }
     }
 
 
@@ -522,6 +616,7 @@ namespace Execucoes
             // Execuções
             Execucoes_GEO ex = new Execucoes_GEO();
             ex.Execucoes();
+            // ex.Teste1();
 
             // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.ExtensiveSearch_SpacecraftOptimization();
             // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.Teste_FuncoesObjetivo_SpacecraftOptimization();

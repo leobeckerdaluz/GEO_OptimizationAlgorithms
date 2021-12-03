@@ -32,7 +32,6 @@ namespace GEOs_BINARIOS
             //============================================================
 
             // Percorre cada variável de projeto para ordenar os bits e escolher o bit para filpar
-            List<BitVerificado> depois_ordenar = new List<BitVerificado>();
             int iterador = 0;
             for (int i=0; i<this.n_variaveis_projeto; i++){
                 // Obtém o número de bits dessa variável de projeto
@@ -51,12 +50,6 @@ namespace GEOs_BINARIOS
 
                 // Ordena esses bits da variável
                 lista_informacoes_bits_variavel.Sort(delegate(BitVerificado b1, BitVerificado b2) { return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); });
-
-                // Coloca esses bits ordenado na lista geral
-                foreach (BitVerificado bit in lista_informacoes_bits_variavel){
-                    depois_ordenar.Add(bit);
-                }
-
 
                 //============================================================
                 // Flipa um bit da variável com probabilidade Pk
@@ -87,6 +80,9 @@ namespace GEOs_BINARIOS
                     }
                 }
             }
+
+            // Depois que flipou um bit de cada variável, precisa calcular o fx_atual novamente
+            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, false);
         }
     }
 }

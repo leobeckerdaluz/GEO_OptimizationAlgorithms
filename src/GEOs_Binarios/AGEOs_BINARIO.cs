@@ -39,10 +39,11 @@ namespace GEOs_BINARIOS
 
             double fx_referencia = (this.tipo_AGEO==1 ? fx_melhor : fx_atual);
 
-            double CoI = MecanismoAGEO.MecanismoAGEO.calcula_CoI_bin(lista_informacoes_mutacao, fx_referencia, tamanho_populacao);
-            this.CoI_1 = CoI;
+            MecanismoAGEO.MecanismoAGEO mecanismo = new MecanismoAGEO.MecanismoAGEO();
+            double CoI = mecanismo.calcula_CoI_bin(lista_informacoes_mutacao, fx_referencia, tamanho_populacao);
+            tau = mecanismo.obtem_novo_tau(this.tipo_AGEO, tau, CoI, CoI_1, tamanho_populacao);
             
-            tau = MecanismoAGEO.MecanismoAGEO.obtem_novo_tau(this.tipo_AGEO, tau, CoI, CoI_1, tamanho_populacao);
+            this.CoI_1 = CoI;
         }
     }
 }

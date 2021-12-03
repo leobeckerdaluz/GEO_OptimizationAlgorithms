@@ -27,13 +27,13 @@ namespace MecanismoAGEO
 {
     public class MecanismoAGEO {
        
-        public static double calcula_CoI_bin(
+        public double calcula_CoI_bin(
             List<BitVerificado> lista_informacoes_mutacao,
             double fx_referencia,
             int tamanho_populacao)
         {
             // Verifica quantos melhora em comparação com a população de referência
-            int melhoraram = lista_informacoes_mutacao.Where(p => p.funcao_objetivo_flipando <= fx_referencia).ToList().Count;
+            int melhoraram = lista_informacoes_mutacao.Where(p => p.funcao_objetivo_flipando < fx_referencia).ToList().Count;
 
             // Calcula a Chance of Improvement
             double CoI = (double) melhoraram / tamanho_populacao;
@@ -42,7 +42,7 @@ namespace MecanismoAGEO
         }
 
 
-        public static double obtem_novo_tau(
+        public double obtem_novo_tau(
             int tipo_AGEO,
             double tau,
             double CoI,
@@ -54,41 +54,45 @@ namespace MecanismoAGEO
             double tau_incremento = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Sqrt( (double)tamanho_populacao )));
             double tau_resetado = (0.5 + CoI) * random.NextDouble();
 
-            if (tipo_AGEO==1 || tipo_AGEO==2)
+            if ((tipo_AGEO==1) || (tipo_AGEO==2))
             {
-                if (CoI == 0.0){
-                    tau = tau_resetado;
-                }
-                else if(CoI <= CoI_1){
-                    tau += tau_incremento;
-                }
+                if (CoI == 0.0)
+                    return tau_resetado;
+                else if(CoI <= CoI_1)
+                    return tau+tau_incremento;
+                else
+                    return tau;
             }
             else if (tipo_AGEO==9)
             {
                 if (CoI == 0.0 || tau > 5)
-                    tau = tau_resetado;
+                    return tau_resetado;
                 else if(CoI <= CoI_1)
-                    tau += tau_incremento;
+                    return tau+tau_incremento;
+                else
+                    return tau;
             }
             else if (tipo_AGEO==3)
             {
                 if (CoI == 0.0)
-                    tau = tau_resetado;
+                    return tau_resetado;
                 else if(CoI <= CoI_1)
-                    tau += tau_incremento;
+                    return tau+tau_incremento;
                 else if(CoI > CoI_1)
-                    tau -= tau_incremento;
+                    return tau-tau_incremento;
+                else
+                    return tau;
             }
             else if (tipo_AGEO==4)
             {
                 if (CoI == 0.0)
-                    tau = tau_resetado;
+                    return tau_resetado;
                 else
-                    tau += tau_incremento;
+                    return tau+tau_incremento;
             }
-
-            // Retorna o novo valor de tau
-            return tau;
+            else
+                return tau;
+                
         }
 
     }

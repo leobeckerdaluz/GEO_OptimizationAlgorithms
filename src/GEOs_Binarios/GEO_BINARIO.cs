@@ -42,16 +42,16 @@ namespace GEOs_BINARIOS
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
             this.definicao_funcao_objetivo = definicao_funcao_objetivo;
-            this.lower_bounds = lower_bounds;
-            this.upper_bounds = upper_bounds;
-            this.lista_NFEs_desejados = lista_NFEs_desejados;
+            this.lower_bounds = new List<double>(lower_bounds);
+            this.upper_bounds = new List<double>(upper_bounds);
+            this.lista_NFEs_desejados = new List<int>(lista_NFEs_desejados);
             
-            this.bits_por_variavel_variaveis = bits_por_variavel_variaveis;
+            this.bits_por_variavel_variaveis = new List<int>(bits_por_variavel_variaveis);
             
             this.NFE = 0;
-            this.populacao_atual = populacao_inicial_binaria;
-            this.populacao_melhor = populacao_inicial_binaria;
-            this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual);
+            this.populacao_atual = new List<bool>(populacao_inicial_binaria);
+            this.populacao_melhor = new List<bool>(populacao_inicial_binaria);
+            this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFEs = new List<double>();
@@ -76,13 +76,14 @@ namespace GEOs_BINARIOS
         }
 
 
-        public virtual double calcula_valor_funcao_objetivo(List<bool> populacao_de_bits)
+        public virtual double calcula_valor_funcao_objetivo(List<bool> populacao_de_bits, bool addNFE)
         {
             // Calcula o valor da função objetivo com o fenótipo desejado
             int n_variaveis_projeto = this.bits_por_variavel_variaveis.Count;
 
             // Incrementa o NFE
-            add_NFE();
+            if (addNFE)
+                add_NFE();
             
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
@@ -154,7 +155,7 @@ namespace GEOs_BINARIOS
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                 // Calcula o valor da função objetivo
-                double fx = calcula_valor_funcao_objetivo(populacao_de_bits_flipado);
+                double fx = calcula_valor_funcao_objetivo(populacao_de_bits_flipado, true);
                 
                 // Armazena as informações dessa mutação do bit na lista de informações
                 BitVerificado informacoes_bit = new BitVerificado();
