@@ -33,7 +33,7 @@ namespace MecanismoAGEO
             int tamanho_populacao)
         {
             // Verifica quantos melhora em comparação com a população de referência
-            int melhoraram = lista_informacoes_mutacao.Where(p => p.funcao_objetivo_flipando < fx_referencia).ToList().Count;
+            int melhoraram = lista_informacoes_mutacao.Where(p => p.funcao_objetivo_flipando <= fx_referencia).ToList().Count;
 
             // Calcula a Chance of Improvement
             double CoI = (double) melhoraram / tamanho_populacao;

@@ -30,7 +30,7 @@ namespace Tunings
         // =========================================================================
         // Ordena o tuning e apresenta
         
-        public static void ordena_e_apresenta_resultados_tuning(List<Tuning> tuning_results)
+        public void ordena_e_apresenta_resultados_tuning(List<Tuning> tuning_results)
         {
             // Ordena os resultados do tuning com base no f(x)
             List<Tuning> sortedList = tuning_results.OrderBy(i => i.NFE).ThenBy(i => i.fx).ToList();
@@ -52,7 +52,7 @@ namespace Tunings
         // =========================================================================
         // Formata a string de parâmetros
 
-        public static string formata_string_parametros_tuning(double P, double s, double std1, double tau, double porc, bool std_or_porc)
+        public string formata_string_parametros_tuning(double P, double s, double std1, double tau, double porc, bool std_or_porc)
         {
             string str_P            = String.Format("{0,2}", P);
             string str_s            = String.Format("{0,2}", s);
@@ -70,7 +70,7 @@ namespace Tunings
             return parameters;
         }
 
-        public static string formata_string_parametros_tuning_GEOreal1(double tau, double std, double porc, bool std_or_porc)
+        public string formata_string_parametros_tuning_GEOreal1(double tau, double std, double porc, bool std_or_porc)
         {
             string str_tau          = String.Format("{0,5:0.00}", tau);
             string parameters       = "";
@@ -88,7 +88,7 @@ namespace Tunings
             return parameters;
         }
 
-        public static string formata_string_parametros_tuning_GEOeGEOvar(double tau)
+        public string formata_string_parametros_tuning_GEOeGEOvar(double tau)
         {
             string str_tau = String.Format("{0,5:0.00}", tau);
             string parameters = String.Format("tau = {0};", str_tau);

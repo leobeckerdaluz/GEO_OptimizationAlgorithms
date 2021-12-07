@@ -21,6 +21,7 @@ namespace GEOs_BINARIOS
         public List<bool> populacao_atual {get; set;}
         public List<bool> populacao_melhor {get; set;}
         public List<double> melhores_NFEs {get; set;}
+        public List<double> fxs_atuais_NFEs {get; set;}
         public List<BitVerificado> lista_informacoes_mutacao {get; set;}
         public int iterations {get; set;}
         public double fx_atual_comeco_it {get; set;}
@@ -55,6 +56,7 @@ namespace GEOs_BINARIOS
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFEs = new List<double>();
+            this.fxs_atuais_NFEs = new List<double>();
             this.lista_informacoes_mutacao = new List<BitVerificado>();
             this.iterations = 0;
             this.melhoras_nas_iteracoes = new List<int>();
@@ -72,6 +74,7 @@ namespace GEOs_BINARIOS
             if (lista_NFEs_desejados.Contains(NFE))
             {
                 melhores_NFEs.Add(fx_melhor);
+                fxs_atuais_NFEs.Add(fx_atual);
             }
         }
 
@@ -117,7 +120,7 @@ namespace GEOs_BINARIOS
                 // (max-min) / (2^bits - 0) ======> Variação de valor por bit
                 // min + [(max-min) / (2^bits - 0)] * binario
                 
-                double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto) - 1));
+                double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto)));
 
                 // Adiciona o fenótipo da variável na lista de fenótipos
                 fenotipo_variaveis_projeto.Add(fenotipo_variavel_projeto);
@@ -285,7 +288,9 @@ namespace GEOs_BINARIOS
                     retorno.NFE = this.NFE;
                     retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
+                    retorno.fx_atual = this.fx_atual;
                     retorno.melhores_NFEs = this.melhores_NFEs;
+                    retorno.fxs_atuais_NFEs = this.fxs_atuais_NFEs;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
                     retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
                     

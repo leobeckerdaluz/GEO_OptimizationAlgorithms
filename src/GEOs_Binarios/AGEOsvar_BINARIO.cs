@@ -37,10 +37,8 @@ namespace GEOs_BINARIOS
         public override void mutacao_do_tau_AGEOs()
         {
             int tamanho_populacao = this.populacao_atual.Count;
-            double tau_antigo = tau;
-
             double fx_referencia = (this.tipo_AGEO==1 ? fx_melhor : fx_atual);
-
+            
             MecanismoAGEO.MecanismoAGEO mecanismo = new MecanismoAGEO.MecanismoAGEO();            
             double CoI = mecanismo.calcula_CoI_bin(lista_informacoes_mutacao, fx_referencia, tamanho_populacao);
             tau = mecanismo.obtem_novo_tau(this.tipo_AGEO, this.tau, CoI, this.CoI_1, tamanho_populacao);

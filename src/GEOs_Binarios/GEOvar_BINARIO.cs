@@ -49,7 +49,11 @@ namespace GEOs_BINARIOS
                 }
 
                 // Ordena esses bits da variável
-                lista_informacoes_bits_variavel.Sort(delegate(BitVerificado b1, BitVerificado b2) { return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); });
+                lista_informacoes_bits_variavel.Sort(
+                    delegate(BitVerificado b1, BitVerificado b2) { 
+                        return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); 
+                    }
+                );
 
                 //============================================================
                 // Flipa um bit da variável com probabilidade Pk

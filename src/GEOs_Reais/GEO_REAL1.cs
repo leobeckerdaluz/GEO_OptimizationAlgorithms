@@ -23,6 +23,7 @@ namespace GEOs_REAIS
         public List<double> populacao_atual {get; set;}
         public List<double> populacao_melhor {get; set;}
         public List<double> melhores_NFEs {get; set;}
+        public List<double> fxs_atuais_NFEs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
         public int iterations {get; set;}
         public List<int> melhoras_nas_iteracoes {get; set;}
@@ -58,6 +59,7 @@ namespace GEOs_REAIS
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFEs = new List<double>();
+            this.fxs_atuais_NFEs = new List<double>();
             this.perturbacoes_da_iteracao = new List<Perturbacao>();
             this.iterations = 0;
             this.melhoras_nas_iteracoes = new List<int>();
@@ -76,6 +78,7 @@ namespace GEOs_REAIS
             if (lista_NFEs_desejados.Contains(NFE))
             {
                 melhores_NFEs.Add(fx_melhor);
+                fxs_atuais_NFEs.Add(fx_atual);
             }
         }
 
@@ -331,6 +334,7 @@ namespace GEOs_REAIS
                     retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFEs = this.melhores_NFEs;
+                    retorno.fxs_atuais_NFEs = this.fxs_atuais_NFEs;
                     retorno.populacao_final = this.populacao_melhor;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
                     retorno.stats_STD_per_iteration = this.stats_STD_per_iteration;

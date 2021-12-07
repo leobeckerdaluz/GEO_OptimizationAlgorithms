@@ -30,7 +30,9 @@ namespace Classes_Comuns_Enums
         public int NFE { get; set; }
         public int iteracoes { get; set; }
         public double melhor_fx { get; set; }
+        public double fx_atual { get; set; }
         public List<double> melhores_NFEs { get; set; }
+        public List<double> fxs_atuais_NFEs { get; set; }
         public List<double> melhores_TAUs { get; set; }
         public List<double> populacao_final { get; set; }
         public List<double> stats_TAU_per_iteration { get; set; }
@@ -46,8 +48,10 @@ namespace Classes_Comuns_Enums
         public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
         public double mediana_melhor_fx { get; set; }
+        public double media_fx_atual { get; set; }
         public double SD_do_melhor_fx { get; set; }
         public List<double> media_valor_FO_em_cada_NFE { get; set; }
+        public List<double> media_fx_atual_em_cada_NFE { get; set; }
         public List<double> lista_melhores_fxs { get; set; }
         public List<List<double>> lista_populacao_final { get; set; }
         public List<double> lista_TAU_medio_per_iteration { get; set; }
@@ -173,6 +177,7 @@ namespace Classes_Comuns_Enums
 
     public class OQueInteressaPrintar{
         public bool mostrar_melhores_NFE {get; set;}
+        public bool mostrar_fxs_atual_por_NFE {get; set;}
         public bool mostrar_meanNFE_meanFX_sdFX {get; set;}
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
         public bool mostrar_header {get; set;}
