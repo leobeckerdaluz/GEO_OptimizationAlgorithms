@@ -1,0 +1,28 @@
+
+
+
+ASGEOreal1_1 ---> taufixo + std 1/5
+ASGEOreal1_2 ---> tau CoI + std 1/5
+ASGEOreal1_3 ---> tau CoI + std CoI         -----> SEM RESULTADOS
+ASGEOreal1_4 ---> tau CoI + std 1/5 + reset -----> SEM RESULTADOS
+
+ASGEOreal2_1 ---> Perturbação porcentagem + 1 uniforme
+ASGEOreal2_2 ---> Várias perturbações Normal + 1 uniforme
+ASGEOreal2_3 ---> Várias perturbações Normal + 1 uniforme + pega a melhor e muta 1 só da população 
+
+
+
+Testes A-GEO antes de sistematizar:
+
+===> AGEO2_REAL2(P, s, sigma) ---> varia perturbação + talvez 1 uniforme + muta 1 por var
+===> AGEOs_REAL1(sigma)       ---> varia perturbação + muta 1 da população
+
+AGEO2_REAL1_igor            ---> perturbação igor           --------------------> std tunado
+AGEO2_REAL1_porcentagem     ---> perturbação porcentagem    --------------------> p   tunado
+AGEO2_REAL2_igor            ---> P perturbações igor        + 1 uniforme -------> P(6), std1(50), s(10)
+AGEO2_REAL2_porcentagem     ---> P perturbações porcentagem + 1 uniforme -------> P(6), p1(10),   s(10)
+AGEO2_REAL2_normal          ---> P perturbações normal      + 1 uniforme -------> P(6), std1(10), s(10)
+
+
+
+

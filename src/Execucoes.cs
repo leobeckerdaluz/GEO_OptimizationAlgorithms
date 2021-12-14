@@ -44,8 +44,9 @@ namespace Execucoes
 
             
 
-
             bool TUNING = false;
+
+            
 
             List<int> o_que_fazer = new List<int>(){ 
                 (int)EnumOQueFazer.executar_algoritmos,
@@ -126,24 +127,29 @@ namespace Execucoes
                     Console.WriteLine("Função: {0}", parametros_problema.nome_funcao);
                     Console.WriteLine("============================================================================");
 
-                    // Após definir os parâmetros do problema e de execução, executa os algoritmos desejados
+
                     // =======================================================================================
-
-
-
-                    // Executa o que foi solicitado
+                    // Após definir os parâmetros do problema e de execução, executa os algoritmos desejados
                     switch(opcao){
                         case (int)EnumOQueFazer.executar_algoritmos:
                         {
                             // ======================================================================================================
+                            // O que interessa printar no arquivo de saída
+                            parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
+                            parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
+                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
+                            parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true;
+                            // parametros_execucao.o_que_interessa_printar.mostrar_mean_Mfx_iteracoes = true;
+                            // ======================================================================================================
+
+                            
+                            // ======================================================================================================
                             // Quais algoritmos executar
                             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-                            
+
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
-                            
-                            // parametros_problema.parametros_livres.GEOvar__tau = 20;
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
@@ -158,16 +164,16 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9var = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_5 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_7 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_9 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
 
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
@@ -185,15 +191,11 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO_UNI = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
+                            // ======================================================================================================
                             
-                            // O que interessa printar no arquivo de saída
-                            parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
-                            parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
-                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-                            parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true;
-                            // parametros_execucao.o_que_interessa_printar.mostrar_mean_Mfx_iteracoes = true;
-
                             
+                            // ======================================================================================================
+                            // Executa os algoritmos
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
@@ -215,9 +217,11 @@ namespace Execucoes
                             // Tuning do GEO
                             List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0}; 
                             
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
-                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau, 0);
+                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                             
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
                             // ======================================================================================================
@@ -231,9 +235,11 @@ namespace Execucoes
                             // Tuning do GEOvar
                             List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0, 4.25, 4.5, 4.75, 5}; 
                             
-                            Tunings.Tunings tunings = new Tunings.Tunings();
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             
-                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau, 1);
+                            Tunings.Tunings tunings = new Tunings.Tunings();
+
+                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                            
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
                             // ======================================================================================================
@@ -248,9 +254,11 @@ namespace Execucoes
                             // List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0, 4.25, 4.5, 4.75, 5}; 
                             List<double> valores_tau = new List<double>(){5.25, 5.5, 5.75, 6, 6.25, 6.5, 6.75, 7};//, 7.25, 7.5, 7.75, 8, 8.25, 8.5, 8.75, 9.0, 9.25, 9.5, 9.75, 10}; 
                             
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
-                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau, 2);
+                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                           
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
                             // ======================================================================================================
@@ -266,6 +274,8 @@ namespace Execucoes
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
                             List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
 
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_O(parametros_execucao, parametros_problema, valores_tau, valores_std);
@@ -283,6 +293,8 @@ namespace Execucoes
                             
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
                             List<double> valores_porcentagem = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9};
+                            
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
@@ -302,6 +314,8 @@ namespace Execucoes
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
                             List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
 
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_N(parametros_execucao, parametros_problema, valores_tau, valores_std);
@@ -320,6 +334,8 @@ namespace Execucoes
                             List<double> valores_std1 = new List<double>(){0.5, 1, 2, 10};
                             List<double> valores_P = new List<double>(){5, 10};
                             List<double> valores_s = new List<double>(){1, 2, 4};
+                            
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_VO = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
@@ -340,6 +356,8 @@ namespace Execucoes
                             List<double> valores_P = new List<double>(){5, 10};
                             List<double> valores_s = new List<double>(){1, 2, 4};
                             
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_P_VO(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
@@ -359,6 +377,8 @@ namespace Execucoes
                             List<double> valores_P = new List<double>(){5, 10};
                             List<double> valores_s = new List<double>(){1, 2, 4};
 
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_N_VO(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
@@ -378,6 +398,8 @@ namespace Execucoes
                             List<double> valores_P = new List<double>(){5, 10};
                             List<double> valores_s = new List<double>(){2, 10};;
 
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_O_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
@@ -397,6 +419,8 @@ namespace Execucoes
                             List<double> valores_P = new List<double>(){5, 10};
                             List<double> valores_s = new List<double>(){2, 10};
 
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
+                            
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_P_DS(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
@@ -415,6 +439,8 @@ namespace Execucoes
                             List<double> valores_std1 = new List<double>(){0.5, 1, 2, 10};
                             List<double> valores_P = new List<double>(){5, 10};
                             List<double> valores_s = new List<double>(){2, 10};
+                            
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
@@ -500,6 +526,7 @@ namespace Execucoes
                     //         }
                     //     }
                     // }
+
 
 
 
@@ -721,7 +748,7 @@ namespace Execucoes
             // ============================================================================
             // ============================================================================
             #if CONSOLE_OUT_FILE
-                string filename = "./SaidaRedirect.txt";
+                string filename = "../SaidaRedirect.txt";
 
                 // Deleta o arquivo caso ele exista
                 if (File.Exists(filename))  File.Delete(filename);

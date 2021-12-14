@@ -32,15 +32,6 @@ https://nikstoyanov.me/post/2019-04-14-numerical-optimizations/
 
 
 
-Conclusões:
-
----> Quanto maior o P, real2 demora mais a cada iteração (calcula vários NFEs), mas é bom em algumas porque fica testando vários sd
-
----> A perturbação com porcentagem do valor atual tem que mudar. É injusta com a Rosenbrock que x* = [1,1]
-
-
-
-
 SCHWEFEL negativa:
 
 363.418484974382, 253.228093848204, 285.444351278918, -390.682233446595, 466.598284880909, 10.2029892197824, -70.0670674303859, 376.606174687206, 209.68477926668, -4555.08713260943

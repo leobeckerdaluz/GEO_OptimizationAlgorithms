@@ -1,0 +1,31 @@
+AGEOreal - Reunião
+
+
+
+Curiosidade:
+- All functions are shifted from the center of the domain search, to avoid to favor algorithms bias to 807 the center of the domain search, and the majority are also rotated.
+- maxEvals = 10000 * Dim
+
+
+
+
+
+===> Funções na planilha
+
+==> Funções artigo ERIC
+- schaffer trocadas
+- schwefel é outra
+- alguns bounds e dimensões diferentes da net
+
+
+==> Plotar o andamento da população em 3D no espaço de projeto
+
+
+==> Não teria que implementar outras mutações pra comparar o quanto a porcentagem é boa?
+Ou então comparar com um conjunto CEC.
+
+
+==> Testar tau=9999 e tau=0,5?
+Com isso, aceitaria sempre a melhor até não melhorar mais, aí resetaria.
+CoI > 0 ---> Ainda pode melhorar, tau=9999
+CoI = 0 ---> Não melhora, tau=0,5
