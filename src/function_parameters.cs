@@ -46,6 +46,7 @@ namespace FunctionParameters
                     {
                         GEO__tau = 1.25,
                         GEOvar__tau = 2.75,
+                        GEOvar2__tau = 6.5,
                         
                         GEOreal1_O__std = 1,
                         GEOreal1_O__tau = 1.5,
@@ -128,6 +129,7 @@ namespace FunctionParameters
                     {
                         GEO__tau = 1,
                         GEOvar__tau = 1.75,
+                        GEOvar2__tau = 6,
 
                         GEOreal1_O__std = 1.8,
                         GEOreal1_O__tau = 2,
@@ -208,6 +210,7 @@ namespace FunctionParameters
                     {
                         GEO__tau = 1.25,
                         GEOvar__tau = 1.5,
+                        GEOvar2__tau = 6.50,
                         
                         GEOreal1_O__std = 2.5,
                         GEOreal1_O__tau = 6,
@@ -288,6 +291,7 @@ namespace FunctionParameters
                     {
                         GEO__tau = 0.75,
                         GEOvar__tau = 1.5,
+                        GEOvar2__tau = 7,
                         
                         GEOreal1_O__std = 1.8,
                         GEOreal1_O__tau = 6,
@@ -371,6 +375,7 @@ namespace FunctionParameters
                         {
                             GEO__tau = 3.25,
                             GEOvar__tau = 2.25,
+                            GEOvar2__tau = 6.25,
 
                             GEOreal1_O__std = 0.8,
                             GEOreal1_O__tau = 1,
@@ -452,6 +457,7 @@ namespace FunctionParameters
                     {
                         GEO__tau = 1.25,
                         GEOvar__tau = 1.5,
+                        GEOvar2__tau = 6.5,
                         
                         GEOreal1_O__std = 2,
                         GEOreal1_O__tau = 5,

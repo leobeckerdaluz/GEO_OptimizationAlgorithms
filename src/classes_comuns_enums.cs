@@ -81,12 +81,27 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO3 { get; set; }
         public bool rodar_AGEO4 { get; set; }
         public bool rodar_AGEO9 { get; set; }
+
+        public bool rodar_GEOvar2 { get; set; }
         
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
         public bool rodar_AGEO3var { get; set; }
         public bool rodar_AGEO4var { get; set; }
         public bool rodar_AGEO9var { get; set; }
+
+
+        public bool rodar_AGEO1var_1 { get; set; }
+        public bool rodar_AGEO1var_2 { get; set; }
+        public bool rodar_AGEO1var_3 { get; set; }
+        public bool rodar_AGEO1var_4 { get; set; }
+        public bool rodar_AGEO1var_5 { get; set; }
+        public bool rodar_AGEO2var_1 { get; set; }
+        public bool rodar_AGEO2var_2 { get; set; }
+        public bool rodar_AGEO2var_3 { get; set; }
+        public bool rodar_AGEO2var_4 { get; set; }
+        public bool rodar_AGEO2var_5 { get; set; }
+        
         
         // GEOreal2
         public bool rodar_GEOreal2_O_VO { get; set; }
@@ -190,6 +205,9 @@ namespace Classes_Comuns_Enums
         
         public double GEO__tau {get; set;}
         public double GEOvar__tau {get; set;}
+
+        public double GEOvar2__tau {get; set;}
+        
         // public double tau_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_porcentagem, GEOreal1_normal
         // public double std_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_normal
         // public double p1_GEOreal1 {get; set;}       // GEOreal1_porcentagem
@@ -319,6 +337,24 @@ namespace Classes_Comuns_Enums
         bohachevsky_1,
     }
 
+
+    enum EnumOQueFazer{
+        executar_algoritmos,
+        tuning_GEO,
+        tuning_GEOvar,
+        tuning_GEOvar2,
+        tuning_GEOreal1_O,
+        tuning_GEOreal1_P,
+        tuning_GEOreal1_N,
+        tuning_GEOreal2_O_VO,
+        tuning_GEOreal2_P_VO,
+        tuning_GEOreal2_N_VO,
+        tuning_GEOreal2_O_DS,
+        tuning_GEOreal2_P_DS,
+        tuning_GEOreal2_N_DS,
+    }
+
+
     enum EnumNomesAlgoritmos{
         // Binários
         GEO_can,
@@ -333,6 +369,18 @@ namespace Classes_Comuns_Enums
         AGEO3var,
         AGEO4var,
         AGEO9var,
+
+        GEO_var2,
+        AGEO1var_1,
+        AGEO1var_2,
+        AGEO1var_3,
+        AGEO1var_4,
+        AGEO1var_5,
+        AGEO2var_1,
+        AGEO2var_2,
+        AGEO2var_3,
+        AGEO2var_4,
+        AGEO2var_5,
 
         // GEOreal1
         GEOreal1_O,

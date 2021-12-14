@@ -47,12 +47,16 @@ namespace MecanismoAGEO
             double tau,
             double CoI,
             double CoI_1,
+            double AGEO9_tau_maior_que,
             int tamanho_populacao)
         {
             Random random = new Random();
             
-            double tau_incremento = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Sqrt( (double)tamanho_populacao )));
-            double tau_resetado = (0.5 + CoI) * random.NextDouble();
+
+            double tau_resetado = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Sqrt((double)tamanho_populacao)) );
+            // double tau_resetado = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Sqrt( (double)tamanho_populacao )));            
+            double tau_incremento = (0.5 + CoI) * random.NextDouble();
+
 
             if ((tipo_AGEO==1) || (tipo_AGEO==2))
             {
@@ -65,7 +69,7 @@ namespace MecanismoAGEO
             }
             else if (tipo_AGEO==9)
             {
-                if (CoI == 0.0 || tau > 5)
+                if (CoI == 0.0 || tau > AGEO9_tau_maior_que)
                     return tau_resetado;
                 else if(CoI <= CoI_1)
                     return tau+tau_incremento;

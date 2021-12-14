@@ -101,18 +101,28 @@ namespace Tunings
         // =========================================================================
         // Tuning GEO e GEOvar
 
-        public List<Tuning> tuning_GEO_GEOvar(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, bool GEOorGEOvar)
+        public List<Tuning> tuning_GEO_GEOvar(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, int GEOorGEOVARorGEOvar2)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-            if (GEOorGEOvar)        parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
-            else                    parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
+            switch(GEOorGEOVARorGEOvar2){
+                case 0:
+                    parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
+                    break;
+                case 1:
+                    parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
+                    break;
+                case 2:
+                    parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
+                    break;
+            }
             
             // Itera cada tau
             foreach (double tau in valores_tau){
                 parametros_problema.parametros_livres.GEO__tau = tau; 
                 parametros_problema.parametros_livres.GEOvar__tau = tau; 
+                parametros_problema.parametros_livres.GEOvar2__tau = tau; 
 
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
                 ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
