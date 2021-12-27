@@ -44,7 +44,6 @@ namespace Execucoes
 
             
 
-            bool TUNING = false;
 
             
 
@@ -83,7 +82,11 @@ namespace Execucoes
                 
                 // Quantidade de execuções
                 parametros_execucao.quantidade_execucoes = 30;
+            
                 
+                bool TUNING = false;
+                
+
                 // Por default, printa somente as médias na saída
                 parametros_execucao.o_que_interessa_printar = new OQueInteressaPrintar();
                 parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
@@ -134,11 +137,11 @@ namespace Execucoes
                         case (int)EnumOQueFazer.executar_algoritmos:
                         {
                             // ======================================================================================================
-                            // O que interessa printar no arquivo de saída
+                            // O que interessa printar no arquivo de saída4
                             parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
-                            parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
+                            // parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-                            parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true;
+                            // parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_mean_Mfx_iteracoes = true;
                             // ======================================================================================================
 
@@ -147,20 +150,20 @@ namespace Execucoes
                             // Quais algoritmos executar
                             parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
 
-                            parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
 
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9var = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_1 = true;
@@ -168,12 +171,14 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_9 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
 
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
@@ -748,7 +753,7 @@ namespace Execucoes
             // ============================================================================
             // ============================================================================
             #if CONSOLE_OUT_FILE
-                string filename = "../SaidaRedirect.txt";
+                string filename = "./SaidaRedirect.txt";
 
                 // Deleta o arquivo caso ele exista
                 if (File.Exists(filename))  File.Delete(filename);

@@ -92,15 +92,17 @@ namespace Classes_Comuns_Enums
 
 
         public bool rodar_AGEO1var_1 { get; set; }
-        public bool rodar_AGEO1var_2 { get; set; }
         public bool rodar_AGEO1var_3 { get; set; }
-        public bool rodar_AGEO1var_4 { get; set; }
         public bool rodar_AGEO1var_5 { get; set; }
+        public bool rodar_AGEO1var_7 { get; set; }
+        public bool rodar_AGEO1var_9 { get; set; }
+        public bool rodar_AGEO1var_11 { get; set; }
         public bool rodar_AGEO2var_1 { get; set; }
-        public bool rodar_AGEO2var_2 { get; set; }
         public bool rodar_AGEO2var_3 { get; set; }
-        public bool rodar_AGEO2var_4 { get; set; }
         public bool rodar_AGEO2var_5 { get; set; }
+        public bool rodar_AGEO2var_7 { get; set; }
+        public bool rodar_AGEO2var_9 { get; set; }
+        public bool rodar_AGEO2var_11 { get; set; }
         
         
         // GEOreal2
@@ -372,15 +374,17 @@ namespace Classes_Comuns_Enums
 
         GEO_var2,
         AGEO1var_1,
-        AGEO1var_2,
         AGEO1var_3,
-        AGEO1var_4,
         AGEO1var_5,
+        AGEO1var_7,
+        AGEO1var_9,
+        AGEO1var_11,
         AGEO2var_1,
-        AGEO2var_2,
         AGEO2var_3,
-        AGEO2var_4,
         AGEO2var_5,
+        AGEO2var_7,
+        AGEO2var_9,
+        AGEO2var_11,
 
         // GEOreal1
         GEOreal1_O,

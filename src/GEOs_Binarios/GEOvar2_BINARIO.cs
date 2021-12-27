@@ -61,7 +61,8 @@ namespace GEOs_BINARIOS
 
                 // Se o novo f(x) ao flipar qualquer bit dessa variável não melhor, não flipa nenhum bit
                 if (lista_informacoes_bits_variavel[0].funcao_objetivo_flipando > this.fx_atual)
-                    continue;
+                    // continue;
+                    this.fx_atual = this.fx_atual;
 
 
 

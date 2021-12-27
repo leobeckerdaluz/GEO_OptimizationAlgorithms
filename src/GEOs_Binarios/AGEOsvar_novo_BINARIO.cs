@@ -39,14 +39,21 @@ namespace GEOs_BINARIOS
 
         public override void mutacao_do_tau_AGEOs()
         {
+            // Obtém o tamanho da população de bits
             int tamanho_populacao = this.populacao_atual.Count;
-            double fx_referencia = (this.tipo_AGEO==1 ? fx_melhor : fx_atual);
             
+            // Se o tipo do AGEO for 1 ou 11 (AGEOvar novo), então a população de referência é a atual
+            double fx_referencia = ((this.tipo_AGEO==1) ? fx_melhor : fx_atual);
+            
+            // Cria o mecanismo que vai calcular o CoI e o tau
             MecanismoAGEO.MecanismoAGEO mecanismo = new MecanismoAGEO.MecanismoAGEO();            
-            
+            // Calcula o CoI
             double CoI = mecanismo.calcula_CoI_bin(lista_informacoes_mutacao, fx_referencia, tamanho_populacao);
             
-
+            
+            
+            
+            // Calcula o valor de tau com o mecanismo AGEOvar_novo
             Random random = new Random();
             double tau_incremento = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Sqrt( (double)tamanho_populacao )));
             double tau_resetado = (0.5 + CoI) * random.NextDouble();
@@ -55,9 +62,12 @@ namespace GEOs_BINARIOS
                 tau = tau_resetado;
             else if(CoI <= CoI_1)
                 tau += tau_incremento;
-
-
-
+                
+                
+                
+                
+                
+            // Já armazena o CoI atual para ser usado como o anterior na próxima iteração
             this.CoI_1 = CoI;
         }
     }

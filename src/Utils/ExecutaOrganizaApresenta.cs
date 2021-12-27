@@ -515,6 +515,7 @@ namespace ExecutaOrganizaApresenta
                     GEOvar2_BINARIO geo_var2 = new GEOvar2_BINARIO(
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         parametros_problema.parametros_livres.GEOvar__tau, 
+                        // parametros_problema.parametros_livres.GEOvar2__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds, 
@@ -740,7 +741,7 @@ namespace ExecutaOrganizaApresenta
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_1)
                 {
                     double tau_maior_que = 1;
-
+                    
                     AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
@@ -754,28 +755,6 @@ namespace ExecutaOrganizaApresenta
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_1;
-                        
-                    todas_execucoes.Add(ret);
-                }
-
-                // AGEO1var_2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_2)
-                {
-                    double tau_maior_que = 2;
-
-                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
-                        new List<bool>(parametros_problema.populacao_inicial_binaria),
-                        1, 
-                        parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.lower_bounds,
-                        parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel,
-                        tau_maior_que);
-
-                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_2;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -802,28 +781,6 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // AGEO1var_4
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_4)
-                {
-                    double tau_maior_que = 4;
-
-                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
-                        new List<bool>(parametros_problema.populacao_inicial_binaria),
-                        1, 
-                        parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.lower_bounds,
-                        parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel,
-                        tau_maior_que);
-
-                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_4;
-                        
-                    todas_execucoes.Add(ret);
-                }
-
                 // AGEO1var_5
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_5)
                 {
@@ -842,6 +799,72 @@ namespace ExecutaOrganizaApresenta
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_5;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // AGEO1var_7
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_7)
+                {
+                    double tau_maior_que = 7;
+
+                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
+                        1, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.bits_por_variavel,
+                        tau_maior_que);
+
+                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_7;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // AGEO1var_9
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_9)
+                {
+                    double tau_maior_que = 9;
+
+                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
+                        1, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.bits_por_variavel,
+                        tau_maior_que);
+
+                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_9;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // AGEO1var_11
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11)
+                {
+                    double tau_maior_que = 11;
+
+                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
+                        1, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.bits_por_variavel,
+                        tau_maior_que);
+
+                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_11;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -873,28 +896,6 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // AGEO2var_2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_2)
-                {
-                    double tau_maior_que = 2;
-
-                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
-                        new List<bool>(parametros_problema.populacao_inicial_binaria),
-                        2, 
-                        parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.lower_bounds,
-                        parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel,
-                        tau_maior_que);
-
-                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_2;
-                        
-                    todas_execucoes.Add(ret);
-                }
-
                 // AGEO2var_3
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3)
                 {
@@ -917,28 +918,6 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // AGEO2var_4
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_4)
-                {
-                    double tau_maior_que = 4;
-
-                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
-                        new List<bool>(parametros_problema.populacao_inicial_binaria),
-                        2, 
-                        parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
-                        parametros_problema.lower_bounds,
-                        parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel,
-                        tau_maior_que);
-
-                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_4;
-                        
-                    todas_execucoes.Add(ret);
-                }
-
                 // AGEO2var_5
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5)
                 {
@@ -957,6 +936,72 @@ namespace ExecutaOrganizaApresenta
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_5;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // AGEO2var_7
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7)
+                {
+                    double tau_maior_que = 7;
+
+                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
+                        2, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.bits_por_variavel,
+                        tau_maior_que);
+
+                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_7;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // AGEO2var_9
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9)
+                {
+                    double tau_maior_que = 9;
+
+                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
+                        2, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.bits_por_variavel,
+                        tau_maior_que);
+
+                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_9;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+                // AGEO2var_11
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11)
+                {
+                    double tau_maior_que = 11;
+
+                    AGEOvar_novo_BINARIO alg = new AGEOvar_novo_BINARIO(
+                        new List<bool>(parametros_problema.populacao_inicial_binaria),
+                        2, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.bits_por_variavel,
+                        tau_maior_que);
+
+                    RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_11;
                         
                     todas_execucoes.Add(ret);
                 }
