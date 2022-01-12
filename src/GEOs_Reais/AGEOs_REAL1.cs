@@ -38,34 +38,28 @@ namespace GEOs_REAIS
 
         public override void mutacao_do_tau_AGEOs()
         {
-            // Define o valor de referência (A-GEO1=melhor; A-GEO2=atual)
-            double valor_ref = (this.tipo_AGEO == 1) ? fx_melhor : fx_atual;
+            // Obtém o tamanho da população de bits
+            int tamanho_populacao = this.populacao_atual.Count;
             
-            // Verifica quantas perturbações melhoraram o valor da função em comparação ao valor de referência
-            int melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao < valor_ref).ToList().Count;
-
-            // Calcula a métrica Chance of Improvement
-            double CoI = (double) melhoraram / populacao_atual.Count;
-
-            // Se a população não tem como melhorar, restarta o tau
-            if (CoI == 0.0)
-            // if (CoI == 0.0 || tau > 5)
-            {
-                // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0/Math.Sqrt(populacao_atual.Count)) );
-                // tau = 0.5 * MathNet.Numerics.Distributions.LogNormal.Sample(0, (1.0 / Math.Pow((populacao_atual.Count), 1.0/2.0)));
-                // tau = 0.5 * Math.Exp(random.NextDouble() * (1.0 / Math.Pow( (populacao_atual.Count), 1.0/2.0 )));
-                tau = 0.5 * Math.Exp( random.NextDouble() * (1.0/Math.Sqrt(populacao_atual.Count)) );
-
-            }
+            // Instancia as funções úteis do mecanismo A-GEO
+            MecanismoAGEO.MecanismoAGEO mecanismo = new MecanismoAGEO.MecanismoAGEO();
             
-            // Se a população pode melhorar, aumenta o tau
-            else if(CoI <= CoI_1)
-            {
-                tau += (0.5 + CoI) * random.NextDouble();
-            }
+            // Calcula o f(x) de referência
+            double fx_referencia = mecanismo.calcula_fx_referencia(tipo_AGEO, fx_melhor, fx_atual);
             
-            // CoI atual passa a ser o CoI anterior da próxima iteração
-            CoI_1 = CoI;
+            // Calcula o CoI
+            double CoI = mecanismo.calcula_CoI_real(perturbacoes_da_iteracao, fx_referencia, tamanho_populacao);
+            
+            
+            
+            // VERSÃO ORIGINAL DE ATUALIZAR O TAU
+            // Atualiza o tau
+            tau = mecanismo.obtem_novo_tau(this.tipo_AGEO, this.tau, CoI, this.CoI_1, tamanho_populacao);
+            
+            
+                
+            // Armazena o CoI atual para ser usado como o anterior na próxima iteração
+            this.CoI_1 = CoI;
         }
     }
 }
