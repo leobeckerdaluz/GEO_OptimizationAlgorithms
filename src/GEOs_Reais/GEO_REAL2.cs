@@ -10,7 +10,7 @@ namespace GEOs_REAIS
         public int P {get; set;}
         public int s {get; set;}
         public int tipo_variacao_std_nas_P_perturbacoes {get; set;}
-        public bool ultima_perturbacao_random_uniforme {get; set;}
+        public bool primeira_das_P_perturbacoes_uniforme {get; set;}
         
         public GEO_real2(
             List<double> populacao_inicial,
@@ -20,7 +20,7 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
-            bool ultima_perturbacao_random_uniforme,
+            bool primeira_das_P_perturbacoes_uniforme,
             int tipo_variacao_std_nas_P_perturbacoes,
             double std,
             int tipo_perturbacao,
@@ -39,7 +39,7 @@ namespace GEOs_REAIS
             this.P = P;
             this.s = s;
             this.tipo_variacao_std_nas_P_perturbacoes = tipo_variacao_std_nas_P_perturbacoes;
-            this.ultima_perturbacao_random_uniforme = ultima_perturbacao_random_uniforme;
+            this.primeira_das_P_perturbacoes_uniforme = primeira_das_P_perturbacoes_uniforme;
         }
 
         public override void verifica_perturbacoes()
@@ -62,10 +62,24 @@ namespace GEOs_REAIS
                     // Cria uma população cópia
                     List<double> populacao_para_perturbar = new List<double>(populacao_atual);
 
+                    // ----------------------------------------------------------------------------
                     // Perturba a variável
                     double xi = populacao_para_perturbar[i];
                     double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                    double xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
+                    double xii = xi;
+                    
+                    // Verifica se quer que a 1ª das P pertuabções seja perturbação uniforme
+                    if(primeira_das_P_perturbacoes_uniforme && j==0)
+                    {
+                        // Perturbação será um valor qualquer no intervalo de variação da variável
+                        MathNet.Numerics.Distributions.ContinuousUniform UniDist = new MathNet.Numerics.Distributions.ContinuousUniform();
+                        xii = lower_bounds[i] + intervalo_variacao_variavel*UniDist.Sample();
+                    }
+                    else
+                    {
+                        xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
+                    }
+                    // ----------------------------------------------------------------------------
 
                     // Atribui a variável perturbada na população cópia
                     populacao_para_perturbar[i] = xii;
@@ -83,14 +97,17 @@ namespace GEOs_REAIS
                     // Adiciona na lista de perturbações
                     perturbacoes.Add(perturbacao);
 
-                    // Atualiza o std pra próxima perturbação da variável
-                    if (this.tipo_variacao_std_nas_P_perturbacoes == (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original){
-                        // std(i+1) = std(i) / (s*i) ===> originalmente, s=2
-                        std_atual = std_atual / ((this.s)*(j+1)) ;
-                    }
-                    else if (this.tipo_variacao_std_nas_P_perturbacoes == (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s){
-                        // std(i+1) = std(i) / s
-                        std_atual = std_atual / this.s;
+                    // Só atualiza o std se não quiser que uma das P perturbações seja uniforme ou caso queira, que a iteração não seja a 1ª
+                    if (!primeira_das_P_perturbacoes_uniforme || j!=0){
+                        // Atualiza o std pra próxima perturbação da variável
+                        if (this.tipo_variacao_std_nas_P_perturbacoes == (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original){
+                            // std(i+1) = std(i) / (s*i) ===> originalmente, s=2
+                            std_atual = std_atual / ((this.s)*(j+1)) ;
+                        }
+                        else if (this.tipo_variacao_std_nas_P_perturbacoes == (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s){
+                            // std(i+1) = std(i) / s
+                            std_atual = std_atual / this.s;
+                        }
                     }
                 }
                 

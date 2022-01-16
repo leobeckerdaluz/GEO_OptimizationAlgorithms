@@ -5,13 +5,12 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class AGEOs_REAL1 : GEO_real1
+    public class AGEO2real1 : GEO_real1
     {
         public int tipo_AGEO {get; set;}
         public double CoI_1 {get; set;}
 
-        
-        public AGEOs_REAL1(
+        public AGEO2real1(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -19,7 +18,6 @@ namespace GEOs_REAIS
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
             double std,
-            int tipo_AGEO,
             int tipo_perturbacao) : base(
                 n_variaveis_projeto,
                 definicao_funcao_objetivo,
@@ -31,7 +29,7 @@ namespace GEOs_REAIS
                 0.5,
                 std)
         {
-            this.tipo_AGEO = tipo_AGEO;
+            this.tipo_AGEO = 2;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
         }
 

@@ -125,27 +125,34 @@ namespace Classes_Comuns_Enums
         public bool rodar_GEOreal1_N { get; set; }
 
 
+        // A-GEOreal
+        public bool rodar_AGEOreal1_P { get; set; }
+        public bool rodar_AGEOreal2_P_DS { get; set; }
+
+
+
+
         
-        // OUTROS
-        public bool rodar_GEOreal1_igor { get; set; }
-        public bool rodar_AGEO1real1_igor { get; set; }
-        public bool rodar_AGEO2real1_igor { get; set; }
-        public bool rodar_GEOreal2_igor { get; set; }
-        public bool rodar_AGEO1real2_igor { get; set; }
-        public bool rodar_AGEO2real2_igor { get; set; }
-        public bool rodar_ASGEO2real1_1 { get; set; }
-        public bool rodar_ASGEO2real1_2 { get; set; }
-        public bool rodar_ASGEO2real1_3 { get; set; }
-        public bool rodar_ASGEO2real1_4 { get; set; }
-        public bool rodar_ASGEO2real2_1 { get; set; }
-        public bool rodar_ASGEO2real2_2 { get; set; }
+        // // OUTROS
+        // public bool rodar_GEOreal1_igor { get; set; }
+        // public bool rodar_AGEO1real1_igor { get; set; }
+        // public bool rodar_AGEO2real1_igor { get; set; }
+        // public bool rodar_GEOreal2_igor { get; set; }
+        // public bool rodar_AGEO1real2_igor { get; set; }
+        // public bool rodar_AGEO2real2_igor { get; set; }
+        // public bool rodar_ASGEO2real1_1 { get; set; }
+        // public bool rodar_ASGEO2real1_2 { get; set; }
+        // public bool rodar_ASGEO2real1_3 { get; set; }
+        // public bool rodar_ASGEO2real1_4 { get; set; }
+        // public bool rodar_ASGEO2real2_1 { get; set; }
+        // public bool rodar_ASGEO2real2_2 { get; set; }
         
-        public bool rodar_AGEO2_REAL1_igor { get; set; }
-        public bool rodar_AGEO2_REAL1_porcentagem { get; set; }
-        public bool rodar_AGEO2_REAL1_normal { get; set; }
-        public bool rodar_AGEO2_REAL2_igor { get; set; }
-        public bool rodar_AGEO2_REAL2_porcentagem { get; set; }
-        public bool rodar_AGEO2_REAL2_normal { get; set; }
+        // public bool rodar_AGEO2_REAL1_igor { get; set; }
+        // public bool rodar_AGEO2_REAL1_porcentagem { get; set; }
+        // public bool rodar_AGEO2_REAL1_normal { get; set; }
+        // public bool rodar_AGEO2_REAL2_igor { get; set; }
+        // public bool rodar_AGEO2_REAL2_porcentagem { get; set; }
+        // public bool rodar_AGEO2_REAL2_normal { get; set; }
         
         
     }
@@ -255,7 +262,6 @@ namespace Classes_Comuns_Enums
         public double GEOreal2_N_VO__std {get; set;}
         public double GEOreal2_N_VO__P {get; set;}
         public double GEOreal2_N_VO__s {get; set;}
-
         // GEOreal2_O_DS
         public double GEOreal2_O_DS__tau {get; set;}
         public double GEOreal2_O_DS__std {get; set;}
@@ -273,22 +279,22 @@ namespace Classes_Comuns_Enums
         public double GEOreal2_N_DS__s {get; set;}
 
 
-        // GEOreal2_P_VO
+        // GEOreal2_P_VO_UNI
         public double GEOreal2_P_VO_UNI__tau {get; set;}
         public double GEOreal2_P_VO_UNI__porc {get; set;}
         public double GEOreal2_P_VO_UNI__P {get; set;}
         public double GEOreal2_P_VO_UNI__s {get; set;}
-        // GEOreal2_N_VO
+        // GEOreal2_N_VO_UNI
         public double GEOreal2_N_VO_UNI__tau {get; set;}
         public double GEOreal2_N_VO_UNI__std {get; set;}
         public double GEOreal2_N_VO_UNI__P {get; set;}
         public double GEOreal2_N_VO_UNI__s {get; set;}
-        // GEOreal2_P_DS
+        // GEOreal2_P_DS_UNI
         public double GEOreal2_P_DS_UNI__tau {get; set;}
         public double GEOreal2_P_DS_UNI__porc {get; set;}
         public double GEOreal2_P_DS_UNI__P {get; set;}
         public double GEOreal2_P_DS_UNI__s {get; set;}
-        // GEOreal2_N_DS
+        // GEOreal2_N_DS_UNI
         public double GEOreal2_N_DS_UNI__tau {get; set;}
         public double GEOreal2_N_DS_UNI__std {get; set;}
         public double GEOreal2_N_DS_UNI__P {get; set;}
@@ -296,6 +302,12 @@ namespace Classes_Comuns_Enums
         
 
 
+        // A-GEOreal
+        public double AGEOreal1_P__porc {get; set;}
+        public double AGEOreal2_P_DS__porc {get; set;}
+        public double AGEOreal2_P_DS__P {get; set;}
+        public double AGEOreal2_P_DS__s {get; set;}
+        
         
         
         // // Não essenciais atualmente
@@ -354,6 +366,8 @@ namespace Classes_Comuns_Enums
         tuning_GEOreal2_O_DS,
         tuning_GEOreal2_P_DS,
         tuning_GEOreal2_N_DS,
+
+        tuning_AGEOreal1_P
     }
 
 
@@ -404,6 +418,11 @@ namespace Classes_Comuns_Enums
         GEOreal2_N_VO_UNI,
         GEOreal2_P_DS_UNI,
         GEOreal2_N_DS_UNI,
+
+
+        // A-GEOreal
+        AGEOreal1_P,
+        AGEOreal2_P_DS,
 
 
         // // OUTROS

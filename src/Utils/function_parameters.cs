@@ -44,50 +44,58 @@ namespace FunctionParameters
                     parametros_problema.fx_esperado = 0.0;
                     parametros_problema.parametros_livres = new ParametrosLivreProblema()
                     {
+                        // Binários
                         GEO__tau = 1.25,
                         GEOvar__tau = 2.75,
                         GEOvar2__tau = 6.5,
-                        
-                        GEOreal1_O__std = 1,
+                       
+                        // GEOreal1
+                        GEOreal1_O__std = 1.2,
                         GEOreal1_O__tau = 1.5,
 
                         GEOreal1_P__porc = 0.5,
-                        GEOreal1_P__tau = 6,
+                        GEOreal1_P__tau = 5.5,
 
                         GEOreal1_N__std = 2,
                         GEOreal1_N__tau = 1.5,
 
-                        GEOreal2_O_VO__P = 4,
+                        // GEOreal2
+                        GEOreal2_O_VO__P = 5,
                         GEOreal2_O_VO__s = 1,
-                        GEOreal2_O_VO__std = 1,
+                        GEOreal2_O_VO__std = 2,
                         GEOreal2_O_VO__tau = 2.5,
 
-                        GEOreal2_P_VO__P = 12,
-                        GEOreal2_P_VO__s = 1,
+                        GEOreal2_P_VO__P = 5,
+                        GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 1,
-                        GEOreal2_P_VO__tau = 3,
+                        GEOreal2_P_VO__tau = 3.5,
 
-                        GEOreal2_N_VO__P = 4,
-                        GEOreal2_N_VO__s = 2,
-                        GEOreal2_N_VO__std = 2,
-                        GEOreal2_N_VO__tau = 3,
+                        GEOreal2_N_VO__P = 5,
+                        GEOreal2_N_VO__s = 4,
+                        GEOreal2_N_VO__std = 10,
+                        GEOreal2_N_VO__tau = 3.5,
 
-                        GEOreal2_O_DS__P = 4,
+                        GEOreal2_O_DS__P = 5,
                         GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 5,
-                        GEOreal2_O_DS__tau = 5,
+                        GEOreal2_O_DS__std = 2,
+                        GEOreal2_O_DS__tau = 3,
 
-                        GEOreal2_P_DS__P = 12,
-                        GEOreal2_P_DS__s = 2,
-                        GEOreal2_P_DS__porc = 10,
-                        GEOreal2_P_DS__tau = 3,
+                        GEOreal2_P_DS__P = 10,
+                        GEOreal2_P_DS__s = 10,
+                        GEOreal2_P_DS__porc = 1,
+                        GEOreal2_P_DS__tau = 4,
 
-                        GEOreal2_N_DS__P = 4,
+                        GEOreal2_N_DS__P = 10,
                         GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 5,
-                        GEOreal2_N_DS__tau = 3,
+                        GEOreal2_N_DS__std = 10,
+                        GEOreal2_N_DS__tau = 4,
 
 
+                        AGEOreal1_P__porc = 0.5,
+
+                        AGEOreal2_P_DS__P = 10,
+                        AGEOreal2_P_DS__s = 10,
+                        AGEOreal2_P_DS__porc = 1,
 
                         // std_AGEO1real1 = 0.8,
                         // std_AGEO2real1 = 1.2,
@@ -127,50 +135,58 @@ namespace FunctionParameters
                     parametros_problema.fx_esperado = 0.0;
                     parametros_problema.parametros_livres = new ParametrosLivreProblema()
                     {
+                        // Binários
                         GEO__tau = 1,
                         GEOvar__tau = 1.75,
                         GEOvar2__tau = 6,
 
-                        GEOreal1_O__std = 1.8,
-                        GEOreal1_O__tau = 2,
+                        // GEOreal1
+                        GEOreal1_O__std = 1,
+                        GEOreal1_O__tau = 1.5,
 
                         GEOreal1_P__porc = 3,
-                        GEOreal1_P__tau = 5,
+                        GEOreal1_P__tau = 5.5,
 
                         GEOreal1_N__std = 0.4,
-                        GEOreal1_N__tau = 6,
+                        GEOreal1_N__tau = 5,
                         
-                        GEOreal2_O_VO__P = 4,
+                        // GEOreal2
+                        GEOreal2_O_VO__P = 5,
                         GEOreal2_O_VO__s = 1,
-                        GEOreal2_O_VO__std = 1,
-                        GEOreal2_O_VO__tau = 4.5,
+                        GEOreal2_O_VO__std = 2,
+                        GEOreal2_O_VO__tau = 5,
 
-                        GEOreal2_P_VO__P = 12,
-                        GEOreal2_P_VO__s = 2,
+                        GEOreal2_P_VO__P = 10,
+                        GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 10,
                         GEOreal2_P_VO__tau = 5,
 
-                        GEOreal2_N_VO__P = 12,
-                        GEOreal2_N_VO__s = 2,
-                        GEOreal2_N_VO__std = 1,
+                        GEOreal2_N_VO__P = 10,
+                        GEOreal2_N_VO__s = 4,
+                        GEOreal2_N_VO__std = 0.5,
                         GEOreal2_N_VO__tau = 5,
 
-                        GEOreal2_O_DS__P = 4,
+                        GEOreal2_O_DS__P = 5,
                         GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 5,
+                        GEOreal2_O_DS__std = 2,
                         GEOreal2_O_DS__tau = 4.5,
 
-                        GEOreal2_P_DS__P = 12,
+                        GEOreal2_P_DS__P = 10,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 10,
                         GEOreal2_P_DS__tau = 5,
 
-                        GEOreal2_N_DS__P = 12,
+                        GEOreal2_N_DS__P = 10,
                         GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 10,
+                        GEOreal2_N_DS__std = 0.5,
                         GEOreal2_N_DS__tau = 5,
 
 
+                        AGEOreal1_P__porc = 3,
+
+                        AGEOreal2_P_DS__P = 10,
+                        AGEOreal2_P_DS__s = 10,
+                        AGEOreal2_P_DS__porc = 10,
 
                         // std_AGEO1real1 = 0.8,
                         // std_AGEO2real1 = 1,
@@ -208,50 +224,58 @@ namespace FunctionParameters
                     parametros_problema.fx_esperado = 0.0;
                     parametros_problema.parametros_livres = new ParametrosLivreProblema()
                     {
+                        // Binários
                         GEO__tau = 1.25,
                         GEOvar__tau = 1.5,
                         GEOvar2__tau = 6.50,
                         
-                        GEOreal1_O__std = 2.5,
-                        GEOreal1_O__tau = 6,
+                        // GEOreal1
+                        GEOreal1_O__std = 2.4,
+                        GEOreal1_O__tau = 5.5,
 
                         GEOreal1_P__porc = 0.5,
                         GEOreal1_P__tau = 6,
 
                         GEOreal1_N__std = 0.2,
-                        GEOreal1_N__tau = 5,
+                        GEOreal1_N__tau = 5.5,
                         
-                        GEOreal2_O_VO__P = 4,
+                        // GEOreal2
+                        GEOreal2_O_VO__P = 5,
                         GEOreal2_O_VO__s = 2,
-                        GEOreal2_O_VO__std = 1,
-                        GEOreal2_O_VO__tau = 5,
+                        GEOreal2_O_VO__std = 2,
+                        GEOreal2_O_VO__tau = 4,
 
-                        GEOreal2_P_VO__P = 4,
+                        GEOreal2_P_VO__P = 5,
                         GEOreal2_P_VO__s = 1,
                         GEOreal2_P_VO__porc = 0.1,
-                        GEOreal2_P_VO__tau = 4,
+                        GEOreal2_P_VO__tau = 4.5,
 
-                        GEOreal2_N_VO__P = 4,
+                        GEOreal2_N_VO__P = 5,
                         GEOreal2_N_VO__s = 2,
                         GEOreal2_N_VO__std = 0.5,
-                        GEOreal2_N_VO__tau = 4.5,
+                        GEOreal2_N_VO__tau = 4,
 
-                        GEOreal2_O_DS__P = 12,
+                        GEOreal2_O_DS__P = 10,
                         GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 5,
-                        GEOreal2_O_DS__tau = 5,
+                        GEOreal2_O_DS__std = 2,
+                        GEOreal2_O_DS__tau = 4.5,
 
-                        GEOreal2_P_DS__P = 4,
+                        GEOreal2_P_DS__P = 5,
                         GEOreal2_P_DS__s = 2,
                         GEOreal2_P_DS__porc = 0.1,
-                        GEOreal2_P_DS__tau = 4,
+                        GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 8,
+                        GEOreal2_N_DS__P = 10,
                         GEOreal2_N_DS__s = 2,
-                        GEOreal2_N_DS__std = 1,
-                        GEOreal2_N_DS__tau = 4,
+                        GEOreal2_N_DS__std = 0.5,
+                        GEOreal2_N_DS__tau = 5,
 
 
+                        AGEOreal1_P__porc = 0.5,
+
+                        AGEOreal2_P_DS__P = 5,
+                        AGEOreal2_P_DS__s = 2,
+                        AGEOreal2_P_DS__porc = 0.1,
 
                         // std_AGEO1real1 = 1.6,
                         // std_AGEO2real1 = 1.8,
@@ -289,50 +313,59 @@ namespace FunctionParameters
                     parametros_problema.fx_esperado = 0.0;
                     parametros_problema.parametros_livres = new ParametrosLivreProblema()
                     {
+                        // Binários
                         GEO__tau = 0.75,
                         GEOvar__tau = 1.5,
                         GEOvar2__tau = 7,
-                        
+                      
+                        // GEOreal1
                         GEOreal1_O__std = 1.8,
-                        GEOreal1_O__tau = 6,
+                        GEOreal1_O__tau = 5.5,
 
-                        GEOreal1_P__porc = 8,
-                        GEOreal1_P__tau = 2.5,
+                        GEOreal1_P__porc = 9,
+                        GEOreal1_P__tau = 3.5,
 
-                        GEOreal1_N__std = 1.4,
+                        GEOreal1_N__std = 1,
                         GEOreal1_N__tau = 1.5,
 
-                        GEOreal2_O_VO__P = 16,
-                        GEOreal2_O_VO__s = 2,
-                        GEOreal2_O_VO__std = 8,
-                        GEOreal2_O_VO__tau = 4,
+                        // GEOreal2
+                        GEOreal2_O_VO__P = 10,
+                        GEOreal2_O_VO__s = 4,
+                        GEOreal2_O_VO__std = 2,
+                        GEOreal2_O_VO__tau = 5,
 
-                        GEOreal2_P_VO__P = 12,
-                        GEOreal2_P_VO__s = 2,
+                        GEOreal2_P_VO__P = 10,
+                        GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 50,
-                        GEOreal2_P_VO__tau = 4.5,
+                        GEOreal2_P_VO__tau = 5,
 
-                        GEOreal2_N_VO__P = 12,
+                        GEOreal2_N_VO__P = 10,
                         GEOreal2_N_VO__s = 2,
-                        GEOreal2_N_VO__std = 2,
-                        GEOreal2_N_VO__tau = 4,
+                        GEOreal2_N_VO__std = 1,
+                        GEOreal2_N_VO__tau = 3.5,
 
-                        GEOreal2_O_DS__P = 12,
+                        GEOreal2_O_DS__P = 10,
                         GEOreal2_O_DS__s = 10,
-                        GEOreal2_O_DS__std = 5,
-                        GEOreal2_O_DS__tau = 5,
+                        GEOreal2_O_DS__std = 2,
+                        GEOreal2_O_DS__tau = 4.5,
 
-                        GEOreal2_P_DS__P = 12,
+                        GEOreal2_P_DS__P = 10,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 50,
-                        GEOreal2_P_DS__tau = 4,
+                        GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 4,
-                        GEOreal2_N_DS__s = 2,
-                        GEOreal2_N_DS__std = 10,
-                        GEOreal2_N_DS__tau = 0.5,
+                        GEOreal2_N_DS__P = 10,
+                        GEOreal2_N_DS__s = 10,
+                        GEOreal2_N_DS__std = 1,
+                        GEOreal2_N_DS__tau = 5,
 
 
+
+                        AGEOreal1_P__porc = 9,
+
+                        AGEOreal2_P_DS__P = 10,
+                        AGEOreal2_P_DS__s = 10,
+                        AGEOreal2_P_DS__porc = 50,
 
                         // std_AGEO1real1 = 1.8,
                         // std_AGEO2real1 = 2.4,
@@ -373,50 +406,58 @@ namespace FunctionParameters
                         fx_esperado = 0.0,
                         parametros_livres = new ParametrosLivreProblema()
                         {
+                            // Binários
                             GEO__tau = 3.25,
                             GEOvar__tau = 2.25,
                             GEOvar2__tau = 6.25,
 
+                            // GEOreal1
                             GEOreal1_O__std = 0.8,
                             GEOreal1_O__tau = 1,
 
                             GEOreal1_P__porc = 1,
-                            GEOreal1_P__tau = 5,
+                            GEOreal1_P__tau = 6,
 
-                            GEOreal1_N__std = 0.6,
+                            GEOreal1_N__std = 0.4,
                             GEOreal1_N__tau = 6,
 
-                            GEOreal2_O_VO__P = 4,
+                            // GEOreal2
+                            GEOreal2_O_VO__P = 5,
                             GEOreal2_O_VO__s = 1,
                             GEOreal2_O_VO__std = 1,
-                            GEOreal2_O_VO__tau = 5,
+                            GEOreal2_O_VO__tau = 4.5,
 
-                            GEOreal2_P_VO__P = 12,
-                            GEOreal2_P_VO__s = 2,
+                            GEOreal2_P_VO__P = 10,
+                            GEOreal2_P_VO__s = 4,
                             GEOreal2_P_VO__porc = 10,
-                            GEOreal2_P_VO__tau = 4.5,
+                            GEOreal2_P_VO__tau = 5,
 
-                            GEOreal2_N_VO__P = 12,
-                            GEOreal2_N_VO__s = 2,
+                            GEOreal2_N_VO__P = 10,
+                            GEOreal2_N_VO__s = 4,
                             GEOreal2_N_VO__std = 2,
-                            GEOreal2_N_VO__tau = 4.5,
+                            GEOreal2_N_VO__tau = 5,
 
-                            GEOreal2_O_DS__P = 4,
+                            GEOreal2_O_DS__P = 5,
                             GEOreal2_O_DS__s = 2,
                             GEOreal2_O_DS__std = 1,
-                            GEOreal2_O_DS__tau = 5,
+                            GEOreal2_O_DS__tau = 4.5,
 
-                            GEOreal2_P_DS__P = 12,
+                            GEOreal2_P_DS__P = 10,
                             GEOreal2_P_DS__s = 10,
                             GEOreal2_P_DS__porc = 10,
-                            GEOreal2_P_DS__tau = 5,
+                            GEOreal2_P_DS__tau = 4.5,
 
-                            GEOreal2_N_DS__P = 12,
+                            GEOreal2_N_DS__P = 10,
                             GEOreal2_N_DS__s = 10,
-                            GEOreal2_N_DS__std = 5,
-                            GEOreal2_N_DS__tau = 4.5,
+                            GEOreal2_N_DS__std = 2,
+                            GEOreal2_N_DS__tau = 5,
 
 
+                            AGEOreal1_P__porc = 1,
+
+                            AGEOreal2_P_DS__P = 10,
+                            AGEOreal2_P_DS__s = 10,
+                            AGEOreal2_P_DS__porc = 10,
 
                             // std_AGEO1real1 = 0.8,
                             // std_AGEO2real1 = 0.8,
@@ -455,50 +496,61 @@ namespace FunctionParameters
                     parametros_problema.fx_esperado = 0.0;
                     parametros_problema.parametros_livres = new ParametrosLivreProblema()
                     {
+                        // Binários
                         GEO__tau = 1.25,
                         GEOvar__tau = 1.5,
                         GEOvar2__tau = 6.5,
                         
+                        // GEOreal1
                         GEOreal1_O__std = 2,
-                        GEOreal1_O__tau = 5,
+                        GEOreal1_O__tau = 6,
 
+                        // GEOreal1_P__porc = 2.5,
+                        // GEOreal1_P__tau = 4,
                         GEOreal1_P__porc = 1.5,
                         GEOreal1_P__tau = 1.5,
 
                         GEOreal1_N__std = 0.2,
-                        GEOreal1_N__tau = 2,
+                        GEOreal1_N__tau = 2.5,
 
-                        GEOreal2_O_VO__P = 8,
-                        GEOreal2_O_VO__s = 2,
-                        GEOreal2_O_VO__std = 2,
-                        GEOreal2_O_VO__tau = 4,
+                        // GEOreal2
+                        GEOreal2_O_VO__P = 10,
+                        GEOreal2_O_VO__s = 4,
+                        GEOreal2_O_VO__std = 1,
+                        GEOreal2_O_VO__tau = 4.5,
 
-                        GEOreal2_P_VO__P = 12,
-                        GEOreal2_P_VO__s = 1,
+                        GEOreal2_P_VO__P = 10,
+                        GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 50,
-                        GEOreal2_P_VO__tau = 3.5,
+                        GEOreal2_P_VO__tau = 4,
 
-                        GEOreal2_N_VO__P = 12,
-                        GEOreal2_N_VO__s = 1,
-                        GEOreal2_N_VO__std = 2,
-                        GEOreal2_N_VO__tau = 3,
+                        GEOreal2_N_VO__P = 10,
+                        GEOreal2_N_VO__s = 4,
+                        GEOreal2_N_VO__std = 10,
+                        GEOreal2_N_VO__tau = 3.5,
 
-                        GEOreal2_O_DS__P = 4,
+                        GEOreal2_O_DS__P = 5,
                         GEOreal2_O_DS__s = 10,
                         GEOreal2_O_DS__std = 1,
-                        GEOreal2_O_DS__tau = 5,
+                        GEOreal2_O_DS__tau = 4.5,
 
-                        GEOreal2_P_DS__P = 12,
-                        GEOreal2_P_DS__s = 2,
-                        GEOreal2_P_DS__porc = 10,
-                        GEOreal2_P_DS__tau = 3.5,
+                        GEOreal2_P_DS__P = 5,
+                        GEOreal2_P_DS__s = 10,
+                        GEOreal2_P_DS__porc = 50,
+                        GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 16,
-                        GEOreal2_N_DS__s = 2,
-                        GEOreal2_N_DS__std = 1,
-                        GEOreal2_N_DS__tau = 3,
+                        GEOreal2_N_DS__P = 5,
+                        GEOreal2_N_DS__s = 10,
+                        GEOreal2_N_DS__std = 10,
+                        GEOreal2_N_DS__tau = 4,
 
 
+
+                        AGEOreal1_P__porc = 1.5,
+
+                        AGEOreal2_P_DS__P = 5,
+                        AGEOreal2_P_DS__s = 10,
+                        AGEOreal2_P_DS__porc = 50,
                         
                         // std_AGEO1real1 = 1.8,
                         // std_AGEO2real1 = 1.8,
@@ -525,6 +577,15 @@ namespace FunctionParameters
                 
                 
                 
+
+
+
+
+
+
+                // =============================================
+                // OUTRAS FUNÇÕES
+                // =============================================
                 
                 // LEVY13
                 case (int)EnumNomesFuncoesObjetivo.levy13:

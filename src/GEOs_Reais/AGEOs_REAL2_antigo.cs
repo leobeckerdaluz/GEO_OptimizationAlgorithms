@@ -5,12 +5,12 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class AGEOs_REAL2 : GEO_real2
+    public class AGEOs_REAL2_antigo : GEO_real2
     {
         public int tipo_AGEO {get; set;}
         public double CoI_1 {get; set;}
 
-        public AGEOs_REAL2(
+        public AGEOs_REAL2_antigo(
             int tipo_AGEO,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -18,7 +18,7 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
-            bool ultima_perturbacao_random_uniforme,
+            bool primeira_das_P_perturbacoes_uniforme,
             int tipo_variacao_std_nas_P_perturbacoes,
             double std,
             int P,
@@ -31,7 +31,7 @@ namespace GEOs_REAIS
                 lower_bounds,
                 upper_bounds,
                 lista_NFEs_desejados,
-                ultima_perturbacao_random_uniforme,
+                primeira_das_P_perturbacoes_uniforme,
                 tipo_variacao_std_nas_P_perturbacoes,
                 std,
                 tipo_perturbacao,

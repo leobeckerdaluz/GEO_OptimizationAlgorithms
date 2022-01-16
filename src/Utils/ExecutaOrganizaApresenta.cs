@@ -1152,7 +1152,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_O_VO  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO ORIGINAL
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_VO)
                 {
-                    bool ultima_perturbacao_random_uniforme = false;
+                    bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
                     
@@ -1164,7 +1164,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_O_VO__std, 
                         tipo_perturbacao, 
@@ -1180,7 +1180,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_P_VO  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO ORIGINAL
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO)
                 {
-                    bool ultima_perturbacao_random_uniforme = false;
+                    bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     
@@ -1192,7 +1192,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_P_VO__porc, 
                         tipo_perturbacao, 
@@ -1208,7 +1208,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_N_VO  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO)
                 {
-                    bool ultima_perturbacao_random_uniforme = false;
+                    bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_normal;
                     
@@ -1220,7 +1220,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
                         tipo_perturbacao, 
@@ -1238,7 +1238,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_O_DS  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO DIVIDE POR S
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS)
                 {
-                    bool ultima_perturbacao_random_uniforme = false;
+                    bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
                     
@@ -1250,7 +1250,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_O_DS__std, 
                         tipo_perturbacao, 
@@ -1266,7 +1266,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_P_DS  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS)
                 {
-                    bool ultima_perturbacao_random_uniforme = false;
+                    bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     
@@ -1278,7 +1278,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_P_DS__porc, 
                         tipo_perturbacao, 
@@ -1294,7 +1294,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_N_DS  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS)
                 {
-                    bool ultima_perturbacao_random_uniforme = false;
+                    bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_normal;
                     
@@ -1306,7 +1306,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
                         tipo_perturbacao, 
@@ -1325,7 +1325,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_P_VO_UNI  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO ORIGINAL + 1 Uniforme
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO_UNI)
                 {
-                    bool ultima_perturbacao_random_uniforme = true;
+                    bool primeira_das_P_perturbacoes_uniforme = true;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     
@@ -1337,7 +1337,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_P_VO__porc, 
                         tipo_perturbacao, 
@@ -1353,7 +1353,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_N_VO_UNI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL + 1 Uniforme
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO_UNI)
                 {
-                    bool ultima_perturbacao_random_uniforme = true;
+                    bool primeira_das_P_perturbacoes_uniforme = true;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_normal;
                     
@@ -1365,7 +1365,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
                         tipo_perturbacao, 
@@ -1381,7 +1381,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_P_DS_UNI  =  GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S + 1 Uniforme
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI)
                 {
-                    bool ultima_perturbacao_random_uniforme = true;
+                    bool primeira_das_P_perturbacoes_uniforme = true;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     
@@ -1393,7 +1393,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_P_DS__porc, 
                         tipo_perturbacao, 
@@ -1409,7 +1409,7 @@ namespace ExecutaOrganizaApresenta
                 // GEOreal2_N_DS_UNI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S + 1 Uniforme
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI)
                 {
-                    bool ultima_perturbacao_random_uniforme = true;
+                    bool primeira_das_P_perturbacoes_uniforme = true;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_normal;
                     
@@ -1421,7 +1421,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        ultima_perturbacao_random_uniforme,
+                        primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
                         parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
                         tipo_perturbacao, 
@@ -1436,11 +1436,62 @@ namespace ExecutaOrganizaApresenta
 
 
 
+                // AGEOreal1_P  =  Adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P)
+                {
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
+                    
+                    AGEO2real1 AGEOreal1_P = new AGEO2real1(
+                        parametros_problema.populacao_inicial_real,
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.parametros_livres.AGEOreal1_P__porc,
+                        tipo_perturbacao);
+                        
+                    RetornoGEOs ret = AGEOreal1_P.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal1_P;
+
+                    todas_execucoes.Add(ret);
+                }
+                
+
+                // A-GEOreal2_P_DS  =  Adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS)
+                {
+                    bool primeira_das_P_perturbacoes_uniforme = false;
+                    int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
+                    
+                    AGEO2real2 ageo_real2 = new AGEO2real2(
+                        parametros_problema.populacao_inicial_real, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        primeira_das_P_perturbacoes_uniforme,
+                        tipo_variacao_std_nas_P_perturbacoes,
+                        parametros_problema.parametros_livres.AGEOreal2_P_DS__porc, 
+                        tipo_perturbacao, 
+                        (int)parametros_problema.parametros_livres.AGEOreal2_P_DS__P, 
+                        (int)parametros_problema.parametros_livres.AGEOreal2_P_DS__s);
+                        
+                    RetornoGEOs ret = ageo_real2.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal2_P_DS;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+
+
 
                 // // AGEO1real2 - IGOR
                 // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2_igor)
                 // {
-                //     bool ultima_perturbacao_random_uniforme = false;
+                //     bool primeira_das_P_perturbacoes_uniforme = false;
                 //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                 //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
 
@@ -1452,7 +1503,7 @@ namespace ExecutaOrganizaApresenta
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         ultima_perturbacao_random_uniforme,
+                //         primeira_das_P_perturbacoes_uniforme,
                 //         tipo_variacao_std_nas_P_perturbacoes,
                 //         parametros_problema.parametros_livres.std_AGEO1real2, 
                 //         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
@@ -1468,7 +1519,7 @@ namespace ExecutaOrganizaApresenta
                 // // AGEO2real2 - IGOR
                 // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_igor)
                 // {
-                //     bool ultima_perturbacao_random_uniforme = false;
+                //     bool primeira_das_P_perturbacoes_uniforme = false;
                 //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
                 //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
                     
@@ -1480,7 +1531,7 @@ namespace ExecutaOrganizaApresenta
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         ultima_perturbacao_random_uniforme,
+                //         primeira_das_P_perturbacoes_uniforme,
                 //         tipo_variacao_std_nas_P_perturbacoes,
                 //         parametros_problema.parametros_livres.std_AGEO1real2, 
                 //         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
@@ -1636,7 +1687,7 @@ namespace ExecutaOrganizaApresenta
                 //     int P = 6;
                 //     double std = 50;
                 //     int s = 10;
-                //     bool ultima_perturbacao_random_uniforme = true;
+                //     bool primeira_das_P_perturbacoes_uniforme = true;
                 //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
 
                 //     AGEOs_REAL2 AGEO2_REAL2_igor = new AGEOs_REAL2(
@@ -1647,7 +1698,7 @@ namespace ExecutaOrganizaApresenta
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         ultima_perturbacao_random_uniforme,
+                //         primeira_das_P_perturbacoes_uniforme,
                 //         tipo_variacao_std_nas_P_perturbacoes,
                 //         std,
                 //         P,
@@ -1666,7 +1717,7 @@ namespace ExecutaOrganizaApresenta
                 //     int P = 6;
                 //     double std = 10;
                 //     int s = 10;
-                //     bool ultima_perturbacao_random_uniforme = true;
+                //     bool primeira_das_P_perturbacoes_uniforme = true;
                 //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
 
                 //     AGEOs_REAL2 AGEO2_REAL2_porcentagem = new AGEOs_REAL2(
@@ -1677,7 +1728,7 @@ namespace ExecutaOrganizaApresenta
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         ultima_perturbacao_random_uniforme,
+                //         primeira_das_P_perturbacoes_uniforme,
                 //         tipo_variacao_std_nas_P_perturbacoes,
                 //         std,
                 //         P,
@@ -1696,7 +1747,7 @@ namespace ExecutaOrganizaApresenta
                 //     int P = 6;
                 //     double std = 10;
                 //     int s = 10;
-                //     bool ultima_perturbacao_random_uniforme = true;
+                //     bool primeira_das_P_perturbacoes_uniforme = true;
                 //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
 
                 //     AGEOs_REAL2 AGEO2_REAL2_normal = new AGEOs_REAL2(
@@ -1707,7 +1758,7 @@ namespace ExecutaOrganizaApresenta
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         ultima_perturbacao_random_uniforme,
+                //         primeira_das_P_perturbacoes_uniforme,
                 //         tipo_variacao_std_nas_P_perturbacoes,
                 //         std,
                 //         P,

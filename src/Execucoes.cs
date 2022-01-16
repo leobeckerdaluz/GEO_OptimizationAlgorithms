@@ -17,11 +17,11 @@ namespace Execucoes
             // =======================================================================================
             List<int> function_values = new List<int>()
             {
-                (int)EnumNomesFuncoesObjetivo.griewangk,
-                (int)EnumNomesFuncoesObjetivo.rastringin,
-                (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                (int)EnumNomesFuncoesObjetivo.schwefel,
-                (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                // (int)EnumNomesFuncoesObjetivo.rastringin,
+                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                // (int)EnumNomesFuncoesObjetivo.schwefel,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
                 (int)EnumNomesFuncoesObjetivo.beale,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
@@ -61,8 +61,20 @@ namespace Execucoes
                 // (int)EnumOQueFazer.tuning_GEOreal2_O_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_P_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_N_DS,
+                // (int)EnumOQueFazer.tuning_AGEOreal1_P,
 
             };
+            
+            bool TUNING = false;
+
+            int qtde_execucoes = 40;
+
+
+
+
+
+
+
 
             foreach (int opcao in o_que_fazer){
                 Console.WriteLine("\n\n\n\n");
@@ -81,15 +93,12 @@ namespace Execucoes
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao();
                 
                 // Quantidade de execuções
-                parametros_execucao.quantidade_execucoes = 30;
-            
-                
-                bool TUNING = false;
-                
+                parametros_execucao.quantidade_execucoes = qtde_execucoes;
 
                 // Por default, printa somente as médias na saída
                 parametros_execucao.o_que_interessa_printar = new OQueInteressaPrintar();
                 parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
+                parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
 
                 // Define os critérios de parada
                 parametros_execucao.parametros_criterio_parada = new ParametrosCriterioParada();
@@ -137,19 +146,21 @@ namespace Execucoes
                         case (int)EnumOQueFazer.executar_algoritmos:
                         {
                             // ======================================================================================================
-                            // O que interessa printar no arquivo de saída4
+                            // O que interessa printar no arquivo de saída ao 'executar algoritmos'
                             parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
+                            
                             // parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
-                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true;
+                            
+                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_mean_Mfx_iteracoes = true;
                             // ======================================================================================================
 
-                            
+
+
                             // ======================================================================================================
                             // Quais algoritmos executar
-                            parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
-
+                            
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
@@ -160,20 +171,18 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
 
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9var = true;
                             
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
@@ -187,7 +196,6 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_VO = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO = true;
-
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;
@@ -196,6 +204,10 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO_UNI = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
+
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS = true;
+                            
                             // ======================================================================================================
                             
                             
@@ -228,7 +240,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -246,7 +259,8 @@ namespace Execucoes
 
                             List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                            
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -265,7 +279,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                           
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -285,7 +300,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_O(parametros_execucao, parametros_problema, valores_tau, valores_std);
                          
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -305,7 +321,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_P(parametros_execucao, parametros_problema, valores_tau, valores_porcentagem);
                           
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -325,7 +342,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_N(parametros_execucao, parametros_problema, valores_tau, valores_std);
                            
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -346,7 +364,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_O_VO(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -367,7 +386,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_P_VO(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -388,7 +408,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_N_VO(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -409,7 +430,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_O_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -430,7 +452,8 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_P_DS(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;
@@ -451,7 +474,28 @@ namespace Execucoes
                             
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_N_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning);
+                            bool ordenar = true;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
+                            // ======================================================================================================
+                        }
+                        break;
+
+
+                        case (int)EnumOQueFazer.tuning_AGEOreal1_P:
+                        {
+                            // ======================================================================================================
+                            // Tuning do AGEOreal1_P
+                            
+                            List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
+                            
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
+                            
+                            Tunings.Tunings tunings = new Tunings.Tunings();
+                            
+                            List<Tuning> resultados_tuning = tunings.tuning_AGEOreal1_P(parametros_execucao, parametros_problema, valores_porcent);
+                          
+                            bool ordenar = false;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================
                         }
                         break;

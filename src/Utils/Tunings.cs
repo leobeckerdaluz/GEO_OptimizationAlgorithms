@@ -30,13 +30,19 @@ namespace Tunings
         // =========================================================================
         // Ordena o tuning e apresenta
         
-        public void ordena_e_apresenta_resultados_tuning(List<Tuning> tuning_results)
+        public void ordena_e_apresenta_resultados_tuning(List<Tuning> tuning_results, bool ordenar_ou_nao)
         {
+            // Cria a lista cópia que irá conter os resultados de tuning
+            List<Tuning> tunings = new List<Tuning>(tuning_results);
+
             // Ordena os resultados do tuning com base no f(x)
-            List<Tuning> sortedList = tuning_results.OrderBy(i => i.NFE).ThenBy(i => i.fx).ToList();
+            if (ordenar_ou_nao)
+            {
+                tunings = tuning_results.OrderBy(i => i.NFE).ThenBy(i => i.fx).ToList();
+            }
             
             // Apresenta os resultados linha por linha
-            foreach (Tuning tun in sortedList){
+            foreach (Tuning tun in tunings){
                 string str_NFE = String.Format("{0,7}", tun.NFE);
                 string str_fx = String.Format("{0:#.000000000000000E+00}", tun.fx);
                 string str_sd = String.Format("{0:#.000000000000000E+00}", tun.sd);
@@ -85,6 +91,16 @@ namespace Tunings
 
             // string str_tau = String.Format("{0:00.00}", tau);
                         
+            return parameters;
+        }
+
+        public string formata_string_parametros_tuning_AGEOreal1_P(double porc)
+        {
+            string parameters       = "";
+            
+            string str_porc = String.Format("{0,5:0.00}", porc);
+            parameters = String.Format("porc = {0};", str_porc);
+            
             return parameters;
         }
 
@@ -451,6 +467,36 @@ namespace Tunings
                         }
                     }
                 }
+            }
+
+            return tuning_results;
+        }
+
+
+        // Tuning A-GEOreal1_P
+        public List<Tuning> tuning_AGEOreal1_P(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_porcent)
+        {
+            List<Tuning> tuning_results = new List<Tuning>();
+
+            // Itera cada std e cada tau
+            foreach (double porc in valores_porcent){
+                parametros_problema.parametros_livres.AGEOreal1_P__porc = porc; 
+
+                // Executa cada algoritmo por N vezes e obtém todas as execuções
+                ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
+
+                List<RetornoGEOs> todas_execucoes_algoritmos = exec.executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
+                
+                // Organiza os resultados de todas as excuções por algoritmo
+                List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
+
+                // Para essa combinação de parâmetros, armazena o melhor valor de f(x)
+                tuning_results.Add(new Tuning(){
+                    parameters = formata_string_parametros_tuning_AGEOreal1_P(porc),
+                    fx = resultados_por_algoritmo[0].media_melhor_fx,
+                    sd = resultados_por_algoritmo[0].SD_do_melhor_fx,
+                    NFE = resultados_por_algoritmo[0].NFE_medio,
+                });
             }
 
             return tuning_results;
