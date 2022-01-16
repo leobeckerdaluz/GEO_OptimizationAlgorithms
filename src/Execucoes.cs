@@ -48,7 +48,7 @@ namespace Execucoes
             
 
             List<int> o_que_fazer = new List<int>(){ 
-                (int)EnumOQueFazer.executar_algoritmos,
+                // (int)EnumOQueFazer.executar_algoritmos,
                 // (int)EnumOQueFazer.tuning_GEO,
                 // (int)EnumOQueFazer.tuning_GEOvar,
                 // (int)EnumOQueFazer.tuning_GEOvar2,
@@ -61,13 +61,13 @@ namespace Execucoes
                 // (int)EnumOQueFazer.tuning_GEOreal2_O_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_P_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_N_DS,
-                // (int)EnumOQueFazer.tuning_AGEOreal1_P,
+                (int)EnumOQueFazer.tuning_AGEOreal1_P,
 
             };
             
-            bool TUNING = false;
+            bool TUNING = true;
 
-            int qtde_execucoes = 40;
+            int qtde_execucoes = 30;
 
 
 
@@ -165,10 +165,10 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
 
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
@@ -206,7 +206,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
 
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS = true;
                             
                             // ======================================================================================================
                             
@@ -486,7 +486,12 @@ namespace Execucoes
                             // ======================================================================================================
                             // Tuning do AGEOreal1_P
                             
-                            List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
+                            
+                            
+                            // List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
+                            List<double> valores_porcent = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                            
+
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
                             

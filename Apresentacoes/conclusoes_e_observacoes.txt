@@ -1,20 +1,3 @@
-,'#ff0004','#868686','#774b0a','#10d22c','#ffff52','#0000ff','#818181','#c0c0c0','#f1f1f1','#bac5eb','#52fff9'
-
-
-
-
-Principais resultados:
-
--> AGEO2var tão bom quanto GEOvar
-    ---> Controle de parâmetros adaptativo
-    ---> Sem necessidade do tuning
-    ---> Iguais estatisticamente para todas as funções
-
--> AGEO1var pior que AGEO1
-    ---> AGEO1 reinicia com mais frequência --> tau=0,5 --> busca estocástica
-
-
-
 
 
 
@@ -35,3 +18,26 @@ https://nikstoyanov.me/post/2019-04-14-numerical-optimizations/
 SCHWEFEL negativa:
 
 363.418484974382, 253.228093848204, 285.444351278918, -390.682233446595, 466.598284880909, 10.2029892197824, -70.0670674303859, 376.606174687206, 209.68477926668, -4555.08713260943
+
+
+
+
+
+
+AGEOreal - Reunião
+
+
+
+
+
+==> Plotar o andamento da população em 3D no espaço de projeto
+
+
+==> Não teria que implementar outras mutações pra comparar o quanto a porcentagem é boa?
+Ou então comparar com um conjunto CEC.
+
+
+==> Testar tau=9999 e tau=0,5?
+Com isso, aceitaria sempre a melhor até não melhorar mais, aí resetaria.
+CoI > 0 ---> Ainda pode melhorar, tau=9999
+CoI = 0 ---> Não melhora, tau=0,5
