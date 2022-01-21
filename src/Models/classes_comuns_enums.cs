@@ -126,8 +126,11 @@ namespace Classes_Comuns_Enums
 
 
         // A-GEOreal
-        public bool rodar_AGEOreal1_P { get; set; }
-        public bool rodar_AGEOreal2_P_DS { get; set; }
+        public bool rodar_AGEO2real1_P { get; set; }
+        public bool rodar_AGEO2real2_P_DS { get; set; }
+        public bool rodar_AGEO2real2_P_DS_fixo { get; set; }
+        
+        
 
 
 
@@ -303,10 +306,12 @@ namespace Classes_Comuns_Enums
 
 
         // A-GEOreal
-        public double AGEOreal1_P__porc {get; set;}
-        public double AGEOreal2_P_DS__porc {get; set;}
-        public double AGEOreal2_P_DS__P {get; set;}
-        public double AGEOreal2_P_DS__s {get; set;}
+        public double AGEO2real1_P__porc {get; set;}
+        public double AGEO2real2_P_DS__porc {get; set;}
+        public double AGEO2real2_P_DS__P {get; set;}
+        public double AGEO2real2_P_DS__s {get; set;}
+
+
         
         
         
@@ -367,7 +372,8 @@ namespace Classes_Comuns_Enums
         tuning_GEOreal2_P_DS,
         tuning_GEOreal2_N_DS,
 
-        tuning_AGEOreal1_P
+        tuning_AGEO2real1_P,
+        tuning_AGEO2real2_P_DS_fixo,
     }
 
 
@@ -423,6 +429,7 @@ namespace Classes_Comuns_Enums
         // A-GEOreal
         AGEOreal1_P,
         AGEOreal2_P_DS,
+        AGEOreal2_P_DS_fixo,
 
 
         // // OUTROS

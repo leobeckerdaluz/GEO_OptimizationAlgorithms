@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Classes_Comuns_Enums;
 using System.IO;
+using System.Linq;
 
 namespace Execucoes
 {
@@ -17,11 +18,11 @@ namespace Execucoes
             // =======================================================================================
             List<int> function_values = new List<int>()
             {
-                // (int)EnumNomesFuncoesObjetivo.griewangk,
-                // (int)EnumNomesFuncoesObjetivo.rastringin,
-                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                // (int)EnumNomesFuncoesObjetivo.schwefel,
-                // (int)EnumNomesFuncoesObjetivo.ackley,
+                (int)EnumNomesFuncoesObjetivo.griewangk,
+                (int)EnumNomesFuncoesObjetivo.rastringin,
+                (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                (int)EnumNomesFuncoesObjetivo.schwefel,
+                (int)EnumNomesFuncoesObjetivo.ackley,
                 (int)EnumNomesFuncoesObjetivo.beale,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
@@ -61,13 +62,14 @@ namespace Execucoes
                 // (int)EnumOQueFazer.tuning_GEOreal2_O_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_P_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_N_DS,
-                (int)EnumOQueFazer.tuning_AGEOreal1_P,
+                (int)EnumOQueFazer.tuning_AGEO2real1_P,
+                // (int)EnumOQueFazer.tuning_AGEO2real2_P_DS_fixo,
 
             };
             
             bool TUNING = true;
 
-            int qtde_execucoes = 30;
+            int qtde_execucoes = 35;
 
 
 
@@ -166,7 +168,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
@@ -184,7 +186,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
@@ -206,7 +208,8 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
 
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS_fixo = true;
                             
                             // ======================================================================================================
                             
@@ -313,7 +316,7 @@ namespace Execucoes
                             // Tuning do GEOreal1_P
                             
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
-                            List<double> valores_porcentagem = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9};
+                            List<double> valores_porcentagem = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10};
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
                             
@@ -481,23 +484,46 @@ namespace Execucoes
                         break;
 
 
-                        case (int)EnumOQueFazer.tuning_AGEOreal1_P:
+                        case (int)EnumOQueFazer.tuning_AGEO2real1_P:
                         {
                             // ======================================================================================================
-                            // Tuning do AGEOreal1_P
-                            
+                            // Tuning do AGEO2real1_P
                             
                             
                             // List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
-                            List<double> valores_porcent = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                            // List<double> valores_porcent = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                            List<double> valores_porcent = Enumerable.Range(1, 50).Select(i => i*2.0).ToList();
                             
 
-                            
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
                             
-                            List<Tuning> resultados_tuning = tunings.tuning_AGEOreal1_P(parametros_execucao, parametros_problema, valores_porcent);
+                            List<Tuning> resultados_tuning = tunings.tuning_AGEO2real1_P(parametros_execucao, parametros_problema, valores_porcent);
+                          
+                            bool ordenar = false;
+                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
+                            // ======================================================================================================
+                        }
+                        break;
+
+
+                        case (int)EnumOQueFazer.tuning_AGEO2real2_P_DS_fixo:
+                        {
+                            // ======================================================================================================
+                            // Tuning do AGEO2real2_P_DS_fixo
+                            
+                            
+                            // List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
+                            // List<double> valores_porcent = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
+                            List<double> valores_porcent = Enumerable.Range(1, 50).Select(i => i*2.0).ToList();
+
+                            
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo = true;
+                            
+                            Tunings.Tunings tunings = new Tunings.Tunings();
+                            
+                            List<Tuning> resultados_tuning = tunings.tuning_AGEO2real2_P_DS_fixo(parametros_execucao, parametros_problema, valores_porcent);
                           
                             bool ordenar = false;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);

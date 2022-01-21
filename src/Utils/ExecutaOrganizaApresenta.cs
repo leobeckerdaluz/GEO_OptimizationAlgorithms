@@ -1437,7 +1437,7 @@ namespace ExecutaOrganizaApresenta
 
 
                 // AGEOreal1_P  =  Adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P)
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P)
                 {
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     
@@ -1448,7 +1448,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.parametros_livres.AGEOreal1_P__porc,
+                        parametros_problema.parametros_livres.AGEO2real1_P__porc,
                         tipo_perturbacao);
                         
                     RetornoGEOs ret = AGEOreal1_P.executar(parametros_execucao.parametros_criterio_parada);
@@ -1459,7 +1459,7 @@ namespace ExecutaOrganizaApresenta
                 
 
                 // A-GEOreal2_P_DS  =  Adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS)
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -1474,13 +1474,43 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.AGEOreal2_P_DS__porc, 
+                        parametros_problema.parametros_livres.AGEO2real2_P_DS__porc,
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.AGEOreal2_P_DS__P, 
-                        (int)parametros_problema.parametros_livres.AGEOreal2_P_DS__s);
+                        (int)parametros_problema.parametros_livres.AGEO2real2_P_DS__P, 
+                        (int)parametros_problema.parametros_livres.AGEO2real2_P_DS__s);
                         
                     RetornoGEOs ret = ageo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal2_P_DS;
+                        
+                    todas_execucoes.Add(ret);
+                }
+
+
+                // A-GEO2real2_P_DS_fixo  =  Adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo)
+                {
+                    bool primeira_das_P_perturbacoes_uniforme = false;
+                    int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
+                    int P = 10;
+                    int s = 10;
+                    
+                    AGEO2real2 ageo2real2PDS = new AGEO2real2(
+                        parametros_problema.populacao_inicial_real, 
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        primeira_das_P_perturbacoes_uniforme,
+                        tipo_variacao_std_nas_P_perturbacoes,
+                        parametros_problema.parametros_livres.AGEO2real2_P_DS__porc,
+                        tipo_perturbacao, 
+                        P, 
+                        s);
+                        
+                    RetornoGEOs ret = ageo2real2PDS.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal2_P_DS_fixo;
                         
                     todas_execucoes.Add(ret);
                 }

@@ -91,11 +91,11 @@ namespace FunctionParameters
                         GEOreal2_N_DS__tau = 4,
 
 
-                        AGEOreal1_P__porc = 0.5,
+                        AGEO2real1_P__porc = 0.5,
 
-                        AGEOreal2_P_DS__P = 10,
-                        AGEOreal2_P_DS__s = 10,
-                        AGEOreal2_P_DS__porc = 1,
+                        AGEO2real2_P_DS__P = 10,
+                        AGEO2real2_P_DS__s = 10,
+                        AGEO2real2_P_DS__porc = 1,
 
                         // std_AGEO1real1 = 0.8,
                         // std_AGEO2real1 = 1.2,
@@ -182,11 +182,11 @@ namespace FunctionParameters
                         GEOreal2_N_DS__tau = 5,
 
 
-                        AGEOreal1_P__porc = 3,
+                        AGEO2real1_P__porc = 3,
 
-                        AGEOreal2_P_DS__P = 10,
-                        AGEOreal2_P_DS__s = 10,
-                        AGEOreal2_P_DS__porc = 10,
+                        AGEO2real2_P_DS__P = 10,
+                        AGEO2real2_P_DS__s = 10,
+                        AGEO2real2_P_DS__porc = 10,
 
                         // std_AGEO1real1 = 0.8,
                         // std_AGEO2real1 = 1,
@@ -271,11 +271,11 @@ namespace FunctionParameters
                         GEOreal2_N_DS__tau = 5,
 
 
-                        AGEOreal1_P__porc = 0.5,
+                        AGEO2real1_P__porc = 0.5,
 
-                        AGEOreal2_P_DS__P = 5,
-                        AGEOreal2_P_DS__s = 2,
-                        AGEOreal2_P_DS__porc = 0.1,
+                        AGEO2real2_P_DS__P = 5,
+                        AGEO2real2_P_DS__s = 2,
+                        AGEO2real2_P_DS__porc = 0.1,
 
                         // std_AGEO1real1 = 1.6,
                         // std_AGEO2real1 = 1.8,
@@ -361,11 +361,11 @@ namespace FunctionParameters
 
 
 
-                        AGEOreal1_P__porc = 9,
+                        AGEO2real1_P__porc = 9,
 
-                        AGEOreal2_P_DS__P = 10,
-                        AGEOreal2_P_DS__s = 10,
-                        AGEOreal2_P_DS__porc = 50,
+                        AGEO2real2_P_DS__P = 10,
+                        AGEO2real2_P_DS__s = 10,
+                        AGEO2real2_P_DS__porc = 50,
 
                         // std_AGEO1real1 = 1.8,
                         // std_AGEO2real1 = 2.4,
@@ -453,11 +453,11 @@ namespace FunctionParameters
                             GEOreal2_N_DS__tau = 5,
 
 
-                            AGEOreal1_P__porc = 1,
+                            AGEO2real1_P__porc = 1,
 
-                            AGEOreal2_P_DS__P = 10,
-                            AGEOreal2_P_DS__s = 10,
-                            AGEOreal2_P_DS__porc = 10,
+                            AGEO2real2_P_DS__P = 10,
+                            AGEO2real2_P_DS__s = 10,
+                            AGEO2real2_P_DS__porc = 10,
 
                             // std_AGEO1real1 = 0.8,
                             // std_AGEO2real1 = 0.8,
@@ -546,11 +546,11 @@ namespace FunctionParameters
 
 
 
-                        AGEOreal1_P__porc = 1.5,
+                        AGEO2real1_P__porc = 1.5,
 
-                        AGEOreal2_P_DS__P = 5,
-                        AGEOreal2_P_DS__s = 10,
-                        AGEOreal2_P_DS__porc = 50,
+                        AGEO2real2_P_DS__P = 5,
+                        AGEO2real2_P_DS__s = 10,
+                        AGEO2real2_P_DS__porc = 50,
                         
                         // std_AGEO1real1 = 1.8,
                         // std_AGEO2real1 = 1.8,
