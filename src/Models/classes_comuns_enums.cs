@@ -47,6 +47,8 @@ namespace Classes_Comuns_Enums
         public int NFE_medio { get; set; }
         public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
+        public double pior_fx_de_todos { get; set; }
+        public double melhor_fx_de_todos { get; set; }
         public double mediana_melhor_fx { get; set; }
         public double media_fx_atual { get; set; }
         public double SD_do_melhor_fx { get; set; }
@@ -129,6 +131,9 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2real1_P { get; set; }
         public bool rodar_AGEO2real2_P_DS { get; set; }
         public bool rodar_AGEO2real2_P_DS_fixo { get; set; }
+        public bool rodar_AGEO2real1_P_autoadap { get; set; }
+
+        
         
         
 
@@ -430,6 +435,7 @@ namespace Classes_Comuns_Enums
         AGEOreal1_P,
         AGEOreal2_P_DS,
         AGEOreal2_P_DS_fixo,
+        AGEO2real1_P_autoadap,
 
 
         // // OUTROS

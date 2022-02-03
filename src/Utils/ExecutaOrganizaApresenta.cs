@@ -70,7 +70,7 @@ namespace ExecutaOrganizaApresenta
                 // Lista utilizada para armazenar a qtde. iterações de cada execução para posterior média
                 List<int> ITEs_para_posterior_media = new List<int>();
                 // Lista utilizada para armazenar o melhor f(x) de cada exeução para posterior média
-                List<double> MelhoresFXs_para_posterior_media = new List<double>();
+                List<double> TodosValoresFinaisDeFX = new List<double>();
                 // Lista utilizada para armazenar o f(x) atual de cada exeução para posterior média
                 List<double> FXsAtual_para_posterior_media = new List<double>();
                 
@@ -82,7 +82,7 @@ namespace ExecutaOrganizaApresenta
                     RetornoGEOs ret = execucoes_algoritmo_executado[j];
 
                     // Armazena o melhor f(x) obtido na execução
-                    MelhoresFXs_para_posterior_media.Add(ret.melhor_fx);
+                    TodosValoresFinaisDeFX.Add(ret.melhor_fx);
                     // Armazena o f(x) da população atual
                     FXsAtual_para_posterior_media.Add(ret.melhor_fx);
                     // Armazena a lista contendo os fxs em cada NFE nessa execução
@@ -104,20 +104,22 @@ namespace ExecutaOrganizaApresenta
                 // Calcula a média de qtde de iterações com base em todas execuções
                 int media_iteracoes = (int) ITEs_para_posterior_media.Average();
                 // Calcula a média de melhor f(x) com base em todas execuções
-                double media_melhor_fx = (double) MelhoresFXs_para_posterior_media.Average();
-                // Calcula a média do f(x) atual com base em todas execuções
-                double media_fx_atual = (double) FXsAtual_para_posterior_media.Average();
+                double media_melhor_fx = (double) TodosValoresFinaisDeFX.Average();
+                // Calcula o menor (melhor) valor de f(x) com base em todas execuções
+                double melhor_fx_de_todos = (double) TodosValoresFinaisDeFX.Min();
+                // Calcula o pior (maior) valor de f(x) com base em todas execuções
+                double pior_fx_de_todos = (double) TodosValoresFinaisDeFX.Max();
                 // Calcula a mediana de melhor f(x) com base em todas execuções
-                List<double> lista = new List<double>(MelhoresFXs_para_posterior_media);
+                List<double> lista = new List<double>(TodosValoresFinaisDeFX);
                 lista.Sort(delegate(double x, double y){return x.CompareTo(y);});
 		        double mediana_melhor_fx = lista[(lista.Count / 2)];
                 // Calcula o desvio padrão final com base nos melhores f(x) das execuções
                 double somatorio_sd = 0;
-                foreach (double melhor_fx in MelhoresFXs_para_posterior_media)
+                foreach (double melhor_fx in TodosValoresFinaisDeFX)
                 {
                     somatorio_sd += Math.Pow((melhor_fx - media_melhor_fx), 2);
                 }
-                int n = MelhoresFXs_para_posterior_media.Count - 1;
+                int n = TodosValoresFinaisDeFX.Count - 1;
                 double SD_melhor_fx = Math.Sqrt(somatorio_sd / n);
 
 
@@ -207,12 +209,13 @@ namespace ExecutaOrganizaApresenta
                 media_das_execucoes.NFE_medio = media_NFEs;
                 media_das_execucoes.ITERACOES_medio = media_iteracoes;
                 media_das_execucoes.media_melhor_fx = media_melhor_fx;
-                media_das_execucoes.media_fx_atual = media_fx_atual;
+                media_das_execucoes.pior_fx_de_todos = pior_fx_de_todos;
+                media_das_execucoes.melhor_fx_de_todos = melhor_fx_de_todos;
                 media_das_execucoes.mediana_melhor_fx = mediana_melhor_fx;
                 media_das_execucoes.SD_do_melhor_fx = SD_melhor_fx;
                 media_das_execucoes.media_valor_FO_em_cada_NFE = lista_MelhoresFX_por_NFE;
                 media_das_execucoes.media_fx_atual_em_cada_NFE = lista_FXatual_por_NFE;
-                media_das_execucoes.lista_melhores_fxs = MelhoresFXs_para_posterior_media;
+                media_das_execucoes.lista_melhores_fxs = TodosValoresFinaisDeFX;
                 media_das_execucoes.lista_TAU_medio_per_iteration = lista_TAU_medio_per_iteration;  
                 media_das_execucoes.lista_Mfx_medio_per_iteration = lista_Mfx_medio_per_iteration;  
 
@@ -257,7 +260,8 @@ namespace ExecutaOrganizaApresenta
                 string resultados_finais = "parameter;" + string_algoritmos_executados + '\n';
                 string media_do_NFE_atingido_nas_execucoes = "meanNFE;";
                 string media_de_fx_nas_execucoes = "meanFX;";
-                string media_de_fx_atual_nas_execucoes = "FXatual;";
+                string melhor_fx_nas_execucoes = "melhorFX;";
+                string pior_fx_nas_execucoes = "piorFX;";
                 string mediana_de_fx_nas_execucoes = "medianFX;";
                 string sd_dos_fx_finais_nas_execucoes = "sdFX;";
 
@@ -266,13 +270,15 @@ namespace ExecutaOrganizaApresenta
                 {
                     int media_NFE = estatisticas_algoritmos[i].NFE_medio;
                     double media_fx = estatisticas_algoritmos[i].media_melhor_fx;
-                    double media_fx_atual = estatisticas_algoritmos[i].media_fx_atual;
+                    double melhor_fx = estatisticas_algoritmos[i].melhor_fx_de_todos;
+                    double pior_fx = estatisticas_algoritmos[i].pior_fx_de_todos;
                     double mediana_fx = estatisticas_algoritmos[i].mediana_melhor_fx;
                     double sd_melhores_fx = estatisticas_algoritmos[i].SD_do_melhor_fx;
 
                     media_do_NFE_atingido_nas_execucoes += media_NFE.ToString() + ';';
                     media_de_fx_nas_execucoes += media_fx.ToString() + ';';
-                    media_de_fx_atual_nas_execucoes += media_fx_atual.ToString() + ';';
+                    melhor_fx_nas_execucoes += melhor_fx.ToString() + ';';
+                    pior_fx_nas_execucoes += pior_fx.ToString() + ';';
                     mediana_de_fx_nas_execucoes += mediana_fx.ToString() + ';';
                     sd_dos_fx_finais_nas_execucoes += sd_melhores_fx.ToString() + ';';
                 }
@@ -280,7 +286,8 @@ namespace ExecutaOrganizaApresenta
                 // Substitui os pontos por vírgulas e printa
                 resultados_finais += media_do_NFE_atingido_nas_execucoes + '\n';
                 resultados_finais += media_de_fx_nas_execucoes + '\n';
-                resultados_finais += media_de_fx_atual_nas_execucoes + '\n';
+                resultados_finais += melhor_fx_nas_execucoes + '\n';
+                resultados_finais += pior_fx_nas_execucoes + '\n';
                 resultados_finais += mediana_de_fx_nas_execucoes + '\n';
                 resultados_finais += sd_dos_fx_finais_nas_execucoes;
                 resultados_finais = resultados_finais.Replace('.',',');
@@ -1512,6 +1519,29 @@ namespace ExecutaOrganizaApresenta
                     RetornoGEOs ret = ageo2real2PDS.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal2_P_DS_fixo;
                         
+                    todas_execucoes.Add(ret);
+                }
+
+
+
+                // AGEOreal1_P_autoadaptativo  =  tau adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM + sigma autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap)
+                {
+                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
+                    
+                    AGEO2real1_autoadap AGEO2real1_P_autoadap = new AGEO2real1_autoadap(
+                        parametros_problema.populacao_inicial_real,
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
+                        parametros_problema.parametros_livres.AGEO2real1_P__porc,
+                        tipo_perturbacao);
+                        
+                    RetornoGEOs ret = AGEO2real1_P_autoadap.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real1_P_autoadap;
+
                     todas_execucoes.Add(ret);
                 }
 

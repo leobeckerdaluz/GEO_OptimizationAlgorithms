@@ -49,7 +49,7 @@ namespace Execucoes
             
 
             List<int> o_que_fazer = new List<int>(){ 
-                // (int)EnumOQueFazer.executar_algoritmos,
+                (int)EnumOQueFazer.executar_algoritmos,
                 // (int)EnumOQueFazer.tuning_GEO,
                 // (int)EnumOQueFazer.tuning_GEOvar,
                 // (int)EnumOQueFazer.tuning_GEOvar2,
@@ -62,14 +62,14 @@ namespace Execucoes
                 // (int)EnumOQueFazer.tuning_GEOreal2_O_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_P_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_N_DS,
-                (int)EnumOQueFazer.tuning_AGEO2real1_P,
+                // (int)EnumOQueFazer.tuning_AGEO2real1_P,
                 // (int)EnumOQueFazer.tuning_AGEO2real2_P_DS_fixo,
 
             };
             
-            bool TUNING = true;
+            bool TUNING = false;
 
-            int qtde_execucoes = 35;
+            int qtde_execucoes = 40;
 
 
 
@@ -168,7 +168,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
@@ -186,7 +186,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
@@ -207,9 +207,10 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
 
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal1_P = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS_fixo = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap = true;
                             
                             // ======================================================================================================
                             
