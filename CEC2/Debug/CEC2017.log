@@ -1,0 +1,13 @@
+﻿  CEC2017.cpp
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(463): warning C4101: 'j': unreferenced local variable
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(870): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(909): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(950): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(993): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(1036): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(1079): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(1122): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(1167): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(1213): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\barro\onedrive\documents\estudos\mestrado\inpe\inpe\tese\dev\algoritimosevolutivos\algoritimosevolutivos\cec2017\cec2017.cpp(1260): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  CEC2017.vcxproj -> C:\Users\barro\OneDrive\Documents\Estudos\Mestrado\INPE\Inpe\Tese\Dev\AlgoritimosEvolutivos\AlgoritimosEvolutivos\Debug\CEC2017.dll
