@@ -210,7 +210,8 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEOreal2_P_DS_fixo = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap_s = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap_p = true;
                             
                             // ======================================================================================================
                             

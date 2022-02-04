@@ -131,7 +131,8 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2real1_P { get; set; }
         public bool rodar_AGEO2real2_P_DS { get; set; }
         public bool rodar_AGEO2real2_P_DS_fixo { get; set; }
-        public bool rodar_AGEO2real1_P_autoadap { get; set; }
+        public bool rodar_AGEO2real1_P_autoadap_s { get; set; }
+        public bool rodar_AGEO2real1_P_autoadap_p { get; set; }
 
         
         
@@ -204,6 +205,7 @@ namespace Classes_Comuns_Enums
         public double xi_antes_da_perturbacao {get; set;}
         public double xi_depois_da_perturbacao {get; set;}
         public double fx_depois_da_perturbacao {get; set;}
+        public List<double> populacao_depois_da_perturbacao {get; set;}
         public int indice_variavel_projeto {get; set;}
     }
 
@@ -435,7 +437,8 @@ namespace Classes_Comuns_Enums
         AGEOreal1_P,
         AGEOreal2_P_DS,
         AGEOreal2_P_DS_fixo,
-        AGEO2real1_P_autoadap,
+        AGEO2real1_P_autoadap_s,
+        AGEO2real1_P_autoadap_p,
 
 
         // // OUTROS

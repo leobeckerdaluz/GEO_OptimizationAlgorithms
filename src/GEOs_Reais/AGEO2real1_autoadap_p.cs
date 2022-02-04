@@ -5,13 +5,13 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class AGEO2real1_autoadap : AGEO2real1
+    public class AGEO2real1_autoadap_p : AGEO2real1
     {
-        public double sigma {get; set;}
+        public double porcentagem {get; set;}
         // public double alfa {get; set;}
         
         
-        public AGEO2real1_autoadap(
+        public AGEO2real1_autoadap_p(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -34,8 +34,8 @@ namespace GEOs_REAIS
 
             // this.alfa = 1 / Math.Sqrt(n_variaveis_projeto);
             
-            this.sigma = 1;
-            
+            // this.sigma = 1;
+            this.porcentagem = 600;
 
         }
           
@@ -57,34 +57,53 @@ namespace GEOs_REAIS
             // double intervalo_variaveis =  
             
             double alfa = 1.0 / Math.Sqrt(n_variaveis_projeto);
-            
-            
-            MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(0, alfa);
+            // // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(0, alfa);
+            // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(1, 0.67);
+            // double rand_lognormal = lognormal_dist.Sample();
+            // double porcentagem_linha = this.porcentagem * rand_lognormal;
+
+
+
+            MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(1, 0.67);
+            // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(0, 1.0/Math.Sqrt(n_variaveis_projeto));
             double rand_lognormal = lognormal_dist.Sample();
+            double porcentagem_linha = rand_lognormal;
+            // double porcentagem_linha = this.porcentagem * rand_lognormal;
             
-            double sigma_linha = sigma * rand_lognormal;
             
-            MathNet.Numerics.Distributions.Normal normalDist_com_sigmalinha = new MathNet.Numerics.Distributions.Normal(0, sigma_linha);
             
-            // Calcula a adaptabilidade do sigma. Para isso, cria uma cópia da população atual para perturbar todas as variáveis
+            // Calcula a adaptabilidade do porcentagem linha. 
+            
+            // Cria uma cópia da população atual para perturbar todas as variáveis
             List<double> populacao_copia = new List<double>(populacao_atual);
-            // Perturba todas as variáveis com aquele sigma perturbado
+            // Perturba todas as variáveis com aquela porcentagem perturbada (porcentagem linha)
             for(int i=0; i<populacao_atual.Count; i++){
+                // Calcula o invervalo de variação das variáveis
+                double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
+                // Calcula o sigma que será utilizado na distribuição normal
+                double sigma = porcentagem_linha/100.0 * intervalo_variacao_variavel;
+                // Cria a normal
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, sigma);
+                // Obtém o valor atual dessa variável
                 double xi = populacao_atual[i];
-                double xi_perturbado = xi + normalDist_com_sigmalinha.Sample();
+                // A perturbação vai ser a variável atual mais um valor da distribuição normal
+                double xi_perturbado = xi + normalDist.Sample();
+                // Atibui esse novo valor da variável na população cópia
                 populacao_copia[i] = xi_perturbado;
             }
-            double fx_adaptabilidade_sigma = calcula_valor_funcao_objetivo(populacao_copia, false);
+            // Calcula o f(x) com essa população totalmente perturbada
+            double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, false);
 
-            // Cria as informações da perturbação do sigma
-            Perturbacao info_perturbacao_sigma = new Perturbacao();
-            info_perturbacao_sigma.xi_antes_da_perturbacao = sigma;
-            info_perturbacao_sigma.xi_depois_da_perturbacao = sigma_linha;
-            info_perturbacao_sigma.fx_depois_da_perturbacao = fx_adaptabilidade_sigma;
-            info_perturbacao_sigma.indice_variavel_projeto = 999;
+            // Cria as informações da perturbação da porcentagem
+            Perturbacao info_perturbacao_porcent = new Perturbacao();
+            info_perturbacao_porcent.xi_antes_da_perturbacao = porcentagem;
+            info_perturbacao_porcent.xi_depois_da_perturbacao = porcentagem_linha;
+            info_perturbacao_porcent.populacao_depois_da_perturbacao = new List<double>(populacao_copia);
+            info_perturbacao_porcent.fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem;
+            info_perturbacao_porcent.indice_variavel_projeto = 999;
 
             // Adiciona essa info da perturbação do sigma na lista de perturbações
-            perturbacoes.Add(info_perturbacao_sigma);
+            perturbacoes.Add(info_perturbacao_porcent);
             // ------------------------------------------------------------------------------------
 
 
@@ -105,12 +124,10 @@ namespace GEOs_REAIS
                 
 
                 
-                double porcent = 5;
-                double sigma_normal = porcent/100.0 * intervalo_variacao_variavel;
-                MathNet.Numerics.Distributions.Normal normal = new MathNet.Numerics.Distributions.Normal(0, sigma_normal);
-                double xii = xi + normal.Sample();
-                // double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao, intervalo_variacao_variavel);
-
+                double sigma_normal = this.porcentagem/100.0 * intervalo_variacao_variavel;
+                MathNet.Numerics.Distributions.Normal DistNormal = new MathNet.Numerics.Distributions.Normal(0, sigma_normal);
+                double xii = xi + DistNormal.Sample();
+                
 
 
 
@@ -126,6 +143,7 @@ namespace GEOs_REAIS
                 Perturbacao perturbacao = new Perturbacao();
                 perturbacao.xi_antes_da_perturbacao = xi;
                 perturbacao.xi_depois_da_perturbacao = xii;
+                perturbacao.populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar);
                 perturbacao.fx_depois_da_perturbacao = fx;
                 perturbacao.indice_variavel_projeto = i;
 
@@ -182,15 +200,19 @@ namespace GEOs_REAIS
                     int indice = perturbacoes_da_iteracao[k].indice_variavel_projeto;
                     double xii_depois_perturbar = perturbacoes_da_iteracao[k].xi_depois_da_perturbacao;
                     double fx_depois_perturbar = perturbacoes_da_iteracao[k].fx_depois_da_perturbacao;
+                    List<double> populacao_depois_perturbar = new List<double>(perturbacoes_da_iteracao[k].populacao_depois_da_perturbacao);
 
                     
 
                     // Se o índice é 999, muda o sigma, senão muda na população
                     if (indice == 999){
-                        sigma = xii_depois_perturbar;
+                        this.porcentagem = xii_depois_perturbar;
                     }
                     else{
-                        populacao_atual[indice] = xii_depois_perturbar;
+                        // populacao_atual[indice] = xii_depois_perturbar;
+                        
+                        // Atualiza a população atual com a população de quando o fx da adaptabilidade foi calculado
+                        populacao_atual = new List<double>(populacao_depois_perturbar);
                     }
                     
 
