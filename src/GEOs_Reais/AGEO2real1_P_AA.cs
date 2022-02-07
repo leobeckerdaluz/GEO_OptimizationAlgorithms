@@ -5,13 +5,11 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class AGEO2real1_autoadap_p : AGEO2real1
+    public class AGEO2real1_P_AA : AGEO2real1
     {
         public double porcentagem {get; set;}
-        // public double alfa {get; set;}
         
-        
-        public AGEO2real1_autoadap_p(
+        public AGEO2real1_P_AA(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -31,11 +29,11 @@ namespace GEOs_REAIS
         {
             
 
-
+            this.porcentagem = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();
             // this.alfa = 1 / Math.Sqrt(n_variaveis_projeto);
             
             // this.sigma = 1;
-            this.porcentagem = 600;
+            // this.porcentagem = 600;
 
         }
           
@@ -56,7 +54,7 @@ namespace GEOs_REAIS
             // double porcentagem_atual = this.std;
             // double intervalo_variaveis =  
             
-            double alfa = 1.0 / Math.Sqrt(n_variaveis_projeto);
+            // double alfa = 1.0 / Math.Sqrt(n_variaveis_projeto);
             // // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(0, alfa);
             // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(1, 0.67);
             // double rand_lognormal = lognormal_dist.Sample();
@@ -64,45 +62,50 @@ namespace GEOs_REAIS
 
 
 
+            
+            
+            
+            // ------------------------------------------------------------------------------------------------------------
+            // Calcula a adaptabilidade do porcentagem linha. 
+            
             MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(1, 0.67);
             // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(0, 1.0/Math.Sqrt(n_variaveis_projeto));
             double rand_lognormal = lognormal_dist.Sample();
             double porcentagem_linha = rand_lognormal;
             // double porcentagem_linha = this.porcentagem * rand_lognormal;
             
-            
-            
-            // Calcula a adaptabilidade do porcentagem linha. 
-            
             // Cria uma cópia da população atual para perturbar todas as variáveis
             List<double> populacao_copia = new List<double>(populacao_atual);
-            // Perturba todas as variáveis com aquela porcentagem perturbada (porcentagem linha)
+            // Perturba todas as variáveis com aquela porcentagem perturlinha
             for(int i=0; i<populacao_atual.Count; i++){
-                // Calcula o invervalo de variação das variáveis
+                // Calcula o invervalo de variação dessa variável
                 double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                 // Calcula o sigma que será utilizado na distribuição normal
                 double sigma = porcentagem_linha/100.0 * intervalo_variacao_variavel;
-                // Cria a normal
+                // Cria a distribuição normal
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, sigma);
+                // Obtém um valor da distribuição
+                double rand_normal = normalDist.Sample();
                 // Obtém o valor atual dessa variável
                 double xi = populacao_atual[i];
                 // A perturbação vai ser a variável atual mais um valor da distribuição normal
-                double xi_perturbado = xi + normalDist.Sample();
-                // Atibui esse novo valor da variável na população cópia
+                double xi_perturbado = xi + rand_normal;
+                // Atualiza o valor dessa variável na população cópia
                 populacao_copia[i] = xi_perturbado;
             }
-            // Calcula o f(x) com essa população totalmente perturbada
-            double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, false);
+            // Depois de toda população perturbada, calcula o f(x) que é a adaptabilidade do porcentagem linha
+            double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
 
             // Cria as informações da perturbação da porcentagem
             Perturbacao info_perturbacao_porcent = new Perturbacao();
             info_perturbacao_porcent.xi_antes_da_perturbacao = porcentagem;
             info_perturbacao_porcent.xi_depois_da_perturbacao = porcentagem_linha;
             info_perturbacao_porcent.populacao_depois_da_perturbacao = new List<double>(populacao_copia);
+            // info_perturbacao_porcent.porcentagem_usada_nessa_perturb = porcentagem_linha;
             info_perturbacao_porcent.fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem;
             info_perturbacao_porcent.indice_variavel_projeto = 999;
 
-            // Adiciona essa info da perturbação do sigma na lista de perturbações
+            // Adiciona essa info da perturbação da porcentagem na lista de perturbações
             perturbacoes.Add(info_perturbacao_porcent);
             // ------------------------------------------------------------------------------------
 
@@ -124,8 +127,9 @@ namespace GEOs_REAIS
                 
 
                 
-                double sigma_normal = this.porcentagem/100.0 * intervalo_variacao_variavel;
-                MathNet.Numerics.Distributions.Normal DistNormal = new MathNet.Numerics.Distributions.Normal(0, sigma_normal);
+                // double sigma = porcentagem_linha/100.0 * intervalo_variacao_variavel;
+                double sigma = this.porcentagem/100.0 * intervalo_variacao_variavel;
+                MathNet.Numerics.Distributions.Normal DistNormal = new MathNet.Numerics.Distributions.Normal(0, sigma);
                 double xii = xi + DistNormal.Sample();
                 
 
@@ -144,6 +148,7 @@ namespace GEOs_REAIS
                 perturbacao.xi_antes_da_perturbacao = xi;
                 perturbacao.xi_depois_da_perturbacao = xii;
                 perturbacao.populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar);
+                // perturbacao.porcentagem_usada_nessa_perturb = this.porcentagem;
                 perturbacao.fx_depois_da_perturbacao = fx;
                 perturbacao.indice_variavel_projeto = i;
 
@@ -182,7 +187,7 @@ namespace GEOs_REAIS
                 
                 // Determina a posição do ranking escolhida, entre 1 e o número de variáveis. +1 é 
                 // ...porque tem que ser de 1 até menor que o 2º parámetro de .Next()
-                int k = random.Next(1, populacao_atual.Count+1    +1    );
+                int k = random.Next(1, perturbacoes_da_iteracao.Count+1   );
                 
                 
                 
@@ -195,65 +200,39 @@ namespace GEOs_REAIS
                 // Se o Pk é maior ou igual ao aleatório, então confirma a perturbação
                 if (Pk >= ALE)
                 {
-                    
                     // Obtém o índice da perturbação escolhida pra aceitar
                     int indice = perturbacoes_da_iteracao[k].indice_variavel_projeto;
+                    // Obtém o valor da variável depois de perturbar
                     double xii_depois_perturbar = perturbacoes_da_iteracao[k].xi_depois_da_perturbacao;
+                    // Obtém o f(x) da população com aquela variável perturbada
                     double fx_depois_perturbar = perturbacoes_da_iteracao[k].fx_depois_da_perturbacao;
+                    // Obtém a população com a variável perturbada
                     List<double> populacao_depois_perturbar = new List<double>(perturbacoes_da_iteracao[k].populacao_depois_da_perturbacao);
 
                     
-
-                    // Se o índice é 999, muda o sigma, senão muda na população
-                    if (indice == 999){
+                    
+                    
+                    
+                    // Atualiza com a população de variáveis escolhida
+                    populacao_atual = new List<double>(populacao_depois_perturbar);
+                    
+                    // Se o índice escolhido para ser perturbado é o da porcentagem, atualiza a porcentagem
+                    if(indice == 999){
+                        // porcentagem foi auto-adaptada
                         this.porcentagem = xii_depois_perturbar;
-                    }
-                    else{
-                        // populacao_atual[indice] = xii_depois_perturbar;
-                        
-                        // Atualiza a população atual com a população de quando o fx da adaptabilidade foi calculado
-                        populacao_atual = new List<double>(populacao_depois_perturbar);
                     }
                     
 
+                    
 
 
-                    // Atualiza o f(x) atual com o perturbado
+                    // Atualiza o f(x) atual com o após perturbado
                     fx_atual = fx_depois_perturbar;
 
                     // Sai do laço while
                     break;
                 }
             }
-        }
-        
-        
-        
-        
-        public override void mutacao_do_tau_AGEOs()
-        {
-            // Obtém o tamanho da população de bits
-            int tamanho_populacao = this.populacao_atual.Count;
-            
-            // Instancia as funções úteis do mecanismo A-GEO
-            MecanismoAGEO.MecanismoAGEO mecanismo = new MecanismoAGEO.MecanismoAGEO();
-            
-            // Calcula o f(x) de referência
-            double fx_referencia = mecanismo.calcula_fx_referencia(tipo_AGEO, fx_melhor, fx_atual);
-            
-            // Calcula o CoI
-            double CoI = mecanismo.calcula_CoI_real(perturbacoes_da_iteracao, fx_referencia, tamanho_populacao);
-            
-            
-            
-            // VERSÃO ORIGINAL DE ATUALIZAR O TAU
-            // Atualiza o tau
-            tau = mecanismo.obtem_novo_tau(this.tipo_AGEO, this.tau, CoI, this.CoI_1, tamanho_populacao);
-            
-            
-                
-            // Armazena o CoI atual para ser usado como o anterior na próxima iteração
-            this.CoI_1 = CoI;
         }
     }
 }

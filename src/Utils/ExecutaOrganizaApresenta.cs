@@ -1524,12 +1524,13 @@ namespace ExecutaOrganizaApresenta
 
 
 
-                // AGEOreal1_P_autoadaptativo  =  tau adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM + sigma autoadaptativo
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap_s)
+
+                // AGEOreal1_P_AA  =  tau adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA)
                 {
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     
-                    AGEO2real1_autoadap_s AGEO2real1_P_autoadap_s = new AGEO2real1_autoadap_s(
+                    AGEO2real1_P_AA AGEO2real1_P_AA = new AGEO2real1_P_AA(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
@@ -1539,33 +1540,50 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.AGEO2real1_P__porc,
                         tipo_perturbacao);
                         
-                    RetornoGEOs ret = AGEO2real1_P_autoadap_s.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real1_P_autoadap_s;
+                    RetornoGEOs ret = AGEO2real1_P_AA.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real1_P_AA;
 
                     todas_execucoes.Add(ret);
                 }
 
 
-                // AGEOreal1_P_autoadap_p  =  tau adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_autoadap_p)
+                // AGEOreal2_P_autoadap_p  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p1)
                 {
-                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
-                    
-                    AGEO2real1_autoadap_p AGEO2real1_P_autoadap = new AGEO2real1_autoadap_p(
+                    AGEO2real2_P_AA_p1 AGEO2real2_P_AA_p1 = new AGEO2real2_P_AA_p1(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.parametros_livres.AGEO2real1_P__porc,
-                        tipo_perturbacao);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
                         
-                    RetornoGEOs ret = AGEO2real1_P_autoadap.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real1_P_autoadap_p;
+                    RetornoGEOs ret = AGEO2real2_P_AA_p1.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p1;
 
                     todas_execucoes.Add(ret);
                 }
+
+
+                // AGEOreal2_P_autoadap_p  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p2)
+                {
+                    AGEO2real2_P_AA_p2 AGEO2real2_P_AA_p2 = new AGEO2real2_P_AA_p2(
+                        parametros_problema.populacao_inicial_real,
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        
+                    RetornoGEOs ret = AGEO2real2_P_AA_p2.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p2;
+
+                    todas_execucoes.Add(ret);
+                }
+
+
+              
 
 
 
