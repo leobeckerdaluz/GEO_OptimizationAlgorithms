@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Funcoes_Definidas;
 using SpaceDesignTeste;
 
 using GEOs_REAIS;

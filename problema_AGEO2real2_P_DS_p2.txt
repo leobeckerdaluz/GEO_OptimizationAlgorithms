@@ -1,0 +1,44 @@
+
+
+p1 chega a ser 10^-21
+As perturbações são tão pequenas que a variável não muda.
+O CoI sempre é 0 porque tinha "fx_perturbado <= fx_referência"
+
+
+==> O quanto mudar para "fx_perturbado < fx_referência" influencia os outros?
+Esse problema só aconteceu aqui porque p era tão pequeno que o f(x) perturbado era igual ao de antes. Nos outros casos sempre o f(x) é diferente, pois há 12 casas decimais
+
+
+
+
+
+GEOreal2_P
+
+tunando, P=10
+
+1E1 = 10% --> p1 da LogNormal(4, 0.2)
+1E0 = 1% 
+1E-1
+1E-2
+1E-3
+1E-4
+1E-5
+1E-6
+1E-7
+1E-8
+
+
+
+P3:
+
+1E1
+1E0
+1E-1
+1E-2
+1E-3
+1E-4
+1E-5
+1E-6
+1E-7
+1E-8
+

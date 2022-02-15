@@ -63,6 +63,8 @@ namespace ExecutaOrganizaApresenta
                 List<List<double>> stats_FX_atual_por_NFE = new List<List<double>>();   
                 // Lista que irá conter os tau por iteração em cada execução
                 List<List<double>> stats_TAU_per_iteration = new List<List<double>>();
+                // Lista que irá conter os std/porcentagens por iteração em cada execução
+                List<List<double>> stats_STDPORC_per_iteration = new List<List<double>>();
                 // Lista que irá conter os melhores f(x) por iteração em cada execução
                 List<List<double>> stats_Mfx_per_iteration = new List<List<double>>();
                 // Lista utilizada para armazenar o NFE de cada execução para posterior média
@@ -95,6 +97,8 @@ namespace ExecutaOrganizaApresenta
                     ITEs_para_posterior_media.Add(ret.iteracoes);
                     // Armazena a lista contendo os tau em cada iteração nessa execução
                     stats_TAU_per_iteration.Add(ret.stats_TAU_per_iteration);
+                    // Armazena a lista contendo os std/porcentagens em cada iteração nessa execução
+                    stats_STDPORC_per_iteration.Add(ret.stats_STDPORC_per_iteration);
                     // Armazena a lista contendo os f(x) em cada iteração nessa execução
                     stats_Mfx_per_iteration.Add(ret.stats_Mfx_per_iteration);
                 }
@@ -129,6 +133,10 @@ namespace ExecutaOrganizaApresenta
                 // ...ser utilizada quando o critério de parada for por número de iterações, visto que só
                 // ...assim que todasas execuções terão a mesma quantidade de iterações
                 List<double> lista_TAU_medio_per_iteration = new List<double>();
+                // Lista irá conter o std/porcentagem média para cada iteração. Essa lista só poderá
+                // ...ser utilizada quando o critério de parada for por número de iterações, visto que só
+                // ...assim que todasas execuções terão a mesma quantidade de iterações
+                List<double> lista_STDPORC_medio_per_iteration = new List<double>();
                 // Lista irá conter o melhor f(x) médio para cada iteração. Essa lista só poderá
                 // ...ser utilizada quando o critério de parada for por número de iterações, visto que só
                 // ...assim que todasas execuções terão a mesma quantidade de iterações
@@ -184,16 +192,21 @@ namespace ExecutaOrganizaApresenta
                     for(int it=0; it<media_iteracoes; it++)
                     {
                         double sum_TAU = 0;
+                        double sum_STDPORC = 0;
                         double sum_Mfx = 0;
 
                         for(int execs=0; execs<stats_TAU_per_iteration.Count; execs++)
                         {
                             sum_TAU += stats_TAU_per_iteration[execs][it];
+                            sum_STDPORC += stats_STDPORC_per_iteration[execs][it];
                             sum_Mfx += stats_Mfx_per_iteration[execs][it];
                         }
 
                         double media1 = sum_TAU / stats_TAU_per_iteration.Count;
                         lista_TAU_medio_per_iteration.Add(media1);
+
+                        double media2 = sum_STDPORC / stats_STDPORC_per_iteration.Count;
+                        lista_STDPORC_medio_per_iteration.Add(media2);
 
                         double media3 = sum_Mfx / stats_Mfx_per_iteration.Count;
                         lista_Mfx_medio_per_iteration.Add(media3);
@@ -217,6 +230,7 @@ namespace ExecutaOrganizaApresenta
                 media_das_execucoes.media_fx_atual_em_cada_NFE = lista_FXatual_por_NFE;
                 media_das_execucoes.lista_melhores_fxs = TodosValoresFinaisDeFX;
                 media_das_execucoes.lista_TAU_medio_per_iteration = lista_TAU_medio_per_iteration;  
+                media_das_execucoes.lista_STDPORC_medio_per_iteration = lista_STDPORC_medio_per_iteration;  
                 media_das_execucoes.lista_Mfx_medio_per_iteration = lista_Mfx_medio_per_iteration;  
 
                 // Adiciona essa estrutura na lista geral que contém uma estatística por algoritmo
@@ -268,19 +282,27 @@ namespace ExecutaOrganizaApresenta
                 // Obtém os valores de cada algoritmo
                 for (int i=0; i<estatisticas_algoritmos.Count; i++)
                 {
-                    int media_NFE = estatisticas_algoritmos[i].NFE_medio;
-                    double media_fx = estatisticas_algoritmos[i].media_melhor_fx;
-                    double melhor_fx = estatisticas_algoritmos[i].melhor_fx_de_todos;
-                    double pior_fx = estatisticas_algoritmos[i].pior_fx_de_todos;
-                    double mediana_fx = estatisticas_algoritmos[i].mediana_melhor_fx;
-                    double sd_melhores_fx = estatisticas_algoritmos[i].SD_do_melhor_fx;
+                    int media_NFE           = estatisticas_algoritmos[i].NFE_medio;
+                    double media_fx         = estatisticas_algoritmos[i].media_melhor_fx;
+                    double melhor_fx        = estatisticas_algoritmos[i].melhor_fx_de_todos;
+                    double pior_fx          = estatisticas_algoritmos[i].pior_fx_de_todos;
+                    double mediana_fx       = estatisticas_algoritmos[i].mediana_melhor_fx;
+                    double sd_melhores_fx   = estatisticas_algoritmos[i].SD_do_melhor_fx;
 
-                    media_do_NFE_atingido_nas_execucoes += media_NFE.ToString() + ';';
-                    media_de_fx_nas_execucoes += media_fx.ToString() + ';';
-                    melhor_fx_nas_execucoes += melhor_fx.ToString() + ';';
-                    pior_fx_nas_execucoes += pior_fx.ToString() + ';';
-                    mediana_de_fx_nas_execucoes += mediana_fx.ToString() + ';';
-                    sd_dos_fx_finais_nas_execucoes += sd_melhores_fx.ToString() + ';';
+                    // Seta formato vazio para decimal
+                    string StrFormat = "";
+                    if (scientific_or_decimal_str_format)
+                        // Seta formato scientific
+                        StrFormat = "0.00E+0";
+
+
+                    // string StrFormat = "";
+                    media_do_NFE_atingido_nas_execucoes += media_NFE.ToString(StrFormat) + ';';
+                    media_de_fx_nas_execucoes           += media_fx.ToString(StrFormat) + ';';
+                    melhor_fx_nas_execucoes             += melhor_fx.ToString(StrFormat) + ';';
+                    pior_fx_nas_execucoes               += pior_fx.ToString(StrFormat) + ';';
+                    mediana_de_fx_nas_execucoes         += mediana_fx.ToString(StrFormat) + ';';
+                    sd_dos_fx_finais_nas_execucoes      += sd_melhores_fx.ToString(StrFormat) + ';';
                 }
 
                 // Substitui os pontos por vírgulas e printa
@@ -413,6 +435,34 @@ namespace ExecutaOrganizaApresenta
                         TAUs_naquela_iteracao += TAU_naquela_iteracao.ToString() + ';';
                     }
                     Console.WriteLine( TAUs_naquela_iteracao.Replace('.',',') );
+                }
+                Console.WriteLine("");
+            }
+
+
+            // Se desejado, apresenta os tau obtidos por iteração
+            // Somente usado quando o critério de parada for por qtde de iterações ou por NFE máximo
+            if (o_que_interessa_printar.mostrar_mean_STDPORC_iteracoes)
+            {
+                Console.WriteLine("==========================================================");
+                Console.WriteLine("===> STDPORC para cada iteração:");
+                Console.WriteLine("iteracao;" + string_algoritmos_executados);
+                
+                int quantidade_iteracoes = estatisticas_algoritmos[0].lista_STDPORC_medio_per_iteration.Count;
+                
+                // Concatena o std/porcentagem por iteração para cada algoritmo executado
+                for (int i=0; i<quantidade_iteracoes; i++)
+                {    
+                    string iteracao_string = (i+1).ToString();
+                    string STDPORCs_naquela_iteracao = iteracao_string + ';';
+                    
+                    // Para cada algoritmo, concatena o std/porcentagem por iteração
+                    for (int j=0; j<estatisticas_algoritmos.Count; j++)
+                    {
+                        double STDPORC_naquela_iteracao = estatisticas_algoritmos[j].lista_STDPORC_medio_per_iteration[i];
+                        STDPORCs_naquela_iteracao += STDPORC_naquela_iteracao.ToString() + ';';
+                    }
+                    Console.WriteLine( STDPORCs_naquela_iteracao.Replace('.',',') );
                 }
                 Console.WriteLine("");
             }
@@ -1493,31 +1543,20 @@ namespace ExecutaOrganizaApresenta
                 }
 
 
-                // A-GEO2real2_P_DS_fixo  =  Adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
+
+                // AGEO2real2_P_DS_fixo  =  Adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo)
                 {
-                    bool primeira_das_P_perturbacoes_uniforme = false;
-                    int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
-                    int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
-                    int P = 10;
-                    int s = 10;
-                    
-                    AGEO2real2 ageo2real2PDS = new AGEO2real2(
+                    AGEO2real2_P_DS_fixo AGEO2real2_P_DS_fixo = new AGEO2real2_P_DS_fixo(
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.definicao_funcao_objetivo, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        primeira_das_P_perturbacoes_uniforme,
-                        tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.AGEO2real2_P_DS__porc,
-                        tipo_perturbacao, 
-                        P, 
-                        s);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
                         
-                    RetornoGEOs ret = ageo2real2PDS.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal2_P_DS_fixo;
+                    RetornoGEOs ret = AGEO2real2_P_DS_fixo.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_DS_fixo;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1547,7 +1586,25 @@ namespace ExecutaOrganizaApresenta
                 }
 
 
-                // AGEOreal2_P_autoadap_p  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                // AGEOreal2_P_AA_p0  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p0)
+                {
+                    AGEO2real2_P_AA_p0 AGEO2real2_P_AA_p0 = new AGEO2real2_P_AA_p0(
+                        parametros_problema.populacao_inicial_real,
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        
+                    RetornoGEOs ret = AGEO2real2_P_AA_p0.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p0;
+
+                    todas_execucoes.Add(ret);
+                }
+                
+                
+                // AGEOreal2_P_AA_p1  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p1)
                 {
                     AGEO2real2_P_AA_p1 AGEO2real2_P_AA_p1 = new AGEO2real2_P_AA_p1(
@@ -1565,7 +1622,7 @@ namespace ExecutaOrganizaApresenta
                 }
 
 
-                // AGEOreal2_P_autoadap_p  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                // AGEOreal2_P_AA_p2  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p2)
                 {
                     AGEO2real2_P_AA_p2 AGEO2real2_P_AA_p2 = new AGEO2real2_P_AA_p2(
@@ -1578,6 +1635,42 @@ namespace ExecutaOrganizaApresenta
                         
                     RetornoGEOs ret = AGEO2real2_P_AA_p2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p2;
+
+                    todas_execucoes.Add(ret);
+                }
+
+
+                // AGEOreal2_P_AA_p3  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3)
+                {
+                    AGEO2real2_P_AA_p3 AGEO2real2_P_AA_p3 = new AGEO2real2_P_AA_p3(
+                        parametros_problema.populacao_inicial_real,
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        
+                    RetornoGEOs ret = AGEO2real2_P_AA_p3.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p3;
+
+                    todas_execucoes.Add(ret);
+                }
+
+
+                // AGEOreal2_P_AA_p9  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p9)
+                {
+                    AGEO2real2_P_AA_p9 AGEO2real2_P_AA_p9 = new AGEO2real2_P_AA_p9(
+                        parametros_problema.populacao_inicial_real,
+                        parametros_problema.n_variaveis_projeto, 
+                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.lower_bounds,
+                        parametros_problema.upper_bounds,
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        
+                    RetornoGEOs ret = AGEO2real2_P_AA_p9.executar(parametros_execucao.parametros_criterio_parada);
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p9;
 
                     todas_execucoes.Add(ret);
                 }

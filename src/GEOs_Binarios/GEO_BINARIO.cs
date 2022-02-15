@@ -292,6 +292,7 @@ namespace GEOs_BINARIOS
                     retorno.melhores_NFEs = this.melhores_NFEs;
                     retorno.fxs_atuais_NFEs = this.fxs_atuais_NFEs;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
+                    retorno.stats_STDPORC_per_iteration = new List<double>(this.stats_TAU_per_iteration);
                     retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
                     
                     return retorno;

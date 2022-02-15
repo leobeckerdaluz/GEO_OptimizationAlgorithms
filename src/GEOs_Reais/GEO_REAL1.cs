@@ -28,7 +28,7 @@ namespace GEOs_REAIS
         public int iterations {get; set;}
         public List<int> melhoras_nas_iteracoes {get; set;}
         public List<double> stats_TAU_per_iteration {get; set;}
-        public List<double> stats_STD_per_iteration {get; set;}
+        public List<double> stats_STDPORC_per_iteration {get; set;}
         public List<double> stats_Mfx_per_iteration {get; set;}
 
 
@@ -65,7 +65,7 @@ namespace GEOs_REAIS
             this.melhoras_nas_iteracoes = new List<int>();
 
             this.stats_TAU_per_iteration = new List<double>();
-            this.stats_STD_per_iteration = new List<double>();
+            this.stats_STDPORC_per_iteration = new List<double>();
             this.stats_Mfx_per_iteration = new List<double>();
         }
 
@@ -80,13 +80,17 @@ namespace GEOs_REAIS
                 melhores_NFEs.Add(fx_melhor);
                 fxs_atuais_NFEs.Add(fx_atual);
             }
+
+
+            // if (NFE % 10000 == 0)
+            //     Console.WriteLine("NFE ATINGIDO = {0}", NFE);
         }
 
 
         public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos, bool addNFE)
         {
             // Calcula o valor da função objetivo com o fenótipo desejado
-            double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
+            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
             
             // Incrementa o NFE
             if(addNFE)
@@ -289,19 +293,26 @@ namespace GEOs_REAIS
                 stop = true;
             }
 
-            // // Se o critério for por precisão...
-            // else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO) 
-            // && parada_por_precisao)
-            // {
-            //     stop = true;
-            // }
-            
             // Se o critério for por precisão ou por NFE...
             else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE) 
             && (parada_por_NFE || parada_por_precisao))
             {
                 stop = true;
             }
+
+            // else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_SPACECRAFT) 
+            // {
+            //     int I = (int)this.populacao_atual[0];
+            //     int N = (int)this.populacao_atual[1];
+            //     int D = (int)this.populacao_atual[2];
+
+                 
+            //     if ((I==14 && N==59 && D==60) || this.NFE>=100000)
+            //         stop = true;
+            // }
+
+
+
 
             // Retorna o status da parada
             return stop;
@@ -323,7 +334,7 @@ namespace GEOs_REAIS
                 iterations++;
                 melhoras_nas_iteracoes.Add((fx_atual < fx_atual_comeco_it) ? 1 : 0 );
                 stats_TAU_per_iteration.Add(tau);
-                stats_STD_per_iteration.Add(std);
+                stats_STDPORC_per_iteration.Add(std);
                 stats_Mfx_per_iteration.Add(fx_melhor);
 
                 // Se o critério de parada for atingido, retorna as informações da execução
@@ -337,7 +348,7 @@ namespace GEOs_REAIS
                     retorno.fxs_atuais_NFEs = this.fxs_atuais_NFEs;
                     retorno.populacao_final = this.populacao_melhor;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
-                    retorno.stats_STD_per_iteration = this.stats_STD_per_iteration;
+                    retorno.stats_STDPORC_per_iteration = this.stats_STDPORC_per_iteration;
                     retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
                     
                     return retorno;

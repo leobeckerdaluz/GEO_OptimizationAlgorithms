@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Funcoes_Definidas;
 using SpaceDesignTeste;
 
 using GEOs_REAIS;
@@ -65,10 +64,10 @@ namespace MecanismoAGEO
             int tamanho_populacao)
         {
             // Verifica quantos melhora em comparação com a população de referência
-            int melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao <= fx_referencia).ToList().Count;
+            int melhoraram = perturbacoes_da_iteracao.Where(p => p.fx_depois_da_perturbacao < fx_referencia).ToList().Count;
 
             // Calcula a Chance of Improvement
-            double CoI = (double) melhoraram / tamanho_populacao;
+            double CoI = (double) melhoraram / perturbacoes_da_iteracao.Count;
 
             return CoI;
         }

@@ -36,7 +36,7 @@ namespace Classes_Comuns_Enums
         public List<double> melhores_TAUs { get; set; }
         public List<double> populacao_final { get; set; }
         public List<double> stats_TAU_per_iteration { get; set; }
-        public List<double> stats_STD_per_iteration { get; set; }
+        public List<double> stats_STDPORC_per_iteration { get; set; }
         public List<double> stats_Mfx_per_iteration { get; set; }
         
     }
@@ -57,7 +57,7 @@ namespace Classes_Comuns_Enums
         public List<double> lista_melhores_fxs { get; set; }
         public List<List<double>> lista_populacao_final { get; set; }
         public List<double> lista_TAU_medio_per_iteration { get; set; }
-        public List<double> lista_STD_medio_per_iteration { get; set; }
+        public List<double> lista_STDPORC_medio_per_iteration { get; set; }
         public List<double> lista_Mfx_medio_per_iteration { get; set; }
     }
 
@@ -132,8 +132,11 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2real2_P_DS { get; set; }
         public bool rodar_AGEO2real2_P_DS_fixo { get; set; }
         public bool rodar_AGEO2real1_P_AA { get; set; }
+        public bool rodar_AGEO2real2_P_AA_p0 { get; set; }
         public bool rodar_AGEO2real2_P_AA_p1 { get; set; }
         public bool rodar_AGEO2real2_P_AA_p2 { get; set; }
+        public bool rodar_AGEO2real2_P_AA_p3 { get; set; }
+        public bool rodar_AGEO2real2_P_AA_p9 { get; set; }
         
         
         
@@ -217,7 +220,7 @@ namespace Classes_Comuns_Enums
         public bool mostrar_melhores_fx_cada_execucao {get; set;}
         public bool mostrar_header {get; set;}
         public bool mostrar_mean_TAU_iteracoes {get; set;}
-        public bool mostrar_mean_STD_iteracoes {get; set;}
+        public bool mostrar_mean_STDPORC_iteracoes {get; set;}
         public bool mostrar_mean_Mfx_iteracoes {get; set;}
     }
 
@@ -348,7 +351,7 @@ namespace Classes_Comuns_Enums
         rastringin,
         schwefel,
         ackley,
-        F09,
+        F09tese,
         F10,
         levy13,
         beale,
@@ -437,10 +440,13 @@ namespace Classes_Comuns_Enums
         // A-GEOreal
         AGEOreal1_P,
         AGEOreal2_P_DS,
-        AGEOreal2_P_DS_fixo,
         AGEO2real1_P_AA,
+        AGEO2real2_P_DS_fixo,
+        AGEO2real2_P_AA_p0,
         AGEO2real2_P_AA_p1,
         AGEO2real2_P_AA_p2,
+        AGEO2real2_P_AA_p3,
+        AGEO2real2_P_AA_p9,
 
 
         // // OUTROS

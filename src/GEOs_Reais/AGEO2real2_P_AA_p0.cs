@@ -5,11 +5,11 @@ using Classes_Comuns_Enums;
 
 namespace GEOs_REAIS
 {
-    public class AGEO2real2_P_AA_p2 : AGEO2real2
+    public class AGEO2real2_P_AA_p0 : AGEO2real2
     {
-        public double p1 {get; set;}
+        public double porcentagem {get; set;}
         
-        public AGEO2real2_P_AA_p2(
+        public AGEO2real2_P_AA_p0(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int definicao_funcao_objetivo,
@@ -30,58 +30,35 @@ namespace GEOs_REAIS
                 9999)
         {
             this.P = 10;
-            this.s = 10;
-            this.std = 99999;
-            this.tau = 0.5;
+            this.porcentagem = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();
             
-            this.p1 = new MathNet.Numerics.Distributions.LogNormal(4, 0.2).Sample();
-            
-            // double alfa = 1 / Math.Sqrt(n_variaveis_projeto);
+            // this.std = 9999;
+            // this.tau = 9999;
         }
           
 
 
-
-
         public override void verifica_perturbacoes()
         {
-            // Se o tau acabou de ser reiniciado na iteração anterior, 
-            // ...reinicia o p1 aqui
-            if (this.reiniciou_o_tau){
-                // GERA UM p1'
-                double rand_lognormal = new MathNet.Numerics.Distributions.LogNormal(4, 0.2).Sample();
-                this.p1 = rand_lognormal;
-
-                this.reiniciou_o_tau = false;
-            }
-
-
-
-
-
             // Limpa a lista com perturbações da iteração
             perturbacoes_da_iteracao = new List<Perturbacao>();
             
             // Lista com todas as variáveis de projeto (incluindo porcentagem de índice 999)
             List<int> indices_variaveis = Enumerable.Range(0, n_variaveis_projeto).ToList();
             indices_variaveis.Add(999);
-
-            // Inicializa p como p1
-            double p = this.p1;
             
             // PARA CADA P...
             for(int j=0; j<this.P; j++){
-
-                // // GERA UM p'
-                // double rand_lognormal = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();
-                // double porcentagem_linha = rand_lognormal;
 
                 // PARA CADA VARIÁVEL...
                 foreach (int i in indices_variaveis){
 
                     // SE A VARIÁVEL É A 999 (p), ENTÃO PERTURBA TODAS VARIÁVEIS AO MESMO TEMPO COM ESSE p' E CALCULA FX
                     if(i == 999){
-                        
+                        // GERA UM p'
+                        double rand_lognormal = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();
+                        double porcentagem_linha = rand_lognormal;
+
                         // Cria uma cópia da população atual para perturbar todas as variáveis
                         List<double> populacao_copia = new List<double>(populacao_atual);
                         // Perturba todas as variáveis com aquela porcentagem perturlinha
@@ -89,7 +66,7 @@ namespace GEOs_REAIS
                             // Calcula o invervalo de variação dessa variável
                             double intervalo_variacao_variavel = upper_bounds[k] - lower_bounds[k];
                             // Calcula o sigma que será utilizado na distribuição normal
-                            double sigma = p/100.0 * intervalo_variacao_variavel;
+                            double sigma = porcentagem_linha/100.0 * intervalo_variacao_variavel;
                             // Obtém um valor aleatório da dist normal
                             double rand_normal = new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
                             // Obtém o valor atual dessa variável
@@ -103,8 +80,8 @@ namespace GEOs_REAIS
                         double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
                         // Cria as informações da perturbação da porcentagem
                         Perturbacao info_perturbacao_porcent = new Perturbacao();
-                        info_perturbacao_porcent.xi_antes_da_perturbacao = p1;
-                        info_perturbacao_porcent.xi_depois_da_perturbacao = p;
+                        info_perturbacao_porcent.xi_antes_da_perturbacao = this.porcentagem;
+                        info_perturbacao_porcent.xi_depois_da_perturbacao = porcentagem_linha;
                         info_perturbacao_porcent.fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem;
                         info_perturbacao_porcent.indice_variavel_projeto = 999;
                         // Adiciona essa info da perturbação da porcentagem na lista de perturbações
@@ -120,7 +97,7 @@ namespace GEOs_REAIS
                         double xi = populacao_para_perturbar[i];
                         double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                         // Calcula o sigma com a porcentagem linha e perturba a variável
-                        double sigma = p/100.0 * intervalo_variacao_variavel;
+                        double sigma = this.porcentagem/100.0 * intervalo_variacao_variavel;
                         MathNet.Numerics.Distributions.Normal DistNormal = new MathNet.Numerics.Distributions.Normal(0, sigma);
                         double xii = xi + DistNormal.Sample();
                         // Atribui a variável perturbada na população cópia
@@ -137,9 +114,6 @@ namespace GEOs_REAIS
                         perturbacoes_da_iteracao.Add(perturbacao);
                     }
                 }
-
-                // Divide p por 10
-                p = p/10;
             }
 
             // Foram geradas P perturbações para todas as (N+1) variáveis de projeto (porcentagem incluida)
@@ -198,7 +172,7 @@ namespace GEOs_REAIS
                         
                         // Se indice é 999, atualiza porcentagem
                         if (indice == 999){
-                            this.p1 = xii_depois_perturbar;
+                            this.porcentagem = xii_depois_perturbar;
                         }
                         // Senão, atualiza valor da variável de projeto
                         else{
