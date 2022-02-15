@@ -3,26 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace Classes_Comuns_Enums
+namespace Classes_e_Enums
 {
-    /*
-        Classe para armazenar as informações da mutação de um bit.
-        Para cada bit, é armazenado o delta fitness caso mute e o indice do bit na população
-    */
+    // Classe para armazenar as informações da mutação de um bit.
     public class BitVerificado{
         public double funcao_objetivo_flipando { get; set; }
         public int indice_bit_mutado { get; set; }
     }
 
-
-
+    
     public class Tuning{
         public string parameters { get; set; }
         public double fx { get; set; }
         public double sd { get; set; }
         public int NFE { get; set; }
     }
-
 
     
     public class RetornoGEOs {
@@ -41,6 +36,7 @@ namespace Classes_Comuns_Enums
         
     }
 
+    
     public class Retorno_N_Execucoes_GEOs {
         public int codigo_algoritmo_executado { get; set; }
         public string nome_algoritmo_executado { get; set; }
@@ -61,6 +57,7 @@ namespace Classes_Comuns_Enums
         public List<double> lista_Mfx_medio_per_iteration { get; set; }
     }
 
+    
     public class ParametrosCriterioParada {
         public int tipo_criterio_parada { get; set; }
         public int NFE_criterio_parada { get; set; }
@@ -69,9 +66,6 @@ namespace Classes_Comuns_Enums
         public double fx_esperado { get; set; }
         public List<int> lista_NFEs_desejados { get; set; }
     }
-    // 'parada_por_NFE_atingido';
-    // 'parada_por_Precisao_atingida';
-    // 'parada_por_Precisao_ou_NFE_atingidos';
 
 
     public class QuaisAlgoritmosRodar {
@@ -83,15 +77,12 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO3 { get; set; }
         public bool rodar_AGEO4 { get; set; }
         public bool rodar_AGEO9 { get; set; }
-
-        public bool rodar_GEOvar2 { get; set; }
         
         public bool rodar_AGEO1var { get; set; }
         public bool rodar_AGEO2var { get; set; }
         public bool rodar_AGEO3var { get; set; }
         public bool rodar_AGEO4var { get; set; }
         public bool rodar_AGEO9var { get; set; }
-
 
         public bool rodar_AGEO1var_1 { get; set; }
         public bool rodar_AGEO1var_3 { get; set; }
@@ -106,7 +97,13 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2var_9 { get; set; }
         public bool rodar_AGEO2var_11 { get; set; }
         
+        public bool rodar_GEOvar2 { get; set; }
         
+        // GEOreal1
+        public bool rodar_GEOreal1_O { get; set; }
+        public bool rodar_GEOreal1_P { get; set; }
+        public bool rodar_GEOreal1_N { get; set; }
+
         // GEOreal2
         public bool rodar_GEOreal2_O_VO { get; set; }
         public bool rodar_GEOreal2_P_VO { get; set; }
@@ -121,12 +118,6 @@ namespace Classes_Comuns_Enums
         public bool rodar_GEOreal2_P_DS_UNI { get; set; }
         public bool rodar_GEOreal2_N_DS_UNI { get; set; }
         
-        // GEOreal1
-        public bool rodar_GEOreal1_O { get; set; }
-        public bool rodar_GEOreal1_P { get; set; }
-        public bool rodar_GEOreal1_N { get; set; }
-
-
         // A-GEOreal
         public bool rodar_AGEO2real1_P { get; set; }
         public bool rodar_AGEO2real2_P_DS { get; set; }
@@ -138,53 +129,29 @@ namespace Classes_Comuns_Enums
         public bool rodar_AGEO2real2_P_AA_p3 { get; set; }
         public bool rodar_AGEO2real2_P_AA_p9 { get; set; }
         
-        
-        
-
-
-
-
-        
         // // OUTROS
-        // public bool rodar_GEOreal1_igor { get; set; }
-        // public bool rodar_AGEO1real1_igor { get; set; }
-        // public bool rodar_AGEO2real1_igor { get; set; }
-        // public bool rodar_GEOreal2_igor { get; set; }
-        // public bool rodar_AGEO1real2_igor { get; set; }
-        // public bool rodar_AGEO2real2_igor { get; set; }
         // public bool rodar_ASGEO2real1_1 { get; set; }
         // public bool rodar_ASGEO2real1_2 { get; set; }
         // public bool rodar_ASGEO2real1_3 { get; set; }
         // public bool rodar_ASGEO2real1_4 { get; set; }
         // public bool rodar_ASGEO2real2_1 { get; set; }
         // public bool rodar_ASGEO2real2_2 { get; set; }
-        
-        // public bool rodar_AGEO2_REAL1_igor { get; set; }
-        // public bool rodar_AGEO2_REAL1_porcentagem { get; set; }
-        // public bool rodar_AGEO2_REAL1_normal { get; set; }
-        // public bool rodar_AGEO2_REAL2_igor { get; set; }
-        // public bool rodar_AGEO2_REAL2_porcentagem { get; set; }
-        // public bool rodar_AGEO2_REAL2_normal { get; set; }
-        
-        
     }
 
 
     public class ParametrosProblema {
-        public int definicao_funcao_objetivo { get; set; }
+        public int function_id { get; set; }
         public string nome_funcao { get; set; }
         public int n_variaveis_projeto { get; set; }
         public List<int> bits_por_variavel { get; set; }
         public List<double> lower_bounds { get; set; }
         public List<double> upper_bounds { get; set; }
-        
-        public double fx_esperado { get; set; }
-        
         public ParametrosLivreProblema parametros_livres { get; set; }
         public List<double> populacao_inicial_real { get; set; }
         public List<bool> populacao_inicial_binaria { get; set; }
     }
 
+    
     public class ParametrosExecucao {
         public int quantidade_execucoes { get; set; }
         public ParametrosCriterioParada parametros_criterio_parada { get; set; }
@@ -193,17 +160,20 @@ namespace Classes_Comuns_Enums
         public int tipo_perturbacao { get; set; }
     }
     
+    
     public class CodificacaoBinariaParaFenotipo {
         public List<int> bits_por_variavel_variaveis { get; set; }
         public List<double> limites_inferiores_variaveis { get; set; }
         public List<double>  limites_superiores_variaveis { get; set; }
     }
 
+    
     public class RestricoesLaterais {
         public double limite_inferior_variavel { get; set; }
         public double limite_superior_variavel { get; set; }
     }
 
+    
     public class Perturbacao{
         public double xi_antes_da_perturbacao {get; set;}
         public double xi_depois_da_perturbacao {get; set;}
@@ -213,6 +183,7 @@ namespace Classes_Comuns_Enums
         public int indice_variavel_projeto {get; set;}
     }
 
+    
     public class OQueInteressaPrintar{
         public bool mostrar_melhores_NFE {get; set;}
         public bool mostrar_fxs_atual_por_NFE {get; set;}
@@ -224,6 +195,7 @@ namespace Classes_Comuns_Enums
         public bool mostrar_mean_Mfx_iteracoes {get; set;}
     }
 
+    
     public class ParametrosLivreProblema{
         
         public double GEO__tau {get; set;}
@@ -249,7 +221,6 @@ namespace Classes_Comuns_Enums
         // public double s_AGEO1real2 {get; set;}      // AGEOs_real2
         // public double s_AGEO2real2 {get; set;}      // AGEOs_real2
         
-        
         // GEOreal1_O
         public double GEOreal1_O__tau {get; set;}
         public double GEOreal1_O__std {get; set;}
@@ -259,7 +230,6 @@ namespace Classes_Comuns_Enums
         // GEOreal1_N
         public double GEOreal1_N__tau {get; set;}
         public double GEOreal1_N__std {get; set;}
-
 
         // GEOreal2_O_VO
         public double GEOreal2_O_VO__tau {get; set;}
@@ -292,7 +262,6 @@ namespace Classes_Comuns_Enums
         public double GEOreal2_N_DS__P {get; set;}
         public double GEOreal2_N_DS__s {get; set;}
 
-
         // GEOreal2_P_VO_UNI
         public double GEOreal2_P_VO_UNI__tau {get; set;}
         public double GEOreal2_P_VO_UNI__porc {get; set;}
@@ -313,17 +282,12 @@ namespace Classes_Comuns_Enums
         public double GEOreal2_N_DS_UNI__std {get; set;}
         public double GEOreal2_N_DS_UNI__P {get; set;}
         public double GEOreal2_N_DS_UNI__s {get; set;}
-        
-
 
         // A-GEOreal
         public double AGEO2real1_P__porc {get; set;}
         public double AGEO2real2_P_DS__porc {get; set;}
         public double AGEO2real2_P_DS__P {get; set;}
         public double AGEO2real2_P_DS__s {get; set;}
-
-
-        
         
         
         // // Não essenciais atualmente
@@ -341,186 +305,5 @@ namespace Classes_Comuns_Enums
         // public double tau_ASGEO2_REAL1_2 {get; set;}
         // public double tau_ASGEO2_REAL1_3 {get; set;}
         // public double tau_ASGEO2_REAL1_4 {get; set;}
-    }
-
-    enum EnumNomesFuncoesObjetivo{
-        griewangk,
-        rosenbrock,
-        dejong3,
-        spacecraft,
-        rastringin,
-        schwefel,
-        ackley,
-        F09tese,
-        F10,
-        levy13,
-        beale,
-        cosine_mixture,
-        mccormick,
-        paviani,
-        salomon,
-        schaffer_2,
-        adjiman,
-        alpine01,
-        bartels_conn,
-        bird,
-        bohachevsky_1,
-
-        CEC2017_01,
-        CEC2017_02,
-        CEC2017_03,
-        CEC2017_04,
-        CEC2017_05,
-        CEC2017_06,
-        CEC2017_07,
-        CEC2017_08,
-        CEC2017_09,
-        CEC2017_10,
-        CEC2017_11,
-        CEC2017_12,
-        CEC2017_13,
-        CEC2017_14,
-        CEC2017_15,
-        CEC2017_16,
-        CEC2017_17,
-        CEC2017_18,
-        CEC2017_19,
-        CEC2017_20,
-        CEC2017_21,
-        CEC2017_22,
-        CEC2017_23,
-        CEC2017_24,
-        CEC2017_25,
-        CEC2017_26,
-        CEC2017_27,
-        CEC2017_28,
-        CEC2017_29,
-        CEC2017_30
-    }
-
-
-    enum EnumOQueFazer{
-        executar_algoritmos,
-        tuning_GEO,
-        tuning_GEOvar,
-        tuning_GEOvar2,
-        tuning_GEOreal1_O,
-        tuning_GEOreal1_P,
-        tuning_GEOreal1_N,
-        tuning_GEOreal2_O_VO,
-        tuning_GEOreal2_P_VO,
-        tuning_GEOreal2_N_VO,
-        tuning_GEOreal2_O_DS,
-        tuning_GEOreal2_P_DS,
-        tuning_GEOreal2_N_DS,
-
-        tuning_AGEO2real1_P,
-        tuning_AGEO2real2_P_DS_fixo,
-    }
-
-
-    enum EnumNomesAlgoritmos{
-        // Binários
-        GEO_can,
-        GEO_var,
-        AGEO1,
-        AGEO2,
-        AGEO3,
-        AGEO4,
-        AGEO9,
-        AGEO1var,
-        AGEO2var,
-        AGEO3var,
-        AGEO4var,
-        AGEO9var,
-
-        GEO_var2,
-        AGEO1var_1,
-        AGEO1var_3,
-        AGEO1var_5,
-        AGEO1var_7,
-        AGEO1var_9,
-        AGEO1var_11,
-        AGEO2var_1,
-        AGEO2var_3,
-        AGEO2var_5,
-        AGEO2var_7,
-        AGEO2var_9,
-        AGEO2var_11,
-
-        // GEOreal1
-        GEOreal1_O,
-        GEOreal1_P,
-        GEOreal1_N,
-        
-        // GEOreal2
-        GEOreal2_O_VO,
-        GEOreal2_P_VO,
-        GEOreal2_N_VO,
-        GEOreal2_O_DS,
-        GEOreal2_P_DS,
-        GEOreal2_N_DS,
-        
-        // GEOreal2 + 1 Uniforme
-        GEOreal2_P_VO_UNI,
-        GEOreal2_N_VO_UNI,
-        GEOreal2_P_DS_UNI,
-        GEOreal2_N_DS_UNI,
-
-
-        // A-GEOreal
-        AGEOreal1_P,
-        AGEOreal2_P_DS,
-        AGEO2real1_P_AA,
-        AGEO2real2_P_DS_fixo,
-        AGEO2real2_P_AA_p0,
-        AGEO2real2_P_AA_p1,
-        AGEO2real2_P_AA_p2,
-        AGEO2real2_P_AA_p3,
-        AGEO2real2_P_AA_p9,
-
-
-        // // OUTROS
-        // GEOreal1_igor,
-        // AGEO1real1_igor,
-        // AGEO2real1_igor,
-        // GEOreal2_igor,
-        // AGEO1real2_igor,
-        // AGEO2real2_igor,
-        // ASGEO2real1_1,
-        // ASGEO2real1_2,
-        // ASGEO2real1_3,
-        // ASGEO2real1_4,
-        // ASGEO2real2_1,
-        // ASGEO2real2_2,
-        // ASGEO2real2_3,
-
-        // AGEO2_REAL1_igor,
-        // AGEO2_REAL1_porcentagem,
-        // AGEO2_REAL1_normal,
-        // AGEO2_REAL2_igor,
-        // AGEO2_REAL2_porcentagem,
-        // AGEO2_REAL2_normal,
-
-    }
-
-    enum EnumTipoCriterioParada{
-        parada_por_NFE,
-        // parada_por_PRECISAO,
-        parada_por_PRECISAOouNFE,
-        parada_por_ITERATIONS,
-        parada_por_SPACECRAFT
-    }
-
-    enum EnumTipoPerturbacao{
-        perturbacao_igor,
-        perturbacao_porcentagem,
-        perturbacao_normal,
-    }
-
-
-    enum EnumTipoVariacaoStdNasPPerturbacoes{
-        variacao_real_original,
-        variacao_divide_por_s,
     }
 }

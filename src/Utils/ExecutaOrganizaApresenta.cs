@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GEOs_REAIS;
 using GEOs_BINARIOS;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 
 namespace ExecutaOrganizaApresenta
@@ -74,6 +74,14 @@ namespace ExecutaOrganizaApresenta
                     // Obtém o retorno do algoritmo naquela execução
                     RetornoGEOs ret = execucoes_algoritmo_executado[j];
 
+
+
+                    // if (ret.melhor_fx > 1E+300){
+                    //     continue;
+                    // }
+
+
+                    
                     // Armazena o melhor f(x) obtido na execução
                     TodosValoresFinaisDeFX.Add(ret.melhor_fx);
                     // Armazena o f(x) da população atual
@@ -250,7 +258,7 @@ namespace ExecutaOrganizaApresenta
                 Console.WriteLine("\n\n==========================================================");
                 Console.WriteLine("Apresenta todas estatísticas");
                 Console.WriteLine("==========================================================\n");
-                Console.WriteLine(String.Format("Função objetivo utilizada: {0} - {1}", parametros_problema.definicao_funcao_objetivo, parametros_problema.nome_funcao));
+                Console.WriteLine(String.Format("Função objetivo utilizada: {0} - {1}", parametros_problema.function_id, parametros_problema.nome_funcao));
                 Console.WriteLine(String.Format("Número de variáveis de projeto: {0}", parametros_problema.n_variaveis_projeto));
                 Console.WriteLine(String.Format("Quantidade de execuções: {0}", parametros_execucao.quantidade_execucoes));
                 Console.WriteLine(String.Format("Tipo de critério de parada: {0}", Enum.GetName(typeof(EnumTipoCriterioParada), parametros_execucao.parametros_criterio_parada.tipo_criterio_parada)));
@@ -522,7 +530,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         parametros_problema.parametros_livres.GEO__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -541,7 +549,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         parametros_problema.parametros_livres.GEOvar__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -566,7 +574,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOvar__tau, 
                         // parametros_problema.parametros_livres.GEOvar2__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -590,7 +598,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -609,7 +617,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -630,7 +638,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         3, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -649,7 +657,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         4, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -668,7 +676,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         9, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -690,7 +698,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -709,7 +717,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -729,7 +737,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         3, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -749,7 +757,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         4, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -769,7 +777,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         9, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -795,7 +803,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -817,7 +825,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -839,7 +847,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -861,7 +869,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -883,7 +891,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -905,7 +913,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         1, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -932,7 +940,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -954,7 +962,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -976,7 +984,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -998,7 +1006,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1020,7 +1028,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1042,7 +1050,7 @@ namespace ExecutaOrganizaApresenta
                         new List<bool>(parametros_problema.populacao_inicial_binaria),
                         2, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1067,7 +1075,7 @@ namespace ExecutaOrganizaApresenta
 
                 //     GEO_real1 geo_real1 = new GEO_real1(
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
@@ -1090,7 +1098,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL1 AGEO1real1 = new AGEOs_REAL1(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1112,7 +1120,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL1 AGEO2real1 = new AGEOs_REAL1(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1137,7 +1145,7 @@ namespace ExecutaOrganizaApresenta
 
                     GEO_real1 geo_real1 = new GEO_real1(
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
@@ -1159,7 +1167,7 @@ namespace ExecutaOrganizaApresenta
 
                     GEO_real1 geo_real1 = new GEO_real1(
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
@@ -1181,7 +1189,7 @@ namespace ExecutaOrganizaApresenta
 
                     GEO_real1 geo_real1 = new GEO_real1(
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
@@ -1209,7 +1217,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_O_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1237,7 +1245,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_P_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1265,7 +1273,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_N_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1295,7 +1303,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_O_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1323,7 +1331,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_P_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1351,7 +1359,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_N_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1382,7 +1390,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_P_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1410,7 +1418,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_N_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1438,7 +1446,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_P_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1466,7 +1474,7 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.parametros_livres.GEOreal2_N_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1493,7 +1501,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real1 AGEOreal1_P = new AGEO2real1(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1517,7 +1525,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2 ageo_real2 = new AGEO2real2(
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1542,7 +1550,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2_P_DS_fixo AGEO2real2_P_DS_fixo = new AGEO2real2_P_DS_fixo(
                         parametros_problema.populacao_inicial_real, 
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
@@ -1564,7 +1572,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real1_P_AA AGEO2real1_P_AA = new AGEO2real1_P_AA(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1584,7 +1592,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2_P_AA_p0 AGEO2real2_P_AA_p0 = new AGEO2real2_P_AA_p0(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
@@ -1602,7 +1610,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2_P_AA_p1 AGEO2real2_P_AA_p1 = new AGEO2real2_P_AA_p1(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
@@ -1620,7 +1628,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2_P_AA_p2 AGEO2real2_P_AA_p2 = new AGEO2real2_P_AA_p2(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
@@ -1638,7 +1646,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2_P_AA_p3 AGEO2real2_P_AA_p3 = new AGEO2real2_P_AA_p3(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
@@ -1656,7 +1664,7 @@ namespace ExecutaOrganizaApresenta
                     AGEO2real2_P_AA_p9 AGEO2real2_P_AA_p9 = new AGEO2real2_P_AA_p9(
                         parametros_problema.populacao_inicial_real,
                         parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.definicao_funcao_objetivo, 
+                        parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
@@ -1683,7 +1691,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL2 AGEO1real2 = new AGEOs_REAL2(
                 //         1, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
@@ -1711,7 +1719,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL2 AGEO2real2 = new AGEOs_REAL2(
                 //         2, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
@@ -1739,7 +1747,7 @@ namespace ExecutaOrganizaApresenta
                 //     ASGEO2_REAL1_1 ASGEO2real1_1 = new ASGEO2_REAL1_1(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
@@ -1764,7 +1772,7 @@ namespace ExecutaOrganizaApresenta
                 //     ASGEO2_REAL1_2 ASGEO2real1_2 = new ASGEO2_REAL1_2(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
@@ -1789,7 +1797,7 @@ namespace ExecutaOrganizaApresenta
                 //     ASGEO2_REAL1_3 ASGEO2real1_3 = new ASGEO2_REAL1_3(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
@@ -1808,7 +1816,7 @@ namespace ExecutaOrganizaApresenta
                 // {
                 //     ASGEO2_REAL2_1 ASGEO2real2_1 = new ASGEO2_REAL2_1(
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
@@ -1832,7 +1840,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL1 AGEO2_REAL1_igor = new AGEOs_REAL1(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1852,7 +1860,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL1 AGEO2_REAL1_porcentagem = new AGEOs_REAL1(
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.lower_bounds,
                 //         parametros_problema.upper_bounds,
                 //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
@@ -1878,7 +1886,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL2 AGEO2_REAL2_igor = new AGEOs_REAL2(
                 //         2,
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
@@ -1908,7 +1916,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL2 AGEO2_REAL2_porcentagem = new AGEOs_REAL2(
                 //         2,
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 
@@ -1938,7 +1946,7 @@ namespace ExecutaOrganizaApresenta
                 //     AGEOs_REAL2 AGEO2_REAL2_normal = new AGEOs_REAL2(
                 //         2,
                 //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.definicao_funcao_objetivo, 
+                //         parametros_problema.function_id, 
                 //         parametros_problema.populacao_inicial_real, 
                 //         parametros_problema.lower_bounds, 
                 //         parametros_problema.upper_bounds, 

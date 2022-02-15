@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 namespace GEOs_REAIS
 {
@@ -12,13 +12,13 @@ namespace GEOs_REAIS
         public AGEO2real2_P_AA_p3(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
-            int definicao_funcao_objetivo,
+            int function_id,
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
-                definicao_funcao_objetivo,
+                function_id,
                 lower_bounds,
                 upper_bounds,
                 lista_NFEs_desejados,
@@ -211,17 +211,7 @@ namespace GEOs_REAIS
                         
                         // Se indice é 999, atualiza porcentagem
                         if (indice == 999){
-                            
-                            const double lim_inf = 1E-3;
-                            const double lim_sup = 1E-2;
-                            
-                            if (xii_depois_perturbar > lim_sup)
-                                this.p_inicial_peq = lim_sup;
-                            else if (xii_depois_perturbar < lim_inf)
-                                this.p_inicial_peq = lim_inf;
-                            else
-                                this.p_inicial_peq = xii_depois_perturbar;
-                            
+                            this.p_inicial_peq = xii_depois_perturbar;
                         }
                         // Senão, atualiza valor da variável de projeto
                         else{
@@ -242,7 +232,7 @@ namespace GEOs_REAIS
 
             
 
-
+            // Armazena o novo p' na variável std do GEOreal1 a fim de gerar gráficos de std
             this.std = this.p_inicial_peq;
         }
     }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 namespace GEOs_REAIS
 {
@@ -10,7 +10,7 @@ namespace GEOs_REAIS
 
         public double tau {get; set;}
         public int n_variaveis_projeto {get; set;}
-        public int definicao_funcao_objetivo {get; set;}
+        public int function_id {get; set;}
         public List<double> lower_bounds {get; set;}
         public List<double> upper_bounds {get; set;}
         public List<int> lista_NFEs_desejados {get; set;}
@@ -34,7 +34,7 @@ namespace GEOs_REAIS
 
         public GEO_real1(
             int n_variaveis_projeto,
-            int definicao_funcao_objetivo,
+            int function_id,
             List<double> populacao_inicial,
             List<double> lower_bounds,
             List<double> upper_bounds,
@@ -45,7 +45,7 @@ namespace GEOs_REAIS
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
-            this.definicao_funcao_objetivo = definicao_funcao_objetivo;
+            this.function_id = function_id;
             this.lower_bounds = lower_bounds;
             this.upper_bounds = upper_bounds;
             this.lista_NFEs_desejados = lista_NFEs_desejados;
@@ -90,7 +90,7 @@ namespace GEOs_REAIS
         public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos, bool addNFE)
         {
             // Calcula o valor da função objetivo com o fenótipo desejado
-            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipos, this.definicao_funcao_objetivo);
+            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipos, this.function_id);
             
             // Incrementa o NFE
             if(addNFE)
@@ -300,17 +300,17 @@ namespace GEOs_REAIS
                 stop = true;
             }
 
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_SPACECRAFT) 
-            {
-                int I = (int)this.populacao_atual[0];
-                int D = (int)this.populacao_atual[1];
-                int Q = (int)this.populacao_atual[2];
+            // else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_SPACECRAFT) 
+            // {
+            //     int I = (int)this.populacao_atual[0];
+            //     int D = (int)this.populacao_atual[1];
+            //     int Q = (int)this.populacao_atual[2];
 
                  
-                if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
-                    stop = true;
-                }
-            }
+            //     if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
+            //         stop = true;
+            //     }
+            // }
 
 
             // Retorna o status da parada

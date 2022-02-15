@@ -10,7 +10,7 @@ using SpaceDesignTeste;
 using GEOs_REAIS;
 using GEOs_BINARIOS;
 
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 using SpaceConceptOptimizer.Models;
 using MathModelsDomain.Utilities;
@@ -77,7 +77,7 @@ namespace ExtensiveSearch_and_Testes
         public static void Teste_FuncoesObjetivo_SpacecraftOptimization()
         {    
             // Define qual função chamar e o fenótipo
-            int definicao_funcao_objetivo = (int)EnumNomesFuncoesObjetivo.spacecraft;
+            int function_id = (int)EnumNomesFuncoesObjetivo.spacecraft;
             List<double> fenotipo_variaveis_projeto = new List<double>(){14,60,59};
             fenotipo_variaveis_projeto = new List<double>(){79,378,348};
             
@@ -85,7 +85,7 @@ namespace ExtensiveSearch_and_Testes
             // Calcula a função objetivo com a rotina de FOs
             // =========================================================
             
-            double melhor_fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
+            double melhor_fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, function_id);
 
             Console.WriteLine("Melhor fx função switch case: {0}", melhor_fx);
 

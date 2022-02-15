@@ -1,9 +1,9 @@
 
-// #define CONSOLE_OUT_FILE
+#define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 using System.IO;
 using System.Linq;
 
@@ -18,12 +18,12 @@ namespace Execucoes
             // =======================================================================================
             List<int> function_values = new List<int>()
             {
-                // (int)EnumNomesFuncoesObjetivo.griewangk,
-                // (int)EnumNomesFuncoesObjetivo.rastringin,
-                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                // (int)EnumNomesFuncoesObjetivo.schwefel,
-                // (int)EnumNomesFuncoesObjetivo.ackley,
-                // (int)EnumNomesFuncoesObjetivo.beale,
+                (int)EnumNomesFuncoesObjetivo.griewangk,
+                (int)EnumNomesFuncoesObjetivo.rastringin,
+                (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                (int)EnumNomesFuncoesObjetivo.schwefel,
+                (int)EnumNomesFuncoesObjetivo.ackley,
+                (int)EnumNomesFuncoesObjetivo.beale,
                 
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
@@ -57,7 +57,7 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
                 
-                (int)EnumNomesFuncoesObjetivo.spacecraft,
+                // (int)EnumNomesFuncoesObjetivo.spacecraft,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
                 // (int)EnumNomesFuncoesObjetivo.salomon,
@@ -107,7 +107,7 @@ namespace Execucoes
 
             int scientific_or_decimal_str_format = 1;
 
-            int execucaoNFE_or_spacecraft = 1;
+            int execucaoNFE_or_spacecraft = 0;
 
 
 
@@ -119,9 +119,7 @@ namespace Execucoes
             foreach (int opcao in o_que_fazer){
                 Console.WriteLine("\n\n\n\n");
                 Console.WriteLine("============================================================================");
-                Console.WriteLine("============================================================================");
                 Console.WriteLine("O que irá executar a seguir: {0}", Enum.GetName(typeof(EnumOQueFazer), opcao));
-                Console.WriteLine("============================================================================");
                 Console.WriteLine("============================================================================");
                 Console.WriteLine("\n\n");
 
@@ -163,11 +161,17 @@ namespace Execucoes
                         // ------------------------------------
                         // Essa parada só funciona no GEOreal
                         // ------------------------------------
-                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_SPACECRAFT;
+                        // parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_SPACECRAFT;
+                        // parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
+                        // // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
+                        // // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
+                        // parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
+
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
+                        parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-15;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                        // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
-                        // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
+                        parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
                     }
                 }
                 // =======================================================================================
@@ -179,12 +183,12 @@ namespace Execucoes
                 
 
                 // Para cada função, executa os algoritmos ou os tunings para cada função.
-                foreach (int definicao_funcao_objetivo in function_values)
+                foreach (int function_id in function_values)
                 {
                     // =======================================================================================
                     // Define os parâmetros do problema
                     // =======================================================================================
-                    ParametrosProblema parametros_problema = ObjectiveFunctions.Methods.get_function_parameters(definicao_funcao_objetivo);
+                    ParametrosProblema parametros_problema = ObjectiveFunctions.Parameters.get_function_parameters(function_id);
 
                     Console.WriteLine("\n\n\n\n\n\n\n\n\n");
                     Console.WriteLine("============================================================================");
@@ -199,7 +203,7 @@ namespace Execucoes
                         {
                             // ======================================================================================================
                             // O que interessa printar no arquivo de saída ao 'executar algoritmos'
-                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
+                            parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
                             
                             // parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true; //alg. sozinho
@@ -219,7 +223,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
@@ -237,7 +241,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
@@ -261,13 +265,13 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p0 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p2 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p9 = true;
                             
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3 = true;
 
                             // ======================================================================================================
                             

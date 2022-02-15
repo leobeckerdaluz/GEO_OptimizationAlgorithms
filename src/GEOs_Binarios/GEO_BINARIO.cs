@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 namespace GEOs_BINARIOS
 {
@@ -10,7 +10,7 @@ namespace GEOs_BINARIOS
 
         public double tau {get; set;}
         public int n_variaveis_projeto {get; set;}
-        public int definicao_funcao_objetivo {get; set;}
+        public int function_id {get; set;}
         public List<double> lower_bounds {get; set;}
         public List<double> upper_bounds {get; set;}
         public List<int> lista_NFEs_desejados {get; set;}
@@ -34,7 +34,7 @@ namespace GEOs_BINARIOS
             List<bool> populacao_inicial_binaria,
             double tau,
             int n_variaveis_projeto,
-            int definicao_funcao_objetivo,
+            int function_id,
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
@@ -42,7 +42,7 @@ namespace GEOs_BINARIOS
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
-            this.definicao_funcao_objetivo = definicao_funcao_objetivo;
+            this.function_id = function_id;
             this.lower_bounds = new List<double>(lower_bounds);
             this.upper_bounds = new List<double>(upper_bounds);
             this.lista_NFEs_desejados = new List<int>(lista_NFEs_desejados);
@@ -130,7 +130,7 @@ namespace GEOs_BINARIOS
             // Calcula o valor da função objetivo
             //============================================================
 
-            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
+            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, function_id);
 
             // Avalia se a perturbação é a melhor de todas
             if (fx < this.fx_melhor)

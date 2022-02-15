@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 namespace GEOs_REAIS
 {
@@ -12,13 +12,13 @@ namespace GEOs_REAIS
         public AGEO2real2_P_AA_p9(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
-            int definicao_funcao_objetivo,
+            int function_id,
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
-                definicao_funcao_objetivo,
+                function_id,
                 lower_bounds,
                 upper_bounds,
                 lista_NFEs_desejados,

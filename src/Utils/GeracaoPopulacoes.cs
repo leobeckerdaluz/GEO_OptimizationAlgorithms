@@ -10,7 +10,7 @@ using SpaceDesignTeste;
 using GEOs_REAIS;
 using GEOs_BINARIOS;
 
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 using SpaceConceptOptimizer.Models;
 using MathModelsDomain.Utilities;

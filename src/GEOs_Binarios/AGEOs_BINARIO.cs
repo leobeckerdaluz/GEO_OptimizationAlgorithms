@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 using System.Linq;
 
 namespace GEOs_BINARIOS
@@ -14,7 +14,7 @@ namespace GEOs_BINARIOS
             List<bool> populacao_inicial_binaria,
             int tipo_AGEO,
             int n_variaveis_projeto,
-            int definicao_funcao_objetivo,
+            int function_id,
             List<double> lower_bounds, 
             List<double> upper_bounds, 
             List<int> lista_NFEs_desejados,
@@ -22,7 +22,7 @@ namespace GEOs_BINARIOS
                 populacao_inicial_binaria,
                 0.5,
                 n_variaveis_projeto,
-                definicao_funcao_objetivo,
+                function_id,
                 lower_bounds,
                 upper_bounds,
                 lista_NFEs_desejados,

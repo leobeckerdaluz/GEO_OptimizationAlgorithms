@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Classes_Comuns_Enums;
+using Classes_e_Enums;
 
 namespace GEOs_REAIS
 {
@@ -12,13 +12,13 @@ namespace GEOs_REAIS
         public AGEO2real2_P_AA_p0(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
-            int definicao_funcao_objetivo,
+            int function_id,
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
-                definicao_funcao_objetivo,
+                function_id,
                 lower_bounds,
                 upper_bounds,
                 lista_NFEs_desejados,
@@ -55,7 +55,7 @@ namespace GEOs_REAIS
 
                     // SE A VARIÁVEL É A 999 (p), ENTÃO PERTURBA TODAS VARIÁVEIS AO MESMO TEMPO COM ESSE p' E CALCULA FX
                     if(i == 999){
-                        // GERA UM p'
+                        // GERA UM p' com maioria entre 0% e 10%
                         double rand_lognormal = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();
                         double porcentagem_linha = rand_lognormal;
 
@@ -89,25 +89,24 @@ namespace GEOs_REAIS
                         // ------------------------------------------------------------------------------------
                     }
                     
-                    // ŚENÃO, PERTURBA A VARIÁVEL DE PROJETO COM O p'
+                    // SENÃO, PERTURBA A VARIÁVEL DE PROJETO COM O p'
                     else{
                         // Cria uma população cópia
                         List<double> populacao_para_perturbar = new List<double>(populacao_atual);
                         // Obtém o valor da variável atual e o intervalo de variação dela
-                        double xi = populacao_para_perturbar[i];
+                        double xi = populacao_atual[i];
                         double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                         // Calcula o sigma com a porcentagem linha e perturba a variável
                         double sigma = this.porcentagem/100.0 * intervalo_variacao_variavel;
-                        MathNet.Numerics.Distributions.Normal DistNormal = new MathNet.Numerics.Distributions.Normal(0, sigma);
-                        double xii = xi + DistNormal.Sample();
+                        double xi_perturbado = xi + new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
                         // Atribui a variável perturbada na população cópia
-                        populacao_para_perturbar[i] = xii;
+                        populacao_para_perturbar[i] = xi_perturbado;
                         // Calcula f(x) com a variável perturbada
                         double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
                         // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                         Perturbacao perturbacao = new Perturbacao();
                         perturbacao.xi_antes_da_perturbacao = xi;
-                        perturbacao.xi_depois_da_perturbacao = xii;
+                        perturbacao.xi_depois_da_perturbacao = xi_perturbado;
                         perturbacao.fx_depois_da_perturbacao = fx;
                         perturbacao.indice_variavel_projeto = i;
                         // Adiciona na lista de perturbações
