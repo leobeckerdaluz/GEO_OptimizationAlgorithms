@@ -508,7 +508,8 @@ namespace Classes_Comuns_Enums
         parada_por_NFE,
         // parada_por_PRECISAO,
         parada_por_PRECISAOouNFE,
-        parada_por_ITERATIONS
+        parada_por_ITERATIONS,
+        parada_por_SPACECRAFT
     }
 
     enum EnumTipoPerturbacao{

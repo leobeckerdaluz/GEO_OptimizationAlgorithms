@@ -234,7 +234,7 @@ namespace ExecutaOrganizaApresenta
 
         // Essa função tem por objetivo apresentar as estatísticas das execuções por algoritmo. Aqui, as 
         // ...informações são apresentadas na tela, como melhor valor da função médio obtido 
-        public static void apresenta_resultados_finais(OQueInteressaPrintar o_que_interessa_printar, List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos, ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, bool scientific_or_decimal_str_format)
+        public static void apresenta_resultados_finais(OQueInteressaPrintar o_que_interessa_printar, List<Retorno_N_Execucoes_GEOs> estatisticas_algoritmos, ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, int scientific_or_decimal_str_format)
         {
             // Concatena o nome dos algoritmos executados
             string string_algoritmos_executados = "";
@@ -282,7 +282,7 @@ namespace ExecutaOrganizaApresenta
 
                     // Seta formato vazio para decimal
                     string StrFormat = "";
-                    if (scientific_or_decimal_str_format)
+                    if (scientific_or_decimal_str_format == 0)
                         // Seta formato scientific
                         StrFormat = "0.00E+0";
 
@@ -486,6 +486,7 @@ namespace ExecutaOrganizaApresenta
                 Console.WriteLine("");
             }
         }
+
 
 
         public List<RetornoGEOs> executa_algoritmos_n_vezes(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema)

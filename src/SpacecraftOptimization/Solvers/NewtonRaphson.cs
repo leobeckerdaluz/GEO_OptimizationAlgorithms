@@ -1,4 +1,4 @@
-﻿using MathModelsDomain.ModelsManagers;
+using MathModelsDomain.ModelsManagers;
 using MathModelsDomain.Utilities;
 using MathNet.Numerics.LinearAlgebra;
 using SpaceConceptOptimizer.Models;
@@ -105,15 +105,21 @@ namespace MathModelsDomain.Solvers
                     //}
 
                 }
+
+
+
+                if (iterations%100000 == 0){
+                    Console.WriteLine("while true!");
+                }
+
+
             }
+            
+            
             //double[,] J = { { partialF1_a(), partialF1_i()},
             //{ partialF2_a(),partialF2_i() } };
 
             //double[] fx = { F1(), F2() };
-
-
-
-
         }
     }
 }

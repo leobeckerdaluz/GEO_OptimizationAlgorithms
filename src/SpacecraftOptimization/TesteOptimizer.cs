@@ -73,10 +73,6 @@ namespace SpaceDesignTeste
 
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
 
-
-            if (D <= Q){
-                Console.WriteLine("DEU MERDA D={0} e Q={1}", D, Q);
-            }
             SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, Q, D, 0.00);
 
             int iterations = 0;
@@ -110,8 +106,8 @@ namespace SpaceDesignTeste
             Console.WriteLine("ReferencePayload.PixelSize: "+ReferencePayload.PixelSize);
             Console.WriteLine("ReferencePayload.FOV: "+ReferencePayload.FOV);
             Console.WriteLine("Ss_orb.I: "+Ss_orb.I);
-            Console.WriteLine("Ss_orb.N: "+Ss_orb.N);
             Console.WriteLine("Ss_orb.D: "+Ss_orb.D);
+            Console.WriteLine("Ss_orb.Q: "+Ss_orb.Q);
             Console.WriteLine("Ss_orb.Rev: "+Ss_orb.Rev);
             Console.WriteLine("a: "+a);
             Console.WriteLine("i: "+i);

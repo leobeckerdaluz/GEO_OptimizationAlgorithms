@@ -20,12 +20,12 @@ namespace SpaceConceptOptimizer.Models
             }
         }
 
-        public SunSyncOrbitRPT(double i, double n, double d, double _e):
-            base((i+n/d) * (2 * Math.PI / 86400),_e)
+        public SunSyncOrbitRPT(double i, double q, double d, double _e):
+            base((i+q/d) * (2 * Math.PI / 86400),_e)
         {
             I = i;
-            Q = n;
             D = d;
+            Q = q;
         }
 
         public SunSyncOrbitRPT() { }

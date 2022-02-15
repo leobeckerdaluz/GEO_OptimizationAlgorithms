@@ -105,7 +105,9 @@ namespace Execucoes
 
             int qtde_execucoes = 50;
 
-            bool scientific_or_decimal_str_format = false;
+            int scientific_or_decimal_str_format = 1;
+
+            int execucaoNFE_or_spacecraft = 1;
 
 
 
@@ -151,16 +153,22 @@ namespace Execucoes
                 }
                 else
                 {
-                    // // Critério de parada para execução normal
-                    // parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
-                    // parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                    // parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000};
-
-                    parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
-                    parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                    parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
-                    parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000};
-                    parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
+                    // execução até NFE>100000 ou spacecraft (NFE + precisão)
+                    if (execucaoNFE_or_spacecraft == 0){
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
+                        parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000};
+                    }
+                    else if (execucaoNFE_or_spacecraft == 1){
+                        // ------------------------------------
+                        // Essa parada só funciona no GEOreal
+                        // ------------------------------------
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_SPACECRAFT;
+                        parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
+                        // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
+                        // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
+                    }
                 }
                 // =======================================================================================
 
