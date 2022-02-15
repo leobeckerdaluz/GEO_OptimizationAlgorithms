@@ -35,7 +35,6 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_09,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_11,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_12,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_13,
@@ -45,8 +44,8 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_17,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_18,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_19,
-                
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_20,
+                
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_21,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_22,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_23,
@@ -212,7 +211,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
