@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Funcoes_Definidas;
 using SpaceDesignTeste;
 
 using GEOs_REAIS;
@@ -85,7 +84,7 @@ namespace ExtensiveSearch_and_Testes
             // Calcula a função objetivo com a rotina de FOs
             // =========================================================
             
-            double melhor_fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
+            double melhor_fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
 
             Console.WriteLine("Melhor fx função switch case: {0}", melhor_fx);
 

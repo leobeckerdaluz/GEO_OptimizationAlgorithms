@@ -9,14 +9,14 @@ namespace SpaceConceptOptimizer.Models
     public class SunSyncOrbitRPT : Orbit, ICloneable
     {
         public double I { get; set; }
-        public double N { get; set; }
         public double D { get; set; }
+        public double Q { get; set; }
 
         public double Rev
         {
             get
             {
-                return I + N / D; ;
+                return I + Q / D; ;
             }
         }
 
@@ -24,7 +24,7 @@ namespace SpaceConceptOptimizer.Models
             base((i+n/d) * (2 * Math.PI / 86400),_e)
         {
             I = i;
-            N = n;
+            Q = n;
             D = d;
         }
 
@@ -38,7 +38,7 @@ namespace SpaceConceptOptimizer.Models
             obr.i = this.i;
             obr.ni = this.ni;
             obr.I = this.I;
-            obr.N = this.N;
+            obr.Q = this.Q;
             obr.D = this.D;
 
             return obr;

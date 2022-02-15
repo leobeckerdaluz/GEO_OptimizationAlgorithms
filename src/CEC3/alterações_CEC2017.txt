@@ -1,8 +1,0 @@
-Mudei %Lf para %lf
-
-Adicionei o .h que está interfaceando
-
-Adicionei iostream
-
-Comentei WINDOWS.h
-Comentei stdafx.h

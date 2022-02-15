@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC   -shared -Wl,-soname,libhello-cpp.so -o libhello-cpp.so CMakeFiles/hello-cpp.dir/CEC2017.cpp.o 

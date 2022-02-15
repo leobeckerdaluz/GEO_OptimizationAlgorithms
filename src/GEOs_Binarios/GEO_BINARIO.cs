@@ -130,7 +130,7 @@ namespace GEOs_BINARIOS
             // Calcula o valor da função objetivo
             //============================================================
 
-            double fx = Funcoes_Definidas.Funcoes.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
+            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, definicao_funcao_objetivo);
 
             // Avalia se a perturbação é a melhor de todas
             if (fx < this.fx_melhor)

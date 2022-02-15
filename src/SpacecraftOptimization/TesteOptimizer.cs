@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-// using Funcoes_Definidas;
 
 namespace SpaceDesignTeste
 {
@@ -24,7 +23,7 @@ namespace SpaceDesignTeste
         public double FOV_min { get; set; }
         public int I { get; set; }
         public int D { get; set; }
-        public int N { get; set; }
+        public int Q { get; set; }
 
 
         // public SunSyncOrbitRPT Ss_orb { get; set; }
@@ -37,7 +36,7 @@ namespace SpaceDesignTeste
         {
             this.I = (int)fenotipo_variaveis_projeto[0];
             this.D = (int)fenotipo_variaveis_projeto[1];
-            this.N = (int)fenotipo_variaveis_projeto[2];
+            this.Q = (int)fenotipo_variaveis_projeto[2];
             
             this.fx_calculada = ObjectiveFunction();
             this.valid_solution = ValidateRestrictions();
@@ -45,9 +44,9 @@ namespace SpaceDesignTeste
 
         public bool ValidateRestrictions()
         {
-            return N < D 
+            return Q < D 
                 && FOV_payload >=1.05*FOV_min
-                && (double)N%D!=0;
+                && (double)Q%D != 0;
         }
 
 
@@ -75,8 +74,10 @@ namespace SpaceDesignTeste
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
 
 
-
-            SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, N, D, 0.00);
+            if (D <= Q){
+                Console.WriteLine("DEU MERDA D={0} e Q={1}", D, Q);
+            }
+            SunSyncOrbitRPT Ss_orb = new SunSyncOrbitRPT(I, Q, D, 0.00);
 
             int iterations = 0;
             double a = 0;
