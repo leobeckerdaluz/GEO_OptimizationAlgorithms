@@ -42,7 +42,7 @@ namespace GEOs_REAIS
         public override void verifica_perturbacoes()
         {
             // Inicia a lista de perturbações zerada
-            List<Perturbacao> perturbacoes = new List<Perturbacao>();
+            perturbacoes_da_iteracao = new List<Perturbacao>();
             
 
 
@@ -68,11 +68,8 @@ namespace GEOs_REAIS
             // ------------------------------------------------------------------------------------------------------------
             // Calcula a adaptabilidade do porcentagem linha. 
             
-            MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(1, 0.67);
-            // MathNet.Numerics.Distributions.LogNormal lognormal_dist = new MathNet.Numerics.Distributions.LogNormal(0, 1.0/Math.Sqrt(n_variaveis_projeto));
-            double rand_lognormal = lognormal_dist.Sample();
+            double rand_lognormal = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();
             double porcentagem_linha = rand_lognormal;
-            // double porcentagem_linha = this.porcentagem * rand_lognormal;
             
             // Cria uma cópia da população atual para perturbar todas as variáveis
             List<double> populacao_copia = new List<double>(populacao_atual);
@@ -82,10 +79,8 @@ namespace GEOs_REAIS
                 double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
                 // Calcula o sigma que será utilizado na distribuição normal
                 double sigma = porcentagem_linha/100.0 * intervalo_variacao_variavel;
-                // Cria a distribuição normal
-                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, sigma);
                 // Obtém um valor da distribuição
-                double rand_normal = normalDist.Sample();
+                double rand_normal = new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
                 // Obtém o valor atual dessa variável
                 double xi = populacao_atual[i];
                 // A perturbação vai ser a variável atual mais um valor da distribuição normal
@@ -95,18 +90,15 @@ namespace GEOs_REAIS
             }
             // Depois de toda população perturbada, calcula o f(x) que é a adaptabilidade do porcentagem linha
             double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
-
             // Cria as informações da perturbação da porcentagem
             Perturbacao info_perturbacao_porcent = new Perturbacao();
             info_perturbacao_porcent.xi_antes_da_perturbacao = porcentagem;
             info_perturbacao_porcent.xi_depois_da_perturbacao = porcentagem_linha;
             info_perturbacao_porcent.populacao_depois_da_perturbacao = new List<double>(populacao_copia);
-            // info_perturbacao_porcent.porcentagem_usada_nessa_perturb = porcentagem_linha;
             info_perturbacao_porcent.fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem;
             info_perturbacao_porcent.indice_variavel_projeto = 999;
-
             // Adiciona essa info da perturbação da porcentagem na lista de perturbações
-            perturbacoes.Add(info_perturbacao_porcent);
+            perturbacoes_da_iteracao.Add(info_perturbacao_porcent);
             // ------------------------------------------------------------------------------------
 
 
@@ -119,50 +111,35 @@ namespace GEOs_REAIS
             {
                 // Cria uma população cópia
                 List<double> populacao_para_perturbar = new List<double>(populacao_atual);
-
                 // Perturba a variável
                 double xi = populacao_para_perturbar[i];
                 double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                
-                
-
-                
-                // double sigma = porcentagem_linha/100.0 * intervalo_variacao_variavel;
+                // Calcula a perturbação
                 double sigma = this.porcentagem/100.0 * intervalo_variacao_variavel;
                 MathNet.Numerics.Distributions.Normal DistNormal = new MathNet.Numerics.Distributions.Normal(0, sigma);
                 double xii = xi + DistNormal.Sample();
-                
-
-
-
-
                 // Atribui a variável perturbada na população cópia
                 populacao_para_perturbar[i] = xii;
-
                 // Calcula f(x) com a variável perturbada
                 double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
-                
-
                 // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                 Perturbacao perturbacao = new Perturbacao();
                 perturbacao.xi_antes_da_perturbacao = xi;
                 perturbacao.xi_depois_da_perturbacao = xii;
                 perturbacao.populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar);
-                // perturbacao.porcentagem_usada_nessa_perturb = this.porcentagem;
                 perturbacao.fx_depois_da_perturbacao = fx;
                 perturbacao.indice_variavel_projeto = i;
-
                 // Adiciona na lista de perturbações
-                perturbacoes.Add(perturbacao);
+                perturbacoes_da_iteracao.Add(perturbacao);
             }
 
 
 
            
 
-            // Todas essas perturbações realizadas na população são as perturbações da iteração a 
-            // ...serem processadas posteriormente.
-            perturbacoes_da_iteracao = perturbacoes;
+            // // Todas essas perturbações realizadas na população são as perturbações da iteração a 
+            // // ...serem processadas posteriormente.
+            // perturbacoes_da_iteracao = perturbacoes;
         }
 
 
@@ -221,6 +198,9 @@ namespace GEOs_REAIS
                         // porcentagem foi auto-adaptada
                         this.porcentagem = xii_depois_perturbar;
                     }
+                    // else{
+                    //     populacao_atual[indice] = xii_depois_perturbar
+                    // }
                     
 
                     
