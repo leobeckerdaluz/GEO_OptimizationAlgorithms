@@ -5,8 +5,14 @@
 from posixpath import split
 
 
+
+TXT_FILEPATH = 'novo__CEC1to30_50runs.txt'
+TXT_FILEPATH = 'teste2.txt'
+XLSX_OUT_FILEPATH = "pandas_column_formats.xlsx"
+
+
 lines = []
-with open('novo__CEC1to30_50runs.txt') as f:
+with open(TXT_FILEPATH) as f:
     lines = f.readlines()
 
 
@@ -116,47 +122,108 @@ dataframe = {
     'Mean2': meanFX_algoritmo2,
     'sd2': sdFX_algoritmo2,
 }
+# Cria o dataframe
 df = pd.DataFrame(data = dataframe)
 
-
-# Nomes algoritmos concatenados
-nome_sheet = nomes_algoritmos[0] + ";" + nomes_algoritmos[1]
-
+# Renomeia as Colunas
+df.columns = ['No.','Best','Worst','Median','Mean','StdDev',  'No.','Best','Worst','Median','Mean','StdDev']
 
 
 
+
+
+
+
+
+
+
+
+NOME_SHEET = 'CEC2017'
+START_ROW = 1
 
 # Create a Pandas Excel writer using XlsxWriter as the engine.
-writer = pd.ExcelWriter("pandas_column_formats.xlsx", engine='xlsxwriter')
-
+writer = pd.ExcelWriter(XLSX_OUT_FILEPATH, engine='xlsxwriter')
 print("Escrevendo xlsx...")
-df.to_excel(writer, index=False, startrow=0, sheet_name=nome_sheet)
+df.to_excel(writer, index=False, startrow=START_ROW, sheet_name=NOME_SHEET)
 print("xlsx escrito!")
-
 workbook  = writer.book
-worksheet = writer.sheets[nome_sheet]
+worksheet = writer.sheets[NOME_SHEET]
 
 
 
-BOLD_FORMAT = workbook.add_format({'bold': True}) # 'valign': 'top'
+CENTER_FORMAT = workbook.add_format({'align':'center'})
+BOLD_FORMAT = workbook.add_format({'bold':True, 'align':'center'})
 
-format1 = workbook.add_format({'num_format': '#,##0.00'})
-format2 = workbook.add_format({'num_format': '0%'})
+
+
+
+
+# Centraliza tudo
+worksheet.set_column('A:M', None, CENTER_FORMAT)
+# Adiciona título
+nome_sheet = nomes_algoritmos[0] + "-" + nomes_algoritmos[1]
+worksheet.write(0, 0, nome_sheet, BOLD_FORMAT)
 
 
 
 COLUNA_MELHORFX1 = 1
+COLUNA_PIORFX1 = 2
+COLUNA_MEDIANFX1 = 3
+COLUNA_MEANFX1 = 4
+COLUNA_SDFX1 = 5
+
 COLUNA_MELHORFX2 = 7
+COLUNA_PIORFX2 = 8
+COLUNA_MEDIANFX2 = 9
+COLUNA_MEANFX2 = 10
+COLUNA_SDFX2 = 11
+
 for i in range(0,len(lista_numeros_funcoes)):
     
     melhorFX1_str = melhorFX_algoritmo1[i]
     melhorFX2_str = melhorFX_algoritmo2[i]
     if (float(melhorFX1_str) < float(melhorFX2_str)):
-        worksheet.write(i+1, COLUNA_MELHORFX1, melhorFX1_str, BOLD_FORMAT)
+        worksheet.write(i+1+START_ROW, COLUNA_MELHORFX1, melhorFX1_str, BOLD_FORMAT)
     elif (float(melhorFX2_str) < float(melhorFX1_str)):
-        worksheet.write(i+1, COLUNA_MELHORFX2, melhorFX2_str, BOLD_FORMAT)
+        worksheet.write(i+1+START_ROW, COLUNA_MELHORFX2, melhorFX2_str, BOLD_FORMAT)
     else:
-        print("IGUALLL!")
+        print("IGUALLL melhorFX na linha {0}!", i)
+
+    piorFX1_str = piorFX_algoritmo1[i]
+    piorFX2_str = piorFX_algoritmo2[i]
+    if (float(piorFX1_str) < float(piorFX2_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_PIORFX1, piorFX1_str, BOLD_FORMAT)
+    elif (float(piorFX2_str) < float(piorFX1_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_PIORFX2, piorFX2_str, BOLD_FORMAT)
+    else:
+        print("IGUALLL piorFX na linha {0}!", i)
+
+    medianFX1_str = medianFX_algoritmo1[i]
+    medianFX2_str = medianFX_algoritmo2[i]
+    if (float(medianFX1_str) < float(medianFX2_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_MEDIANFX1, medianFX1_str, BOLD_FORMAT)
+    elif (float(medianFX2_str) < float(medianFX1_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_MEDIANFX2, medianFX2_str, BOLD_FORMAT)
+    else:
+        print("IGUALLL medianFX na linha {0}!", i)
+
+    meanFX1_str = meanFX_algoritmo1[i]
+    meanFX2_str = meanFX_algoritmo2[i]
+    if (float(meanFX1_str) < float(meanFX2_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_MEANFX1, meanFX1_str, BOLD_FORMAT)
+    elif (float(meanFX2_str) < float(meanFX1_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_MEANFX2, meanFX2_str, BOLD_FORMAT)
+    else:
+        print("IGUALLL meanFX na linha {0}!", i)
+
+    sdFX1_str = sdFX_algoritmo1[i]
+    sdFX2_str = sdFX_algoritmo2[i]
+    if (float(sdFX1_str) < float(sdFX2_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_SDFX1, sdFX1_str, BOLD_FORMAT)
+    elif (float(sdFX2_str) < float(sdFX1_str)):
+        worksheet.write(i+1+START_ROW, COLUNA_SDFX2, sdFX2_str, BOLD_FORMAT)
+    else:
+        print("IGUALLL sdFX na linha {0}!", i)
 
 
 
