@@ -83,8 +83,8 @@ namespace Execucoes
             
 
             List<int> o_que_fazer = new List<int>(){ 
-                (int)EnumOQueFazer.executar_algoritmos,
-                // (int)EnumOQueFazer.tuning_GEO,
+                // (int)EnumOQueFazer.executar_algoritmos,
+                (int)EnumOQueFazer.tuning_GEO,
                 // (int)EnumOQueFazer.tuning_GEOvar,
                 // (int)EnumOQueFazer.tuning_GEOvar2,
                 // (int)EnumOQueFazer.tuning_GEOreal1_O,
@@ -97,17 +97,20 @@ namespace Execucoes
                 // (int)EnumOQueFazer.tuning_GEOreal2_P_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_N_DS,
                 // (int)EnumOQueFazer.tuning_AGEO2real1_P,
-                // (int)EnumOQueFazer.tuning_AGEO2real2_P_DS_fixo,
 
             };
             
             bool TUNING = false;
-
             int qtde_execucoes = 50;
-
             int scientific_or_decimal_str_format = 1;
-
             int execucaoNFE_or_spacecraft = 0;
+
+
+            
+            // TUNING = true;
+            // qtde_execucoes = 5;
+            // execucaoNFE_or_spacecraft = 1;
+            // scientific_or_decimal_str_format = 1;
 
 
 
@@ -220,7 +223,7 @@ namespace Execucoes
                             // ======================================================================================================
                             // Quais algoritmos executar
                             
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
@@ -243,7 +246,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
@@ -264,14 +267,17 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
 
+                            // Poucos parâmetros
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;        //OBS.: CEC não foi tunado, então falta 'p1', 'P' e 's'
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo = true;
+                            
+                            // Auto-adaptativos
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p0 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p2 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p9 = true;
                             
 
@@ -299,7 +305,8 @@ namespace Execucoes
                         {
                             // ======================================================================================================
                             // Tuning do GEO
-                            List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0}; 
+                            // List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0}; 
+                            List<double> valores_tau = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5}; 
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
                             
@@ -572,30 +579,6 @@ namespace Execucoes
                         break;
 
 
-                        case (int)EnumOQueFazer.tuning_AGEO2real2_P_DS_fixo:
-                        {
-                            // ======================================================================================================
-                            // Tuning do AGEO2real2_P_DS_fixo
-                            
-                            
-                            // List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
-                            // List<double> valores_porcent = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
-                            List<double> valores_porcent = Enumerable.Range(1, 50).Select(i => i*2.0).ToList();
-
-                            
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo = true;
-                            
-                            Tunings.Tunings tunings = new Tunings.Tunings();
-                            
-                            List<Tuning> resultados_tuning = tunings.tuning_AGEO2real2_P_DS_fixo(parametros_execucao, parametros_problema, valores_porcent);
-                          
-                            bool ordenar = false;
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
-                        }
-                        break;
-
-
                         default:
                             Console.WriteLine("Tipo de execução não conhecido!");
                         break;
@@ -603,179 +586,27 @@ namespace Execucoes
 
 
 
-
-
-
-
-
-
-
                 
 
 
 
                     
                     // // ======================================================================================================
-                    // // ======================================================================================================
                     // // ================================== ASGEO e 1/5 rule ==================================================
-                    // // ======================================================================================================
-                    // // ======================================================================================================
-                    
-                    // // ====================================================================================
-                    // // ASGEO2 REAL2 1
-                    
-                    /////// parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
-
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-
-                    // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 5;
-                    // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 10;
-                    // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
-
-
-                    // // List<int> valores_P = new List<int>(){4,8,12,16};
-                    // // List<double> valores_p1 = new List<double>(){5, 10, 50, 100};
-                    // // List<int> valores_s = new List<int>(){2, 10};
-
-                    // // List<int> valores_P = new List<int>(){5};
-                    // // List<double> valores_p1 = new List<double>(){10};
-                    // // List<int> valores_s = new List<int>(){10};
-
-                    // // BOM
-                    // // List<int> valores_P = new List<int>(){8};
-                    // // List<double> valores_p1 = new List<double>(){10};
-                    // // List<int> valores_s = new List<int>(){2};
-
-                    // List<int> valores_P = new List<int>(){4, 6, 8, 12};
-                    // List<double> valores_p1 = new List<double>(){10, 20, 50};
-                    // List<int> valores_s = new List<int>(){2, 10};
-                    
-                    // foreach (int P in valores_P){
-                    //     foreach (double p1 in valores_p1){
-                    //         foreach (int s in valores_s){
-                    //             Console.WriteLine("=====================================================");
-                    //             Console.WriteLine("P = {0} | p1 = {1} | s = {2}", P, p1, s);
-                    //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = P;
-                    //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = p1;
-                    //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = s;
-                    //             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    //             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                    //             // Organiza os resultados de todas as excuções por algoritmo
-                    //             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                    //             // Apresenta os resultados finais
-                    //             apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                    //         }
-                    //     }
-                    // }
-
-
-
-
-                    // // ====================================================================================
-                    // // ASGEO2 REAL2 1 - PERTURBAÇÃO ORIGINAL
-                    // // ====================================================================================
-
-                    // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = 5;
-                    // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = 10;
-                    // // parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = 10;
-
-                    // // List<int> valores_P = new List<int>(){4,8,12,16};
-                    // List<int> valores_P = new List<int>(){2,4,8};
-                    // List<double> valores_std1 = new List<double>(){1,2,3};
-                    // // List<double> valores_std1 = new List<double>(){10};
-                    // List<int> valores_s = new List<int>(){2,5,10};
-                    // // List<int> valores_s = new List<int>(){10};
-                    
-                    // foreach (int P in valores_P){
-                    //     foreach (double std1 in valores_std1){
-                    //         foreach (int s in valores_s){
-                    //             Console.WriteLine("=====================================================");
-                    //             Console.WriteLine("P = {0} | std1 = {1} | s = {2}", P, std1, s);
-                    //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_P = P;
-                    //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1 = std1;
-                    //             parametros_problema.parametros_livres.ASGEO2_REAL2_1_s = s;
-                    //             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    //             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                    //             // Organiza os resultados de todas as excuções por algoritmo
-                    //             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                    //             // Apresenta os resultados finais
-                    //             apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                    //         }
-                    //     }
-                    // }
-
-
 
                     // // ====================================================================================
                     // // Execução 1/5 rule tunado
-                    // // ====================================================================================
-                    
-                    /////// parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
-
                     // parametros_problema.parametros_livres.stdmin_one_fifth_rule = 0.2; 
                     // parametros_problema.parametros_livres.q_one_fifth_rule = 200; 
                     // parametros_problema.parametros_livres.c_one_fifth_rule = 0.9;
 
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_header = false;
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
-                    // // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-                
-                    // // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    // List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                    
-                    // // Organiza os resultados de todas as excuções por algoritmo
-                    // List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                    
-                    // // Apresenta os resultados finais
-                    // apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-
-                    
-
                     // // ====================================================================================
                     // // Tuning do c e q para 1/5 rule dos A-GEOsreal1
-                    // // ====================================================================================
-
-                    /////// parametros_execucao.tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_SDdireto;
-                    
-                    // // Executa o algoritmo variando o std
                     // List<double> valores_stdmin = new List<double>(){0.1, 0.2, 0.5, 1};
                     // // List<int> valores_q = new List<int>(){50, 100, 200, 500};
                     // List<int> valores_q = new List<int>(){100, 200, 500};
                     // // List<double> valores_c = new List<double>(){0.85, 0.9, 0.95};
                     // List<double> valores_c = new List<double>(){0.9, 0.95};
-                    
-                    // // Itera cada std e cada tau
-                    // foreach (double stdmin in valores_stdmin){
-                    //     foreach (int q in valores_q){
-                    //         foreach (double c in valores_c){
-                    //             parametros_problema.parametros_livres.stdmin_one_fifth_rule = stdmin; 
-                    //             parametros_problema.parametros_livres.q_one_fifth_rule = q; 
-                    //             parametros_problema.parametros_livres.c_one_fifth_rule = c; 
-
-                    //             Console.WriteLine("========================================================");
-                    //             Console.WriteLine("stdmin = {0} | q = {1} | c = {2}", stdmin, q, c);
-
-                    //             // Executa cada algoritmo por N vezes e obtém todas as execuções
-                    //             List<RetornoGEOs> todas_execucoes_algoritmos = executa_algoritmos_n_vezes(parametros_execucao, parametros_problema);
-                                
-                    //             // Organiza os resultados de todas as excuções por algoritmo
-                    //             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
-                                
-                    //             // Apresenta os resultados finais
-                    //             apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema);
-                    //         }
-                    //     }
-                    // }
-                    
-                    
-                    // // ======================================================================================================
-                    // // ======================================================================================================
-                    // // ======================================================================================================
-                    // // ======================================================================================================
                     // // ======================================================================================================
 
                 }

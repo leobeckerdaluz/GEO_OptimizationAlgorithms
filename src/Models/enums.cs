@@ -77,7 +77,6 @@ namespace Classes_e_Enums
         tuning_GEOreal2_N_DS,
 
         tuning_AGEO2real1_P,
-        tuning_AGEO2real2_P_DS_fixo,
     }
 
 
@@ -140,15 +139,6 @@ namespace Classes_e_Enums
         AGEO2real2_P_AA_p2,
         AGEO2real2_P_AA_p3,
         AGEO2real2_P_AA_p9,
-
-        // // OUTROS
-        // ASGEO2real1_1,
-        // ASGEO2real1_2,
-        // ASGEO2real1_3,
-        // ASGEO2real1_4,
-        // ASGEO2real2_1,
-        // ASGEO2real2_2,
-        // ASGEO2real2_3,
     }
 
 

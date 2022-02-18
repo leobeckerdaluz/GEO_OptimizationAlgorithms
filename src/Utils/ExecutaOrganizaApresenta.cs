@@ -1492,6 +1492,10 @@ namespace ExecutaOrganizaApresenta
                 }
 
 
+                
+                // ----------------------------------------------------------------
+                // tau adaptativo
+                // ----------------------------------------------------------------
 
                 // AGEOreal1_P  =  Adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P)
@@ -1544,6 +1548,10 @@ namespace ExecutaOrganizaApresenta
 
 
 
+                // ----------------------------------------------------------------
+                // FIXO
+                // ----------------------------------------------------------------
+
                 // AGEO2real2_P_DS_fixo  =  Adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + VARIAÇÃO DIVIDE POR S
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo)
                 {
@@ -1563,7 +1571,10 @@ namespace ExecutaOrganizaApresenta
 
 
 
-
+                // ----------------------------------------------------------------
+                // Auto-Adaptativo
+                // ----------------------------------------------------------------
+                
                 // AGEOreal1_P_AA  =  tau adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA)
                 {
@@ -1640,7 +1651,7 @@ namespace ExecutaOrganizaApresenta
                 }
 
 
-                // AGEOreal2_P_AA_p3  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
+                // AGEOreal2_P_AA_p 3  =  tau adaptativo + GEOreal2 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3)
                 {
                     AGEO2real2_P_AA_p3 AGEO2real2_P_AA_p3 = new AGEO2real2_P_AA_p3(
@@ -1674,295 +1685,6 @@ namespace ExecutaOrganizaApresenta
 
                     todas_execucoes.Add(ret);
                 }
-
-
-              
-
-
-
-
-                // // AGEO1real2 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real2_igor)
-                // {
-                //     bool primeira_das_P_perturbacoes_uniforme = false;
-                //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-
-                //     AGEOs_REAL2 AGEO1real2 = new AGEOs_REAL2(
-                //         1, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         primeira_das_P_perturbacoes_uniforme,
-                //         tipo_variacao_std_nas_P_perturbacoes,
-                //         parametros_problema.parametros_livres.std_AGEO1real2, 
-                //         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
-                //         (int)parametros_problema.parametros_livres.s_AGEO1real2,
-                //         tipo_perturbacao);
-                        
-                //     RetornoGEOs ret = AGEO1real2.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1real2_igor;
-
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO2real2 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_igor)
-                // {
-                //     bool primeira_das_P_perturbacoes_uniforme = false;
-                //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-                    
-                //     AGEOs_REAL2 AGEO2real2 = new AGEOs_REAL2(
-                //         2, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds, 
-                //         parametros_problema.upper_bounds, 
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         primeira_das_P_perturbacoes_uniforme,
-                //         tipo_variacao_std_nas_P_perturbacoes,
-                //         parametros_problema.parametros_livres.std_AGEO1real2, 
-                //         (int)parametros_problema.parametros_livres.P_AGEO1real2, 
-                //         (int)parametros_problema.parametros_livres.s_AGEO1real2,
-                //         tipo_perturbacao);
-                        
-                //     RetornoGEOs ret = AGEO2real2.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_igor;
-
-                //     todas_execucoes.Add(ret);
-                // }
-                
-                
-                
-                // // ASGEO2real1_1 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_1)
-                // {
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-
-                //     ASGEO2_REAL1_1 ASGEO2real1_1 = new ASGEO2_REAL1_1(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         tipo_perturbacao,
-                //         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_1, 
-                //         parametros_problema.parametros_livres.std_ASGEO2_REAL1_1,
-                //         parametros_problema.parametros_livres.q_one_fifth_rule,
-                //         parametros_problema.parametros_livres.c_one_fifth_rule,
-                //         parametros_problema.parametros_livres.stdmin_one_fifth_rule);
-                        
-                //     RetornoGEOs ret = ASGEO2real1_1.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_1;
-                        
-                //     todas_execucoes.Add(ret);
-                // }
-                
-                // // ASGEO2real1_2 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_2)
-                // {
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-                    
-                //     ASGEO2_REAL1_2 ASGEO2real1_2 = new ASGEO2_REAL1_2(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         tipo_perturbacao,
-                //         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_2, 
-                //         parametros_problema.parametros_livres.std_ASGEO2_REAL1_2,
-                //         parametros_problema.parametros_livres.q_one_fifth_rule,
-                //         parametros_problema.parametros_livres.c_one_fifth_rule,
-                //         parametros_problema.parametros_livres.stdmin_one_fifth_rule);
-                        
-                //     RetornoGEOs ret = ASGEO2real1_2.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_2;
-                        
-                //     todas_execucoes.Add(ret);
-                // }
-                
-                // // ASGEO2real1_3 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real1_3)
-                // {
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-                    
-                //     ASGEO2_REAL1_3 ASGEO2real1_3 = new ASGEO2_REAL1_3(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         tipo_perturbacao,
-                //         parametros_problema.parametros_livres.tau_ASGEO2_REAL1_3, 
-                //         parametros_problema.parametros_livres.std_ASGEO2_REAL1_3);
-                        
-                //     RetornoGEOs ret = ASGEO2real1_3.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real1_3;
-                        
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // ASGEO2real2_1
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_ASGEO2real2_1)
-                // {
-                //     ASGEO2_REAL2_1 ASGEO2real2_1 = new ASGEO2_REAL2_1(
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds, 
-                //         parametros_problema.upper_bounds, 
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         parametros_problema.parametros_livres.ASGEO2_REAL2_1_P,
-                //         parametros_problema.parametros_livres.ASGEO2_REAL2_1_std1,
-                //         parametros_problema.parametros_livres.ASGEO2_REAL2_1_s,
-                //         (int)EnumTipoPerturbacao.perturbacao_porcentagem);
-                        
-                //     RetornoGEOs ret = ASGEO2real2_1.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.ASGEO2real2_1;
-
-                //     todas_execucoes.Add(ret);
-                // }
-
-                
-                
-                // // AGEO2_REAL1_igor
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL1_igor)
-                // {
-                //     AGEOs_REAL1 AGEO2_REAL1_igor = new AGEOs_REAL1(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         parametros_problema.parametros_livres.std_AGEO2real1, 
-                //         2, 
-                //         (int)EnumTipoPerturbacao.perturbacao_igor);
-                        
-                //     RetornoGEOs ret = AGEO2_REAL1_igor.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2_REAL1_igor;
-                        
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO2_REAL1_porcentagem
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL1_porcentagem)
-                // {
-                //     AGEOs_REAL1 AGEO2_REAL1_porcentagem = new AGEOs_REAL1(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         parametros_problema.parametros_livres.p1_AGEO2real1, 
-                //         2, 
-                //         (int)EnumTipoPerturbacao.perturbacao_porcentagem);
-                        
-                //     RetornoGEOs ret = AGEO2_REAL1_porcentagem.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2_REAL1_porcentagem;
-                        
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO2_REAL2_igor
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL2_igor)
-                // {
-                //     int P = 6;
-                //     double std = 50;
-                //     int s = 10;
-                //     bool primeira_das_P_perturbacoes_uniforme = true;
-                //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
-
-                //     AGEOs_REAL2 AGEO2_REAL2_igor = new AGEOs_REAL2(
-                //         2,
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds, 
-                //         parametros_problema.upper_bounds, 
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         primeira_das_P_perturbacoes_uniforme,
-                //         tipo_variacao_std_nas_P_perturbacoes,
-                //         std,
-                //         P,
-                //         s,
-                //         (int)EnumTipoPerturbacao.perturbacao_igor);
-                        
-                //     RetornoGEOs ret = AGEO2_REAL2_igor.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2_REAL2_igor;
-
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO2_REAL2_porcentagem
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL2_porcentagem)
-                // {
-                //     int P = 6;
-                //     double std = 10;
-                //     int s = 10;
-                //     bool primeira_das_P_perturbacoes_uniforme = true;
-                //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
-
-                //     AGEOs_REAL2 AGEO2_REAL2_porcentagem = new AGEOs_REAL2(
-                //         2,
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds, 
-                //         parametros_problema.upper_bounds, 
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         primeira_das_P_perturbacoes_uniforme,
-                //         tipo_variacao_std_nas_P_perturbacoes,
-                //         std,
-                //         P,
-                //         s,
-                //         (int)EnumTipoPerturbacao.perturbacao_porcentagem);
-                        
-                //     RetornoGEOs ret = AGEO2_REAL2_porcentagem.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2_REAL2_porcentagem;
-
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO2_REAL2_normal
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2_REAL2_normal)
-                // {
-                //     int P = 6;
-                //     double std = 10;
-                //     int s = 10;
-                //     bool primeira_das_P_perturbacoes_uniforme = true;
-                //     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
-
-                //     AGEOs_REAL2 AGEO2_REAL2_normal = new AGEOs_REAL2(
-                //         2,
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds, 
-                //         parametros_problema.upper_bounds, 
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
-                //         primeira_das_P_perturbacoes_uniforme,
-                //         tipo_variacao_std_nas_P_perturbacoes,
-                //         std,
-                //         P,
-                //         s,
-                //         (int)EnumTipoPerturbacao.perturbacao_normal);
-                        
-                //     RetornoGEOs ret = AGEO2_REAL2_normal.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2_REAL2_normal;
-
-                //     todas_execucoes.Add(ret);
-                // }
             }
 
             // Retorna a lista com todas as N execuções para os algoritmos a serem executados

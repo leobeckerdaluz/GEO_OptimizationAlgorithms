@@ -1,0 +1,29 @@
+
+
+
+
+FUNÇÕES:
+http://benchmarkfcns.xyz/fcns
+https://www.sfu.ca/~ssurjano/optimization.html
+
+https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html#newton-conjugate-gradient-algorithm-method-newton-cg
+https://docs.scipy.org/doc/scipy/reference/optimize.minimize-cg.html
+https://nikstoyanov.me/post/2019-04-14-numerical-optimizations/
+
+
+
+
+
+## Aprendizados:
+
+- Se tá fora do range por causa da penalidade pode dar um valor muito baixo. Tipo na SCH com os valores N=10 valendo  363.418484974382, 253.228093848204, 285.444351278918, -390.682233446595, 466.598284880909, 10.2029892197824, -70.0670674303859, 376.606174687206, 209.68477926668, -4555.08713260943.
+
+
+
+
+
+
+## Python:
+
+- Plotar o andamento da população em 3D no espaço de projeto
+- Implementar outras formas de mutação

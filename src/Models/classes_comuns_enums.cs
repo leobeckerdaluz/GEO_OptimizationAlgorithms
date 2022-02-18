@@ -128,14 +128,6 @@ namespace Classes_e_Enums
         public bool rodar_AGEO2real2_P_AA_p2 { get; set; }
         public bool rodar_AGEO2real2_P_AA_p3 { get; set; }
         public bool rodar_AGEO2real2_P_AA_p9 { get; set; }
-        
-        // // OUTROS
-        // public bool rodar_ASGEO2real1_1 { get; set; }
-        // public bool rodar_ASGEO2real1_2 { get; set; }
-        // public bool rodar_ASGEO2real1_3 { get; set; }
-        // public bool rodar_ASGEO2real1_4 { get; set; }
-        // public bool rodar_ASGEO2real2_1 { get; set; }
-        // public bool rodar_ASGEO2real2_2 { get; set; }
     }
 
 
@@ -288,22 +280,5 @@ namespace Classes_e_Enums
         public double AGEO2real2_P_DS__porc {get; set;}
         public double AGEO2real2_P_DS__P {get; set;}
         public double AGEO2real2_P_DS__s {get; set;}
-        
-        
-        // // Não essenciais atualmente
-        // public double std_ASGEO2_REAL1_1 {get; set;}
-        // public double std_ASGEO2_REAL1_2 {get; set;}
-        // public double std_ASGEO2_REAL1_3 {get; set;}
-        // public double std_ASGEO2_REAL1_4 {get; set;}
-        // public int q_one_fifth_rule {get; set;}
-        // public double c_one_fifth_rule {get; set;}
-        // public double stdmin_one_fifth_rule {get; set;}
-        // public int ASGEO2_REAL2_1_P {get; set;}
-        // public double ASGEO2_REAL2_1_std1 {get; set;}
-        // public int ASGEO2_REAL2_1_s {get; set;}
-        // public double tau_ASGEO2_REAL1_1 {get; set;}
-        // public double tau_ASGEO2_REAL1_2 {get; set;}
-        // public double tau_ASGEO2_REAL1_3 {get; set;}
-        // public double tau_ASGEO2_REAL1_4 {get; set;}
     }
 }
