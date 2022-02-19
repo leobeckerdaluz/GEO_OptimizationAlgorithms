@@ -300,17 +300,17 @@ namespace GEOs_REAIS
                 stop = true;
             }
 
-            // else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_SPACECRAFT) 
-            // {
-            //     int I = (int)this.populacao_atual[0];
-            //     int D = (int)this.populacao_atual[1];
-            //     int Q = (int)this.populacao_atual[2];
+            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_SPACECRAFT) 
+            {
+                int I = (int)this.populacao_atual[0];
+                int D = (int)this.populacao_atual[1];
+                int Q = (int)this.populacao_atual[2];
 
                  
-            //     if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
-            //         stop = true;
-            //     }
-            // }
+                if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
+                    stop = true;
+                }
+            }
 
 
             // Retorna o status da parada

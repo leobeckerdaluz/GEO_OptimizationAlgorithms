@@ -1,5 +1,5 @@
 
-#define CONSOLE_OUT_FILE
+// #define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
@@ -18,12 +18,12 @@ namespace Execucoes
             // =======================================================================================
             List<int> function_values = new List<int>()
             {
-                (int)EnumNomesFuncoesObjetivo.griewangk,
-                (int)EnumNomesFuncoesObjetivo.rastringin,
-                (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                (int)EnumNomesFuncoesObjetivo.schwefel,
-                (int)EnumNomesFuncoesObjetivo.ackley,
-                (int)EnumNomesFuncoesObjetivo.beale,
+                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                // (int)EnumNomesFuncoesObjetivo.rastringin,
+                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                // (int)EnumNomesFuncoesObjetivo.schwefel,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.beale,
                 
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
@@ -57,7 +57,7 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
                 // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
                 
-                // (int)EnumNomesFuncoesObjetivo.spacecraft,
+                (int)EnumNomesFuncoesObjetivo.spacecraft,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
                 // (int)EnumNomesFuncoesObjetivo.salomon,
@@ -83,8 +83,8 @@ namespace Execucoes
             
 
             List<int> o_que_fazer = new List<int>(){ 
-                // (int)EnumOQueFazer.executar_algoritmos,
-                (int)EnumOQueFazer.tuning_GEO,
+                (int)EnumOQueFazer.executar_algoritmos,
+                // (int)EnumOQueFazer.tuning_GEO,
                 // (int)EnumOQueFazer.tuning_GEOvar,
                 // (int)EnumOQueFazer.tuning_GEOvar2,
                 // (int)EnumOQueFazer.tuning_GEOreal1_O,
@@ -106,11 +106,11 @@ namespace Execucoes
             int execucaoNFE_or_spacecraft = 0;
 
 
-            
-            // TUNING = true;
-            // qtde_execucoes = 5;
-            // execucaoNFE_or_spacecraft = 1;
-            // scientific_or_decimal_str_format = 1;
+            // Spacecraft
+            TUNING = false;
+            qtde_execucoes = 10;
+            execucaoNFE_or_spacecraft = 1;
+            scientific_or_decimal_str_format = 1;
 
 
 
@@ -166,17 +166,17 @@ namespace Execucoes
                         // ------------------------------------
                         // Essa parada só funciona no GEOreal
                         // ------------------------------------
-                        // parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_SPACECRAFT;
-                        // parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                        // // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
-                        // // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
-                        // parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
-
-                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
-                        parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-15;
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_SPACECRAFT;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
-                        parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
+                        // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
+                        // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
+
+                        // parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
+                        // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-15;
+                        // parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
+                        // parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
+                        // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
                     }
                 }
                 // =======================================================================================
@@ -208,7 +208,7 @@ namespace Execucoes
                         {
                             // ======================================================================================================
                             // O que interessa printar no arquivo de saída ao 'executar algoritmos'
-                            parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
+                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
                             
                             // parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true; //alg. sozinho
@@ -223,12 +223,12 @@ namespace Execucoes
                             // ======================================================================================================
                             // Quais algoritmos executar
                             
-                            parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
@@ -702,8 +702,6 @@ namespace Execucoes
             };
 
             List<Retorno_N_Execucoes_GEOs> ret = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes, parametros_execucao);
-
-            int a = 2;
         }
     }
 
@@ -757,14 +755,14 @@ namespace Execucoes
 
             // Execuções
             Execucoes_GEO ex = new Execucoes_GEO();
-            ex.Execucoes();
+            // ex.Execucoes();
             // ex.Teste1();
 
-            // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.ExtensiveSearch_SpacecraftOptimization();
+            ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.ExtensiveSearch_SpacecraftOptimization();
             // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.Teste_FuncoesObjetivo_SpacecraftOptimization();
 
             watch.Stop();
-            Console.WriteLine("\n\nExecution Time: {0} s", watch.ElapsedMilliseconds/1000);
+            Console.WriteLine("\n\nExecution Time: {0} s", watch.ElapsedMilliseconds/1000.0);
 
 
 

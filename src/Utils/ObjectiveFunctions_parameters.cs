@@ -479,7 +479,9 @@ namespace ObjectiveFunctions
                     parametros_problema.bits_por_variavel = new List<int>(){2,6,6};
                     parametros_problema.lower_bounds = new List<double>(){13,1,1};
                     parametros_problema.upper_bounds = new List<double>(){15,60,59};
-                    parametros_problema.parametros_livres = new ParametrosLivreProblema();
+                    parametros_problema.parametros_livres = new ParametrosLivreProblema(){
+                        GEO__tau = 1.0,
+                    };
                 break;
                 }
 

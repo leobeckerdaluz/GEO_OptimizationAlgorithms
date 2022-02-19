@@ -100,7 +100,7 @@ namespace GEOs_BINARIOS
             }
 
             // Depois que flipou um bit de cada variável, precisa calcular o fx_atual novamente
-            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, false);
+            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, true);
         }
     }
 }

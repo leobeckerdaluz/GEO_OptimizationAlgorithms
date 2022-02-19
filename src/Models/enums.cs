@@ -147,7 +147,7 @@ namespace Classes_e_Enums
         // parada_por_PRECISAO,
         parada_por_PRECISAOouNFE,
         parada_por_ITERATIONS,
-        parada_por_SPACECRAFT
+        parada_SPACECRAFT
     }
 
 

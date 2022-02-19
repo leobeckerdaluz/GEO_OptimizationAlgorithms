@@ -18,6 +18,7 @@ namespace GEOs_BINARIOS
         public int NFE {get; set;}
         public double fx_atual {get; set;}
         public double fx_melhor {get; set;}
+        public List<double> populacao_atual_double {get; set;}
         public List<bool> populacao_atual {get; set;}
         public List<bool> populacao_melhor {get; set;}
         public List<double> melhores_NFEs {get; set;}
@@ -50,6 +51,7 @@ namespace GEOs_BINARIOS
             this.bits_por_variavel_variaveis = new List<int>(bits_por_variavel_variaveis);
             
             this.NFE = 0;
+            this.populacao_atual_double = new List<double>();
             this.populacao_atual = new List<bool>(populacao_inicial_binaria);
             this.populacao_melhor = new List<bool>(populacao_inicial_binaria);
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
@@ -79,15 +81,7 @@ namespace GEOs_BINARIOS
         }
 
 
-        public virtual double calcula_valor_funcao_objetivo(List<bool> populacao_de_bits, bool addNFE)
-        {
-            // Calcula o valor da função objetivo com o fenótipo desejado
-            int n_variaveis_projeto = this.bits_por_variavel_variaveis.Count;
-
-            // Incrementa o NFE
-            if (addNFE)
-                add_NFE();
-            
+        private List<double> convert_boolpop_to_listdouble(List<bool>populacao_de_bits){
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
             
@@ -125,6 +119,23 @@ namespace GEOs_BINARIOS
                 // Adiciona o fenótipo da variável na lista de fenótipos
                 fenotipo_variaveis_projeto.Add(fenotipo_variavel_projeto);
             }
+
+            return fenotipo_variaveis_projeto;
+        }
+
+
+        public virtual double calcula_valor_funcao_objetivo(List<bool> populacao_de_bits, bool addNFE)
+        {
+            // Calcula o valor da função objetivo com o fenótipo desejado
+            int n_variaveis_projeto = this.bits_por_variavel_variaveis.Count;
+
+            // Incrementa o NFE
+            if (addNFE)
+                add_NFE();
+            
+            // Cria a lista que irá conter o fenótipo de cada variável de projeto
+            List<double> fenotipo_variaveis_projeto = convert_boolpop_to_listdouble(populacao_de_bits);
+            
 
             //============================================================
             // Calcula o valor da função objetivo
@@ -207,6 +218,22 @@ namespace GEOs_BINARIOS
                     // Atualiza o valor da f(x) para o flipado
                     fx_atual = lista_informacoes_mutacao[k].funcao_objetivo_flipando;
 
+                    // Atualiza os fenótipos da população 
+                    populacao_atual_double = convert_boolpop_to_listdouble(this.populacao_atual);
+
+
+
+
+                    if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
+                        // Atualiza cada fenótipo para um valor int
+                        for (int i=0; i<populacao_atual_double.Count; i++){
+                            populacao_atual_double[i] = Math.Round(populacao_atual_double[i]);
+                        }
+                    }
+
+
+
+
                     // Sai do laço while
                     break;
                 }
@@ -256,6 +283,27 @@ namespace GEOs_BINARIOS
             && (parada_por_NFE || parada_por_precisao))
             {
                 stop = true;
+            }
+
+
+            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_SPACECRAFT) 
+            {
+                int I = (int)this.populacao_atual_double[0];
+                int D = (int)this.populacao_atual_double[1];
+                int Q = (int)this.populacao_atual_double[2];
+
+
+
+                if (I==14 && D>58 && Q>58){
+                    Console.WriteLine("OLOOOCO");
+                }
+
+
+
+
+                if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
+                    stop = true;
+                }
             }
 
             // Retorna o status da parada

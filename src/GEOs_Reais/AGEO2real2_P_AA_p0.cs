@@ -187,7 +187,7 @@ namespace GEOs_REAIS
             }
 
             // Depois que aceitou uma perturbação de cada variável, precisa calcular o fx_atual novamente
-            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, false);
+            fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, true);
         }
     }
 }
