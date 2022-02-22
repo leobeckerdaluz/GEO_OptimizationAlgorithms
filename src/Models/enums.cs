@@ -134,10 +134,10 @@ namespace Classes_e_Enums
         AGEOreal2_P_DS,
         AGEO2real1_P_AA,
         AGEO2real2_P_DS_fixo,
-        AGEO2real2_P_AA_p0,
-        AGEO2real2_P_AA_p1,
-        AGEO2real2_P_AA_p2,
-        AGEO2real2_P_AA_p3,
+        AGEO2real2_AA0,
+        AGEO2real2_AA1,
+        AGEO2real2_AA2,
+        AGEO2real2_AA3,
         AGEO2real2_P_AA_p9,
     }
 
@@ -148,6 +148,14 @@ namespace Classes_e_Enums
         parada_por_PRECISAOouNFE,
         parada_por_ITERATIONS,
         parada_SPACECRAFT
+    }
+
+
+    enum EnumCriteriosParada{
+        tuning_1e16_10e5,
+        execution_1e5,
+        execution_1e6,
+        execution_spacecraft,
     }
 
 

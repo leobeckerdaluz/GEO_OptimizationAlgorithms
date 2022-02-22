@@ -51,7 +51,7 @@ namespace GEOs_BINARIOS
             this.bits_por_variavel_variaveis = new List<int>(bits_por_variavel_variaveis);
             
             this.NFE = 0;
-            this.populacao_atual_double = new List<double>();
+            this.populacao_atual_double = new List<double>(convert_boolpop_to_listdouble(populacao_inicial_binaria));
             this.populacao_atual = new List<bool>(populacao_inicial_binaria);
             this.populacao_melhor = new List<bool>(populacao_inicial_binaria);
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
@@ -223,13 +223,20 @@ namespace GEOs_BINARIOS
 
 
 
-
+                    // Perturbação INT
+                    // Perturbação INT
+                    // Perturbação INT
+                    // Perturbação INT
                     if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
                         // Atualiza cada fenótipo para um valor int
                         for (int i=0; i<populacao_atual_double.Count; i++){
                             populacao_atual_double[i] = Math.Round(populacao_atual_double[i]);
                         }
                     }
+                    // Perturbação INT
+                    // Perturbação INT
+                    // Perturbação INT
+                    // Perturbação INT
 
 
 
@@ -295,7 +302,10 @@ namespace GEOs_BINARIOS
 
 
                 if (I==14 && D>58 && Q>58){
-                    Console.WriteLine("OLOOOCO");
+                    Console.WriteLine("OLOOOCO1");
+                    Console.WriteLine("OLOOOCO2");
+                    Console.WriteLine("OLOOOCO3");
+                    Console.WriteLine("OLOOOCO4");
                 }
 
 
@@ -319,7 +329,7 @@ namespace GEOs_BINARIOS
                 fx_atual_comeco_it = fx_atual;
 
                 verifica_perturbacoes();    // Realiza todas as perturbações nas variáveis
-                mutacao_do_tau_AGEOs();     // Muta o tau se necessário
+                mutacao_do_tau_AGEOs();     // Muda o tau se necessário
                 ordena_e_perturba();        // Escolhe as perturbações a serem confirmadas
 
                 // Armazena os dados da iteração

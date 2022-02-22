@@ -326,7 +326,7 @@ namespace GEOs_REAIS
                 fx_atual_comeco_it = fx_atual;
                 
                 verifica_perturbacoes();    // Realiza todas as perturbações nas variáveis
-                mutacao_do_tau_AGEOs();     // Muta o tau se necessário
+                mutacao_do_tau_AGEOs();     // Muda o tau se necessário
                 ordena_e_perturba();        // Escolhe as perturbações a serem confirmadas
 
                 // Armazena os dados da iteração

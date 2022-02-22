@@ -5,11 +5,11 @@ using Classes_e_Enums;
 
 namespace GEOs_REAIS
 {
-    public class AGEO2real2_P_AA_p3 : AGEO2real2
+    public class AGEO2real2_AA3 : AGEO2real2
     {
         public double p_inicial_peq {get; set;}
         
-        public AGEO2real2_P_AA_p3(
+        public AGEO2real2_AA3(
             List<double> populacao_inicial,
             int n_variaveis_projeto,
             int function_id,

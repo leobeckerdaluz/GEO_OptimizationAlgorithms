@@ -123,10 +123,10 @@ namespace Classes_e_Enums
         public bool rodar_AGEO2real2_P_DS { get; set; }
         public bool rodar_AGEO2real2_P_DS_fixo { get; set; }
         public bool rodar_AGEO2real1_P_AA { get; set; }
-        public bool rodar_AGEO2real2_P_AA_p0 { get; set; }
-        public bool rodar_AGEO2real2_P_AA_p1 { get; set; }
-        public bool rodar_AGEO2real2_P_AA_p2 { get; set; }
-        public bool rodar_AGEO2real2_P_AA_p3 { get; set; }
+        public bool rodar_AGEO2real2_AA0 { get; set; }
+        public bool rodar_AGEO2real2_AA1 { get; set; }
+        public bool rodar_AGEO2real2_AA2 { get; set; }
+        public bool rodar_AGEO2real2_AA3 { get; set; }
         public bool rodar_AGEO2real2_P_AA_p9 { get; set; }
     }
 

@@ -1,5 +1,5 @@
 
-// #define CONSOLE_OUT_FILE
+#define CONSOLE_OUT_FILE
 
 using System;
 using System.Collections.Generic;
@@ -25,39 +25,39 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.beale,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_04,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_05,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_06,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_07,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_08,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_09,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_01,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_03,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_04,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_05,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_06,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_07,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_08,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_09,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_10,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_11,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_12,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_13,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_14,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_15,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_16,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_17,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_18,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_19,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_20,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_11,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_12,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_13,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_14,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_15,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_16,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_17,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_18,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_19,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_20,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_21,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_22,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_23,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_24,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_25,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_26,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_27,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_28,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_21,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_22,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_23,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_24,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_25,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_26,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_27,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_28,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_29,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_30,
                 
-                (int)EnumNomesFuncoesObjetivo.spacecraft,
+                // (int)EnumNomesFuncoesObjetivo.spacecraft,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
                 // (int)EnumNomesFuncoesObjetivo.salomon,
@@ -100,19 +100,18 @@ namespace Execucoes
 
             };
             
-            bool TUNING = false;
+
+
+
             int qtde_execucoes = 50;
-            int scientific_or_decimal_str_format = 1;
-            int execucaoNFE_or_spacecraft = 0;
+            
+            int scientific_or_decimal_str_format = 0;
+            // int scientific_or_decimal_str_format = 1;
 
-
-            // Spacecraft
-            TUNING = false;
-            qtde_execucoes = 10;
-            execucaoNFE_or_spacecraft = 1;
-            scientific_or_decimal_str_format = 1;
-
-
+            int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
+            // int criterio_parada = (int)EnumCriteriosParada.execution_1e6;
+            // int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
+            // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
 
 
 
@@ -127,10 +126,8 @@ namespace Execucoes
                 Console.WriteLine("\n\n");
 
 
-
                 // =======================================================================================
                 // Define os parâmetros de execução
-                // =======================================================================================
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao();
                 
                 // Quantidade de execuções
@@ -143,40 +140,36 @@ namespace Execucoes
 
                 // Define os critérios de parada
                 parametros_execucao.parametros_criterio_parada = new ParametrosCriterioParada();
-                if(TUNING)
-                {
-                    // Critério de parada para tuning
-                    parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
-                    parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-16;
-                    parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                    parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
-                    parametros_execucao.parametros_criterio_parada.fx_esperado = 0.0;
-                }
-                else
-                {
-                    // execução até NFE>100000 ou spacecraft (NFE + precisão)
-                    if (execucaoNFE_or_spacecraft == 0){
+                switch(criterio_parada){
+                    case (int)EnumCriteriosParada.tuning_1e16_10e5:{
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
+                        parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-16;
+                        parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
+                        parametros_execucao.parametros_criterio_parada.fx_esperado = 0.0;
+                    break;
+                    }
+
+                    case (int)EnumCriteriosParada.execution_1e5:{
                         parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000};
-                        // parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 1000000;
-                        // parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000,150000,200000,250000,300000,350000,400000,450000,500000,550000,600000,650000,700000,750000,800000,850000,900000,950000,1000000};
+                    break;
                     }
-                    else if (execucaoNFE_or_spacecraft == 1){
-                        // ------------------------------------
-                        // Essa parada só funciona no GEOreal
-                        // ------------------------------------
+
+                    case (int)EnumCriteriosParada.execution_1e6:{
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
+                        parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 1000000;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000,150000,200000,250000,300000,350000,400000,450000,500000,550000,600000,650000,700000,750000,800000,850000,900000,950000,1000000};
+                    break;
+                    }
+
+                    case (int)EnumCriteriosParada.execution_spacecraft:{
                         parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_SPACECRAFT;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                        // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
-                        // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 0.0000001;
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
-
-                        // parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
-                        // parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-15;
-                        // parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
-                        // parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
                         // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
+                    break;
                     }
                 }
                 // =======================================================================================
@@ -223,9 +216,9 @@ namespace Execucoes
                             // ======================================================================================================
                             // Quais algoritmos executar
                             
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;                    // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;                 // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;                // Possui parâmetros livres
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
@@ -246,38 +239,38 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
 
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O = true;             // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;             // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N = true;             // Possui parâmetros livres
 
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_VO = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_VO = true;          // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;          // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO = true;          // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS = true;          // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;          // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS = true;          // Possui parâmetros livres
 
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO_UNI = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO_UNI = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO_UNI = true;      // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO_UNI = true;      // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;      // Possui parâmetros livres
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI = true;      // Possui parâmetros livres
 
                             // Poucos parâmetros
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;        //OBS.: CEC não foi tunado, então falta 'p1', 'P' e 's'
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;        // Possui parâmetros livres
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo = true;
                             
                             // Auto-adaptativos
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p0 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p2 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p3 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA0 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA1 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA2 = true;
+                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p9 = true;
                             
 
@@ -755,10 +748,10 @@ namespace Execucoes
 
             // Execuções
             Execucoes_GEO ex = new Execucoes_GEO();
-            // ex.Execucoes();
+            ex.Execucoes();
             // ex.Teste1();
 
-            ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.ExtensiveSearch_SpacecraftOptimization();
+            // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.ExtensiveSearch_SpacecraftOptimization();
             // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.Teste_FuncoesObjetivo_SpacecraftOptimization();
 
             watch.Stop();
