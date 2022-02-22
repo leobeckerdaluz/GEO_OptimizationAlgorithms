@@ -47,11 +47,11 @@ namespace ExtensiveSearch_and_Testes
                             List<double> fenotipo_variaveis_projeto = new List<double>(){i,d,n};
                             
                             // Instancia a spacecraft
-                            TesteOptimizer spacecraft_model = new TesteOptimizer(fenotipo_variaveis_projeto);
+                            SpacecraftFunction spacecraft_model = new SpacecraftFunction(fenotipo_variaveis_projeto);
                             double fx = spacecraft_model.fx_calculada;
 
                             // Executa diretamente a função objetivo
-                            // double fx = SpaceDesignTeste.TesteOptimizer.ObjectiveFunction(fenotipo_variaveis_projeto);
+                            // double fx = SpaceDesignTeste.SpacecraftFunction.ObjectiveFunction(fenotipo_variaveis_projeto);
                             // Console.WriteLine("Espaço válido! i="+i+"; n="+n+"; d:"+d+"; fx="+fx);
 
                             // Verifica se essa execução é a melhor da história
@@ -95,7 +95,7 @@ namespace ExtensiveSearch_and_Testes
             // Calcula a função objetivo diretamente
             // =========================================================
 
-            SpaceDesignTeste.TesteOptimizer spacecraft_model = new SpaceDesignTeste.TesteOptimizer(fenotipo_variaveis_projeto);
+            SpaceDesignTeste.SpacecraftFunction spacecraft_model = new SpaceDesignTeste.SpacecraftFunction(fenotipo_variaveis_projeto);
 
             double fx = spacecraft_model.fx_calculada;
 

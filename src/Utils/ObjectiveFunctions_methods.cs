@@ -262,13 +262,13 @@ namespace ObjectiveFunctions
                     int Q = (int)fenotipo_variaveis_projeto[2];
 
                     
-                    if (D<=Q || I<13 || I>15 || D<1 || D>60 || Q<1){
+                    if (D<=Q){// || I<13 || I>15 || D<1 || D>60 || Q<1){
                         // Console.WriteLine("Já saiu antes!");
                         return Double.MaxValue;
                     }
 
                     // Calcula f(x). Se a solução não é viável (FOV...), retorna MaxValue
-                    SpaceDesignTeste.TesteOptimizer spacecraft_model = new SpaceDesignTeste.TesteOptimizer(fenotipo_variaveis_projeto);
+                    SpaceDesignTeste.SpacecraftFunction spacecraft_model = new SpaceDesignTeste.SpacecraftFunction(fenotipo_variaveis_projeto);
                     if (spacecraft_model.valid_solution)
                         return spacecraft_model.fx_calculada;
                     else

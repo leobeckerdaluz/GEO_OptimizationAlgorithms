@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 namespace SpaceDesignTeste
 {
-    public class TesteOptimizer
+    public class SpacecraftFunction
     {
         public double fx_calculada { get; set; }
         public bool valid_solution { get; set; }
@@ -32,7 +32,7 @@ namespace SpaceDesignTeste
         // public Satellite Satellite { get; set; }
         // public Orbit Deorbit { get; set; }
 
-        public TesteOptimizer(List<double> fenotipo_variaveis_projeto)
+        public SpacecraftFunction(List<double> fenotipo_variaveis_projeto)
         {
             this.I = (int)fenotipo_variaveis_projeto[0];
             this.D = (int)fenotipo_variaveis_projeto[1];
@@ -45,7 +45,7 @@ namespace SpaceDesignTeste
         public bool ValidateRestrictions()
         {
             return Q < D 
-                && FOV_payload >=1.05*FOV_min
+                && FOV_payload >= 1.05*FOV_min
                 && (double)Q%D != 0;
         }
 
@@ -69,7 +69,6 @@ namespace SpaceDesignTeste
             Settings.MissionResolution = 20;
 
 
-            double fx = 0;
 
             Camera ReferencePayload = new Camera(109, 26.5, 41.71, 0.048576886, 20, 0.242884427939569, 12000, 6.5E-6);
 
@@ -184,10 +183,7 @@ namespace SpaceDesignTeste
             Console.WriteLine("------------------");
 #endif
 
-            fx = Satellite.M;
-
-            fx_calculada = fx;
-
+            double fx = Satellite.M;
             return fx;
         }
     }
