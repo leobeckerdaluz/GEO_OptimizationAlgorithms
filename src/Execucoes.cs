@@ -25,39 +25,39 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.beale,
                 
-                (int)EnumNomesFuncoesObjetivo.CEC2017_01,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_03,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_04,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_05,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_06,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_07,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_08,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_09,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_10,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_04,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_05,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_06,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_07,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_08,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_09,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
                 
-                (int)EnumNomesFuncoesObjetivo.CEC2017_11,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_12,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_13,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_14,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_15,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_16,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_17,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_18,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_19,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_20,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_11,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_12,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_13,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_14,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_15,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_16,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_17,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_18,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_19,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_20,
                 
-                (int)EnumNomesFuncoesObjetivo.CEC2017_21,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_22,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_23,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_24,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_25,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_26,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_27,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_28,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_29,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_30,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_21,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_22,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_23,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_24,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_25,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_26,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_27,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_28,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
                 
-                // (int)EnumNomesFuncoesObjetivo.spacecraft,
+                (int)EnumNomesFuncoesObjetivo.spacecraft,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
                 // (int)EnumNomesFuncoesObjetivo.salomon,
@@ -103,14 +103,14 @@ namespace Execucoes
 
 
 
-            int qtde_execucoes = 50;
+            int qtde_execucoes = 2;
             
-            int scientific_or_decimal_str_format = 0;
-            // int scientific_or_decimal_str_format = 1;
+            // int scientific_or_decimal_str_format = 0;
+            int v1E2_or_0dot546843_str_format = 1;
 
-            int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
+            // int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e6;
-            // int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
+            int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
             // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
 
 
@@ -288,7 +288,7 @@ namespace Execucoes
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                             
                             // Apresenta os resultados finais
-                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema, scientific_or_decimal_str_format);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema, v1E2_or_0dot546843_str_format);
                             // ======================================================================================================
                         }
                         break;
