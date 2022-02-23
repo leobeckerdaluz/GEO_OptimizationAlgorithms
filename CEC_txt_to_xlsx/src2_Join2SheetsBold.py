@@ -2,38 +2,36 @@
 
 import pandas as pd
 
-FOLDER_NAME = './folder3/'
+FOLDER_NAME = './conversions2/'
+# INPUT_FILE1 = 'AGEO2'
+INPUT_FILE1 = 'AGEO2var_5'
+# INPUT_FILE2 = 'AGEO2'
+# INPUT_FILE2 = 'AGEO2var_5'
+INPUT_FILE2 = 'AGEO2real2_AA3'
+FILENAME_OUTPUT = "TABLE__"+INPUT_FILE1+"_vs_"+INPUT_FILE2
 
-FILE1 = 'AGEO2.xlsx'
-# FILE1 = 'AGEO2var_5.xlsx'
-# FILE1 = 'AGEO2real2_P_DS_AA3.xlsx'
+INPUT_FILENAME1 = FOLDER_NAME + INPUT_FILE1 + ".xlsx"
+INPUT_FILENAME2 = FOLDER_NAME + INPUT_FILE2 + ".xlsx"
+OUTPUT_FILEPATH = FOLDER_NAME + FILENAME_OUTPUT + ".xlsx"
 
-# FILE2 = 'AGEO2.xlsx'
-FILE2 = 'AGEO2var_5.xlsx'
-# FILE2 = 'AGEO2real2_P_DS_AA3.xlsx'
+file1 = pd.read_excel(INPUT_FILENAME1)
+file2 = pd.read_excel(INPUT_FILENAME2)
 
-FILE_OUTPUT = "saida.xlsx"
-
-FILEPATH1 = FOLDER_NAME + FILE1
-FILEPATH2 = FOLDER_NAME + FILE2
-OUTPUT_FILEPATH = FOLDER_NAME + FILE_OUTPUT
-
-file1 = pd.read_excel(FILEPATH1)
-file2 = pd.read_excel(FILEPATH2)
-
-df_geral = pd.DataFrame()
-df_geral['No1']     = file1['No']
-df_geral['Best1']   = file1['Best']
-df_geral['Worst1']  = file1['Worst']
-df_geral['Median1'] = file1['Median']
-df_geral['Mean1']   = file1['Mean']
-df_geral['Std1']    = file1['Std']
-df_geral['No2']     = file2['No']
-df_geral['Best2']   = file2['Best']
-df_geral['Worst2']  = file2['Worst']
-df_geral['Median2'] = file2['Median']
-df_geral['Mean2']   = file2['Mean']
-df_geral['Std2']    = file2['Std']
+df_geral = pd.DataFrame({
+    'No1': file1['No'],
+    'Best1': file1['Best'],
+    'Worst1': file1['Worst'],
+    'Median1': file1['Median'],
+    'Mean1': file1['Mean'],
+    'Std1': file1['Std'],
+    
+    'No2': file2['No'],
+    'Best2': file2['Best'],
+    'Worst2': file2['Worst'],
+    'Median2': file2['Median'],
+    'Mean2': file2['Mean'],
+    'Std2': file2['Std']
+})
 
 
 
@@ -58,17 +56,17 @@ worksheet = writer.sheets[NOME_SHEET]
 
 
 
+# Formats
+CENTER_FORMAT =             workbook.add_format({'align':'center'})
+CENTER_NUMBER_FORMAT =      workbook.add_format({'align':'center', 'num_format':'0.00E+00'})
+CENTERBOLD_FORMAT =         workbook.add_format({'align':'center', 'bold':True, })
+CENTERBOLD_NUMBER_FORMAT =  workbook.add_format({'align':'center', 'bold':True, 'num_format':'0.00E+00'})
 
-CENTER_FORMAT = workbook.add_format({'align':'center'})
-CENTERBOLD_FORMAT = workbook.add_format({'bold':True, 'align':'center'})
-CENTER_NUMBER_FORMAT = workbook.add_format({'num_format':'0.00E+00', 'align':'center'})
-CENTERBOLD_NUMBER_FORMAT = workbook.add_format({'num_format':'0.00E+00', 'bold':True, 'align':'center'})
-
+# Seta os formatos das colunas. Centraliza só os ids e formata e centraliza os valores
 worksheet.set_column('A:A', None, CENTER_FORMAT)
 worksheet.set_column('B:F', None, CENTER_NUMBER_FORMAT)
 worksheet.set_column('G:G', None, CENTER_FORMAT)
 worksheet.set_column('H:L', None, CENTER_NUMBER_FORMAT)
-
 
 
 
@@ -85,53 +83,64 @@ COLUNA_MEDIANFX2 = 9
 COLUNA_MEANFX2 = 10
 COLUNA_SDFX2 = 11
 
-df_length = len(df_geral['Median2'])
+START_ROW = 1
+
+# Tamanho do dataframe
+df_length = df_geral.shape[0]
+# Para cada linha, verifica o menor e formata em negrito
 for i in range(0, df_length):
+    funcao_id       = df_geral['No1'][i]
+    melhorFX1_str   = df_geral['Best1'][i]
+    melhorFX2_str   = df_geral['Best2'][i]
+    piorFX1_str     = df_geral['Worst1'][i]
+    piorFX2_str     = df_geral['Worst2'][i]
+    medianFX1_str   = df_geral['Median1'][i]
+    medianFX2_str   = df_geral['Median2'][i]
+    meanFX1_str     = df_geral['Mean1'][i]
+    meanFX2_str     = df_geral['Mean2'][i]
+    sdFX1_str       = df_geral['Std1'][i]
+    sdFX2_str       = df_geral['Std2'][i]
     
-    melhorFX1_str = df_geral['Best1'][i]
-    melhorFX2_str = df_geral['Best2'][i]
+    # Verifica o menor melhorFX
     if (float(melhorFX1_str) < float(melhorFX2_str)):
-        worksheet.write(i, COLUNA_MELHORFX1, melhorFX1_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_MELHORFX1, melhorFX1_str, CENTERBOLD_NUMBER_FORMAT)
     elif (float(melhorFX2_str) < float(melhorFX1_str)):
-        worksheet.write(i, COLUNA_MELHORFX2, melhorFX2_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_MELHORFX2, melhorFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("IGUALLL melhorFX na função {}".format(df_geral['No1'][i]))
+        print("Igual melhorFX na função {} !".format(funcao_id))
 
-    piorFX1_str = df_geral['Worst1'][i]
-    piorFX2_str = df_geral['Worst2'][i]
+    # Verifica o menor piorFX
     if (float(piorFX1_str) < float(piorFX2_str)):
-        worksheet.write(i, COLUNA_PIORFX1, piorFX1_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_PIORFX1, piorFX1_str, CENTERBOLD_NUMBER_FORMAT)
     elif (float(piorFX2_str) < float(piorFX1_str)):
-        worksheet.write(i, COLUNA_PIORFX2, piorFX2_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_PIORFX2, piorFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("IGUALLL piorFX na função {}".format(df_geral['No1'][i]))
+        print("Igual piorFX na função {} !".format(funcao_id))
 
-    medianFX1_str = df_geral['Median1'][i]
-    medianFX2_str = df_geral['Median2'][i]
+    # Verifica o menor medianFX
     if (float(medianFX1_str) < float(medianFX2_str)):
-        worksheet.write(i, COLUNA_MEDIANFX1, medianFX1_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_MEDIANFX1, medianFX1_str, CENTERBOLD_NUMBER_FORMAT)
     elif (float(medianFX2_str) < float(medianFX1_str)):
-        worksheet.write(i, COLUNA_MEDIANFX2, medianFX2_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_MEDIANFX2, medianFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("IGUALLL medianFX na função {}".format(df_geral['No1'][i]))
+        print("Igual medianFX na função {} !".format(funcao_id))
 
-    meanFX1_str = df_geral['Mean1'][i]
-    meanFX2_str = df_geral['Mean2'][i]
+    # Verifica o menor meanFX
     if (float(meanFX1_str) < float(meanFX2_str)):
-        worksheet.write(i, COLUNA_MEANFX1, meanFX1_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_MEANFX1, meanFX1_str, CENTERBOLD_NUMBER_FORMAT)
     elif (float(meanFX2_str) < float(meanFX1_str)):
-        worksheet.write(i, COLUNA_MEANFX2, meanFX2_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_MEANFX2, meanFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:   
-        print("IGUALLL meanFX na função {}".format(df_geral['No1'][i]))
+        print("Igual meanFX na função {} !".format(funcao_id))
 
-    sdFX1_str = df_geral['Std1'][i]
-    sdFX2_str = df_geral['Std2'][i]
+    # Verifica o menor sdFX
     if (float(sdFX1_str) < float(sdFX2_str)):
-        worksheet.write(i, COLUNA_SDFX1, sdFX1_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_SDFX1, sdFX1_str, CENTERBOLD_NUMBER_FORMAT)
     elif (float(sdFX2_str) < float(sdFX1_str)):
-        worksheet.write(i, COLUNA_SDFX2, sdFX2_str, CENTERBOLD_NUMBER_FORMAT)
+        worksheet.write(i+START_ROW, COLUNA_SDFX2, sdFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("IGUALLL sdFX na função {}".format(df_geral['No1'][i]))
+        print("Igual sdFX na função {} !".format(funcao_id))
 
 
+# Salva o xlsx
 writer.save()

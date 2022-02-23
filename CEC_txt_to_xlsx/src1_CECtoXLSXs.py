@@ -1,20 +1,14 @@
 
 
-
-
-from posixpath import split
-from statistics import mean
-
-
-
-# TXT_FILEPATH = 'novo__CEC1to30_50runs.txt'
-TXT_FILEPATH = 'CEC_teste_3algoritmos.txt'
-XLSX_OUT_FILEPATH = "saida.xlsx"
+INPUT_TXT_FILENAME = 'todosCEC2017.txt'
+# INPUT_TXT_FILENAME = 'CEC_teste_3algoritmos.txt'
+QUANTIDADE_ALGORITMOS = 3
+FOLDER_NAME = './conversions2/'
 
 
 # Abre o txt
 lines = []
-with open(TXT_FILEPATH) as f:
+with open(FOLDER_NAME+INPUT_TXT_FILENAME) as f:
     lines = f.readlines()
 
 
@@ -30,53 +24,47 @@ ListaGeral_sdFX = []
 
 for line in lines:
     line = line.replace(',', '.')
-    # print(line)
+
+    if (("parameter" not in line) and
+        ("melhorFX" not in line) and
+        ("piorFX" not in line) and
+        ("meanFX" not in line) and
+        ("medianFX" not in line) and
+        ("sdFX" not in line)):
+        ## Então não tem como fazer split
+        continue
+
+        
+    # Se chegou aqui é porque tem o que fazer split. Então retira a label (pop(0)) e o \n (pop(-1))
     spl = line.split(';')
+    spl.pop(0)
+    spl.pop(-1)
 
-    # os comandos pop(0) e pop(-1) servem pra remover a primeira label e o \n do fim da linha
-    
-    if (("parameter" in line) and not(jah_viu_algoritmos)):
-        spl.pop(0)
-        spl.pop(-1)
-        for value in spl:
+
+    # Para cada parâmetro do split, verifica que métrica é e guarda
+    for value in spl:
+        if ("parameter" in line):
             ListaGeral_nomes_algoritmos.append(value)
-        jah_viu_algoritmos = True
 
-    if ("melhorFX" in line):
-        spl.pop(0)
-        spl.pop(-1)
-        for value in spl:
+        if ("melhorFX" in line):
             ListaGeral_melhorFX.append(value)
 
-    if ("piorFX" in line):
-        spl.pop(0)
-        spl.pop(-1)
-        for value in spl:
+        if ("piorFX" in line):
             ListaGeral_piorFX.append(value)
 
-    if ("medianFX" in line):
-        spl.pop(0)
-        spl.pop(-1)
-        for value in spl:
+        if ("medianFX" in line):
             ListaGeral_medianFX.append(value)
 
-    if ("meanFX" in line):
-        spl.pop(0)
-        spl.pop(-1)
-        for value in spl:
+        if ("meanFX" in line):
             ListaGeral_meanFX.append(value)
 
-    if ("sdFX" in line):
-        spl.pop(0)
-        spl.pop(-1)
-        for value in spl:
+        if ("sdFX" in line):
             ListaGeral_sdFX.append(value)
 
 
 
 # Essas listas aqui abaixo terão sempre QUANTIDADE_ALGORITMOS listas e cada listinha terá 30 valores
 # Inicialmente, cria as listinhas vazias
-QUANTIDADE_ALGORITMOS = 3
 
 melhorFX_algoritmos = []
 piorFX_algoritmos = []
@@ -121,12 +109,6 @@ lista_ids_funcoes.remove(2)
 
 
 # Monta um dataframe pra cada algoritmo e salva em xlsx
-FOLDER_NAME = './folder3/'
-# Cria a pasta se ela não existe
-import os
-if (not(os.path.exists(FOLDER_NAME))):
-    os.makedirs(FOLDER_NAME)
-
 import pandas as pd
 for i in range(0,QUANTIDADE_ALGORITMOS):
     df = pd.DataFrame()
@@ -139,6 +121,6 @@ for i in range(0,QUANTIDADE_ALGORITMOS):
     df['Std'] = sdFX_algoritmos[i]
 
     nome_algoritmo = ListaGeral_nomes_algoritmos[i]
-    filepath = FOLDER_NAME + nome_algoritmo + '.xlsx'
+    filepath = FOLDER_NAME+nome_algoritmo+'.xlsx'
     # df.to_excel(filepath, index=False, sheet_name=nome_algoritmo)
     df.to_excel(filepath, index=False)
