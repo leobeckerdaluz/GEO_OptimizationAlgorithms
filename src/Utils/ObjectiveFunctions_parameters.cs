@@ -455,7 +455,7 @@ namespace ObjectiveFunctions
                 case (int)EnumNomesFuncoesObjetivo.CEC2017_30:
                 {
                     const int bits_per_variable = 16;
-                    const int n_design_variables = 10;
+                    const int n_design_variables = 30;
                     
                     // dimension, bits per variable and bounds are fixed.
                     // The only variable per function is its name.

@@ -1,14 +1,17 @@
 
 
-INPUT_TXT_FILENAME = 'todosCEC2017.txt'
-# INPUT_TXT_FILENAME = 'CEC_teste_3algoritmos.txt'
-QUANTIDADE_ALGORITMOS = 3
-FOLDER_NAME = './conversions2/'
+INPUT_TXT_FILENAME = 'CEC2017_functions_D30.txt'
+# INPUT_TXT_FILENAME = 'CEC2017_functions_D30.txt'
+
+INPUT_FOLDER_NAME = '../INPUTS/'
+# INPUT_FOLDER_NAME = './'
+
+OUTPUT_FOLDER_NAME = '../OUTPUTS/'
 
 
 # Abre o txt
 lines = []
-with open(FOLDER_NAME+INPUT_TXT_FILENAME) as f:
+with open(INPUT_FOLDER_NAME+INPUT_TXT_FILENAME) as f:
     lines = f.readlines()
 
 
@@ -34,12 +37,10 @@ for line in lines:
         ## Então não tem como fazer split
         continue
 
-        
     # Se chegou aqui é porque tem o que fazer split. Então retira a label (pop(0)) e o \n (pop(-1))
     spl = line.split(';')
     spl.pop(0)
     spl.pop(-1)
-
 
     # Para cada parâmetro do split, verifica que métrica é e guarda
     for value in spl:
@@ -62,8 +63,11 @@ for line in lines:
             ListaGeral_sdFX.append(value)
 
 
+# Calcula a quantidade de algoritmos
+QUANTIDADE_ALGORITMOS = int(len(ListaGeral_nomes_algoritmos)/29)
 
-# Essas listas aqui abaixo terão sempre QUANTIDADE_ALGORITMOS listas e cada listinha terá 30 valores
+
+# Essas listas aqui abaixo terão sempre QUANTIDADE_ALGORITMOS listas e cada listinha terá 29 valores
 # Inicialmente, cria as listinhas vazias
 
 melhorFX_algoritmos = []
@@ -110,6 +114,8 @@ lista_ids_funcoes.remove(2)
 
 # Monta um dataframe pra cada algoritmo e salva em xlsx
 import pandas as pd
+import datetime as dt
+datetime_str = str(dt.datetime.now().time())
 for i in range(0,QUANTIDADE_ALGORITMOS):
     df = pd.DataFrame()
 
@@ -121,6 +127,6 @@ for i in range(0,QUANTIDADE_ALGORITMOS):
     df['Std'] = sdFX_algoritmos[i]
 
     nome_algoritmo = ListaGeral_nomes_algoritmos[i]
-    filepath = FOLDER_NAME+nome_algoritmo+'.xlsx'
+    filepath = OUTPUT_FOLDER_NAME+INPUT_TXT_FILENAME[:-4]+'__'+datetime_str+'__'+nome_algoritmo+'.xlsx'
     # df.to_excel(filepath, index=False, sheet_name=nome_algoritmo)
     df.to_excel(filepath, index=False)

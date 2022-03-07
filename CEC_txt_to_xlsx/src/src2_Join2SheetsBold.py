@@ -2,17 +2,22 @@
 
 import pandas as pd
 
-FOLDER_NAME = './conversions2/'
-# INPUT_FILE1 = 'AGEO2'
-INPUT_FILE1 = 'AGEO2var_5'
+INPUTS_FOLDER_NAME = '../OUTPUTS/'
+
+PREINPUT = 'CEC2017_functions_D30__08:05:58.397200__'
+
+INPUT_FILE1 = 'AGEO2'
+# INPUT_FILE1 = 'AGEO2var_5'
+
 # INPUT_FILE2 = 'AGEO2'
 # INPUT_FILE2 = 'AGEO2var_5'
 INPUT_FILE2 = 'AGEO2real2_AA3'
-FILENAME_OUTPUT = "TABLE__"+INPUT_FILE1+"_vs_"+INPUT_FILE2
 
-INPUT_FILENAME1 = FOLDER_NAME + INPUT_FILE1 + ".xlsx"
-INPUT_FILENAME2 = FOLDER_NAME + INPUT_FILE2 + ".xlsx"
-OUTPUT_FILEPATH = FOLDER_NAME + FILENAME_OUTPUT + ".xlsx"
+FILENAME_OUTPUT = INPUT_FILE1+"_vs_"+INPUT_FILE2
+
+INPUT_FILENAME1 = INPUTS_FOLDER_NAME + PREINPUT+INPUT_FILE1 + ".xlsx"
+INPUT_FILENAME2 = INPUTS_FOLDER_NAME + PREINPUT+INPUT_FILE2 + ".xlsx"
+OUTPUT_FILEPATH = INPUTS_FOLDER_NAME + PREINPUT+FILENAME_OUTPUT + ".xlsx"
 
 file1 = pd.read_excel(INPUT_FILENAME1)
 file2 = pd.read_excel(INPUT_FILENAME2)
@@ -107,7 +112,7 @@ for i in range(0, df_length):
     elif (float(melhorFX2_str) < float(melhorFX1_str)):
         worksheet.write(i+START_ROW, COLUNA_MELHORFX2, melhorFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("Igual melhorFX na função {} !".format(funcao_id))
+        print("WARNING ---> Igual melhorFX na função {} !".format(funcao_id))
 
     # Verifica o menor piorFX
     if (float(piorFX1_str) < float(piorFX2_str)):
@@ -115,7 +120,7 @@ for i in range(0, df_length):
     elif (float(piorFX2_str) < float(piorFX1_str)):
         worksheet.write(i+START_ROW, COLUNA_PIORFX2, piorFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("Igual piorFX na função {} !".format(funcao_id))
+        print("WARNING ---> Igual piorFX na função {} !".format(funcao_id))
 
     # Verifica o menor medianFX
     if (float(medianFX1_str) < float(medianFX2_str)):
@@ -123,7 +128,7 @@ for i in range(0, df_length):
     elif (float(medianFX2_str) < float(medianFX1_str)):
         worksheet.write(i+START_ROW, COLUNA_MEDIANFX2, medianFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("Igual medianFX na função {} !".format(funcao_id))
+        print("WARNING ---> Igual medianFX na função {} !".format(funcao_id))
 
     # Verifica o menor meanFX
     if (float(meanFX1_str) < float(meanFX2_str)):
@@ -131,7 +136,7 @@ for i in range(0, df_length):
     elif (float(meanFX2_str) < float(meanFX1_str)):
         worksheet.write(i+START_ROW, COLUNA_MEANFX2, meanFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:   
-        print("Igual meanFX na função {} !".format(funcao_id))
+        print("WARNING ---> Igual meanFX na função {} !".format(funcao_id))
 
     # Verifica o menor sdFX
     if (float(sdFX1_str) < float(sdFX2_str)):
@@ -139,7 +144,7 @@ for i in range(0, df_length):
     elif (float(sdFX2_str) < float(sdFX1_str)):
         worksheet.write(i+START_ROW, COLUNA_SDFX2, sdFX2_str, CENTERBOLD_NUMBER_FORMAT)
     else:
-        print("Igual sdFX na função {} !".format(funcao_id))
+        print("WARNING ---> Igual sdFX na função {} !".format(funcao_id))
 
 
 # Salva o xlsx
