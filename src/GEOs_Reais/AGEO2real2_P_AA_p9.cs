@@ -15,7 +15,8 @@ namespace GEOs_REAIS
             int function_id,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            List<int> lista_NFEs_desejados) : base(
+            List<int> lista_NFEs_desejados,
+            bool round_current_population_every_it) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
                 function_id,
@@ -27,7 +28,8 @@ namespace GEOs_REAIS
                 9999,
                 9999,
                 9999,
-                9999)
+                9999,
+                round_current_population_every_it)
         {
             this.P = 9;
             this.s = 10;

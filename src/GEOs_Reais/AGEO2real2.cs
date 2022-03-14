@@ -26,7 +26,8 @@ namespace GEOs_REAIS
             double std,
             int tipo_perturbacao,
             int P,
-            int s) : base(
+            int s,
+            bool round_current_population_every_it) : base(
                 new List<double>(populacao_inicial),
                 0.5,
                 n_variaveis_projeto,
@@ -39,7 +40,8 @@ namespace GEOs_REAIS
                 std,
                 tipo_perturbacao,
                 P,
-                s)
+                s,
+                round_current_population_every_it)
         {
             this.tipo_AGEO = 2;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);

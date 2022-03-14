@@ -25,7 +25,8 @@ namespace GEOs_REAIS
             double std,
             int tipo_perturbacao,
             int P,
-            int s) : base(
+            int s,
+            bool round_current_population_every_it) : base(
                 n_variaveis_projeto,
                 function_id,
                 populacao_inicial,
@@ -34,7 +35,8 @@ namespace GEOs_REAIS
                 lista_NFEs_desejados,
                 tipo_perturbacao,
                 tau,
-                std)
+                std,
+                round_current_population_every_it)
         {
             this.P = P;
             this.s = s;

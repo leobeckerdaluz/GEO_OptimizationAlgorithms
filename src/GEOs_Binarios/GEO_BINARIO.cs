@@ -20,7 +20,6 @@ namespace GEOs_BINARIOS
         public double fx_melhor {get; set;}
         public List<double> populacao_atual_double {get; set;}
         public List<bool> populacao_atual {get; set;}
-        public List<bool> populacao_melhor {get; set;}
         public List<double> melhores_NFEs {get; set;}
         public List<double> fxs_atuais_NFEs {get; set;}
         public List<BitVerificado> lista_informacoes_mutacao {get; set;}
@@ -29,6 +28,7 @@ namespace GEOs_BINARIOS
         public List<int> melhoras_nas_iteracoes {get; set;}
         public List<double> stats_TAU_per_iteration {get; set;}
         public List<double> stats_Mfx_per_iteration {get; set;}
+        public bool round_current_population_every_it {get; set;}
 
 
         public GEO_BINARIO(
@@ -39,7 +39,8 @@ namespace GEOs_BINARIOS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
-            List<int> bits_por_variavel_variaveis)
+            List<int> bits_por_variavel_variaveis,
+            bool round_current_population_every_it)
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
@@ -47,14 +48,14 @@ namespace GEOs_BINARIOS
             this.lower_bounds = new List<double>(lower_bounds);
             this.upper_bounds = new List<double>(upper_bounds);
             this.lista_NFEs_desejados = new List<int>(lista_NFEs_desejados);
+            this.round_current_population_every_it = round_current_population_every_it;
             
             this.bits_por_variavel_variaveis = new List<int>(bits_por_variavel_variaveis);
             
             this.NFE = 0;
             this.populacao_atual_double = new List<double>(convert_boolpop_to_listdouble(populacao_inicial_binaria));
             this.populacao_atual = new List<bool>(populacao_inicial_binaria);
-            this.populacao_melhor = new List<bool>(populacao_inicial_binaria);
-            this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
+            this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual_double, false);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFEs = new List<double>();
@@ -81,7 +82,7 @@ namespace GEOs_BINARIOS
         }
 
 
-        private List<double> convert_boolpop_to_listdouble(List<bool>populacao_de_bits){
+        public List<double> convert_boolpop_to_listdouble(List<bool>populacao_de_bits){
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
             
@@ -114,7 +115,7 @@ namespace GEOs_BINARIOS
                 // (max-min) / (2^bits - 0) ======> Variação de valor por bit
                 // min + [(max-min) / (2^bits - 0)] * binario
                 
-                double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto)));
+                double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto)-1));
 
                 // Adiciona o fenótipo da variável na lista de fenótipos
                 fenotipo_variaveis_projeto.Add(fenotipo_variavel_projeto);
@@ -124,31 +125,17 @@ namespace GEOs_BINARIOS
         }
 
 
-        public virtual double calcula_valor_funcao_objetivo(List<bool> populacao_de_bits, bool addNFE)
+        public virtual double calcula_valor_funcao_objetivo(List<double> fenotipo_variaveis_projeto, bool addNFE)
         {
-            // Calcula o valor da função objetivo com o fenótipo desejado
-            int n_variaveis_projeto = this.bits_por_variavel_variaveis.Count;
-
             // Incrementa o NFE
             if (addNFE)
                 add_NFE();
             
-            // Cria a lista que irá conter o fenótipo de cada variável de projeto
-            List<double> fenotipo_variaveis_projeto = convert_boolpop_to_listdouble(populacao_de_bits);
-            
-
-            //============================================================
-            // Calcula o valor da função objetivo
-            //============================================================
-
             double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, function_id);
 
             // Avalia se a perturbação é a melhor de todas
             if (fx < this.fx_melhor)
-            {
                 fx_melhor = fx;
-                populacao_melhor = populacao_de_bits;
-            }
 
             return fx;
         }
@@ -169,7 +156,8 @@ namespace GEOs_BINARIOS
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                 // Calcula o valor da função objetivo
-                double fx = calcula_valor_funcao_objetivo(populacao_de_bits_flipado, true);
+                List<double> fenotipos = convert_boolpop_to_listdouble(populacao_de_bits_flipado);
+                double fx = calcula_valor_funcao_objetivo(fenotipos, true);
                 
                 // Armazena as informações dessa mutação do bit na lista de informações
                 BitVerificado informacoes_bit = new BitVerificado();
@@ -223,20 +211,7 @@ namespace GEOs_BINARIOS
 
 
 
-                    // Perturbação INT
-                    // Perturbação INT
-                    // Perturbação INT
-                    // Perturbação INT
-                    if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
-                        // Atualiza cada fenótipo para um valor int
-                        for (int i=0; i<populacao_atual_double.Count; i++){
-                            populacao_atual_double[i] = Math.Round(populacao_atual_double[i]);
-                        }
-                    }
-                    // Perturbação INT
-                    // Perturbação INT
-                    // Perturbação INT
-                    // Perturbação INT
+                    
 
 
 
@@ -277,13 +252,6 @@ namespace GEOs_BINARIOS
             {
                 stop = true;
             }
-
-            // // Se o critério for por precisão...
-            // else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAO) 
-            // && parada_por_precisao)
-            // {
-            //     stop = true;
-            // }
             
             // Se o critério for por precisão ou por NFE...
             else if ((parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE) 
@@ -301,14 +269,9 @@ namespace GEOs_BINARIOS
 
 
 
-                if (I==14 && D>58 && Q>58){
-                    Console.WriteLine("OLOOOCO1");
-                    Console.WriteLine("OLOOOCO2");
-                    Console.WriteLine("OLOOOCO3");
-                    Console.WriteLine("OLOOOCO4");
+                if ((I==14 && D>=59 && Q>=58) || (I<13 || I>15 || D<1 || D>60 || Q<1 || Q>60)){
+                    Console.WriteLine("CREEPS");
                 }
-
-
 
 
                 if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
@@ -325,6 +288,17 @@ namespace GEOs_BINARIOS
         {
             while(true)
             {
+                // Se desejado, arredonda toda população 
+                if (round_current_population_every_it){
+                    for (int i=0; i<populacao_atual_double.Count; i++){
+                        populacao_atual_double[i] = Math.Round(populacao_atual_double[i]);
+                    }
+
+                    // Atualiza o valor de f(x)
+                    fx_atual = calcula_valor_funcao_objetivo(populacao_atual_double, false);
+                }
+
+
                 // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
 

@@ -144,7 +144,6 @@ namespace Classes_e_Enums
 
     enum EnumTipoCriterioParada{
         parada_por_NFE,
-        // parada_por_PRECISAO,
         parada_por_PRECISAOouNFE,
         parada_por_ITERATIONS,
         parada_SPACECRAFT

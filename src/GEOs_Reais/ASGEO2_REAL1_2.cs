@@ -25,7 +25,8 @@ namespace GEOs_REAIS
             double std,
             int q,
             double c,
-            double std_minimo) : base(
+            double std_minimo,
+            bool round_current_population_every_it) : base(
                 n_variaveis_projeto,
                 function_id,
                 populacao_inicial,
@@ -34,7 +35,8 @@ namespace GEOs_REAIS
                 lista_NFEs_desejados,
                 tipo_perturbacao,
                 tau,
-                std)
+                std,
+                round_current_population_every_it)
         {
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
             this.tau = 0.5;

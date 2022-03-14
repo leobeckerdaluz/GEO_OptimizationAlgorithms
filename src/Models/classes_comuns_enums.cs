@@ -150,6 +150,7 @@ namespace Classes_e_Enums
         public QuaisAlgoritmosRodar quais_algoritmos_rodar { get; set; }
         public OQueInteressaPrintar o_que_interessa_printar { get; set; }
         public int tipo_perturbacao { get; set; }
+        public bool round_current_population_every_it {get; set;}
     }
     
     

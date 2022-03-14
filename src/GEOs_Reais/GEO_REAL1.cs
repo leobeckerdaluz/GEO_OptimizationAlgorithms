@@ -21,7 +21,6 @@ namespace GEOs_REAIS
         public double fx_melhor {get; set;}
         public double fx_atual_comeco_it {get; set;}
         public List<double> populacao_atual {get; set;}
-        public List<double> populacao_melhor {get; set;}
         public List<double> melhores_NFEs {get; set;}
         public List<double> fxs_atuais_NFEs {get; set;}
         public List<Perturbacao> perturbacoes_da_iteracao {get; set;}
@@ -30,6 +29,7 @@ namespace GEOs_REAIS
         public List<double> stats_TAU_per_iteration {get; set;}
         public List<double> stats_STDPORC_per_iteration {get; set;}
         public List<double> stats_Mfx_per_iteration {get; set;}
+        public bool round_current_population_every_it {get; set;}
 
 
         public GEO_real1(
@@ -41,7 +41,8 @@ namespace GEOs_REAIS
             List<int> lista_NFEs_desejados,
             int tipo_perturbacao,
             double tau,
-            double std)
+            double std,
+            bool round_current_population_every_it)
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
@@ -51,10 +52,10 @@ namespace GEOs_REAIS
             this.lista_NFEs_desejados = lista_NFEs_desejados;
             this.std = std;
             this.tipo_perturbacao = tipo_perturbacao;
+            this.round_current_population_every_it = round_current_population_every_it;
             
             this.NFE = 0;
             this.populacao_atual = new List<double>(populacao_inicial);
-            this.populacao_melhor = new List<double>(populacao_inicial);
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial, false);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
@@ -125,7 +126,6 @@ namespace GEOs_REAIS
             if (fx_final < fx_melhor)
             {
                 fx_melhor = fx_final;
-                populacao_melhor = fenotipos;
             }
 
             return fx_final;
@@ -306,6 +306,11 @@ namespace GEOs_REAIS
                 int D = (int)this.populacao_atual[1];
                 int Q = (int)this.populacao_atual[2];
 
+
+                if ((I==14 && D>=59 && Q>=58) || (I<13 || I>15 || D<1 || D>60 || Q<1 || Q>60)){
+                    Console.WriteLine("CREEPS");
+                }
+
                  
                 if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
                     stop = true;
@@ -322,6 +327,16 @@ namespace GEOs_REAIS
         {
             while(true)
             {
+                // Se desejado, arredonda toda população 
+                if (round_current_population_every_it){
+                    for (int i=0; i<populacao_atual.Count; i++){
+                        populacao_atual[i] = Math.Round(populacao_atual[i]);
+                    }
+
+                    // Atualiza o valor de f(x)
+                    fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
+                }
+
                 // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
                 
@@ -345,7 +360,6 @@ namespace GEOs_REAIS
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFEs = this.melhores_NFEs;
                     retorno.fxs_atuais_NFEs = this.fxs_atuais_NFEs;
-                    retorno.populacao_final = this.populacao_melhor;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
                     retorno.stats_STDPORC_per_iteration = this.stats_STDPORC_per_iteration;
                     retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;

@@ -534,7 +534,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = geo.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_can;
@@ -553,7 +554,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = geo_var.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var;
@@ -578,7 +580,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = geo_var2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var2;
@@ -602,7 +605,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds, 
                         parametros_problema.upper_bounds, 
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = ageo1.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1;
@@ -621,7 +625,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = ageo2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2;
@@ -642,7 +647,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = ageo3.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO3;
@@ -661,7 +667,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = ageo4.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO4;
@@ -680,7 +687,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret2 = ageo9.executar(parametros_execucao.parametros_criterio_parada);
                     ret2.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO9;
@@ -702,7 +710,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = ageo1_var.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var;
@@ -721,7 +730,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = ageo2_var.executar(parametros_execucao.parametros_criterio_parada); 
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var;
@@ -741,7 +751,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada); 
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO3var;
@@ -761,7 +772,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada); 
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO4var;
@@ -781,7 +793,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel);
+                        parametros_problema.bits_por_variavel,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada); 
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO9var;
@@ -808,7 +821,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_1;
@@ -830,7 +844,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_3;
@@ -852,7 +867,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_5;
@@ -874,7 +890,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_7;
@@ -896,7 +913,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_9;
@@ -918,7 +936,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1var_11;
@@ -945,7 +964,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_1;
@@ -967,7 +987,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_3;
@@ -989,7 +1010,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_5;
@@ -1011,7 +1033,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_7;
@@ -1033,7 +1056,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_9;
@@ -1055,84 +1079,14 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.bits_por_variavel,
-                        tau_maior_que);
+                        tau_maior_que,
+                        parametros_execucao.round_current_population_every_it);
 
                     RetornoGEOs ret = alg.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2var_11;
                         
                     todas_execucoes.Add(ret);
                 }
-
-
-
-
-
-
-                // // GEOreal1 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_igor)
-                // {
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-
-                //     GEO_real1 geo_real1 = new GEO_real1(
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         tipo_perturbacao,
-                //         parametros_problema.parametros_livres.tau_GEOreal1, 
-                //         parametros_problema.parametros_livres.std_GEOreal1);
-                        
-                //     RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_igor;
-
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO1real1 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1real1_igor)
-                // {
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-                    
-                //     AGEOs_REAL1 AGEO1real1 = new AGEOs_REAL1(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         parametros_problema.parametros_livres.std_AGEO1real1, 
-                //         1, 
-                //         tipo_perturbacao);
-                        
-                //     RetornoGEOs ret = AGEO1real1.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO1real1_igor;
-
-                //     todas_execucoes.Add(ret);
-                // }
-
-                // // AGEO2real1 - IGOR
-                // if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_igor)
-                // {
-                //     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
-
-                //     AGEOs_REAL1 AGEO2real1 = new AGEOs_REAL1(
-                //         parametros_problema.populacao_inicial_real, 
-                //         parametros_problema.n_variaveis_projeto, 
-                //         parametros_problema.function_id, 
-                //         parametros_problema.lower_bounds,
-                //         parametros_problema.upper_bounds,
-                //         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                //         parametros_problema.parametros_livres.std_AGEO2real1, 
-                //         2, 
-                //         tipo_perturbacao);
-                        
-                //     RetornoGEOs ret = AGEO2real1.executar(parametros_execucao.parametros_criterio_parada);
-                //     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real1_igor;
-                        
-                //     todas_execucoes.Add(ret);
-                // }
 
 
 
@@ -1152,7 +1106,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         tipo_perturbacao,
                         parametros_problema.parametros_livres.GEOreal1_O__tau, 
-                        parametros_problema.parametros_livres.GEOreal1_O__std);
+                        parametros_problema.parametros_livres.GEOreal1_O__std,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_O;
@@ -1174,7 +1129,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         tipo_perturbacao,
                         parametros_problema.parametros_livres.GEOreal1_P__tau, 
-                        parametros_problema.parametros_livres.GEOreal1_P__porc);
+                        parametros_problema.parametros_livres.GEOreal1_P__porc,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_P;
@@ -1196,7 +1152,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         tipo_perturbacao,
                         parametros_problema.parametros_livres.GEOreal1_N__tau, 
-                        parametros_problema.parametros_livres.GEOreal1_N__std);
+                        parametros_problema.parametros_livres.GEOreal1_N__std,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_N;
@@ -1226,7 +1183,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_O_VO__std, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_O_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_O_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_O_VO__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_O_VO;
@@ -1254,7 +1212,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_P_VO__porc, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_P_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_VO__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_VO;
@@ -1282,7 +1241,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_N_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_VO;
@@ -1312,7 +1272,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_O_DS__std, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_O_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_O_DS__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_O_DS__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_O_DS;
@@ -1340,7 +1301,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_P_DS__porc, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_P_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_DS__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_DS__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_DS;
@@ -1368,7 +1330,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_N_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_DS;
@@ -1399,7 +1362,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_P_VO__porc, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_P_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_VO__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_VO_UNI;
@@ -1427,7 +1391,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_N_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_VO_UNI;
@@ -1455,7 +1420,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_P_DS__porc, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_P_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_P_DS__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_P_DS__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_P_DS_UNI;
@@ -1483,7 +1449,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.GEOreal2_N_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s);
+                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_DS_UNI;
@@ -1510,7 +1477,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.parametros_livres.AGEO2real1_P__porc,
-                        tipo_perturbacao);
+                        tipo_perturbacao,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEOreal1_P.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal1_P;
@@ -1538,7 +1506,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.parametros_livres.AGEO2real2_P_DS__porc,
                         tipo_perturbacao, 
                         (int)parametros_problema.parametros_livres.AGEO2real2_P_DS__P, 
-                        (int)parametros_problema.parametros_livres.AGEO2real2_P_DS__s);
+                        (int)parametros_problema.parametros_livres.AGEO2real2_P_DS__s,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = ageo_real2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEOreal2_P_DS;
@@ -1561,7 +1530,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real2_P_DS_fixo.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_DS_fixo;
@@ -1588,7 +1558,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         parametros_problema.parametros_livres.AGEO2real1_P__porc,
-                        tipo_perturbacao);
+                        tipo_perturbacao,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real1_P_AA.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real1_P_AA;
@@ -1606,7 +1577,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real2_AA0.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_AA0;
@@ -1624,7 +1596,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real2_AA1.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_AA1;
@@ -1642,7 +1615,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real2_AA2.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_AA2;
@@ -1660,7 +1634,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real2_AA3.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_AA3;
@@ -1678,7 +1653,8 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
                         parametros_problema.upper_bounds,
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados);
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados,
+                        parametros_execucao.round_current_population_every_it);
                         
                     RetornoGEOs ret = AGEO2real2_P_AA_p9.executar(parametros_execucao.parametros_criterio_parada);
                     ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.AGEO2real2_P_AA_p9;

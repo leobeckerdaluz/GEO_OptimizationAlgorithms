@@ -14,7 +14,8 @@ namespace GEOs_REAIS
             int function_id,
             List<double> lower_bounds,
             List<double> upper_bounds,
-            List<int> lista_NFEs_desejados) : base(
+            List<int> lista_NFEs_desejados,
+            bool round_current_population_every_it) : base(
                 new List<double>(populacao_inicial),
                 n_variaveis_projeto,
                 function_id,
@@ -26,7 +27,8 @@ namespace GEOs_REAIS
                 9999,
                 (int)EnumTipoPerturbacao.perturbacao_porcentagem,
                 9999,
-                9999)
+                9999,
+                round_current_population_every_it)
         {
             // Fixa o 'P' e o 's' em 10
             this.P = 10;
@@ -43,6 +45,17 @@ namespace GEOs_REAIS
         {
             while(true)
             {
+                // Se desejado, arredonda toda população 
+                if (round_current_population_every_it){
+                    for (int i=0; i<populacao_atual.Count; i++){
+                        populacao_atual[i] = Math.Round(populacao_atual[i]);
+                    }
+
+                    // Atualiza o valor de f(x)
+                    fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
+                }
+
+
                 // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
                 
@@ -66,7 +79,6 @@ namespace GEOs_REAIS
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFEs = this.melhores_NFEs;
                     retorno.fxs_atuais_NFEs = this.fxs_atuais_NFEs;
-                    retorno.populacao_final = this.populacao_melhor;
                     retorno.stats_TAU_per_iteration = this.stats_TAU_per_iteration;
                     retorno.stats_STDPORC_per_iteration = this.stats_STDPORC_per_iteration;
                     retorno.stats_Mfx_per_iteration = this.stats_Mfx_per_iteration;
