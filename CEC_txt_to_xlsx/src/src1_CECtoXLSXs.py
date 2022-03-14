@@ -1,12 +1,12 @@
 
 
-INPUT_TXT_FILENAME = 'CEC2017_functions_D30.txt'
-# INPUT_TXT_FILENAME = 'CEC2017_functions_D30.txt'
+N = 'D10'
+# N = 'D30'
 
+
+INPUT_TXT_FILENAME = f'CEC2017functions-{N}.txt'
 INPUT_FOLDER_NAME = '../INPUTS/'
-# INPUT_FOLDER_NAME = './'
-
-OUTPUT_FOLDER_NAME = '../OUTPUTS/'
+OUTPUT_FOLDER_NAME = f'../OUTPUTS/{N}/'
 
 
 # Abre o txt
@@ -115,7 +115,8 @@ lista_ids_funcoes.remove(2)
 # Monta um dataframe pra cada algoritmo e salva em xlsx
 import pandas as pd
 import datetime as dt
-datetime_str = str(dt.datetime.now().time())
+# datetime_str = str(dt.datetime.now().time())
+
 for i in range(0,QUANTIDADE_ALGORITMOS):
     df = pd.DataFrame()
 
@@ -127,6 +128,6 @@ for i in range(0,QUANTIDADE_ALGORITMOS):
     df['Std'] = sdFX_algoritmos[i]
 
     nome_algoritmo = ListaGeral_nomes_algoritmos[i]
-    filepath = OUTPUT_FOLDER_NAME+INPUT_TXT_FILENAME[:-4]+'__'+datetime_str+'__'+nome_algoritmo+'.xlsx'
+    filepath = OUTPUT_FOLDER_NAME+INPUT_TXT_FILENAME[:-4]+'__'+nome_algoritmo+'.xlsx'
     # df.to_excel(filepath, index=False, sheet_name=nome_algoritmo)
     df.to_excel(filepath, index=False)

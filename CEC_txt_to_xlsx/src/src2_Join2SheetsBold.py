@@ -2,12 +2,15 @@
 
 import pandas as pd
 
-INPUTS_FOLDER_NAME = '../OUTPUTS/'
 
-PREINPUT = 'CEC2017_functions_D30__08:05:58.397200__'
+N = 'D10'
+# N = 'D30'
 
-INPUT_FILE1 = 'AGEO2'
-# INPUT_FILE1 = 'AGEO2var_5'
+INPUTS_FOLDER_NAME = f'../OUTPUTS/{N}/'
+PREINPUT = f'CEC2017functions-{N}__'
+
+# INPUT_FILE1 = 'AGEO2'
+INPUT_FILE1 = 'AGEO2var_5'
 
 # INPUT_FILE2 = 'AGEO2'
 # INPUT_FILE2 = 'AGEO2var_5'
