@@ -13,75 +13,10 @@ namespace Execucoes
     {
         public void Execucoes()
         {
-            // =======================================================================================
-            // Define a lista de funções a serem executadas
-            // =======================================================================================
-            List<int> function_values = new List<int>()
-            {
-                // (int)EnumNomesFuncoesObjetivo.griewangk,
-                // (int)EnumNomesFuncoesObjetivo.rastringin,
-                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
-                // (int)EnumNomesFuncoesObjetivo.schwefel,
-                // (int)EnumNomesFuncoesObjetivo.ackley,
-                // (int)EnumNomesFuncoesObjetivo.beale,
-                
-                (int)EnumNomesFuncoesObjetivo.CEC2017_01,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_03,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_04,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_05,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_06,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_07,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_08,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_09,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_10,
-                
-                (int)EnumNomesFuncoesObjetivo.CEC2017_11,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_12,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_13,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_14,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_15,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_16,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_17,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_18,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_19,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_20,
-                
-                (int)EnumNomesFuncoesObjetivo.CEC2017_21,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_22,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_23,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_24,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_25,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_26,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_27,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_28,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_29,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_30,
-                
-                // (int)EnumNomesFuncoesObjetivo.spacecraft,
-                
-                // (int)EnumNomesFuncoesObjetivo.paviani,
-                // (int)EnumNomesFuncoesObjetivo.salomon,
-                // (int)EnumNomesFuncoesObjetivo.schaffer_2,
-                // (int)EnumNomesFuncoesObjetivo.bartels_conn,
-                // (int)EnumNomesFuncoesObjetivo.bird,
-                // (int)EnumNomesFuncoesObjetivo.bohachevsky_1,
-                
-                // (int)EnumNomesFuncoesObjetivo.cosine_mixture,
-                // (int)EnumNomesFuncoesObjetivo.mccormick,
-                // (int)EnumNomesFuncoesObjetivo.alpine01,
-                // (int)EnumNomesFuncoesObjetivo.adjiman,
-                // (int)EnumNomesFuncoesObjetivo.levy13,
-                // (int)EnumNomesFuncoesObjetivo.nova,
-                // (int)EnumNomesFuncoesObjetivo.spacecraft,
-            };
-            // =======================================================================================
-
-
             
-
-
-            
-
+            // =======================================================================================
+            // Define qual modo o usuário deseja operar (executar ou realizar tuning)
+            // =======================================================================================
             List<int> o_que_fazer = new List<int>(){ 
                 (int)EnumOQueFazer.executar_algoritmos,
                 // (int)EnumOQueFazer.tuning_GEO,
@@ -102,16 +37,96 @@ namespace Execucoes
             
 
 
+            // =======================================================================================
+            // Define a lista de funções a serem executadas
+            // =======================================================================================
+            List<int> function_values = new List<int>()
+            {
+                // (int)EnumNomesFuncoesObjetivo.griewangk,
+                // (int)EnumNomesFuncoesObjetivo.rastringin,
+                // (int)EnumNomesFuncoesObjetivo.rosenbrock,
+                // (int)EnumNomesFuncoesObjetivo.schwefel,
+                // (int)EnumNomesFuncoesObjetivo.ackley,
+                // (int)EnumNomesFuncoesObjetivo.beale,
+                
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_04,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_05,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_06,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_07,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_08,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_09,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
+                
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_11,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_12,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_13,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_14,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_15,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_16,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_17,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_18,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_19,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_20,
+                
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_21,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_22,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_23,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_24,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_25,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_26,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_27,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_28,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
+                
+                (int)EnumNomesFuncoesObjetivo.spacecraft,
+                
+                // (int)EnumNomesFuncoesObjetivo.paviani,
+                // (int)EnumNomesFuncoesObjetivo.salomon,
+                // (int)EnumNomesFuncoesObjetivo.schaffer_2,
+                // (int)EnumNomesFuncoesObjetivo.bartels_conn,
+                // (int)EnumNomesFuncoesObjetivo.bird,
+                // (int)EnumNomesFuncoesObjetivo.bohachevsky_1,
+                
+                // (int)EnumNomesFuncoesObjetivo.cosine_mixture,
+                // (int)EnumNomesFuncoesObjetivo.mccormick,
+                // (int)EnumNomesFuncoesObjetivo.alpine01,
+                // (int)EnumNomesFuncoesObjetivo.adjiman,
+                // (int)EnumNomesFuncoesObjetivo.levy13,
+                // (int)EnumNomesFuncoesObjetivo.nova,
+                // (int)EnumNomesFuncoesObjetivo.spacecraft,
+            };
+            // =======================================================================================
 
-            int qtde_execucoes = 30;
+
             
-            int v1E2_or_0dot546843_str_format = 0;
-            // int v1E2_or_0dot546843_str_format = 1;
+            int qtde_execucoes = 50;
 
-            int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
+            int v1E2_or_0dot546843_str_format = 1;
+
+            // int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e6;
-            // int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
+            int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
             // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
+
+            bool round_current_population_every_it = false;
+            
+            QuaisAlgoritmosRodar quais_rodar = new QuaisAlgoritmosRodar(){
+                // rodar_GEO = true,
+                rodar_AGEO2 = true,
+                // rodar_AGEO2var_5 = true,
+                // rodar_AGEO2real2_AA3 = true
+            };
+
+            OQueInteressaPrintar q_printar = new OQueInteressaPrintar(){
+                // mostrar_melhores_NFE = true,
+                // mostrar_melhores_fx_cada_execucao = true
+            };
+
+
+
 
 
 
@@ -134,9 +149,11 @@ namespace Execucoes
                 parametros_execucao.quantidade_execucoes = qtde_execucoes;
 
                 // Por default, printa somente as médias na saída
-                parametros_execucao.o_que_interessa_printar = new OQueInteressaPrintar();
+                parametros_execucao.o_que_interessa_printar = q_printar; //new OQueInteressaPrintar();
                 parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                parametros_execucao.quais_algoritmos_rodar = new QuaisAlgoritmosRodar();
+                parametros_execucao.quais_algoritmos_rodar = quais_rodar; //new QuaisAlgoritmosRodar();
+                parametros_execucao.round_current_population_every_it = round_current_population_every_it;
+                
 
                 // Define os critérios de parada
                 parametros_execucao.parametros_criterio_parada = new ParametrosCriterioParada();
@@ -201,7 +218,7 @@ namespace Execucoes
                         {
                             // ======================================================================================================
                             // O que interessa printar no arquivo de saída ao 'executar algoritmos'
-                            parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
+                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
                             
                             // parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
                             // parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true; //alg. sozinho
@@ -221,7 +238,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;                // Possui parâmetros livres
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
@@ -239,7 +256,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
@@ -270,7 +287,7 @@ namespace Execucoes
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA0 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA2 = true;
-                            parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA3 = true;
+                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA3 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p9 = true;
                             
 
@@ -606,7 +623,7 @@ namespace Execucoes
             }
         }
     
-        public void Teste1(){
+        public void Verify_Final_Stats(){
 
             ParametrosExecucao parametros_execucao = new ParametrosExecucao();
             parametros_execucao.quantidade_execucoes = 2;
@@ -709,9 +726,7 @@ namespace Execucoes
             Console.WriteLine("Rodando!");
             
             // ============================================================================
-            // ============================================================================
-            // Seta a saída para o arquivo
-            // ============================================================================
+            // If desired, set console output to file
             // ============================================================================
             #if CONSOLE_OUT_FILE
                 string filename = "./SaidaRedirect.txt";
@@ -730,13 +745,11 @@ namespace Execucoes
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine ("Cannot open SaidaRedirect.txt for writing");
                     Console.WriteLine (e.Message);
                     return;
                 }
                 Console.SetOut (writer);
             #endif
-            // ============================================================================
             // ============================================================================
 
 
@@ -746,13 +759,18 @@ namespace Execucoes
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
 
+
+
             // Execuções
             Execucoes_GEO ex = new Execucoes_GEO();
             ex.Execucoes();
-            // ex.Teste1();
+            
+            // ex.Verify_Final_Stats();
 
             // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.ExtensiveSearch_SpacecraftOptimization();
             // ExtensiveSearch_and_Testes.ExtensiveSearch_and_Testes.Teste_FuncoesObjetivo_SpacecraftOptimization();
+
+
 
             watch.Stop();
             Console.WriteLine("\n\nExecution Time: {0} s", watch.ElapsedMilliseconds/1000.0);
@@ -762,16 +780,13 @@ namespace Execucoes
 
 
             // ============================================================================
-            // ============================================================================
-            // Volta para o normal o console
-            // ============================================================================
+            // Set console output back to terminal
             // ============================================================================
             #if CONSOLE_OUT_FILE
                 Console.SetOut (oldOut);
                 writer.Close();
                 ostrm.Close();
             #endif
-            // ============================================================================
             // ============================================================================
 
             Console.WriteLine ("Done");
