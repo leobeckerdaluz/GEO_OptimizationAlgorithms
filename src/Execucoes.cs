@@ -49,39 +49,39 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.beale,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_04,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_05,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_06,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_07,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_08,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_09,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_01,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_03,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_04,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_05,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_06,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_07,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_08,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_09,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_10,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_11,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_12,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_13,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_14,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_15,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_16,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_17,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_18,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_19,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_20,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_11,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_12,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_13,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_14,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_15,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_16,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_17,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_18,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_19,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_20,
                 
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_21,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_22,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_23,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_24,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_25,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_26,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_27,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_28,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
-                // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_21,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_22,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_23,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_24,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_25,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_26,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_27,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_28,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_29,
+                (int)EnumNomesFuncoesObjetivo.CEC2017_30,
                 
-                (int)EnumNomesFuncoesObjetivo.spacecraft,
+                // (int)EnumNomesFuncoesObjetivo.spacecraft,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
                 // (int)EnumNomesFuncoesObjetivo.salomon,
@@ -102,13 +102,14 @@ namespace Execucoes
 
 
             
-            int qtde_execucoes = 50;
+            int qtde_execucoes = 51;
 
-            int v1E2_or_0dot546843_str_format = 1;
+            int v1E2_or_0dot546843_str_format = 0;
 
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
+            int criterio_parada = (int)EnumCriteriosParada.execution_3e5;
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e6;
-            int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
+            // int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
             // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
 
             bool round_current_population_every_it = false;
@@ -116,8 +117,8 @@ namespace Execucoes
             QuaisAlgoritmosRodar quais_rodar = new QuaisAlgoritmosRodar(){
                 // rodar_GEO = true,
                 rodar_AGEO2 = true,
-                // rodar_AGEO2var_5 = true,
-                // rodar_AGEO2real2_AA3 = true
+                rodar_AGEO2var_5 = true,
+                rodar_AGEO2real2_AA3 = true
             };
 
             OQueInteressaPrintar q_printar = new OQueInteressaPrintar(){
@@ -171,6 +172,13 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000};
+                    break;
+                    }
+
+                    case (int)EnumCriteriosParada.execution_3e5:{
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
+                        parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 300000;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000,150000,200000,250000,300000};
                     break;
                     }
 

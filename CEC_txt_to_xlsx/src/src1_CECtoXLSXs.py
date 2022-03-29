@@ -1,7 +1,7 @@
 
 
-N = 'D10'
-# N = 'D30'
+# N = 'D10'
+N = 'D30'
 
 
 INPUT_TXT_FILENAME = f'CEC2017functions-{N}.txt'
