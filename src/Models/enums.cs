@@ -153,6 +153,7 @@ namespace Classes_e_Enums
     enum EnumCriteriosParada{
         tuning_1e16_10e5,
         execution_1e5,
+        execution_3e5,
         execution_1e6,
         execution_spacecraft,
     }

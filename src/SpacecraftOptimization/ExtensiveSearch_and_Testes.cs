@@ -79,7 +79,6 @@ namespace ExtensiveSearch_and_Testes
             // Define qual função chamar e o fenótipo
             int function_id = (int)EnumNomesFuncoesObjetivo.spacecraft;
             List<double> fenotipo_variaveis_projeto = new List<double>(){14,60,59};
-            fenotipo_variaveis_projeto = new List<double>(){14,60,59};
             // fenotipo_variaveis_projeto = new List<double>(){79,378,348};
             
             // =========================================================

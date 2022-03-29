@@ -2,3 +2,5 @@ src/bin/*
 src/obj/*
 /.vscode
 src/SaidaRedirect.txt
+
+src/CEC2017_linux_cpp_csharp_integration

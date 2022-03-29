@@ -43,7 +43,7 @@ namespace GEOs_REAIS
 
 
 
-        public override void verifica_perturbacoes()
+        public override async void verifica_perturbacoes()
         {
             // // Se o tau acabou de ser reiniciado na iteração anterior, 
             // // ...reinicia o p1 aqui
@@ -116,8 +116,26 @@ namespace GEOs_REAIS
                             double xi = populacao_atual[k];
                             // A perturbação vai ser a variável atual mais um valor da distribuição normal
                             double xi_perturbado = xi + rand_normal;
-                            // Atualiza o valor dessa variável na população cópia
-                            populacao_copia[k] = xi_perturbado;
+
+
+
+                            if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
+                                if (Math.Round(xi_perturbado) > upper_bounds[k]){
+                                    xi_perturbado = upper_bounds[k];
+                                }
+                                else if (Math.Round(xi_perturbado) < lower_bounds[k]){
+                                    xi_perturbado = lower_bounds[k];
+                                }
+                                
+                                populacao_copia[k] = Math.Round(xi_perturbado);
+                            }
+                            else
+                            {
+                                populacao_copia[k] = xi_perturbado;
+                            }
+
+
+
                         }
                         // Depois de toda população perturbada, calcula o f(x) que é a adaptabilidade do porcentagem linha
                         double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
@@ -142,14 +160,35 @@ namespace GEOs_REAIS
                         // Calcula o sigma com a porcentagem linha e perturba a variável
                         double sigma = p/100.0 * intervalo_variacao_variavel;
                         double xii = xi + new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
+
                         // Atribui a variável perturbada na população cópia
-                        populacao_para_perturbar[i] = xii;
+
+
+                        if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
+                            if (Math.Round(xii) > upper_bounds[i]){
+                                xii = upper_bounds[i];
+                            }
+                            else if (Math.Round(xii) < lower_bounds[i]){
+                                xii = lower_bounds[i];
+                            }
+
+                            populacao_para_perturbar[i] = Math.Round(xii);
+                        }
+                        else
+                        {
+                            populacao_para_perturbar[i] = xii;
+                        }
+                            
+                            
+                       
+
+
                         // Calcula f(x) com a variável perturbada
                         double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
                         // Cria a perturbação e adiciona ela na lista de perturbações da iteração
                         Perturbacao perturbacao = new Perturbacao();
                         perturbacao.xi_antes_da_perturbacao = xi;
-                        perturbacao.xi_depois_da_perturbacao = xii;
+                        perturbacao.xi_depois_da_perturbacao = populacao_para_perturbar[i];
                         perturbacao.fx_depois_da_perturbacao = fx;
                         perturbacao.indice_variavel_projeto = i;
                         // Adiciona na lista de perturbações
