@@ -29,7 +29,7 @@ namespace GEOs_REAIS
         public List<double> stats_TAU_per_iteration {get; set;}
         public List<double> stats_STDPORC_per_iteration {get; set;}
         public List<double> stats_Mfx_per_iteration {get; set;}
-        public bool round_current_population_every_it {get; set;}
+        public bool integer_population {get; set;}
 
 
         public GEO_real1(
@@ -42,7 +42,7 @@ namespace GEOs_REAIS
             int tipo_perturbacao,
             double tau,
             double std,
-            bool round_current_population_every_it)
+            bool integer_population)
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
@@ -52,11 +52,18 @@ namespace GEOs_REAIS
             this.lista_NFEs_desejados = lista_NFEs_desejados;
             this.std = std;
             this.tipo_perturbacao = tipo_perturbacao;
-            this.round_current_population_every_it = round_current_population_every_it;
+            this.integer_population = integer_population;
             
             this.NFE = 0;
             this.populacao_atual = new List<double>(populacao_inicial);
-            this.fx_atual = calcula_valor_funcao_objetivo(populacao_inicial, false);
+
+            if (integer_population){
+                for (int i=0; i<populacao_atual.Count; i++){
+                    populacao_atual[i] = (int)populacao_atual[i];
+                }
+            }
+
+            this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
             this.melhores_NFEs = new List<double>();
@@ -90,9 +97,6 @@ namespace GEOs_REAIS
 
         public virtual double calcula_valor_funcao_objetivo(List<double> fenotipos, bool addNFE)
         {
-            // Calcula o valor da função objetivo com o fenótipo desejado
-            double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipos, this.function_id);
-            
             // Incrementa o NFE
             if(addNFE)
                 add_NFE();
@@ -119,14 +123,24 @@ namespace GEOs_REAIS
                 }
             }
 
-            // Aplica a penalidade em f(x)
-            double fx_final = fx + penalidade;
+
+            double fx_final = double.MaxValue;
+            if ((this.function_id == (int)EnumNomesFuncoesObjetivo.spacecraft) && (penalidade > 0)){
+                // fx = 10000 + penalidade;
+                fx_final = double.MaxValue;
+            }
+            else{
+                // Calcula o valor da função objetivo com o fenótipo desejado
+                double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipos, this.function_id);
+                fx_final = fx + penalidade;
+            }
+            
+
+
             
             // Sempre depois de calcular o f(x), verifica se é o melhor de todos
             if (fx_final < fx_melhor)
-            {
                 fx_melhor = fx_final;
-            }
 
             return fx_final;
         }
@@ -269,8 +283,7 @@ namespace GEOs_REAIS
             bool stop = false;
             
             // POR PRECISÃO - Se a precisão é menor que a definida
-            double precisao_obtida = Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado));
-            bool parada_por_precisao = (precisao_obtida <= parametros_criterio_parada.PRECISAO_criterio_parada);
+            bool parada_por_precisao = (this.fx_melhor <= parametros_criterio_parada.PRECISAO_criterio_parada);
 
             // POR NFE - Se o NFE é superior ao definido
             bool parada_por_NFE = (NFE >= parametros_criterio_parada.NFE_criterio_parada);
@@ -300,24 +313,6 @@ namespace GEOs_REAIS
                 stop = true;
             }
 
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_SPACECRAFT) 
-            {
-                int I = (int)this.populacao_atual[0];
-                int D = (int)this.populacao_atual[1];
-                int Q = (int)this.populacao_atual[2];
-
-
-                if ((I==14 && D>=59 && Q>=58) || (I<13 || I>15 || D<1 || D>60 || Q<1 || Q>60)){
-                    Console.WriteLine("CREEPS");
-                }
-
-                 
-                if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
-                    stop = true;
-                }
-            }
-
-
             // Retorna o status da parada
             return stop;
         }
@@ -328,7 +323,7 @@ namespace GEOs_REAIS
             while(true)
             {
                 // Se desejado, arredonda toda população 
-                if (round_current_population_every_it){
+                if (integer_population){
                     for (int i=0; i<populacao_atual.Count; i++){
                         populacao_atual[i] = Math.Round(populacao_atual[i]);
                     }
@@ -356,6 +351,7 @@ namespace GEOs_REAIS
                 {
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFE = this.NFE;
+                    retorno.melhor_solucao_valida = (this.fx_melhor > 1e200) ? false : true;
                     retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.melhores_NFEs = this.melhores_NFEs;

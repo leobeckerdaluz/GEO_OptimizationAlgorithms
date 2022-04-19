@@ -262,9 +262,10 @@ namespace ObjectiveFunctions
                     int Q = (int)fenotipo_variaveis_projeto[2];
 
                     
-                    if (D<=Q){// || I<13 || I>15 || D<1 || D>60 || Q<1){
+                    if (D < Q){// || I<13 || I>15 || D<1 || D>60 || Q<1){
                         // Console.WriteLine("Já saiu antes!");
                         return Double.MaxValue;
+                        // return 10000;
                     }
 
                     // Calcula f(x). Se a solução não é viável (FOV...), retorna MaxValue

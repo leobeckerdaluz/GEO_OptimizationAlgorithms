@@ -26,6 +26,7 @@ namespace Classes_e_Enums
         public int iteracoes { get; set; }
         public double melhor_fx { get; set; }
         public double fx_atual { get; set; }
+        public bool melhor_solucao_valida { get; set; }
         public List<double> melhores_NFEs { get; set; }
         public List<double> fxs_atuais_NFEs { get; set; }
         public List<double> melhores_TAUs { get; set; }
@@ -41,6 +42,8 @@ namespace Classes_e_Enums
         public int codigo_algoritmo_executado { get; set; }
         public string nome_algoritmo_executado { get; set; }
         public int NFE_medio { get; set; }
+        public int n_execucoes { get; set; }
+        public int n_execucoes_valid { get; set; }
         public int ITERACOES_medio { get; set; }
         public double media_melhor_fx { get; set; }
         public double pior_fx_de_todos { get; set; }
@@ -63,7 +66,6 @@ namespace Classes_e_Enums
         public int NFE_criterio_parada { get; set; }
         public int ITERATIONS_criterio_parada { get; set; }
         public double PRECISAO_criterio_parada { get; set; }
-        public double fx_esperado { get; set; }
         public List<int> lista_NFEs_desejados { get; set; }
     }
 
@@ -150,7 +152,7 @@ namespace Classes_e_Enums
         public QuaisAlgoritmosRodar quais_algoritmos_rodar { get; set; }
         public OQueInteressaPrintar o_que_interessa_printar { get; set; }
         public int tipo_perturbacao { get; set; }
-        public bool round_current_population_every_it {get; set;}
+        public bool integer_population {get; set;}
     }
     
     
@@ -171,6 +173,7 @@ namespace Classes_e_Enums
         public double xi_antes_da_perturbacao {get; set;}
         public double xi_depois_da_perturbacao {get; set;}
         public double fx_depois_da_perturbacao {get; set;}
+        public bool populacao_viavel {get; set;}
         public List<double> populacao_depois_da_perturbacao {get; set;}
         public double porcentagem_usada_nessa_perturb {get; set;}
         public int indice_variavel_projeto {get; set;}

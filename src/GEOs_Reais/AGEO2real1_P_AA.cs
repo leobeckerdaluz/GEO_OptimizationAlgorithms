@@ -18,7 +18,7 @@ namespace GEOs_REAIS
             List<int> lista_NFEs_desejados,
             double std_ou_porcentagem,
             int tipo_perturbacao,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
                 function_id,
@@ -27,7 +27,7 @@ namespace GEOs_REAIS
                 lista_NFEs_desejados,
                 std_ou_porcentagem,
                 tipo_perturbacao,
-                round_current_population_every_it)
+                integer_population)
         {
             
 

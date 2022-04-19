@@ -16,7 +16,7 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
                 function_id,
@@ -29,7 +29,7 @@ namespace GEOs_REAIS
                 9999,
                 9999,
                 9999,
-                round_current_population_every_it)
+                integer_population)
         {
             this.P = 9;
             this.s = 10;
@@ -39,26 +39,28 @@ namespace GEOs_REAIS
             // this.p_inicial_peq = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample()/1000;
             this.p_inicial_peq = 1E-3 + (1E-2 - 1E-3)*new MathNet.Numerics.Distributions.ContinuousUniform().Sample();
         }
+
+
+
+        private bool populacao_viavel(List<double> populacao_para_perturbar, List<double> lower_bounds, List<double> upper_bounds)
+        {
+            for (int i=0; i<populacao_para_perturbar.Count; i++){
+                double xi = populacao_para_perturbar[i];
+                double ul = upper_bounds[i];
+                double ll = lower_bounds[i];
+
+                if (xi<ll || xi>ul){
+                    return false;
+                }
+            }
+            return true;
+        }
           
 
 
 
-        public override async void verifica_perturbacoes()
+        public override void verifica_perturbacoes()
         {
-            // // Se o tau acabou de ser reiniciado na iteração anterior, 
-            // // ...reinicia o p1 aqui
-            // if (this.reiniciou_o_tau){
-            //     // GERA UM p1'
-            //     double rand_lognormal = new MathNet.Numerics.Distributions.LogNormal(4, 0.2).Sample();
-            //     this.p1 = rand_lognormal;
-
-            //     this.reiniciou_o_tau = false;
-            // }
-
-
-
-
-
             // Limpa a lista com perturbações da iteração
             perturbacoes_da_iteracao = new List<Perturbacao>();
             
@@ -78,17 +80,13 @@ namespace GEOs_REAIS
             p_linhas.Add(this.p_inicial_peq / 100);
             p_linhas.Add(this.p_inicial_peq / 1000);
             p_linhas.Add(this.p_inicial_peq / 10000);
-            // p_linhas.Add(this.p_inicial_peq / 100000);
-
 
             
             // PARA CADA P...
             for(int j=0; j<this.P; j++){
-
                 
                 // Valor da porcentagem p a ser utilizada:
                 double p = p_linhas[j];
-
                 
                 // PARA CADA VARIÁVEL...
                 foreach (int i in indices_variaveis){
@@ -104,47 +102,34 @@ namespace GEOs_REAIS
                         
                         // Cria uma cópia da população atual para perturbar todas as variáveis
                         List<double> populacao_copia = new List<double>(populacao_atual);
-                        // Perturba todas as variáveis com aquela porcentagem perturlinha
+                        // Perturba todas as variáveis com aquela porcentagem ro_linha
                         for(int k=0; k<populacao_atual.Count; k++){
-                            // Calcula o invervalo de variação dessa variável
-                            double intervalo_variacao_variavel = upper_bounds[k] - lower_bounds[k];
-                            // Calcula o sigma que será utilizado na distribuição normal
-                            double sigma = ro_linha/100.0 * intervalo_variacao_variavel;
-                            // Obtém um valor aleatório da dist normal
-                            double rand_normal = new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
                             // Obtém o valor atual dessa variável
                             double xi = populacao_atual[k];
-                            // A perturbação vai ser a variável atual mais um valor da distribuição normal
-                            double xi_perturbado = xi + rand_normal;
-
-
-
-                            if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
-                                if (Math.Round(xi_perturbado) > upper_bounds[k]){
-                                    xi_perturbado = upper_bounds[k];
-                                }
-                                else if (Math.Round(xi_perturbado) < lower_bounds[k]){
-                                    xi_perturbado = lower_bounds[k];
-                                }
-                                
-                                populacao_copia[k] = Math.Round(xi_perturbado);
-                            }
-                            else
-                            {
-                                populacao_copia[k] = xi_perturbado;
+                            // Calcula o invervalo de variação dessa variável
+                            double intervalo_variacao_variavel = Math.Abs(upper_bounds[k] - lower_bounds[k]);
+                            // Perturba a variável
+                            double xi_perturbado = perturba_variavel(xi, ro_linha, (int)EnumTipoPerturbacao.perturbacao_porcentagem, intervalo_variacao_variavel);
+                            
+                            // If user set it is an integer population, cast mutation
+                            if (integer_population){
+                                xi_perturbado = (int)xi_perturbado;
                             }
 
-
-
+                            populacao_copia[k] = xi_perturbado;
                         }
                         // Depois de toda população perturbada, calcula o f(x) que é a adaptabilidade do porcentagem linha
                         double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
                         // Cria as informações da perturbação da porcentagem
-                        Perturbacao info_perturbacao_porcent = new Perturbacao();
-                        info_perturbacao_porcent.xi_antes_da_perturbacao = p_inicial_peq;
-                        info_perturbacao_porcent.xi_depois_da_perturbacao = ro_linha;
-                        info_perturbacao_porcent.fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem;
-                        info_perturbacao_porcent.indice_variavel_projeto = 999;
+                        Perturbacao info_perturbacao_porcent = new Perturbacao(){
+                            xi_antes_da_perturbacao = p_inicial_peq,
+                            xi_depois_da_perturbacao = ro_linha,
+                            fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem,
+                            populacao_depois_da_perturbacao = populacao_copia,
+                            populacao_viavel = populacao_viavel(populacao_copia, lower_bounds, upper_bounds),
+                            indice_variavel_projeto = 999
+                        };
+
                         // Adiciona essa info da perturbação da porcentagem na lista de perturbações
                         perturbacoes_da_iteracao.Add(info_perturbacao_porcent);
                         // ------------------------------------------------------------------------------------
@@ -156,47 +141,36 @@ namespace GEOs_REAIS
                         List<double> populacao_para_perturbar = new List<double>(populacao_atual);
                         // Obtém o valor da variável atual e o intervalo de variação dela
                         double xi = populacao_para_perturbar[i];
-                        double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                        // Calcula o sigma com a porcentagem linha e perturba a variável
-                        double sigma = p/100.0 * intervalo_variacao_variavel;
-                        double xii = xi + new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
+                        double intervalo_variacao_variavel = Math.Abs(upper_bounds[i] - lower_bounds[i]);
+                        
+                        // Perturba a variável
+                        double xi_perturbado = perturba_variavel(xi, p, (int)EnumTipoPerturbacao.perturbacao_porcentagem, intervalo_variacao_variavel);
 
-                        // Atribui a variável perturbada na população cópia
-
-
-                        if (function_id == (int)EnumNomesFuncoesObjetivo.spacecraft){
-                            if (Math.Round(xii) > upper_bounds[i]){
-                                xii = upper_bounds[i];
-                            }
-                            else if (Math.Round(xii) < lower_bounds[i]){
-                                xii = lower_bounds[i];
-                            }
-
-                            populacao_para_perturbar[i] = Math.Round(xii);
+                        // If user set it is an integer population, cast mutation
+                        if (integer_population){
+                            xi_perturbado = (int)xi_perturbado;
                         }
-                        else
-                        {
-                            populacao_para_perturbar[i] = xii;
-                        }
-                            
-                            
+                        
+                        populacao_para_perturbar[i] = xi_perturbado;
                        
-
-
                         // Calcula f(x) com a variável perturbada
                         double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
+                        
                         // Cria a perturbação e adiciona ela na lista de perturbações da iteração
-                        Perturbacao perturbacao = new Perturbacao();
-                        perturbacao.xi_antes_da_perturbacao = xi;
-                        perturbacao.xi_depois_da_perturbacao = populacao_para_perturbar[i];
-                        perturbacao.fx_depois_da_perturbacao = fx;
-                        perturbacao.indice_variavel_projeto = i;
+                        Perturbacao perturbacao = new Perturbacao(){
+                            xi_antes_da_perturbacao = xi,
+                            xi_depois_da_perturbacao = xi_perturbado,
+                            fx_depois_da_perturbacao = fx,
+                            populacao_depois_da_perturbacao = populacao_para_perturbar,
+                            populacao_viavel = populacao_viavel(populacao_para_perturbar, lower_bounds, upper_bounds),
+                            indice_variavel_projeto = i
+                        };
+
                         // Adiciona na lista de perturbações
                         perturbacoes_da_iteracao.Add(perturbacao);
                     }
                 }
             }
-
             // Foram geradas P perturbações para todas as (N+1) variáveis de projeto (porcentagem incluida)
         }
 
@@ -208,10 +182,10 @@ namespace GEOs_REAIS
         {
             // Para cada variável, escolhe uma das P perturbações para confirmar
 
-
             // Para cada variável, confirma uma perturbação
             List<int> indices_variaveis = Enumerable.Range(0, n_variaveis_projeto).ToList();
             indices_variaveis.Add(999);
+            
             foreach(int i in indices_variaveis)
             {
                 // Obtem somente as perturbações realizadas naquela variável
@@ -219,12 +193,15 @@ namespace GEOs_REAIS
                 perturbacoes_da_variavel = perturbacoes_da_iteracao.Where(p => p.indice_variavel_projeto == i).ToList();
                
                 // Ordena as perturbações com base no f(x)
-                perturbacoes_da_variavel.Sort(
-                    delegate(Perturbacao b1, Perturbacao b2) { 
-                        return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); 
-                    }
-                );
-
+                perturbacoes_da_variavel.Sort(delegate(Perturbacao b1, Perturbacao b2) { 
+                    return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); 
+                });
+                
+                // Se nenhuma perturbação for viável, deixa essa população mesmo
+                bool at_least_one_valid = perturbacoes_da_variavel.Any(x => x.populacao_viavel == true);
+                if (!at_least_one_valid)
+                    continue;
+                
                 // Verifica as probabilidades até que uma das perturbações dessa variável seja aceita
                 while (true)
                 {
@@ -238,17 +215,19 @@ namespace GEOs_REAIS
                     // Probabilidade Pk => k^(-tau)
                     double Pk = Math.Pow(k, -tau);
 
-                    // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
-                    k -= 1;
-
                     // Se o Pk é maior ou igual ao aleatório, então confirma a perturbação
                     if (Pk >= ALE)
                     {
-                        // Obtém o índice da perturbação escolhida pra aceitar
-                        int indice = perturbacoes_da_variavel[k].indice_variavel_projeto;
-                        // Obtém o valor da variável depois de perturbar
-                        double xii_depois_perturbar = perturbacoes_da_variavel[k].xi_depois_da_perturbacao;
+                        // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
+                        Perturbacao perturbacao_escolhida = perturbacoes_da_variavel[k-1];
 
+                        if (!perturbacao_escolhida.populacao_viavel)
+                            continue;
+
+                        // Obtém o índice da perturbação escolhida pra aceitar
+                        int indice = perturbacao_escolhida.indice_variavel_projeto;
+                        // Obtém o valor da variável depois de perturbar
+                        double xii_depois_perturbar = perturbacao_escolhida.xi_depois_da_perturbacao;
                         
                         // Se indice é 999, atualiza porcentagem
                         if (indice == 999){
@@ -259,8 +238,6 @@ namespace GEOs_REAIS
                             populacao_atual[indice] = xii_depois_perturbar;
                         }
 
-
-
                         // Sai do laço while
                         break;
                     }
@@ -269,9 +246,6 @@ namespace GEOs_REAIS
 
             // Depois que aceitou uma perturbação de cada variável, precisa calcular o fx_atual novamente
             fx_atual = calcula_valor_funcao_objetivo(this.populacao_atual, true);
-
-
-            
 
             // Armazena o novo p' na variável std do GEOreal1 a fim de gerar gráficos de std
             this.std = this.p_inicial_peq;

@@ -15,7 +15,7 @@ namespace GEOs_BINARIOS
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
             List<int> bits_por_variavel_variaveis,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 populacao_inicial_binaria,
                 tau,
                 n_variaveis_projeto,
@@ -24,7 +24,7 @@ namespace GEOs_BINARIOS
                 upper_bounds,
                 lista_NFEs_desejados,
                 bits_por_variavel_variaveis,
-                round_current_population_every_it)
+                integer_population)
         {}
 
 
@@ -102,7 +102,7 @@ namespace GEOs_BINARIOS
             }
 
             // Depois que flipou um bit de cada variável, precisa calcular o fx_atual novamente
-            populacao_atual_double = convert_boolpop_to_listdouble(populacao_atual);
+            populacao_atual_double = convert_boolpop_to_listdouble(populacao_atual, this.integer_population);
             fx_atual = calcula_valor_funcao_objetivo(populacao_atual_double, true);
         }
     }

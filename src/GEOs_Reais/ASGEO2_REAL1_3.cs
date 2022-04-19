@@ -20,7 +20,7 @@ namespace GEOs_REAIS
             int tipo_perturbacao,
             double tau,
             double std,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 n_variaveis_projeto,
                 function_id,
                 populacao_inicial,
@@ -30,7 +30,7 @@ namespace GEOs_REAIS
                 tipo_perturbacao,
                 tau,
                 std,
-                round_current_population_every_it)
+                integer_population)
         {
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);
             this.tau = 0.5;

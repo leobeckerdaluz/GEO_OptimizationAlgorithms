@@ -19,7 +19,7 @@ namespace GEOs_BINARIOS
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
             List<int> bits_por_variavel_variaveis,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 populacao_inicial_binaria,
                 0.5,
                 n_variaveis_projeto,
@@ -28,7 +28,7 @@ namespace GEOs_BINARIOS
                 upper_bounds,
                 lista_NFEs_desejados,
                 bits_por_variavel_variaveis,
-                round_current_population_every_it)
+                integer_population)
         {
             this.CoI_1 = 1.0 / Math.Sqrt(n_variaveis_projeto);
             this.tipo_AGEO = tipo_AGEO;

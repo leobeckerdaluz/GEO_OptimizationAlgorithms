@@ -15,7 +15,7 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 new List<double>(populacao_inicial),
                 n_variaveis_projeto,
                 function_id,
@@ -28,7 +28,7 @@ namespace GEOs_REAIS
                 (int)EnumTipoPerturbacao.perturbacao_porcentagem,
                 9999,
                 9999,
-                round_current_population_every_it)
+                integer_population)
         {
             // Fixa o 'P' e o 's' em 10
             this.P = 10;
@@ -46,7 +46,7 @@ namespace GEOs_REAIS
             while(true)
             {
                 // Se desejado, arredonda toda população 
-                if (round_current_population_every_it){
+                if (integer_population){
                     for (int i=0; i<populacao_atual.Count; i++){
                         populacao_atual[i] = Math.Round(populacao_atual[i]);
                     }

@@ -32,7 +32,6 @@ namespace Execucoes
                 // (int)EnumOQueFazer.tuning_GEOreal2_P_DS,
                 // (int)EnumOQueFazer.tuning_GEOreal2_N_DS,
                 // (int)EnumOQueFazer.tuning_AGEO2real1_P,
-
             };
             
 
@@ -49,39 +48,39 @@ namespace Execucoes
                 // (int)EnumNomesFuncoesObjetivo.ackley,
                 // (int)EnumNomesFuncoesObjetivo.beale,
                 
-                (int)EnumNomesFuncoesObjetivo.CEC2017_01,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_03,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_04,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_05,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_06,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_07,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_08,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_09,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_10,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_01,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_03,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_04,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_05,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_06,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_07,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_08,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_09,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_10,
                 
-                (int)EnumNomesFuncoesObjetivo.CEC2017_11,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_12,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_13,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_14,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_15,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_16,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_17,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_18,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_19,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_20,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_11,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_12,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_13,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_14,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_15,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_16,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_17,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_18,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_19,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_20,
                 
-                (int)EnumNomesFuncoesObjetivo.CEC2017_21,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_22,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_23,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_24,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_25,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_26,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_27,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_28,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_29,
-                (int)EnumNomesFuncoesObjetivo.CEC2017_30,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_21,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_22,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_23,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_24,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_25,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_26,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_27,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_28,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_29,
+                // (int)EnumNomesFuncoesObjetivo.CEC2017_30,
                 
-                // (int)EnumNomesFuncoesObjetivo.spacecraft,
+                (int)EnumNomesFuncoesObjetivo.spacecraft,
                 
                 // (int)EnumNomesFuncoesObjetivo.paviani,
                 // (int)EnumNomesFuncoesObjetivo.salomon,
@@ -102,26 +101,31 @@ namespace Execucoes
 
 
             
-            int qtde_execucoes = 51;
 
-            int v1E2_or_0dot546843_str_format = 0;
+            int qtde_execucoes = 20;
+
+            // int float_str_format = (int)EnumFloatStrFormat.scientific_notation;
+            int float_str_format = (int)EnumFloatStrFormat.decimal_double;
 
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
-            int criterio_parada = (int)EnumCriteriosParada.execution_3e5;
+            // int criterio_parada = (int)EnumCriteriosParada.execution_3e5;
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e6;
-            // int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
+            int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
             // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
 
-            bool round_current_population_every_it = false;
+            bool integer_population = true;
             
-            QuaisAlgoritmosRodar quais_rodar = new QuaisAlgoritmosRodar(){
+            QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar(){
                 // rodar_GEO = true,
                 rodar_AGEO2 = true,
-                rodar_AGEO2var_5 = true,
-                rodar_AGEO2real2_AA3 = true
+                // rodar_AGEO2var = true,
+                // rodar_AGEO2var_5 = true,
+                // rodar_AGEO2real2_AA3 = true,
+                // rodar_AGEO2real2_AA2 = true,
+                // rodar_AGEO2real1_P_AA = true
             };
 
-            OQueInteressaPrintar q_printar = new OQueInteressaPrintar(){
+            OQueInteressaPrintar o_que_printar = new OQueInteressaPrintar(){
                 // mostrar_melhores_NFE = true,
                 // mostrar_melhores_fx_cada_execucao = true
             };
@@ -141,7 +145,6 @@ namespace Execucoes
                 Console.WriteLine("============================================================================");
                 Console.WriteLine("\n\n");
 
-
                 // =======================================================================================
                 // Define os parâmetros de execução
                 ParametrosExecucao parametros_execucao = new ParametrosExecucao();
@@ -150,10 +153,10 @@ namespace Execucoes
                 parametros_execucao.quantidade_execucoes = qtde_execucoes;
 
                 // Por default, printa somente as médias na saída
-                parametros_execucao.o_que_interessa_printar = q_printar; //new OQueInteressaPrintar();
+                parametros_execucao.o_que_interessa_printar = o_que_printar;
                 parametros_execucao.o_que_interessa_printar.mostrar_meanNFE_meanFX_sdFX = true;
-                parametros_execucao.quais_algoritmos_rodar = quais_rodar; //new QuaisAlgoritmosRodar();
-                parametros_execucao.round_current_population_every_it = round_current_population_every_it;
+                parametros_execucao.quais_algoritmos_rodar = quais_algoritmos_rodar;
+                parametros_execucao.integer_population = integer_population;
                 
 
                 // Define os critérios de parada
@@ -164,7 +167,6 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 1e-16;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){100000};
-                        parametros_execucao.parametros_criterio_parada.fx_esperado = 0.0;
                     break;
                     }
 
@@ -190,10 +192,10 @@ namespace Execucoes
                     }
 
                     case (int)EnumCriteriosParada.execution_spacecraft:{
-                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_SPACECRAFT;
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_PRECISAOouNFE;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 100000;
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5};
-                        // parametros_execucao.parametros_criterio_parada.fx_esperado = 196.94943319215918;
+                        parametros_execucao.parametros_criterio_parada.PRECISAO_criterio_parada = 196.94943319216; //196.94943319215918;
                     break;
                     }
                 }
@@ -313,7 +315,7 @@ namespace Execucoes
                             List<Retorno_N_Execucoes_GEOs> resultados_por_algoritmo = ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.organiza_os_resultados_de_cada_execucao(todas_execucoes_algoritmos, parametros_execucao);
                             
                             // Apresenta os resultados finais
-                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema, v1E2_or_0dot546843_str_format);
+                            ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema, float_str_format);
                             // ======================================================================================================
                         }
                         break;

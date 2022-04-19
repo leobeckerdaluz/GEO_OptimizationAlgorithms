@@ -26,7 +26,7 @@ namespace GEOs_REAIS
             int tipo_perturbacao,
             int P,
             int s,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 n_variaveis_projeto,
                 function_id,
                 populacao_inicial,
@@ -36,7 +36,7 @@ namespace GEOs_REAIS
                 tipo_perturbacao,
                 tau,
                 std,
-                round_current_population_every_it)
+                integer_population)
         {
             this.P = P;
             this.s = s;

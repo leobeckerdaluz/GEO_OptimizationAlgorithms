@@ -16,7 +16,7 @@ namespace GEOs_REAIS
             List<double> lower_bounds,
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 populacao_inicial,
                 n_variaveis_projeto,
                 function_id,
@@ -29,7 +29,7 @@ namespace GEOs_REAIS
                 9999,
                 9999,
                 9999,
-                round_current_population_every_it)
+                integer_population)
         {
             this.P = 10;
             this.porcentagem = new MathNet.Numerics.Distributions.LogNormal(1, 0.67).Sample();

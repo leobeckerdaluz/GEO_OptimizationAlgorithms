@@ -146,7 +146,6 @@ namespace Classes_e_Enums
         parada_por_NFE,
         parada_por_PRECISAOouNFE,
         parada_por_ITERATIONS,
-        parada_SPACECRAFT
     }
 
 
@@ -169,5 +168,11 @@ namespace Classes_e_Enums
     enum EnumTipoVariacaoStdNasPPerturbacoes{
         variacao_real_original,
         variacao_divide_por_s,
+    }
+
+
+    enum EnumFloatStrFormat{
+        scientific_notation,
+        decimal_double,
     }
 }

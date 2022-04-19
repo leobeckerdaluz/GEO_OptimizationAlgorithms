@@ -19,7 +19,7 @@ namespace GEOs_REAIS
             List<int> lista_NFEs_desejados,
             double std,
             int tipo_perturbacao,
-            bool round_current_population_every_it) : base(
+            bool integer_population) : base(
                 n_variaveis_projeto,
                 function_id,
                 populacao_inicial,
@@ -29,7 +29,7 @@ namespace GEOs_REAIS
                 tipo_perturbacao,
                 0.5,
                 std,
-                round_current_population_every_it)
+                integer_population)
         {
             this.tipo_AGEO = 2;
             this.CoI_1 = (double) 1.0 / Math.Sqrt(n_variaveis_projeto);

@@ -28,7 +28,7 @@ namespace GEOs_BINARIOS
         public List<int> melhoras_nas_iteracoes {get; set;}
         public List<double> stats_TAU_per_iteration {get; set;}
         public List<double> stats_Mfx_per_iteration {get; set;}
-        public bool round_current_population_every_it {get; set;}
+        public bool integer_population {get; set;}
 
 
         public GEO_BINARIO(
@@ -40,7 +40,7 @@ namespace GEOs_BINARIOS
             List<double> upper_bounds,
             List<int> lista_NFEs_desejados,
             List<int> bits_por_variavel_variaveis,
-            bool round_current_population_every_it)
+            bool integer_population)
         {
             this.tau = tau;
             this.n_variaveis_projeto = n_variaveis_projeto;
@@ -48,12 +48,12 @@ namespace GEOs_BINARIOS
             this.lower_bounds = new List<double>(lower_bounds);
             this.upper_bounds = new List<double>(upper_bounds);
             this.lista_NFEs_desejados = new List<int>(lista_NFEs_desejados);
-            this.round_current_population_every_it = round_current_population_every_it;
+            this.integer_population = integer_population;
             
             this.bits_por_variavel_variaveis = new List<int>(bits_por_variavel_variaveis);
             
             this.NFE = 0;
-            this.populacao_atual_double = new List<double>(convert_boolpop_to_listdouble(populacao_inicial_binaria));
+            this.populacao_atual_double = new List<double>(convert_boolpop_to_listdouble(populacao_inicial_binaria, integer_population));
             this.populacao_atual = new List<bool>(populacao_inicial_binaria);
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual_double, false);
             this.fx_melhor = this.fx_atual;
@@ -82,7 +82,7 @@ namespace GEOs_BINARIOS
         }
 
 
-        public List<double> convert_boolpop_to_listdouble(List<bool>populacao_de_bits){
+        public List<double> convert_boolpop_to_listdouble(List<bool>populacao_de_bits, bool integer_population){
             // Cria a lista que irá conter o fenótipo de cada variável de projeto
             List<double> fenotipo_variaveis_projeto = new List<double>();
             
@@ -116,6 +116,10 @@ namespace GEOs_BINARIOS
                 // min + [(max-min) / (2^bits - 0)] * binario
                 
                 double fenotipo_variavel_projeto = lower + ((upper - lower) * variavel_convertida / (Math.Pow(2, bits_variavel_projeto)-1));
+
+                // if user set, convert variable value to integer
+                if (integer_population)
+                    fenotipo_variavel_projeto = (int)fenotipo_variavel_projeto;
 
                 // Adiciona o fenótipo da variável na lista de fenótipos
                 fenotipo_variaveis_projeto.Add(fenotipo_variavel_projeto);
@@ -156,7 +160,7 @@ namespace GEOs_BINARIOS
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
                 // Calcula o valor da função objetivo
-                List<double> fenotipos = convert_boolpop_to_listdouble(populacao_de_bits_flipado);
+                List<double> fenotipos = convert_boolpop_to_listdouble(populacao_de_bits_flipado, integer_population);
                 double fx = calcula_valor_funcao_objetivo(fenotipos, true);
                 
                 // Armazena as informações dessa mutação do bit na lista de informações
@@ -175,11 +179,9 @@ namespace GEOs_BINARIOS
         public virtual void ordena_e_perturba()
         {
             // Ordena as perturbações com base no f(x)
-            this.lista_informacoes_mutacao.Sort(
-                delegate(BitVerificado b1, BitVerificado b2) { 
-                    return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); 
-                }
-            );
+            this.lista_informacoes_mutacao.Sort(delegate(BitVerificado b1, BitVerificado b2) { 
+                return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); 
+            });
            
             // Verifica as probabilidades até que uma variável seja perturbada
             while (true)
@@ -200,21 +202,25 @@ namespace GEOs_BINARIOS
                 // Se o Pk é maior ou igual ao aleatório, então confirma a mutação
                 if (Pk >= ALE)
                 {
+                    // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
+                    BitVerificado perturbacao_escolhida = lista_informacoes_mutacao[k-1];
+
+
+
+                    // if (!perturbacao_escolhida.populacao_viavel)
+                    //     continue;
+
+
+
+
                     // Flipa o bit
-                    this.populacao_atual[ this.lista_informacoes_mutacao[k].indice_bit_mutado ] = !this.populacao_atual[ this.lista_informacoes_mutacao[k].indice_bit_mutado ];
+                    this.populacao_atual[ perturbacao_escolhida.indice_bit_mutado ] = !this.populacao_atual[ perturbacao_escolhida.indice_bit_mutado ];
 
                     // Atualiza o valor da f(x) para o flipado
-                    fx_atual = lista_informacoes_mutacao[k].funcao_objetivo_flipando;
+                    fx_atual = perturbacao_escolhida.funcao_objetivo_flipando;
 
                     // Atualiza os fenótipos da população 
-                    populacao_atual_double = convert_boolpop_to_listdouble(this.populacao_atual);
-
-
-
-                    
-
-
-
+                    populacao_atual_double = convert_boolpop_to_listdouble(this.populacao_atual, this.integer_population);
 
                     // Sai do laço while
                     break;
@@ -229,8 +235,7 @@ namespace GEOs_BINARIOS
             bool stop = false;
             
             // POR PRECISÃO - Se a precisão é menor que a definida
-            double precisao_obtida = Math.Abs(Math.Abs(this.fx_melhor) - Math.Abs(parametros_criterio_parada.fx_esperado));
-            bool parada_por_precisao = (precisao_obtida <= parametros_criterio_parada.PRECISAO_criterio_parada);
+            bool parada_por_precisao = (this.fx_melhor <= parametros_criterio_parada.PRECISAO_criterio_parada);
 
             // POR NFE - Se o NFE é superior ao definido
             bool parada_por_NFE = (NFE >= parametros_criterio_parada.NFE_criterio_parada);
@@ -260,25 +265,6 @@ namespace GEOs_BINARIOS
                 stop = true;
             }
 
-
-            else if (parametros_criterio_parada.tipo_criterio_parada == (int)EnumTipoCriterioParada.parada_SPACECRAFT) 
-            {
-                int I = (int)this.populacao_atual_double[0];
-                int D = (int)this.populacao_atual_double[1];
-                int Q = (int)this.populacao_atual_double[2];
-
-
-
-                if ((I==14 && D>=59 && Q>=58) || (I<13 || I>15 || D<1 || D>60 || Q<1 || Q>60)){
-                    Console.WriteLine("CREEPS");
-                }
-
-
-                if ((I==14 && D==60 && Q==59) || this.NFE>=parametros_criterio_parada.NFE_criterio_parada){
-                    stop = true;
-                }
-            }
-
             // Retorna o status da parada
             return stop;
         }
@@ -288,17 +274,6 @@ namespace GEOs_BINARIOS
         {
             while(true)
             {
-                // Se desejado, arredonda toda população 
-                if (round_current_population_every_it){
-                    for (int i=0; i<populacao_atual_double.Count; i++){
-                        populacao_atual_double[i] = Math.Round(populacao_atual_double[i]);
-                    }
-
-                    // Atualiza o valor de f(x)
-                    fx_atual = calcula_valor_funcao_objetivo(populacao_atual_double, false);
-                }
-
-
                 // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
 
@@ -318,6 +293,7 @@ namespace GEOs_BINARIOS
                 {
                     RetornoGEOs retorno = new RetornoGEOs();
                     retorno.NFE = this.NFE;
+                    retorno.melhor_solucao_valida = true;
                     retorno.iteracoes = this.iterations;
                     retorno.melhor_fx = this.fx_melhor;
                     retorno.fx_atual = this.fx_atual;
