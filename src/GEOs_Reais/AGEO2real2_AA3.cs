@@ -104,34 +104,29 @@ namespace GEOs_REAIS
                         List<double> populacao_copia = new List<double>(populacao_atual);
                         // Perturba todas as variáveis com aquela porcentagem ro_linha
                         for(int k=0; k<populacao_atual.Count; k++){
-                            // Obtém o valor atual dessa variável
-                            double xi = populacao_atual[k];
                             // Calcula o invervalo de variação dessa variável
                             double intervalo_variacao_variavel = Math.Abs(upper_bounds[k] - lower_bounds[k]);
                             // Perturba a variável
-                            double xi_perturbado = perturba_variavel(xi, ro_linha, (int)EnumTipoPerturbacao.perturbacao_porcentagem, intervalo_variacao_variavel);
-                            
-                            // If user set it is an integer population, cast mutation
-                            if (integer_population){
-                                xi_perturbado = (int)xi_perturbado;
-                            }
-
-                            populacao_copia[k] = xi_perturbado;
+                            populacao_copia[k] = perturba_variavel(
+                                populacao_atual[k], 
+                                ro_linha, 
+                                this.tipo_perturbacao,
+                                intervalo_variacao_variavel, 
+                                integer_population
+                            );
                         }
-                        // Depois de toda população perturbada, calcula o f(x) que é a adaptabilidade do porcentagem linha
-                        double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
-                        // Cria as informações da perturbação da porcentagem
-                        Perturbacao info_perturbacao_porcent = new Perturbacao(){
-                            xi_antes_da_perturbacao = p_inicial_peq,
-                            xi_depois_da_perturbacao = ro_linha,
-                            fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem,
-                            populacao_depois_da_perturbacao = populacao_copia,
-                            populacao_viavel = populacao_viavel(populacao_copia, lower_bounds, upper_bounds),
-                            indice_variavel_projeto = 999
-                        };
 
-                        // Adiciona essa info da perturbação da porcentagem na lista de perturbações
-                        perturbacoes_da_iteracao.Add(info_perturbacao_porcent);
+                        // Cria e adiciona essa info da perturbação da porcentagem na lista de perturbações
+                        perturbacoes_da_iteracao.Add(
+                            new Perturbacao(){
+                                xi_antes_da_perturbacao = p_inicial_peq,
+                                xi_depois_da_perturbacao = ro_linha,
+                                fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_copia, true),
+                                populacao_depois_da_perturbacao = populacao_copia,
+                                feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_copia, upper_bounds, lower_bounds),
+                                indice_variavel_projeto = 999
+                            }
+                        );
                         // ------------------------------------------------------------------------------------
                     }
                     
@@ -140,34 +135,28 @@ namespace GEOs_REAIS
                         // Cria uma população cópia
                         List<double> populacao_para_perturbar = new List<double>(populacao_atual);
                         // Obtém o valor da variável atual e o intervalo de variação dela
-                        double xi = populacao_para_perturbar[i];
                         double intervalo_variacao_variavel = Math.Abs(upper_bounds[i] - lower_bounds[i]);
                         
                         // Perturba a variável
-                        double xi_perturbado = perturba_variavel(xi, p, (int)EnumTipoPerturbacao.perturbacao_porcentagem, intervalo_variacao_variavel);
-
-                        // If user set it is an integer population, cast mutation
-                        if (integer_population){
-                            xi_perturbado = (int)xi_perturbado;
-                        }
-                        
-                        populacao_para_perturbar[i] = xi_perturbado;
+                        populacao_para_perturbar[i] = perturba_variavel(
+                            populacao_atual[i],
+                            p,
+                            this.tipo_perturbacao,
+                            intervalo_variacao_variavel,
+                            integer_population
+                        );
                        
-                        // Calcula f(x) com a variável perturbada
-                        double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
-                        
                         // Cria a perturbação e adiciona ela na lista de perturbações da iteração
-                        Perturbacao perturbacao = new Perturbacao(){
-                            xi_antes_da_perturbacao = xi,
-                            xi_depois_da_perturbacao = xi_perturbado,
-                            fx_depois_da_perturbacao = fx,
-                            populacao_depois_da_perturbacao = populacao_para_perturbar,
-                            populacao_viavel = populacao_viavel(populacao_para_perturbar, lower_bounds, upper_bounds),
-                            indice_variavel_projeto = i
-                        };
-
-                        // Adiciona na lista de perturbações
-                        perturbacoes_da_iteracao.Add(perturbacao);
+                        perturbacoes_da_iteracao.Add(
+                            new Perturbacao(){
+                                xi_antes_da_perturbacao = populacao_atual[i],
+                                xi_depois_da_perturbacao = populacao_para_perturbar[i],
+                                fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_para_perturbar, true),
+                                populacao_depois_da_perturbacao = populacao_para_perturbar,
+                                feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
+                                indice_variavel_projeto = i
+                            }
+                        );
                     }
                 }
             }
@@ -198,7 +187,7 @@ namespace GEOs_REAIS
                 });
                 
                 // Se nenhuma perturbação for viável, deixa essa população mesmo
-                bool at_least_one_valid = perturbacoes_da_variavel.Any(x => x.populacao_viavel == true);
+                bool at_least_one_valid = perturbacoes_da_variavel.Any(x => x.feasible_solution == true);
                 if (!at_least_one_valid)
                     continue;
                 
@@ -221,7 +210,7 @@ namespace GEOs_REAIS
                         // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
                         Perturbacao perturbacao_escolhida = perturbacoes_da_variavel[k-1];
 
-                        if (!perturbacao_escolhida.populacao_viavel)
+                        if (!perturbacao_escolhida.feasible_solution)
                             continue;
 
                         // Obtém o índice da perturbação escolhida pra aceitar

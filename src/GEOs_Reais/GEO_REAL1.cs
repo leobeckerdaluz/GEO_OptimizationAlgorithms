@@ -56,13 +56,6 @@ namespace GEOs_REAIS
             
             this.NFE = 0;
             this.populacao_atual = new List<double>(populacao_inicial);
-
-            if (integer_population){
-                for (int i=0; i<populacao_atual.Count; i++){
-                    populacao_atual[i] = (int)populacao_atual[i];
-                }
-            }
-
             this.fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
             this.fx_melhor = this.fx_atual;
             this.fx_atual_comeco_it = this.fx_atual;
@@ -146,7 +139,7 @@ namespace GEOs_REAIS
         }
         
         
-        public double perturba_variavel(double xi, double std_or_p, int tipo_perturbacao, double intervalo_variacao_variavel)
+        public double perturba_variavel(double xi, double std_or_p, int tipo_perturbacao, double intervalo_variacao_variavel, bool integer_population)
         {
             // Cria a variável perturbada como cópia da original
             double xii = xi;
@@ -175,20 +168,12 @@ namespace GEOs_REAIS
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(0, std_or_p);
                 xii = xi + normalDist.Sample();
             }
+           
+            // Cast variable to int if user set
+            if (integer_population){
+                xii = (int)xii;
+            }
 
-
-            // MathNet.Numerics.Distributions.ContinuousUniform uniformContDist = new MathNet.Numerics.Distributions.ContinuousUniform();
-            // MathNet.Numerics.Distributions.Exponential expDist = new MathNet.Numerics.Distributions.Exponential(std_atual);
-            
-            // xii = xi + normalDist.Sample();
-            // // xii = xi + uniformContDist.Sample();
-            
-            // // double exp = expDist.Sample();
-            // // double unif = uniformContDist.Sample();
-            // // xii = xi + ((unif >= 0.5) ? exp : -exp);
-
-
-            // Retorna a variável perturbada
             return xii;
         }
         
@@ -204,27 +189,29 @@ namespace GEOs_REAIS
                 // Cria uma população cópia
                 List<double> populacao_para_perturbar = new List<double>(populacao_atual);
 
-                // Perturba a variável
-                double xi = populacao_para_perturbar[i];
+                // Obtém o intervalo de variação da variável
                 double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                double xii = perturba_variavel(xi, this.std, this.tipo_perturbacao, intervalo_variacao_variavel);
-
-                // Atribui a variável perturbada na população cópia
-                populacao_para_perturbar[i] = xii;
-
-                // Calcula f(x) com a variável perturbada
-                double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
                 
+                // Perturba a variável
+                populacao_para_perturbar[i] = perturba_variavel(
+                    populacao_atual[i],
+                    this.std, 
+                    this.tipo_perturbacao, 
+                    intervalo_variacao_variavel, 
+                    integer_population
+                );
 
                 // Cria a perturbação e adiciona ela na lista de perturbações da iteração
-                Perturbacao perturbacao = new Perturbacao();
-                perturbacao.xi_antes_da_perturbacao = xi;
-                perturbacao.xi_depois_da_perturbacao = xii;
-                perturbacao.fx_depois_da_perturbacao = fx;
-                perturbacao.indice_variavel_projeto = i;
-
-                // Adiciona na lista de perturbações
-                perturbacoes.Add(perturbacao);
+                perturbacoes.Add(
+                    new Perturbacao(){
+                        xi_antes_da_perturbacao = populacao_atual[i],
+                        xi_depois_da_perturbacao = populacao_para_perturbar[i],
+                        fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_para_perturbar, true),
+                        populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar),
+                        feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
+                        indice_variavel_projeto = i,
+                    }
+                );
             }
 
             // Todas essas perturbações realizadas na população são as perturbações da iteração a 
@@ -322,16 +309,6 @@ namespace GEOs_REAIS
         {
             while(true)
             {
-                // Se desejado, arredonda toda população 
-                if (integer_population){
-                    for (int i=0; i<populacao_atual.Count; i++){
-                        populacao_atual[i] = Math.Round(populacao_atual[i]);
-                    }
-
-                    // Atualiza o valor de f(x)
-                    fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
-                }
-
                 // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
                 

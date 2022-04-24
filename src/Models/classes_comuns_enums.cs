@@ -9,6 +9,7 @@ namespace Classes_e_Enums
     public class BitVerificado{
         public double funcao_objetivo_flipando { get; set; }
         public int indice_bit_mutado { get; set; }
+        public bool feasible_solution { get; set; }
     }
 
     
@@ -99,8 +100,6 @@ namespace Classes_e_Enums
         public bool rodar_AGEO2var_9 { get; set; }
         public bool rodar_AGEO2var_11 { get; set; }
         
-        public bool rodar_GEOvar2 { get; set; }
-        
         // GEOreal1
         public bool rodar_GEOreal1_O { get; set; }
         public bool rodar_GEOreal1_P { get; set; }
@@ -173,7 +172,7 @@ namespace Classes_e_Enums
         public double xi_antes_da_perturbacao {get; set;}
         public double xi_depois_da_perturbacao {get; set;}
         public double fx_depois_da_perturbacao {get; set;}
-        public bool populacao_viavel {get; set;}
+        public bool feasible_solution {get; set;}
         public List<double> populacao_depois_da_perturbacao {get; set;}
         public double porcentagem_usada_nessa_perturb {get; set;}
         public int indice_variavel_projeto {get; set;}
@@ -196,8 +195,6 @@ namespace Classes_e_Enums
         
         public double GEO__tau {get; set;}
         public double GEOvar__tau {get; set;}
-
-        public double GEOvar2__tau {get; set;}
         
         // public double tau_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_porcentagem, GEOreal1_normal
         // public double std_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_normal

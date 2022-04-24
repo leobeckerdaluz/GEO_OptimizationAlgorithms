@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Classes_e_Enums;
 
@@ -44,7 +45,6 @@ namespace GEOs_BINARIOS
                 
                 // Percorre o número de bits de cada variável de projeto
                 for(int c=0; c<bits_variavel_projeto; c++){
-                    // Se o bit for true, concatena "1", senão, "0"
                     lista_informacoes_bits_variavel.Add( this.lista_informacoes_mutacao[iterador] );
 
                     iterador++;
@@ -57,9 +57,12 @@ namespace GEOs_BINARIOS
                     }
                 );
 
-                //============================================================
-                // Flipa um bit da variável com probabilidade Pk
-                //============================================================
+                //---------------------------------------------------------------------------------------
+                // Se nenhuma perturbação for viável, deixa essa população mesmo
+                bool at_least_one_valid = lista_informacoes_bits_variavel.Any(x => x.feasible_solution == true);
+                if (!at_least_one_valid)
+                    return;
+                //---------------------------------------------------------------------------------------
 
                 // Verifica as probabilidades até que um bit por variável seja mutado
                 while (true){
@@ -73,13 +76,19 @@ namespace GEOs_BINARIOS
                     // Probabilidade Pk => k^(-tau)
                     double Pk = Math.Pow(k, -tau);
 
-                    // k precisa ser de 1 a N, mas aqui nos índices começa em 0
-                    k -= 1;
-
                     // Se o Pk é maior ou igual ao aleatório, então flipa o bit
                     if (Pk >= ALE){
+                        // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
+                        BitVerificado perturbacao_escolhida = lista_informacoes_mutacao[k-1];
+
+                        //----------------------------------------------------
+                        // Do not set an unfeasible solution as new population
+                        if (!perturbacao_escolhida.feasible_solution)
+                            continue;
+                        //----------------------------------------------------
+
                         // Flipa o bit
-                        this.populacao_atual[ lista_informacoes_bits_variavel[k].indice_bit_mutado ] = !this.populacao_atual[ lista_informacoes_bits_variavel[k].indice_bit_mutado ];
+                        this.populacao_atual[ perturbacao_escolhida.indice_bit_mutado ] = !this.populacao_atual[ perturbacao_escolhida.indice_bit_mutado ];
 
                         // Sai do laço
                         break;

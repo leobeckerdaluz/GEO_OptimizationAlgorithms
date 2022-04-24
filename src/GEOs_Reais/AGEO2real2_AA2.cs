@@ -88,27 +88,27 @@ namespace GEOs_REAIS
                         for(int k=0; k<populacao_atual.Count; k++){
                             // Calcula o invervalo de variação dessa variável
                             double intervalo_variacao_variavel = upper_bounds[k] - lower_bounds[k];
-                            // Calcula o sigma que será utilizado na distribuição normal
-                            double sigma = p/100.0 * intervalo_variacao_variavel;
-                            // Obtém um valor aleatório da dist normal
-                            double rand_normal = new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
-                            // Obtém o valor atual dessa variável
-                            double xi = populacao_atual[k];
-                            // A perturbação vai ser a variável atual mais um valor da distribuição normal
-                            double xi_perturbado = xi + rand_normal;
-                            // Atualiza o valor dessa variável na população cópia
-                            populacao_copia[k] = xi_perturbado;
+                            // Perturba a variável
+                            populacao_copia[k] = perturba_variavel(
+                                populacao_atual[k],
+                                p,
+                                this.tipo_perturbacao,
+                                intervalo_variacao_variavel,
+                                integer_population
+                            );
                         }
-                        // Depois de toda população perturbada, calcula o f(x) que é a adaptabilidade do porcentagem linha
-                        double fx_adaptabilidade_porcentagem = calcula_valor_funcao_objetivo(populacao_copia, true);
+
                         // Cria as informações da perturbação da porcentagem
-                        Perturbacao info_perturbacao_porcent = new Perturbacao();
-                        info_perturbacao_porcent.xi_antes_da_perturbacao = p1;
-                        info_perturbacao_porcent.xi_depois_da_perturbacao = p;
-                        info_perturbacao_porcent.fx_depois_da_perturbacao = fx_adaptabilidade_porcentagem;
-                        info_perturbacao_porcent.indice_variavel_projeto = 999;
-                        // Adiciona essa info da perturbação da porcentagem na lista de perturbações
-                        perturbacoes_da_iteracao.Add(info_perturbacao_porcent);
+                        perturbacoes_da_iteracao.Add(
+                            new Perturbacao(){
+                                xi_antes_da_perturbacao = p1,
+                                xi_depois_da_perturbacao = p,
+                                fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_copia, true),
+                                feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_copia, upper_bounds, lower_bounds),
+                                populacao_depois_da_perturbacao = new List<double>(populacao_copia),
+                                indice_variavel_projeto = 999,
+                            }
+                        );
                         // ------------------------------------------------------------------------------------
                     }
                     
@@ -116,24 +116,28 @@ namespace GEOs_REAIS
                     else{
                         // Cria uma população cópia
                         List<double> populacao_para_perturbar = new List<double>(populacao_atual);
-                        // Obtém o valor da variável atual e o intervalo de variação dela
-                        double xi = populacao_para_perturbar[i];
+                        // Obtém o intervalo de variação dela
                         double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                        // Calcula o sigma com a porcentagem linha e perturba a variável
-                        double sigma = p/100.0 * intervalo_variacao_variavel;
-                        double xii = xi + new MathNet.Numerics.Distributions.Normal(0, sigma).Sample();
-                        // Atribui a variável perturbada na população cópia
-                        populacao_para_perturbar[i] = xii;
-                        // Calcula f(x) com a variável perturbada
-                        double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
+                        // Perturba a variável
+                        populacao_para_perturbar[i] = perturba_variavel(
+                            populacao_atual[i],
+                            p,
+                            this.tipo_perturbacao,
+                            intervalo_variacao_variavel,
+                            integer_population
+                        );
+
                         // Cria a perturbação e adiciona ela na lista de perturbações da iteração
-                        Perturbacao perturbacao = new Perturbacao();
-                        perturbacao.xi_antes_da_perturbacao = xi;
-                        perturbacao.xi_depois_da_perturbacao = xii;
-                        perturbacao.fx_depois_da_perturbacao = fx;
-                        perturbacao.indice_variavel_projeto = i;
-                        // Adiciona na lista de perturbações
-                        perturbacoes_da_iteracao.Add(perturbacao);
+                        perturbacoes_da_iteracao.Add(
+                            new Perturbacao(){
+                                xi_antes_da_perturbacao = populacao_atual[i],
+                                xi_depois_da_perturbacao = populacao_para_perturbar[i],
+                                fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_para_perturbar, true),
+                                populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar),
+                                feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
+                                indice_variavel_projeto = i,
+                            }
+                        );
                     }
                 }
 

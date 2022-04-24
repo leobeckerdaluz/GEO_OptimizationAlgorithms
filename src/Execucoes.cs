@@ -13,7 +13,6 @@ namespace Execucoes
     {
         public void Execucoes()
         {
-            
             // =======================================================================================
             // Define qual modo o usuário deseja operar (executar ou realizar tuning)
             // =======================================================================================
@@ -21,7 +20,6 @@ namespace Execucoes
                 (int)EnumOQueFazer.executar_algoritmos,
                 // (int)EnumOQueFazer.tuning_GEO,
                 // (int)EnumOQueFazer.tuning_GEOvar,
-                // (int)EnumOQueFazer.tuning_GEOvar2,
                 // (int)EnumOQueFazer.tuning_GEOreal1_O,
                 // (int)EnumOQueFazer.tuning_GEOreal1_P,
                 // (int)EnumOQueFazer.tuning_GEOreal1_N,
@@ -117,9 +115,9 @@ namespace Execucoes
             
             QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar(){
                 // rodar_GEO = true,
-                rodar_AGEO2 = true,
+                // rodar_AGEO2 = true,
                 // rodar_AGEO2var = true,
-                // rodar_AGEO2var_5 = true,
+                rodar_AGEO2var_5 = true,
                 // rodar_AGEO2real2_AA3 = true,
                 // rodar_AGEO2real2_AA2 = true,
                 // rodar_AGEO2real1_P_AA = true
@@ -127,7 +125,7 @@ namespace Execucoes
 
             OQueInteressaPrintar o_que_printar = new OQueInteressaPrintar(){
                 // mostrar_melhores_NFE = true,
-                // mostrar_melhores_fx_cada_execucao = true
+                mostrar_melhores_fx_cada_execucao = true
             };
 
 
@@ -245,7 +243,6 @@ namespace Execucoes
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;                    // Possui parâmetros livres
                             // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;                 // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;                // Possui parâmetros livres
                             
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
                             // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
@@ -353,26 +350,6 @@ namespace Execucoes
 
                             List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                            
-                            bool ordenar = true;
-                            tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
-                        }
-                        break;
-
-
-                        case (int)EnumOQueFazer.tuning_GEOvar2:
-                        {
-                            // ======================================================================================================
-                            // Tuning do GEOvar2
-                            // List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0, 4.25, 4.5, 4.75, 5}; 
-                            List<double> valores_tau = new List<double>(){5.25, 5.5, 5.75, 6, 6.25, 6.5, 6.75, 7};//, 7.25, 7.5, 7.75, 8, 8.25, 8.5, 8.75, 9.0, 9.25, 9.5, 9.75, 10}; 
-                            
-                            parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2 = true;
-                            
-                            Tunings.Tunings tunings = new Tunings.Tunings();
-                            
-                            List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
-                          
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
                             // ======================================================================================================

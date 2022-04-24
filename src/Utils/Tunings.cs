@@ -124,7 +124,6 @@ namespace Tunings
             foreach (double tau in valores_tau){
                 parametros_problema.parametros_livres.GEO__tau = tau; 
                 parametros_problema.parametros_livres.GEOvar__tau = tau; 
-                parametros_problema.parametros_livres.GEOvar2__tau = tau; 
 
                 // Executa cada algoritmo por N vezes e obtém todas as execuções
                 ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();

@@ -3,30 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using SpaceDesignTeste;
-
-using GEOs_REAIS;
-using GEOs_BINARIOS;
-
-using Classes_e_Enums;
-
-using SpaceConceptOptimizer.Models;
-using MathModelsDomain.Utilities;
-using SpaceConceptOptimizer.Settings;
-using SpaceConceptOptimizer.Utilities;
-
-
-using System.IO;
-using System.Threading.Tasks;
-
 
 namespace GeracaoPopulacoes
 {
     public class GeracaoPopulacoes {
        
-        public static List<double> geracao_populacao_real(List<double> lower_bounds, List<double> upper_bounds, int seed)
+        public static List<double> geracao_populacao_real(List<double> lower_bounds, List<double> upper_bounds, int seed, bool integer_population)
         {
             // Quantidade de variáveis de projeto
             double size = lower_bounds.Count;
@@ -42,6 +24,10 @@ namespace GeracaoPopulacoes
                 double rand = rnd.NextDouble();
 
                 double xi = lower + ((upper - lower) * rand);
+
+                if (integer_population){
+                    xi = (int)xi;
+                }
 
                 population.Add(xi);
             }

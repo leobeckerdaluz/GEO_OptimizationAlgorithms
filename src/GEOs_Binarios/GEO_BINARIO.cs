@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Classes_e_Enums;
+using CheckFeasibility;
+using System.Linq;
 
 namespace GEOs_BINARIOS
 {
@@ -135,6 +137,7 @@ namespace GEOs_BINARIOS
             if (addNFE)
                 add_NFE();
             
+            // Compute fx
             double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipo_variaveis_projeto, function_id);
 
             // Avalia se a perturbação é a melhor de todas
@@ -159,15 +162,16 @@ namespace GEOs_BINARIOS
                 // Flipa o i-ésimo bit
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
-                // Calcula o valor da função objetivo
+                // Converte a população de bits para fenótipo
                 List<double> fenotipos = convert_boolpop_to_listdouble(populacao_de_bits_flipado, integer_population);
-                double fx = calcula_valor_funcao_objetivo(fenotipos, true);
                 
                 // Armazena as informações dessa mutação do bit na lista de informações
-                BitVerificado informacoes_bit = new BitVerificado();
-                informacoes_bit.funcao_objetivo_flipando = fx;
-                informacoes_bit.indice_bit_mutado = i;
-                this.lista_informacoes_mutacao.Add(informacoes_bit);
+                this.lista_informacoes_mutacao.Add(
+                    new BitVerificado(){
+                        funcao_objetivo_flipando = calcula_valor_funcao_objetivo(fenotipos, true),
+                        indice_bit_mutado = i,
+                    }
+                );
             }
         }
 
@@ -182,6 +186,13 @@ namespace GEOs_BINARIOS
             this.lista_informacoes_mutacao.Sort(delegate(BitVerificado b1, BitVerificado b2) { 
                 return b1.funcao_objetivo_flipando.CompareTo(b2.funcao_objetivo_flipando); 
             });
+
+            //---------------------------------------------------------------------------------------
+            // Se nenhuma perturbação for viável, deixa essa população mesmo
+            bool at_least_one_valid = lista_informacoes_mutacao.Any(x => x.feasible_solution == true);
+            if (!at_least_one_valid)
+                return;
+            //---------------------------------------------------------------------------------------
            
             // Verifica as probabilidades até que uma variável seja perturbada
             while (true)
@@ -196,22 +207,17 @@ namespace GEOs_BINARIOS
                 // Probabilidade Pk => k^(-tau)
                 double Pk = Math.Pow(k, -this.tau);
 
-                // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
-                k -= 1;
-
                 // Se o Pk é maior ou igual ao aleatório, então confirma a mutação
                 if (Pk >= ALE)
                 {
                     // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
                     BitVerificado perturbacao_escolhida = lista_informacoes_mutacao[k-1];
 
-
-
-                    // if (!perturbacao_escolhida.populacao_viavel)
-                    //     continue;
-
-
-
+                    //----------------------------------------------------
+                    // Do not set an unfeasible solution as new population
+                    if (!perturbacao_escolhida.feasible_solution)
+                        continue;
+                    //----------------------------------------------------
 
                     // Flipa o bit
                     this.populacao_atual[ perturbacao_escolhida.indice_bit_mutado ] = !this.populacao_atual[ perturbacao_escolhida.indice_bit_mutado ];

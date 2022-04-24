@@ -37,7 +37,6 @@ namespace ObjectiveFunctions
                         // Binários
                         GEO__tau = 1.25,
                         GEOvar__tau = 2.75,
-                        GEOvar2__tau = 6.5,
                        
                         // GEOreal1
                         GEOreal1_O__std = 1.2,
@@ -102,7 +101,6 @@ namespace ObjectiveFunctions
                         // Binários
                         GEO__tau = 1,
                         GEOvar__tau = 1.75,
-                        GEOvar2__tau = 6,
 
                         // GEOreal1
                         GEOreal1_O__std = 1,
@@ -167,7 +165,6 @@ namespace ObjectiveFunctions
                         // Binários
                         GEO__tau = 1.25,
                         GEOvar__tau = 1.5,
-                        GEOvar2__tau = 6.50,
                         
                         // GEOreal1
                         GEOreal1_O__std = 2.4,
@@ -232,7 +229,6 @@ namespace ObjectiveFunctions
                         // Binários
                         GEO__tau = 0.75,
                         GEOvar__tau = 1.5,
-                        GEOvar2__tau = 7,
                       
                         // GEOreal1
                         GEOreal1_O__std = 1.8,
@@ -298,7 +294,6 @@ namespace ObjectiveFunctions
                         // Binários
                         GEO__tau = 3.25,
                         GEOvar__tau = 2.25,
-                        GEOvar2__tau = 6.25,
 
                         // GEOreal1
                         GEOreal1_O__std = 0.8,
@@ -363,7 +358,6 @@ namespace ObjectiveFunctions
                         // Binários
                         GEO__tau = 1.25,
                         GEOvar__tau = 1.5,
-                        GEOvar2__tau = 6.5,
                         
                         // GEOreal1
                         GEOreal1_O__std = 2,

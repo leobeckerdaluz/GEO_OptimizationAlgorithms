@@ -65,7 +65,6 @@ namespace Classes_e_Enums
         executar_algoritmos,
         tuning_GEO,
         tuning_GEOvar,
-        tuning_GEOvar2,
         tuning_GEOreal1_O,
         tuning_GEOreal1_P,
         tuning_GEOreal1_N,

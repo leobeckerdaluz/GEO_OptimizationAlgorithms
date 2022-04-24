@@ -68,36 +68,38 @@ namespace GEOs_REAIS
                     // Perturba a variável
                     double xi = populacao_para_perturbar[i];
                     double intervalo_variacao_variavel = upper_bounds[i] - lower_bounds[i];
-                    double xii = xi;
                     
                     // Verifica se quer que a 1ª das P pertuabções seja perturbação uniforme
                     if(primeira_das_P_perturbacoes_uniforme && j==0)
                     {
                         // Perturbação será um valor qualquer no intervalo de variação da variável
                         MathNet.Numerics.Distributions.ContinuousUniform UniDist = new MathNet.Numerics.Distributions.ContinuousUniform();
-                        xii = lower_bounds[i] + intervalo_variacao_variavel*UniDist.Sample();
+                        populacao_para_perturbar[i] = lower_bounds[i] + intervalo_variacao_variavel*UniDist.Sample();
                     }
                     else
                     {
-                        xii = perturba_variavel(xi, std_atual, this.tipo_perturbacao, intervalo_variacao_variavel);
+                        populacao_para_perturbar[i] = perturba_variavel(
+                            populacao_atual[i],
+                            std_atual,
+                            this.tipo_perturbacao,
+                            intervalo_variacao_variavel,
+                            integer_population
+                        );
                     }
                     // ----------------------------------------------------------------------------
 
-                    // Atribui a variável perturbada na população cópia
-                    populacao_para_perturbar[i] = xii;
-
-                    // Calcula f(x) com a variável perturbada
-                    double fx = calcula_valor_funcao_objetivo(populacao_para_perturbar, true);
-
                     // Cria a perturbação e adiciona ela na lista de perturbações da iteração
-                    Perturbacao perturbacao = new Perturbacao();
-                    perturbacao.xi_antes_da_perturbacao = xi;
-                    perturbacao.xi_depois_da_perturbacao = xii;
-                    perturbacao.fx_depois_da_perturbacao = fx;
-                    perturbacao.indice_variavel_projeto = i;
+                    perturbacoes.Add(
+                        new Perturbacao(){
+                            xi_antes_da_perturbacao = populacao_atual[i],
+                            xi_depois_da_perturbacao = populacao_para_perturbar[i],
+                            fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_para_perturbar, true),
+                            feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
+                            populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar),
+                            indice_variavel_projeto = i,
+                        }
+                    );
 
-                    // Adiciona na lista de perturbações
-                    perturbacoes.Add(perturbacao);
 
                     // Só atualiza o std se não quiser que uma das P perturbações seja uniforme ou caso queira, que a iteração não seja a 1ª
                     if (!primeira_das_P_perturbacoes_uniforme || j!=0){

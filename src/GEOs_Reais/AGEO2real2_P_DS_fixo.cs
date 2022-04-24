@@ -45,17 +45,6 @@ namespace GEOs_REAIS
         {
             while(true)
             {
-                // Se desejado, arredonda toda população 
-                if (integer_population){
-                    for (int i=0; i<populacao_atual.Count; i++){
-                        populacao_atual[i] = Math.Round(populacao_atual[i]);
-                    }
-
-                    // Atualiza o valor de f(x)
-                    fx_atual = calcula_valor_funcao_objetivo(populacao_atual, false);
-                }
-
-
                 // Armazena o valor da função no início da iteração
                 fx_atual_comeco_it = fx_atual;
                 

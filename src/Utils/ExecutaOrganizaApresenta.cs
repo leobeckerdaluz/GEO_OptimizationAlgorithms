@@ -1,10 +1,3 @@
-
-
-
-#define SCIENTIFIC_STRING_FORMAT
-// #define DECIMAL_STRING_FORMAT
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -372,7 +365,7 @@ namespace ExecutaOrganizaApresenta
                     // Para cada algoritmo, concatena o f(x) médio
                     for (int j=0; j<estatisticas_algoritmos.Count; j++)
                     {
-                        // // Obtém o valor do f(x) médio naquele NFE para esse algoritmo
+                        // Obtém o valor do f(x) médio naquele NFE para esse algoritmo
                         double fx_atual_naquele_NFE = estatisticas_algoritmos[j].media_fx_atual_em_cada_NFE[i];
                         // Concatena
                         fxs_string += fx_atual_naquele_NFE.ToString() + ';';
@@ -392,8 +385,10 @@ namespace ExecutaOrganizaApresenta
                 Console.WriteLine("===> Melhores f(x) para cada execução:");
                 Console.WriteLine("execucao;" + string_algoritmos_executados);
                 
+                int quantidade_valid_executions = estatisticas_algoritmos[0].n_execucoes_valid;
+
                 // Para cada execução dos algoritmos
-                for (int i=0; i<parametros_execucao.quantidade_execucoes; i++)
+                for (int i=0; i<quantidade_valid_executions; i++)
                 {    
                     string execucao_string = (i+1).ToString() + ';';
                     string melhores_fx_algoritmos = execucao_string;
@@ -517,11 +512,19 @@ namespace ExecutaOrganizaApresenta
                 // Para cada execução, gera uma nova população inicial com base nos limites de cada variável
                 
                 // População Real
-                List<double> populacao_real_gerada = GeracaoPopulacoes.GeracaoPopulacoes.geracao_populacao_real(parametros_problema.lower_bounds, parametros_problema.upper_bounds, seed);
+                List<double> populacao_real_gerada = GeracaoPopulacoes.GeracaoPopulacoes.geracao_populacao_real(
+                    parametros_problema.lower_bounds, 
+                    parametros_problema.upper_bounds, 
+                    seed,
+                    parametros_execucao.integer_population
+                );
                 parametros_problema.populacao_inicial_real = new List<double>(populacao_real_gerada);
 
                 // População Binária
-                List<bool> populacao_binaria_gerada = GeracaoPopulacoes.GeracaoPopulacoes.geracao_populacao_binaria(parametros_problema.bits_por_variavel, seed);
+                List<bool> populacao_binaria_gerada = GeracaoPopulacoes.GeracaoPopulacoes.geracao_populacao_binaria(
+                    parametros_problema.bits_por_variavel, 
+                    seed
+                );
                 parametros_problema.populacao_inicial_binaria = new List<bool>(populacao_binaria_gerada);
 
                 // ---------------------------------------------------------------------------
@@ -565,37 +568,6 @@ namespace ExecutaOrganizaApresenta
                     
                     todas_execucoes.Add(ret);
                 }
-
-
-
-
-
-
-                // GEOvar2
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar2)
-                {
-                    GEOvar2_BINARIO geo_var2 = new GEOvar2_BINARIO(
-                        new List<bool>(parametros_problema.populacao_inicial_binaria),
-                        parametros_problema.parametros_livres.GEOvar__tau, 
-                        // parametros_problema.parametros_livres.GEOvar2__tau, 
-                        parametros_problema.n_variaveis_projeto, 
-                        parametros_problema.function_id, 
-                        parametros_problema.lower_bounds, 
-                        parametros_problema.upper_bounds, 
-                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
-                        parametros_problema.bits_por_variavel,
-                        parametros_execucao.integer_population);
-
-                    RetornoGEOs ret = geo_var2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEO_var2;
-                    
-                    todas_execucoes.Add(ret);
-                }
-
-
-
-
-
 
                 // A-GEO1
                 if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1)
