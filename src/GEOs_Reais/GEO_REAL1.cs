@@ -106,12 +106,14 @@ namespace GEOs_REAIS
 
                 if (xi < lower)
                 {
-                    double penalidade_inferior = grau_penalidade * Math.Pow((xi-lower), 2);
+                    // double penalidade_inferior = grau_penalidade * Math.Pow((xi-lower), 2);
+                    double penalidade_inferior = grau_penalidade * (xi-lower);
                     penalidade += penalidade_inferior;
                 }
                 else if (xi > upper)
                 {
-                    double penalidade_superior = grau_penalidade * Math.Pow((xi-upper), 2);
+                    // double penalidade_superior = grau_penalidade * Math.Pow((xi-upper), 2);
+                    double penalidade_superior = grau_penalidade * (xi-upper);
                     penalidade += penalidade_superior;
                 }
             }
@@ -119,11 +121,9 @@ namespace GEOs_REAIS
 
             double fx_final = double.MaxValue;
             if ((this.function_id == (int)EnumNomesFuncoesObjetivo.spacecraft) && (penalidade > 0)){
-                // fx = 10000 + penalidade;
-                fx_final = double.MaxValue;
+                fx_final = 200 + penalidade;
             }
             else{
-                // Calcula o valor da função objetivo com o fenótipo desejado
                 double fx = ObjectiveFunctions.Methods.funcao_objetivo(fenotipos, this.function_id);
                 fx_final = fx + penalidade;
             }

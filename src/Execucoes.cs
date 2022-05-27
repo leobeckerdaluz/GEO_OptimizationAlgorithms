@@ -100,7 +100,7 @@ namespace Execucoes
 
             
 
-            int qtde_execucoes = 20;
+            int qtde_execucoes = 50;
 
             // int float_str_format = (int)EnumFloatStrFormat.scientific_notation;
             int float_str_format = (int)EnumFloatStrFormat.decimal_double;
@@ -112,20 +112,22 @@ namespace Execucoes
             // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
 
             bool integer_population = true;
+            // bool integer_population = false;
             
             QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar(){
                 // rodar_GEO = true,
+                // rodar_GEOvar = true,
                 // rodar_AGEO2 = true,
                 // rodar_AGEO2var = true,
-                rodar_AGEO2var_5 = true,
+                // rodar_AGEO2var_5 = true,
                 // rodar_AGEO2real2_AA3 = true,
                 // rodar_AGEO2real2_AA2 = true,
-                // rodar_AGEO2real1_P_AA = true
+                rodar_AGEO2real1_P_AA = true
             };
 
             OQueInteressaPrintar o_que_printar = new OQueInteressaPrintar(){
                 // mostrar_melhores_NFE = true,
-                mostrar_melhores_fx_cada_execucao = true
+                mostrar_melhores_fx_cada_execucao = true,
             };
 
 

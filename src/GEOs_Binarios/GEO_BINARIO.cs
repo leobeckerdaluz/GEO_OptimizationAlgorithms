@@ -159,6 +159,27 @@ namespace GEOs_BINARIOS
                 // Cria uma cópia da população de bits
                 List<bool> populacao_de_bits_flipado = new List<bool>(this.populacao_atual);
                 
+
+                //==============================================================================================
+                //==============================================================================================
+                // Se os 2 primeiros bits forem 00 e for flipar o segundo, ou tudo vira 10 ou 11
+                if (i == 1 && populacao_de_bits_flipado[0] == false && populacao_de_bits_flipado[1] == false){
+                    double ALE = this.random.NextDouble();
+                    if (ALE > 0.5){
+                        // vai virar 10 após flipar --> valor 14
+                        populacao_de_bits_flipado[0] = true;
+                        populacao_de_bits_flipado[1] = true;
+                    }
+                    else{
+                        // vai virar 11 após flipar --> valor 15
+                        populacao_de_bits_flipado[0] = true;
+                        populacao_de_bits_flipado[1] = false;
+                    }
+                }
+                //==============================================================================================
+                //==============================================================================================
+                
+                
                 // Flipa o i-ésimo bit
                 populacao_de_bits_flipado[i] = !populacao_de_bits_flipado[i];
 
@@ -170,6 +191,7 @@ namespace GEOs_BINARIOS
                     new BitVerificado(){
                         funcao_objetivo_flipando = calcula_valor_funcao_objetivo(fenotipos, true),
                         indice_bit_mutado = i,
+                        feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(fenotipos, upper_bounds, lower_bounds),
                     }
                 );
             }

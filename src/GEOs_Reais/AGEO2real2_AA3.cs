@@ -210,8 +210,8 @@ namespace GEOs_REAIS
                         // k foi de 1 a N, mas no array o índice começa em 0, então subtrai 1
                         Perturbacao perturbacao_escolhida = perturbacoes_da_variavel[k-1];
 
-                        if (!perturbacao_escolhida.feasible_solution)
-                            continue;
+                        // if (!perturbacao_escolhida.feasible_solution)
+                        //     continue;
 
                         // Obtém o índice da perturbação escolhida pra aceitar
                         int indice = perturbacao_escolhida.indice_variavel_projeto;
