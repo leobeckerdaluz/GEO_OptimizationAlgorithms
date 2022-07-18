@@ -106,14 +106,14 @@ namespace GEOs_REAIS
 
                 if (xi < lower)
                 {
-                    // double penalidade_inferior = grau_penalidade * Math.Pow((xi-lower), 2);
-                    double penalidade_inferior = grau_penalidade * (xi-lower);
+                    double penalidade_inferior = grau_penalidade * Math.Pow((xi-lower), 2);
+                    // double penalidade_inferior = grau_penalidade * (xi-lower);
                     penalidade += penalidade_inferior;
                 }
                 else if (xi > upper)
                 {
-                    // double penalidade_superior = grau_penalidade * Math.Pow((xi-upper), 2);
-                    double penalidade_superior = grau_penalidade * (xi-upper);
+                    double penalidade_superior = grau_penalidade * Math.Pow((xi-upper), 2);
+                    // double penalidade_superior = grau_penalidade * (xi-upper);
                     penalidade += penalidade_superior;
                 }
             }

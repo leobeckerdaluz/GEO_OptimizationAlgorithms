@@ -100,7 +100,7 @@ namespace Execucoes
 
             
 
-            int qtde_execucoes = 50;
+            int qtde_execucoes = 100;
 
             // int float_str_format = (int)EnumFloatStrFormat.scientific_notation;
             int float_str_format = (int)EnumFloatStrFormat.decimal_double;
@@ -108,6 +108,7 @@ namespace Execucoes
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e5;
             // int criterio_parada = (int)EnumCriteriosParada.execution_3e5;
             // int criterio_parada = (int)EnumCriteriosParada.execution_1e6;
+            // int criterio_parada = (int)EnumCriteriosParada.execution_100e6;
             int criterio_parada = (int)EnumCriteriosParada.execution_spacecraft;
             // int criterio_parada = (int)EnumCriteriosParada.tuning_1e16_10e5;
 
@@ -120,14 +121,14 @@ namespace Execucoes
                 // rodar_AGEO2 = true,
                 // rodar_AGEO2var = true,
                 // rodar_AGEO2var_5 = true,
-                // rodar_AGEO2real2_AA3 = true,
+                rodar_AGEO2real2_AA3 = true,
                 // rodar_AGEO2real2_AA2 = true,
-                rodar_AGEO2real1_P_AA = true
+                // rodar_AGEO2real1_P_AA = true
             };
 
             OQueInteressaPrintar o_que_printar = new OQueInteressaPrintar(){
                 // mostrar_melhores_NFE = true,
-                mostrar_melhores_fx_cada_execucao = true,
+                // mostrar_melhores_fx_cada_execucao = true,
             };
 
 
@@ -188,6 +189,13 @@ namespace Execucoes
                         parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
                         parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = 1000000;
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50,100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000,50000,55000,60000,65000,70000,75000,80000,85000,90000,95000,100000,150000,200000,250000,300000,350000,400000,450000,500000,550000,600000,650000,700000,750000,800000,850000,900000,950000,1000000};
+                    break;
+                    }
+
+                    case (int)EnumCriteriosParada.execution_100e6:{
+                        parametros_execucao.parametros_criterio_parada.tipo_criterio_parada = (int)EnumTipoCriterioParada.parada_por_NFE;
+                        parametros_execucao.parametros_criterio_parada.NFE_criterio_parada = (int)100e6;
+                        parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados = new List<int>(){5,50000,100000,(int)1e6,(int)10e6,(int)30e6,(int)50e6,(int)70e6,(int)90e6,(int)100e6};
                     break;
                     }
 

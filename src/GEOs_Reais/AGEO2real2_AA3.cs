@@ -26,7 +26,7 @@ namespace GEOs_REAIS
                 false,
                 9999,
                 9999,
-                9999,
+                (int)EnumTipoPerturbacao.perturbacao_porcentagem,
                 9999,
                 9999,
                 integer_population)
@@ -186,10 +186,10 @@ namespace GEOs_REAIS
                     return b1.fx_depois_da_perturbacao.CompareTo(b2.fx_depois_da_perturbacao); 
                 });
                 
-                // Se nenhuma perturbação for viável, deixa essa população mesmo
-                bool at_least_one_valid = perturbacoes_da_variavel.Any(x => x.feasible_solution == true);
-                if (!at_least_one_valid)
-                    continue;
+                // // Se nenhuma perturbação for viável, deixa essa população mesmo
+                // bool at_least_one_valid = perturbacoes_da_variavel.Any(x => x.feasible_solution == true);
+                // if (!at_least_one_valid)
+                //     continue;
                 
                 // Verifica as probabilidades até que uma das perturbações dessa variável seja aceita
                 while (true)
