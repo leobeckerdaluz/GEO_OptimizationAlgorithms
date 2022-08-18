@@ -26,7 +26,7 @@ namespace GEOs_REAIS
                 false,
                 9999,
                 9999,
-                9999,
+                (int)EnumTipoPerturbacao.perturbacao_porcentagem,
                 9999,
                 9999,
                 integer_population)

@@ -150,15 +150,15 @@ namespace Tunings
         // =========================================================================
         // Tuning GEOreal1
 
-        public List<Tuning> tuning_GEOreal1_O(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
+        public List<Tuning> tuning_GEOreal1_M(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             // Itera cada std e cada tau
             foreach (double tau in valores_tau){
                 foreach (double std in valores_std){
-                    parametros_problema.parametros_livres.GEOreal1_O__tau = tau; 
-                    parametros_problema.parametros_livres.GEOreal1_O__std = std; 
+                    parametros_problema.parametros_livres.GEOreal1_M__tau = tau; 
+                    parametros_problema.parametros_livres.GEOreal1_M__std = std; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
                     ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
@@ -212,15 +212,15 @@ namespace Tunings
             return tuning_results;
         }
         
-        public List<Tuning> tuning_GEOreal1_N(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
+        public List<Tuning> tuning_GEOreal1_A(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
             // Itera cada std e cada tau
             foreach (double tau in valores_tau){
                 foreach (double std in valores_std){
-                    parametros_problema.parametros_livres.GEOreal1_N__tau = tau; 
-                    parametros_problema.parametros_livres.GEOreal1_N__std = std; 
+                    parametros_problema.parametros_livres.GEOreal1_A__tau = tau; 
+                    parametros_problema.parametros_livres.GEOreal1_A__std = std; 
 
                     // Executa cada algoritmo por N vezes e obtém todas as execuções
                     ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
@@ -248,7 +248,7 @@ namespace Tunings
         // =========================================================================
         // Tuning GEOreal2
 
-        public List<Tuning> tuning_GEOreal2_O_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_M_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
@@ -257,10 +257,10 @@ namespace Tunings
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_O_VO__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_O_VO__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_O_VO__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_O_VO__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_M_VO__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_M_VO__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_M_VO__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_M_VO__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
@@ -322,7 +322,7 @@ namespace Tunings
             return tuning_results;
         }
 
-        public List<Tuning> tuning_GEOreal2_N_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_A_VO(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
@@ -331,10 +331,10 @@ namespace Tunings
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_N_VO__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_A_VO__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_A_VO__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_A_VO__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_A_VO__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
@@ -359,7 +359,7 @@ namespace Tunings
             return tuning_results;
         }
 
-        public List<Tuning> tuning_GEOreal2_O_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_M_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
@@ -368,10 +368,10 @@ namespace Tunings
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_O_DS__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_O_DS__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_O_DS__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_O_DS__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_M_DS__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_M_DS__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_M_DS__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_M_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
@@ -433,7 +433,7 @@ namespace Tunings
             return tuning_results;
         }
 
-        public List<Tuning> tuning_GEOreal2_N_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
+        public List<Tuning> tuning_GEOreal2_A_DS(ParametrosExecucao parametros_execucao, ParametrosProblema parametros_problema, List<double> valores_tau, List<double> valores_std1, List<double> valores_P, List<double> valores_s)
         {
             List<Tuning> tuning_results = new List<Tuning>();
 
@@ -442,10 +442,10 @@ namespace Tunings
                 foreach (double s in valores_s){
                     foreach (double std1 in valores_std1){
                         foreach (double tau in valores_tau){
-                            parametros_problema.parametros_livres.GEOreal2_N_DS__tau = tau; 
-                            parametros_problema.parametros_livres.GEOreal2_N_DS__std = std1; 
-                            parametros_problema.parametros_livres.GEOreal2_N_DS__P = P; 
-                            parametros_problema.parametros_livres.GEOreal2_N_DS__s = s; 
+                            parametros_problema.parametros_livres.GEOreal2_A_DS__tau = tau; 
+                            parametros_problema.parametros_livres.GEOreal2_A_DS__std = std1; 
+                            parametros_problema.parametros_livres.GEOreal2_A_DS__P = P; 
+                            parametros_problema.parametros_livres.GEOreal2_A_DS__s = s; 
                             
                             // Executa cada algoritmo por N vezes e obtém todas as execuções
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();

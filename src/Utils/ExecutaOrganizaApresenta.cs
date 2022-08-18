@@ -9,6 +9,21 @@ using Classes_e_Enums;
 namespace ExecutaOrganizaApresenta
 {
     public class ExecutaOrganizaApresenta {
+
+        public static double compute_median(List<double> numbers){
+            if (numbers.Count == 0)
+                return 0;
+
+            numbers = numbers.OrderBy(n => n).ToList(); 
+
+            var halfIndex = numbers.Count/2; 
+
+            if (numbers.Count % 2 == 0)
+                return (numbers[halfIndex] + numbers[halfIndex - 1]) / 2.0;
+
+            return numbers[halfIndex];
+        }
+        
        
         public static List<Retorno_N_Execucoes_GEOs> organiza_os_resultados_de_cada_execucao(List<RetornoGEOs> todas_execucoes, ParametrosExecucao parametros_execucao)
         {
@@ -170,12 +185,22 @@ namespace ExecutaOrganizaApresenta
                     
                         // Gera a média d melhor f(x) naquele NFE
                         double avg_naquele_NFE = fxs_no_NFE_desejado.Average();
+
+                        // Computa a mediana do melhor f(x) naquele NFE
+                        double median_naquele_NFE = compute_median(fxs_no_NFE_desejado);
+
+
+                        
+                        double valor_a_ser_utilizado = median_naquele_NFE;
+                        // double valor_a_ser_utilizado = avg_naquele_NFE;
+
+
+
                         // Gera a média do f(x) atual naquele NFE
                         double avg_fx_atual_naquele_NFE = fx_atual_no_NFE_desejado.Average();
                         
-                        
                         // Adiciona essa média na lista de fxs médios
-                        lista_MelhoresFX_por_NFE.Add(avg_naquele_NFE);
+                        lista_MelhoresFX_por_NFE.Add(valor_a_ser_utilizado);
                         lista_FXatual_por_NFE.Add(avg_fx_atual_naquele_NFE);
                     }
                 }
@@ -1067,8 +1092,8 @@ namespace ExecutaOrganizaApresenta
 
 
 
-                // GEOreal1_O  =  GEOreal1 + PERTURBAÇÃO IGOR
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_O)
+                // GEOreal1_M  =  GEOreal1 + PERTURBAÇÃO IGOR
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_M)
                 {
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_igor;
 
@@ -1080,12 +1105,12 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         tipo_perturbacao,
-                        parametros_problema.parametros_livres.GEOreal1_O__tau, 
-                        parametros_problema.parametros_livres.GEOreal1_O__std,
+                        parametros_problema.parametros_livres.GEOreal1_M__tau, 
+                        parametros_problema.parametros_livres.GEOreal1_M__std,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_O;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_M;
 
                     todas_execucoes.Add(ret);
                 }
@@ -1113,8 +1138,8 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal1_N  =  GEOreal1 + PERTURBAÇÃO DISTNORMAL
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_N)
+                // GEOreal1_A  =  GEOreal1 + PERTURBAÇÃO DISTNORMAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_A)
                 {
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_normal;
 
@@ -1126,20 +1151,20 @@ namespace ExecutaOrganizaApresenta
                         parametros_problema.upper_bounds,
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         tipo_perturbacao,
-                        parametros_problema.parametros_livres.GEOreal1_N__tau, 
-                        parametros_problema.parametros_livres.GEOreal1_N__std,
+                        parametros_problema.parametros_livres.GEOreal1_A__tau, 
+                        parametros_problema.parametros_livres.GEOreal1_A__std,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real1.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_N;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal1_A;
 
                     todas_execucoes.Add(ret);
                 }
 
 
 
-                // GEOreal2_O_VO  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO ORIGINAL
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_VO)
+                // GEOreal2_M_VO  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO ORIGINAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_M_VO)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
@@ -1147,7 +1172,7 @@ namespace ExecutaOrganizaApresenta
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_O_VO__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_M_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
@@ -1155,14 +1180,14 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_O_VO__std, 
+                        parametros_problema.parametros_livres.GEOreal2_M_VO__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_O_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_O_VO__s,
+                        (int)parametros_problema.parametros_livres.GEOreal2_M_VO__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_M_VO__s,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_O_VO;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_M_VO;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1196,8 +1221,8 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_N_VO  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO)
+                // GEOreal2_A_VO  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_VO)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
@@ -1205,7 +1230,7 @@ namespace ExecutaOrganizaApresenta
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_N_VO__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_A_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
@@ -1213,22 +1238,22 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
+                        parametros_problema.parametros_livres.GEOreal2_A_VO__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s,
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_VO__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_VO__s,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_VO;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_A_VO;
                         
                     todas_execucoes.Add(ret);
                 }
 
 
 
-                // GEOreal2_O_DS  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO DIVIDE POR S
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_O_DS)
+                // GEOreal2_M_DS  =  GEOreal2 + PERTURBAÇÃO IGOR + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_M_DS)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -1236,7 +1261,7 @@ namespace ExecutaOrganizaApresenta
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_O_DS__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_M_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
@@ -1244,14 +1269,14 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_O_DS__std, 
+                        parametros_problema.parametros_livres.GEOreal2_M_DS__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_O_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_O_DS__s,
+                        (int)parametros_problema.parametros_livres.GEOreal2_M_DS__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_M_DS__s,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_O_DS;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_M_DS;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1285,8 +1310,8 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_N_DS  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS)
+                // GEOreal2_A_DS  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_DS)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = false;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -1294,7 +1319,7 @@ namespace ExecutaOrganizaApresenta
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_N_DS__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_A_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
@@ -1302,14 +1327,14 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
+                        parametros_problema.parametros_livres.GEOreal2_A_DS__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s,
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_DS__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_DS__s,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_DS;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_A_DS;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1346,8 +1371,8 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
                 
-                // GEOreal2_N_VO_UNI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL + 1 Uniforme
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_VO_UNI)
+                // GEOreal2_A_VO_UNI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO ORIGINAL + 1 Uniforme
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_VO_UNI)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = true;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_real_original;
@@ -1355,7 +1380,7 @@ namespace ExecutaOrganizaApresenta
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_N_VO__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_A_VO__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
@@ -1363,14 +1388,14 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_N_VO__std, 
+                        parametros_problema.parametros_livres.GEOreal2_A_VO__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_VO__s,
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_VO__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_VO__s,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_VO_UNI;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_A_VO_UNI;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1404,8 +1429,8 @@ namespace ExecutaOrganizaApresenta
                     todas_execucoes.Add(ret);
                 }
 
-                // GEOreal2_N_DS_UNI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S + 1 Uniforme
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_N_DS_UNI)
+                // GEOreal2_A_DS_UNI  =  GEOreal2 + PERTURBAÇÃO NORMAL + VARIAÇÃO DIVIDE POR S + 1 Uniforme
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_DS_UNI)
                 {
                     bool primeira_das_P_perturbacoes_uniforme = true;
                     int tipo_variacao_std_nas_P_perturbacoes = (int)EnumTipoVariacaoStdNasPPerturbacoes.variacao_divide_por_s;
@@ -1413,7 +1438,7 @@ namespace ExecutaOrganizaApresenta
                     
                     GEO_real2 geo_real2 = new GEO_real2(
                         parametros_problema.populacao_inicial_real, 
-                        parametros_problema.parametros_livres.GEOreal2_N_DS__tau, 
+                        parametros_problema.parametros_livres.GEOreal2_A_DS__tau, 
                         parametros_problema.n_variaveis_projeto, 
                         parametros_problema.function_id, 
                         parametros_problema.lower_bounds,
@@ -1421,14 +1446,14 @@ namespace ExecutaOrganizaApresenta
                         parametros_execucao.parametros_criterio_parada.lista_NFEs_desejados, 
                         primeira_das_P_perturbacoes_uniforme,
                         tipo_variacao_std_nas_P_perturbacoes,
-                        parametros_problema.parametros_livres.GEOreal2_N_DS__std, 
+                        parametros_problema.parametros_livres.GEOreal2_A_DS__std, 
                         tipo_perturbacao, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__P, 
-                        (int)parametros_problema.parametros_livres.GEOreal2_N_DS__s,
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_DS__P, 
+                        (int)parametros_problema.parametros_livres.GEOreal2_A_DS__s,
                         parametros_execucao.integer_population);
                         
                     RetornoGEOs ret = geo_real2.executar(parametros_execucao.parametros_criterio_parada);
-                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_N_DS_UNI;
+                    ret.algoritmo_utilizado = (int)EnumNomesAlgoritmos.GEOreal2_A_DS_UNI;
                         
                     todas_execucoes.Add(ret);
                 }
@@ -1521,7 +1546,7 @@ namespace ExecutaOrganizaApresenta
                 // ----------------------------------------------------------------
                 
                 // AGEOreal1_P_AA  =  tau adaptativo + GEOreal1 + PERTURBAÇÃO PORCENTAGEM + porcent autoadaptativo
-                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P_AA)
+                if (parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_AA)
                 {
                     int tipo_perturbacao = (int)EnumTipoPerturbacao.perturbacao_porcentagem;
                     

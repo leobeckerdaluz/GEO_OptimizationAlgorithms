@@ -26,7 +26,7 @@ namespace GEOs_REAIS
                 false,
                 9999,
                 9999,
-                9999,
+                (int)EnumTipoPerturbacao.perturbacao_porcentagem,
                 9999,
                 9999,
                 integer_population)
@@ -69,7 +69,7 @@ namespace GEOs_REAIS
                             double intervalo_variacao_variavel = upper_bounds[k] - lower_bounds[k];
                             // Perturba a variável
                             populacao_copia[k] = perturba_variavel(
-                                populacao_atual[i],
+                                populacao_atual[k],
                                 porcentagem_linha,
                                 this.tipo_perturbacao,
                                 intervalo_variacao_variavel,

@@ -39,45 +39,45 @@ namespace ObjectiveFunctions
                         GEOvar__tau = 2.75,
                        
                         // GEOreal1
-                        GEOreal1_O__std = 1.2,
-                        GEOreal1_O__tau = 1.5,
+                        GEOreal1_M__std = 1.2,
+                        GEOreal1_M__tau = 1.5,
 
                         GEOreal1_P__porc = 0.5,
                         GEOreal1_P__tau = 5.5,
 
-                        GEOreal1_N__std = 2,
-                        GEOreal1_N__tau = 1.5,
+                        GEOreal1_A__std = 2,
+                        GEOreal1_A__tau = 1.5,
 
                         // GEOreal2
-                        GEOreal2_O_VO__P = 5,
-                        GEOreal2_O_VO__s = 1,
-                        GEOreal2_O_VO__std = 2,
-                        GEOreal2_O_VO__tau = 2.5,
+                        GEOreal2_M_VO__P = 5,
+                        GEOreal2_M_VO__s = 1,
+                        GEOreal2_M_VO__std = 2,
+                        GEOreal2_M_VO__tau = 2.5,
 
                         GEOreal2_P_VO__P = 5,
                         GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 1,
                         GEOreal2_P_VO__tau = 3.5,
 
-                        GEOreal2_N_VO__P = 5,
-                        GEOreal2_N_VO__s = 4,
-                        GEOreal2_N_VO__std = 10,
-                        GEOreal2_N_VO__tau = 3.5,
+                        GEOreal2_A_VO__P = 5,
+                        GEOreal2_A_VO__s = 4,
+                        GEOreal2_A_VO__std = 10,
+                        GEOreal2_A_VO__tau = 3.5,
 
-                        GEOreal2_O_DS__P = 5,
-                        GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 2,
-                        GEOreal2_O_DS__tau = 3,
+                        GEOreal2_M_DS__P = 5,
+                        GEOreal2_M_DS__s = 2,
+                        GEOreal2_M_DS__std = 2,
+                        GEOreal2_M_DS__tau = 3,
 
                         GEOreal2_P_DS__P = 10,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 1,
                         GEOreal2_P_DS__tau = 4,
 
-                        GEOreal2_N_DS__P = 10,
-                        GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 10,
-                        GEOreal2_N_DS__tau = 4,
+                        GEOreal2_A_DS__P = 10,
+                        GEOreal2_A_DS__s = 10,
+                        GEOreal2_A_DS__std = 10,
+                        GEOreal2_A_DS__tau = 4,
 
 
                         AGEO2real1_P__porc = 0.5,
@@ -103,45 +103,45 @@ namespace ObjectiveFunctions
                         GEOvar__tau = 1.75,
 
                         // GEOreal1
-                        GEOreal1_O__std = 1,
-                        GEOreal1_O__tau = 1.5,
+                        GEOreal1_M__std = 1,
+                        GEOreal1_M__tau = 1.5,
 
                         GEOreal1_P__porc = 3,
                         GEOreal1_P__tau = 5.5,
 
-                        GEOreal1_N__std = 0.4,
-                        GEOreal1_N__tau = 5,
+                        GEOreal1_A__std = 0.4,
+                        GEOreal1_A__tau = 5,
                         
                         // GEOreal2
-                        GEOreal2_O_VO__P = 5,
-                        GEOreal2_O_VO__s = 1,
-                        GEOreal2_O_VO__std = 2,
-                        GEOreal2_O_VO__tau = 5,
+                        GEOreal2_M_VO__P = 5,
+                        GEOreal2_M_VO__s = 1,
+                        GEOreal2_M_VO__std = 2,
+                        GEOreal2_M_VO__tau = 5,
 
                         GEOreal2_P_VO__P = 10,
                         GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 10,
                         GEOreal2_P_VO__tau = 5,
 
-                        GEOreal2_N_VO__P = 10,
-                        GEOreal2_N_VO__s = 4,
-                        GEOreal2_N_VO__std = 0.5,
-                        GEOreal2_N_VO__tau = 5,
+                        GEOreal2_A_VO__P = 10,
+                        GEOreal2_A_VO__s = 4,
+                        GEOreal2_A_VO__std = 0.5,
+                        GEOreal2_A_VO__tau = 5,
 
-                        GEOreal2_O_DS__P = 5,
-                        GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 2,
-                        GEOreal2_O_DS__tau = 4.5,
+                        GEOreal2_M_DS__P = 5,
+                        GEOreal2_M_DS__s = 2,
+                        GEOreal2_M_DS__std = 2,
+                        GEOreal2_M_DS__tau = 4.5,
 
                         GEOreal2_P_DS__P = 10,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 10,
                         GEOreal2_P_DS__tau = 5,
 
-                        GEOreal2_N_DS__P = 10,
-                        GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 0.5,
-                        GEOreal2_N_DS__tau = 5,
+                        GEOreal2_A_DS__P = 10,
+                        GEOreal2_A_DS__s = 10,
+                        GEOreal2_A_DS__std = 0.5,
+                        GEOreal2_A_DS__tau = 5,
 
 
                         AGEO2real1_P__porc = 3,
@@ -167,45 +167,45 @@ namespace ObjectiveFunctions
                         GEOvar__tau = 1.5,
                         
                         // GEOreal1
-                        GEOreal1_O__std = 2.4,
-                        GEOreal1_O__tau = 5.5,
+                        GEOreal1_M__std = 2.4,
+                        GEOreal1_M__tau = 5.5,
 
                         GEOreal1_P__porc = 0.5,
                         GEOreal1_P__tau = 6,
 
-                        GEOreal1_N__std = 0.2,
-                        GEOreal1_N__tau = 5.5,
+                        GEOreal1_A__std = 0.2,
+                        GEOreal1_A__tau = 5.5,
                         
                         // GEOreal2
-                        GEOreal2_O_VO__P = 5,
-                        GEOreal2_O_VO__s = 2,
-                        GEOreal2_O_VO__std = 2,
-                        GEOreal2_O_VO__tau = 4,
+                        GEOreal2_M_VO__P = 5,
+                        GEOreal2_M_VO__s = 2,
+                        GEOreal2_M_VO__std = 2,
+                        GEOreal2_M_VO__tau = 4,
 
                         GEOreal2_P_VO__P = 5,
                         GEOreal2_P_VO__s = 1,
                         GEOreal2_P_VO__porc = 0.1,
                         GEOreal2_P_VO__tau = 4.5,
 
-                        GEOreal2_N_VO__P = 5,
-                        GEOreal2_N_VO__s = 2,
-                        GEOreal2_N_VO__std = 0.5,
-                        GEOreal2_N_VO__tau = 4,
+                        GEOreal2_A_VO__P = 5,
+                        GEOreal2_A_VO__s = 2,
+                        GEOreal2_A_VO__std = 0.5,
+                        GEOreal2_A_VO__tau = 4,
 
-                        GEOreal2_O_DS__P = 10,
-                        GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 2,
-                        GEOreal2_O_DS__tau = 4.5,
+                        GEOreal2_M_DS__P = 10,
+                        GEOreal2_M_DS__s = 2,
+                        GEOreal2_M_DS__std = 2,
+                        GEOreal2_M_DS__tau = 4.5,
 
                         GEOreal2_P_DS__P = 5,
                         GEOreal2_P_DS__s = 2,
                         GEOreal2_P_DS__porc = 0.1,
                         GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 10,
-                        GEOreal2_N_DS__s = 2,
-                        GEOreal2_N_DS__std = 0.5,
-                        GEOreal2_N_DS__tau = 5,
+                        GEOreal2_A_DS__P = 10,
+                        GEOreal2_A_DS__s = 2,
+                        GEOreal2_A_DS__std = 0.5,
+                        GEOreal2_A_DS__tau = 5,
 
 
                         AGEO2real1_P__porc = 0.5,
@@ -231,45 +231,45 @@ namespace ObjectiveFunctions
                         GEOvar__tau = 1.5,
                       
                         // GEOreal1
-                        GEOreal1_O__std = 1.8,
-                        GEOreal1_O__tau = 5.5,
+                        GEOreal1_M__std = 1.8,
+                        GEOreal1_M__tau = 5.5,
 
                         GEOreal1_P__porc = 9,
                         GEOreal1_P__tau = 3.5,
 
-                        GEOreal1_N__std = 1,
-                        GEOreal1_N__tau = 1.5,
+                        GEOreal1_A__std = 1,
+                        GEOreal1_A__tau = 1.5,
 
                         // GEOreal2
-                        GEOreal2_O_VO__P = 10,
-                        GEOreal2_O_VO__s = 4,
-                        GEOreal2_O_VO__std = 2,
-                        GEOreal2_O_VO__tau = 5,
+                        GEOreal2_M_VO__P = 10,
+                        GEOreal2_M_VO__s = 4,
+                        GEOreal2_M_VO__std = 2,
+                        GEOreal2_M_VO__tau = 5,
 
                         GEOreal2_P_VO__P = 10,
                         GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 50,
                         GEOreal2_P_VO__tau = 5,
 
-                        GEOreal2_N_VO__P = 10,
-                        GEOreal2_N_VO__s = 2,
-                        GEOreal2_N_VO__std = 1,
-                        GEOreal2_N_VO__tau = 3.5,
+                        GEOreal2_A_VO__P = 10,
+                        GEOreal2_A_VO__s = 2,
+                        GEOreal2_A_VO__std = 1,
+                        GEOreal2_A_VO__tau = 3.5,
 
-                        GEOreal2_O_DS__P = 10,
-                        GEOreal2_O_DS__s = 10,
-                        GEOreal2_O_DS__std = 2,
-                        GEOreal2_O_DS__tau = 4.5,
+                        GEOreal2_M_DS__P = 10,
+                        GEOreal2_M_DS__s = 10,
+                        GEOreal2_M_DS__std = 2,
+                        GEOreal2_M_DS__tau = 4.5,
 
                         GEOreal2_P_DS__P = 10,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 50,
                         GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 10,
-                        GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 1,
-                        GEOreal2_N_DS__tau = 5,
+                        GEOreal2_A_DS__P = 10,
+                        GEOreal2_A_DS__s = 10,
+                        GEOreal2_A_DS__std = 1,
+                        GEOreal2_A_DS__tau = 5,
 
 
 
@@ -296,45 +296,45 @@ namespace ObjectiveFunctions
                         GEOvar__tau = 2.25,
 
                         // GEOreal1
-                        GEOreal1_O__std = 0.8,
-                        GEOreal1_O__tau = 1,
+                        GEOreal1_M__std = 0.8,
+                        GEOreal1_M__tau = 1,
 
                         GEOreal1_P__porc = 1,
                         GEOreal1_P__tau = 6,
 
-                        GEOreal1_N__std = 0.4,
-                        GEOreal1_N__tau = 6,
+                        GEOreal1_A__std = 0.4,
+                        GEOreal1_A__tau = 6,
 
                         // GEOreal2
-                        GEOreal2_O_VO__P = 5,
-                        GEOreal2_O_VO__s = 1,
-                        GEOreal2_O_VO__std = 1,
-                        GEOreal2_O_VO__tau = 4.5,
+                        GEOreal2_M_VO__P = 5,
+                        GEOreal2_M_VO__s = 1,
+                        GEOreal2_M_VO__std = 1,
+                        GEOreal2_M_VO__tau = 4.5,
 
                         GEOreal2_P_VO__P = 10,
                         GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 10,
                         GEOreal2_P_VO__tau = 5,
 
-                        GEOreal2_N_VO__P = 10,
-                        GEOreal2_N_VO__s = 4,
-                        GEOreal2_N_VO__std = 2,
-                        GEOreal2_N_VO__tau = 5,
+                        GEOreal2_A_VO__P = 10,
+                        GEOreal2_A_VO__s = 4,
+                        GEOreal2_A_VO__std = 2,
+                        GEOreal2_A_VO__tau = 5,
 
-                        GEOreal2_O_DS__P = 5,
-                        GEOreal2_O_DS__s = 2,
-                        GEOreal2_O_DS__std = 1,
-                        GEOreal2_O_DS__tau = 4.5,
+                        GEOreal2_M_DS__P = 5,
+                        GEOreal2_M_DS__s = 2,
+                        GEOreal2_M_DS__std = 1,
+                        GEOreal2_M_DS__tau = 4.5,
 
                         GEOreal2_P_DS__P = 10,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 10,
                         GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 10,
-                        GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 2,
-                        GEOreal2_N_DS__tau = 5,
+                        GEOreal2_A_DS__P = 10,
+                        GEOreal2_A_DS__s = 10,
+                        GEOreal2_A_DS__std = 2,
+                        GEOreal2_A_DS__tau = 5,
 
 
                         AGEO2real1_P__porc = 1,
@@ -360,47 +360,47 @@ namespace ObjectiveFunctions
                         GEOvar__tau = 1.5,
                         
                         // GEOreal1
-                        GEOreal1_O__std = 2,
-                        GEOreal1_O__tau = 6,
+                        GEOreal1_M__std = 2,
+                        GEOreal1_M__tau = 6,
 
                         // GEOreal1_P__porc = 2.5,
                         // GEOreal1_P__tau = 4,
                         GEOreal1_P__porc = 1.5,
                         GEOreal1_P__tau = 1.5,
 
-                        GEOreal1_N__std = 0.2,
-                        GEOreal1_N__tau = 2.5,
+                        GEOreal1_A__std = 0.2,
+                        GEOreal1_A__tau = 2.5,
 
                         // GEOreal2
-                        GEOreal2_O_VO__P = 10,
-                        GEOreal2_O_VO__s = 4,
-                        GEOreal2_O_VO__std = 1,
-                        GEOreal2_O_VO__tau = 4.5,
+                        GEOreal2_M_VO__P = 10,
+                        GEOreal2_M_VO__s = 4,
+                        GEOreal2_M_VO__std = 1,
+                        GEOreal2_M_VO__tau = 4.5,
 
                         GEOreal2_P_VO__P = 10,
                         GEOreal2_P_VO__s = 4,
                         GEOreal2_P_VO__porc = 50,
                         GEOreal2_P_VO__tau = 4,
 
-                        GEOreal2_N_VO__P = 10,
-                        GEOreal2_N_VO__s = 4,
-                        GEOreal2_N_VO__std = 10,
-                        GEOreal2_N_VO__tau = 3.5,
+                        GEOreal2_A_VO__P = 10,
+                        GEOreal2_A_VO__s = 4,
+                        GEOreal2_A_VO__std = 10,
+                        GEOreal2_A_VO__tau = 3.5,
 
-                        GEOreal2_O_DS__P = 5,
-                        GEOreal2_O_DS__s = 10,
-                        GEOreal2_O_DS__std = 1,
-                        GEOreal2_O_DS__tau = 4.5,
+                        GEOreal2_M_DS__P = 5,
+                        GEOreal2_M_DS__s = 10,
+                        GEOreal2_M_DS__std = 1,
+                        GEOreal2_M_DS__tau = 4.5,
 
                         GEOreal2_P_DS__P = 5,
                         GEOreal2_P_DS__s = 10,
                         GEOreal2_P_DS__porc = 50,
                         GEOreal2_P_DS__tau = 4.5,
 
-                        GEOreal2_N_DS__P = 5,
-                        GEOreal2_N_DS__s = 10,
-                        GEOreal2_N_DS__std = 10,
-                        GEOreal2_N_DS__tau = 4,
+                        GEOreal2_A_DS__P = 5,
+                        GEOreal2_A_DS__s = 10,
+                        GEOreal2_A_DS__std = 10,
+                        GEOreal2_A_DS__tau = 4,
 
 
 

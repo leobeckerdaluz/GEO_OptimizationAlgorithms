@@ -65,15 +65,15 @@ namespace Classes_e_Enums
         executar_algoritmos,
         tuning_GEO,
         tuning_GEOvar,
-        tuning_GEOreal1_O,
+        tuning_GEOreal1_M,
         tuning_GEOreal1_P,
-        tuning_GEOreal1_N,
-        tuning_GEOreal2_O_VO,
+        tuning_GEOreal1_A,
+        tuning_GEOreal2_M_VO,
         tuning_GEOreal2_P_VO,
-        tuning_GEOreal2_N_VO,
-        tuning_GEOreal2_O_DS,
+        tuning_GEOreal2_A_VO,
+        tuning_GEOreal2_M_DS,
         tuning_GEOreal2_P_DS,
-        tuning_GEOreal2_N_DS,
+        tuning_GEOreal2_A_DS,
 
         tuning_AGEO2real1_P,
     }
@@ -110,23 +110,23 @@ namespace Classes_e_Enums
         GEO_var2,
 
         // GEOreal1
-        GEOreal1_O,
+        GEOreal1_M,
         GEOreal1_P,
-        GEOreal1_N,
+        GEOreal1_A,
         
         // GEOreal2
-        GEOreal2_O_VO,
+        GEOreal2_M_VO,
         GEOreal2_P_VO,
-        GEOreal2_N_VO,
-        GEOreal2_O_DS,
+        GEOreal2_A_VO,
+        GEOreal2_M_DS,
         GEOreal2_P_DS,
-        GEOreal2_N_DS,
+        GEOreal2_A_DS,
         
         // GEOreal2 + 1 Uniforme
         GEOreal2_P_VO_UNI,
-        GEOreal2_N_VO_UNI,
+        GEOreal2_A_VO_UNI,
         GEOreal2_P_DS_UNI,
-        GEOreal2_N_DS_UNI,
+        GEOreal2_A_DS_UNI,
 
         // A-GEOreal
         AGEOreal1_P,
