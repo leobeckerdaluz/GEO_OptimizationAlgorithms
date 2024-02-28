@@ -104,7 +104,7 @@ namespace GEOs_REAIS
                                 xi_antes_da_perturbacao = p1,
                                 xi_depois_da_perturbacao = p,
                                 fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_copia, true),
-                                feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_copia, upper_bounds, lower_bounds),
+                                feasible_solution = Utils.CheckFeasibility.check_feasibility(populacao_copia, upper_bounds, lower_bounds),
                                 populacao_depois_da_perturbacao = new List<double>(populacao_copia),
                                 indice_variavel_projeto = 999,
                             }
@@ -134,7 +134,7 @@ namespace GEOs_REAIS
                                 xi_depois_da_perturbacao = populacao_para_perturbar[i],
                                 fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_para_perturbar, true),
                                 populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar),
-                                feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
+                                feasible_solution = Utils.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
                                 indice_variavel_projeto = i,
                             }
                         );

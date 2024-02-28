@@ -196,24 +196,6 @@ namespace Classes_e_Enums
         public double GEO__tau {get; set;}
         public double GEOvar__tau {get; set;}
         
-        // public double tau_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_porcentagem, GEOreal1_Aormal
-        // public double std_GEOreal1 {get; set;}      // GEOreal1_igor, GEOreal1_Aormal
-        // public double p1_GEOreal1 {get; set;}       // GEOreal1_porcentagem
-        // public double tau_GEOreal2 {get; set;}      // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_Aormal
-        // public double std_AGEO1real1 {get; set;}    // AGEOs real1
-        // public double std_AGEO2real1 {get; set;}    // AGEOs real1
-        // public double std_GEOreal2 {get; set;}      // GEOreal2_igor, GEOreal2_Aormal
-        // public double std_AGEO1real2 {get; set;}    // AGEOs real2
-        // public double std_AGEO2real2 {get; set;}    // AGEOs real2
-        // public double p1_AGEO1real1 {get; set;}     // AGEOs_real1 porcentagem
-        // public double p1_AGEO2real1 {get; set;}     // AGEOs_real1 porcentagem
-        // public double P_GEOreal2 {get; set;}        // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_Aormal
-        // public double P_AGEO1real2 {get; set;}      // AGEOs_real2
-        // public double P_AGEO2real2 {get; set;}      // AGEOs_real2
-        // public double s_GEOreal2 {get; set;}        // GEOreal2_igor, GEOreal2_porcentagem, GEOreal2_Aormal
-        // public double s_AGEO1real2 {get; set;}      // AGEOs_real2
-        // public double s_AGEO2real2 {get; set;}      // AGEOs_real2
-        
         // GEOreal1_M
         public double GEOreal1_M__tau {get; set;}
         public double GEOreal1_M__std {get; set;}

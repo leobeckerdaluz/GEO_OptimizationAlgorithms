@@ -332,7 +332,7 @@ namespace ExecutaOrganizaApresenta
                 resultados_finais += pior_fx_nas_execucoes + '\n';
                 resultados_finais += mediana_de_fx_nas_execucoes + '\n';
                 resultados_finais += sd_dos_fx_finais_nas_execucoes;
-                resultados_finais = resultados_finais.Replace('.',',');
+                // resultados_finais = resultados_finais.Replace('.',',');
                 
                 // Printa essa linha processada
                 Console.WriteLine(resultados_finais);
@@ -537,7 +537,7 @@ namespace ExecutaOrganizaApresenta
                 // Para cada execução, gera uma nova população inicial com base nos limites de cada variável
                 
                 // População Real
-                List<double> populacao_real_gerada = GeracaoPopulacoes.GeracaoPopulacoes.geracao_populacao_real(
+                List<double> populacao_real_gerada = Utils.GeracaoPopulacoes.geracao_populacao_real(
                     parametros_problema.lower_bounds, 
                     parametros_problema.upper_bounds, 
                     seed,
@@ -546,7 +546,7 @@ namespace ExecutaOrganizaApresenta
                 parametros_problema.populacao_inicial_real = new List<double>(populacao_real_gerada);
 
                 // População Binária
-                List<bool> populacao_binaria_gerada = GeracaoPopulacoes.GeracaoPopulacoes.geracao_populacao_binaria(
+                List<bool> populacao_binaria_gerada = Utils.GeracaoPopulacoes.geracao_populacao_binaria(
                     parametros_problema.bits_por_variavel, 
                     seed
                 );

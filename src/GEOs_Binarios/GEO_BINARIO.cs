@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Classes_e_Enums;
-using CheckFeasibility;
+using Utils;
 using System.Linq;
 
 namespace GEOs_BINARIOS
@@ -191,7 +191,7 @@ namespace GEOs_BINARIOS
                     new BitVerificado(){
                         funcao_objetivo_flipando = calcula_valor_funcao_objetivo(fenotipos, true),
                         indice_bit_mutado = i,
-                        feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(fenotipos, upper_bounds, lower_bounds),
+                        feasible_solution = Utils.CheckFeasibility.check_feasibility(fenotipos, upper_bounds, lower_bounds),
                     }
                 );
             }

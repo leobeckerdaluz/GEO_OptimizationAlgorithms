@@ -116,27 +116,17 @@ namespace Execucoes
             bool integer_population = false;
             
             QuaisAlgoritmosRodar quais_algoritmos_rodar = new QuaisAlgoritmosRodar(){
-                // rodar_GEO = true,
-                // rodar_GEOvar = true,
-                // rodar_GEOreal1 = true,
-                // rodar_GEOreal1_M = true,
-                // rodar_AGEO2 = true,
-                // rodar_AGEO2var = true,
-                // rodar_AGEO2var_5 = true,
-                // rodar_AGEO2real2_AA3 = true,
-                // rodar_AGEO2real2_AA2 = true,
-                
                 // rodar_GEO = true,                    // Possui parâmetros livres
                 // rodar_GEOvar = true,                 // Possui parâmetros livres
                 
                 // rodar_AGEO1 = true,
-                // rodar_AGEO2 = true,
+                rodar_AGEO2 = true,
                 // rodar_AGEO3 = true,
                 // rodar_AGEO4 = true,
                 // rodar_AGEO9 = true,
 
                 // rodar_AGEO1var = true,
-                // rodar_AGEO2var = true,
+                rodar_AGEO2var = true,
                 // rodar_AGEO3var = true,
                 // rodar_AGEO4var = true,
                 // rodar_AGEO9var = true,
@@ -161,12 +151,12 @@ namespace Execucoes
                 // rodar_GEOreal2_P_VO = true,          // Possui parâmetros livres
                 // rodar_GEOreal2_A_VO = true,          // Possui parâmetros livres
                 // rodar_GEOreal2_M_DS = true,          // Possui parâmetros livres
-                rodar_GEOreal2_P_DS = true,          // Possui parâmetros livres
+                // rodar_GEOreal2_P_DS = true,          // Possui parâmetros livres
                 // rodar_GEOreal2_A_DS = true,          // Possui parâmetros livres
 
                 // rodar_GEOreal2_P_VO_UNI = true,      // Possui parâmetros livres
                 // rodar_GEOreal2_A_VO_UNI = true,      // Possui parâmetros livres
-                rodar_GEOreal2_P_DS_UNI = true,      // Possui parâmetros livres
+                // rodar_GEOreal2_P_DS_UNI = true,      // Possui parâmetros livres
                 // rodar_GEOreal2_A_DS_UNI = true,      // Possui parâmetros livres
 
                 // rodar_AGEO2real1_P = true,
@@ -177,16 +167,15 @@ namespace Execucoes
                 // rodar_AGEO2real2_AA0 = true,
                 // rodar_AGEO2real2_AA1 = true,
                 // rodar_AGEO2real2_AA2 = true,
-                // rodar_AGEO2real2_AA3 = true,
+                rodar_AGEO2real2_AA3 = true,
                 // rodar_AGEO2real2_P_AA_p9 = true,
             };
 
             OQueInteressaPrintar o_que_printar = new OQueInteressaPrintar(){
                 mostrar_melhores_fx_cada_execucao = true,
-                mostrar_melhores_NFE = false
+                mostrar_melhores_NFE = true,
+                // mostrar_mean_Mfx_iteracoes = true
             };
-
-
 
 
 
@@ -289,84 +278,6 @@ namespace Execucoes
                     switch(opcao){
                         case (int)EnumOQueFazer.executar_algoritmos:
                         {
-                            // ======================================================================================================
-                            // O que interessa printar no arquivo de saída ao 'executar algoritmos'
-                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_NFE = true;
-                            
-                            // parametros_execucao.o_que_interessa_printar.mostrar_fxs_atual_por_NFE = true;
-                            // parametros_execucao.o_que_interessa_printar.mostrar_mean_TAU_iteracoes = true; //alg. sozinho
-                            // parametros_execucao.o_que_interessa_printar.mostrar_mean_STDPORC_iteracoes = true;
-                            
-                            // parametros_execucao.o_que_interessa_printar.mostrar_melhores_fx_cada_execucao = true;
-                            // parametros_execucao.o_que_interessa_printar.mostrar_mean_Mfx_iteracoes = true;
-                            // ======================================================================================================
-
-
-
-                            // ======================================================================================================
-                            // Quais algoritmos executar
-                            
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;                    // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;                 // Possui parâmetros livres
-                            
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9 = true;
-
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO3var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO4var = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO9var = true;
-                            
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_5 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_7 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_9 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO1var_11 = true;
-                            
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_5 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_7 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_9 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2var_11 = true;
-
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_M = true;             // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;             // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_A = true;             // Possui parâmetros livres
-
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_M_VO = true;          // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;          // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_VO = true;          // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_M_DS = true;          // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;          // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_DS = true;          // Possui parâmetros livres
-
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO_UNI = true;      // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_VO_UNI = true;      // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS_UNI = true;      // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_DS_UNI = true;      // Possui parâmetros livres
-
-                            // Poucos parâmetros
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS = true;        // Possui parâmetros livres
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_DS_fixo = true;
-                            
-                            // Auto-adaptativos
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_AA = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA0 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA1 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA2 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_AA3 = true;
-                            // parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real2_P_AA_p9 = true;
-                            
-
-                            // ======================================================================================================
-                            
-                            
-                            // ======================================================================================================
                             // Executa os algoritmos
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta exec = new ExecutaOrganizaApresenta.ExecutaOrganizaApresenta();
                             
@@ -378,117 +289,91 @@ namespace Execucoes
                             
                             // Apresenta os resultados finais
                             ExecutaOrganizaApresenta.ExecutaOrganizaApresenta.apresenta_resultados_finais(parametros_execucao.o_que_interessa_printar, resultados_por_algoritmo, parametros_execucao, parametros_problema, float_str_format);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEO:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEO
                             // List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0}; 
                             List<double> valores_tau = new List<double>(){0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5}; 
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEO = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOvar:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOvar
                             List<double> valores_tau = new List<double>(){0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4.0, 4.25, 4.5, 4.75, 5}; 
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOvar = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-
                             List<Tuning> resultados_tuning = tunings.tuning_GEO_GEOvar(parametros_execucao, parametros_problema, valores_tau);
                            
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal1_M:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal1_M
-                            
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
                             List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
 
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_M = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_M(parametros_execucao, parametros_problema, valores_tau, valores_std);
                          
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal1_P:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal1_P
-                            
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
                             List<double> valores_porcentagem = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10};
                             
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_P = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_P(parametros_execucao, parametros_problema, valores_tau, valores_porcentagem);
                           
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal1_A:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal1_A
-                            
                             List<double> valores_tau = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6};
                             List<double> valores_std = new List<double>(){0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
 
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal1_A = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal1_A(parametros_execucao, parametros_problema, valores_tau, valores_std);
                            
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal2_M_VO:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal2_M_VO
                             List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                             List<double> valores_std1 = new List<double>(){0.5, 1, 2, 10};
                             List<double> valores_P = new List<double>(){5, 10};
@@ -497,20 +382,16 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_M_VO = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_M_VO(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal2_P_VO:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal2_P_VO
                             List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                             List<double> valores_porcent = new List<double>(){0.1, 1, 10, 50};
                             List<double> valores_P = new List<double>(){5, 10};
@@ -519,20 +400,16 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_VO = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_P_VO(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal2_A_VO:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal2_A_VO                
                             List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                             List<double> valores_std1 = new List<double>(){0.5, 1, 2, 10};
                             List<double> valores_P = new List<double>(){5, 10};
@@ -541,20 +418,16 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_VO = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_A_VO(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal2_M_DS:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal2_M_DS
                             List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                             List<double> valores_std1 = new List<double>(){0.5, 1, 2, 10};
                             List<double> valores_P = new List<double>(){5, 10};
@@ -563,20 +436,16 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_M_DS = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_M_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal2_P_DS:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal2_P_DS
                             List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                             List<double> valores_porcent = new List<double>(){0.1, 1, 10, 50};
                             List<double> valores_P = new List<double>(){5, 10};
@@ -585,20 +454,16 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_P_DS = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_P_DS(parametros_execucao, parametros_problema, valores_tau, valores_porcent, valores_P, valores_s);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_GEOreal2_A_DS:
                         {
-                            // ======================================================================================================
-                            // Tuning do GEOreal2_A_DS                
                             List<double> valores_tau = new List<double>(){0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
                             List<double> valores_std1 = new List<double>(){0.5, 1, 2, 10};
                             List<double> valores_P = new List<double>(){5, 10};
@@ -607,36 +472,27 @@ namespace Execucoes
                             parametros_execucao.quais_algoritmos_rodar.rodar_GEOreal2_A_DS = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_GEOreal2_A_DS(parametros_execucao, parametros_problema, valores_tau, valores_std1, valores_P, valores_s);
                             
                             bool ordenar = true;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 
 
                         case (int)EnumOQueFazer.tuning_AGEO2real1_P:
                         {
-                            // ======================================================================================================
-                            // Tuning do AGEO2real1_P
-                            
-                            
                             // List<double> valores_porcent = new List<double>(){0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12};
                             // List<double> valores_porcent = new List<double>(){0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100};
                             List<double> valores_porcent = Enumerable.Range(1, 50).Select(i => i*2.0).ToList();
                             
-
                             parametros_execucao.quais_algoritmos_rodar.rodar_AGEO2real1_P = true;
                             
                             Tunings.Tunings tunings = new Tunings.Tunings();
-                            
                             List<Tuning> resultados_tuning = tunings.tuning_AGEO2real1_P(parametros_execucao, parametros_problema, valores_porcent);
                           
                             bool ordenar = false;
                             tunings.ordena_e_apresenta_resultados_tuning(resultados_tuning, ordenar);
-                            // ======================================================================================================
                         }
                         break;
 

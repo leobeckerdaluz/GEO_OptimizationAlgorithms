@@ -1,5 +1,4 @@
-﻿// using AlgoritimosEvolutivos.Utils;
-using MathModelsDomain.Utilities;
+﻿using MathModelsDomain.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +68,7 @@ namespace SpaceConceptOptimizer.Models
 
         public object Clone()
         {
-            return new object();// AlgoritimosEvolutivos.Utils.Utility.InstantiateFunction(this);
+            return new object();
         }
     }
 }

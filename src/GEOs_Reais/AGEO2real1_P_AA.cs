@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Classes_e_Enums;
-using CheckFeasibility;
+using Utils;
 
 namespace GEOs_REAIS
 {
@@ -97,7 +97,7 @@ namespace GEOs_REAIS
                     xi_antes_da_perturbacao = porcentagem,
                     xi_depois_da_perturbacao = porcentagem_linha,
                     fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_copia, true),
-                    feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_copia, upper_bounds, lower_bounds),
+                    feasible_solution = Utils.CheckFeasibility.check_feasibility(populacao_copia, upper_bounds, lower_bounds),
                     populacao_depois_da_perturbacao = new List<double>(populacao_copia),
                     indice_variavel_projeto = 999,
                 }
@@ -132,7 +132,7 @@ namespace GEOs_REAIS
                     new Perturbacao(){
                         xi_antes_da_perturbacao = populacao_atual[i],
                         xi_depois_da_perturbacao = populacao_para_perturbar[i],
-                        feasible_solution = CheckFeasibility.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
+                        feasible_solution = Utils.CheckFeasibility.check_feasibility(populacao_para_perturbar, upper_bounds, lower_bounds),
                         populacao_depois_da_perturbacao = new List<double>(populacao_para_perturbar),
                         fx_depois_da_perturbacao = calcula_valor_funcao_objetivo(populacao_para_perturbar, true),
                         indice_variavel_projeto = i

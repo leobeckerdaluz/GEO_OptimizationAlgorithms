@@ -146,7 +146,6 @@ namespace MecanismoAGEO
                 else
                     return tau;
             }
-            
             else
             {
                 return tau;
